@@ -1,2 +1,4 @@
-# relational-databases
-Text Book for Relational Databases
+## Dev
+```sh
+hugo server --themesDir ../
+```
