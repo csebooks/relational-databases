@@ -61,53 +61,24 @@ As personal computers became faster, more powerful, and cheaper, there was a shi
 
 Functionality provided by database systems can be broadly divided into two parts—the front end and the back end. The back end manages access structures, query evaluation and optimization, concurrency control, and recovery. The front end of a database system consists of tools such as the SQL user interface, forms interfaces, report generation tools, and data mining and analysis tools (see Fig- ure 17.3). The interface between the front end and the back end is through SQL, or through an application program.
 
-1The reasons for this pertain to issues in computer architecture related to heat generation and power consumption. Rather than make processors significantly faster, computer architects are using advances in chip design to put more cores on a single chip, a trend likely to continue for some time.  
+^1^The reasons for this pertain to issues in computer architecture related to heat generation and power consumption. Rather than make processors significantly faster, computer architects are using advances in chip design to put more cores on a single chip, a trend likely to continue for some time.  
 
-**772 Chapter 17 Database-System Architectures**
+![Alt text](client.png)
 
-client client client client
 
-server
+- Standards such as _ODBC_ and _JDBC_, which we saw in Chapter 3, were developed to interface clients with servers. Any client that uses the ODBC or JDBC interface can connect to any server that provides the interface.
 
-network
+- Certain application programs, such as spreadsheets and statistical-analysis packages, use the client–server interface directly to access data from a back-end server. In effect, they provide front ends specialized for particular tasks.
 
-**Figure 17.2** General structure of a client–server system.
+- Systems that deal with large numbers of users adopt a three-tier architecture, which we saw earlier in Figure 1.6 (Chapter 1), where the front end is a Web browser that talks to an application server. The application server, in effect, acts  as a client to the database server.
 
-Standards such as _ODBC_ and _JDBC_, which we saw in Chapter 3, were developed to interface clients with servers. Any client that uses the ODBC or JDBC interface can connect to any server that provides the interface.
+- Some transaction-processing systems provide a **transactional remote proce- dure call** interface to connect clients with a server. These calls appear like ordi- nary procedure calls to the programmer, but all the remote procedure calls from a client are enclosed in a single transaction at the server end. Thus, if the transaction aborts, the server can undo the effects of the individual remote procedure calls.
 
-Certain application programs, such as spreadsheets and statistical-analysis packages, use the client–server interface directly to access data from a back-end server. In effect, they provide front ends specialized for particular tasks.
-
-Systems that deal with large numbers of users adopt a three-tier architecture, which we saw earlier in Figure 1.6 (Chapter 1), where the front end is a Web browser that talks to an application server. The application server, in effect, acts as a client to the database server.
-
-Some transaction-processing systems provide a **transactional remote proce- dure call** interface to connect clients with a server. These calls appear like ordi- nary procedure calls to the programmer, but all the remote procedure calls from a client are enclosed in a single transaction at the server end. Thus, if the transaction aborts, the server can undo the effects of the individual remote procedure calls.
-
-**17.2 Server System Architectures**
+## 17.2 Server System Architectures
 
 Server systems can be broadly categorized as transaction servers and data servers.
 
-SQL user interface
-
-forms interface
-
-report generation
-
-tools
-
-data mining and analysis
-
-tools
-
-SQL engine
-
-front end
-
-interface (SQL API)
-
-back end
-
-**Figure 17.3** Front-end and back-end functionality.  
-
-**17.2 Server System Architectures 773**
+![Alt text](front.png)
 
 • **Transaction-server** systems, also called **query-server** systems, provide an in- terface to which clients can send requests to perform an action, in response to which they execute the action and send back results to the client. Usually, client machines ship transactions to the server systems, where those transac- tions are executed, and results are shipped back to clients that are in charge of displaying the data. Requests may be specified by using SQL, or through a specialized application program interface.
 
@@ -115,7 +86,7 @@ back end
 
 Of these, the transaction-server architecture is by far the more widely used archi- tecture. We shall elaborate on the transaction-server and data-server architectures in Sections 17.2.1 and 17.2.2.
 
-**17.2.1 Transaction Servers**
+### 17.2.1 Transaction Servers
 
 A typical transaction-server system today consists of multiple processes accessing data in shared memory, as in Figure 17.4. The processes that form part of the database system include:
 
@@ -127,41 +98,8 @@ A typical transaction-server system today consists of multiple processes accessi
 
 • **Log writer process**: This process outputs log records from the log record buffer to stable storage. Server processes simply add log records to the log  
 
-**774 Chapter 17 Database-System Architectures**
+![Alt text](share.png)
 
-lock manager processlock tablelog buffer
-
-shared memory
-
-database writer process
-
-log writer process
-
-checkpoint process
-
-process monitor process
-
-server process
-
-server process
-
-user process
-
-user process
-
-server process
-
-user process
-
-ODBC JDBC
-
-log disks data disks
-
-query plan cache
-
-buffer pool
-
-**Figure 17.4** Shared memory and process structure.
 
 record buffer in shared memory, and if a log force is required, they request the log writer process to output log records.
 
@@ -177,7 +115,6 @@ The shared memory contains all shared data, such as:
 
 • Log buffer, containing log records waiting to be output to the log on stable storage.  
 
-**17.2 Server System Architectures 775**
 
 • Cached query plans, which can be reused if the same query is submitted again.
 
@@ -193,11 +130,10 @@ To avoid repeated checks on the lock table, operating system semaphores can be u
 
 Even if the system handles lock requests through shared memory, it still uses the lock manager process for deadlock detection.
 
-**17.2.2 Data Servers**
+### 17.2.2 Data Servers
 
 Data-server systems are used in local-area networks, where there is a high-speed connection between the clients and the server, the client machines are comparable in processing power to the server machine, and the tasks to be executed are computation intensive. In such an environment, it makes sense to ship data to client machines, to perform all processing at the client machine (which may take a while), and then to ship the data back to the server machine. Note that this architecture requires full back-end functionality at the clients. Data-server architectures have been particularly popular in object-oriented database systems (Chapter 22).  
 
-**776 Chapter 17 Database-System Architectures**
 
 Interesting issues arise in such an architecture, since the time cost of com- munication between the client and the server is high compared to that of a local memory reference (milliseconds, versus less than 100 nanoseconds):
 
@@ -211,11 +147,9 @@ If the unit of communication is a single item, the overhead of message passing i
 
 • **Lock caching**. If the use of data is mostly partitioned among the clients, with clients rarely requesting data that are also requested by other clients, locks can also be cached at the client machine. Suppose that a client finds a data item in the cache, and that it also finds the lock required for an access to the data item in the cache. Then, the access can proceed without any communication with the server. However, the server must keep track of cached locks; if a client requests a lock from the server, the server must **call back** all conflicting locks on the data item from any other client machines that have cached the locks. The task becomes more complicated when machine failures are taken into account. This technique differs from lock de-escalation in that lock caching takes place across transactions; otherwise, the two techniques are similar.  
 
-**17.3 Parallel Systems 777**
-
 The bibliographical references provide more information about client–server database systems.
 
-**17.2.3 Cloud-Based Servers**
+### 17.2.3 Cloud-Based Servers
 
 Servers are usually owned by the enterprise providing the service, but there is an increasing trend for service providers to rely at least in part upon servers that are owned by a “third party” that is neither the client nor the service provider.
 
@@ -225,21 +159,17 @@ Another model for using third-party servers is **cloud computing**, in which the
 
 A third model uses a cloud computing service as a data server; such _cloud-based data storage_ systems are covered in detail in Section 19.9. Database applications using cloud-based storage may run on the same cloud (that is, the same set of machines), or on another cloud. The bibliographical references provide more information about cloud-computing systems.
 
-**17.3 Parallel Systems**
+## 17.3 Parallel Systems
 
 Parallel systems improve processing and I/O speeds by using multiple processors and disks in parallel. Parallel machines are becoming increasingly common, mak- ing the study of parallel database systems correspondingly more important. The driving force behind parallel database systems is the demands of applications that have to query extremely large databases (of the order of terabytes—that is, 1012
 
 bytes) or that have to process an extremely large number of transactions per sec- ond (of the order of thousands of transactions per second). Centralized and client –server database systems are not powerful enough to handle such applications.
 
-In parallel processing, many operations are performed simultaneously, as opposed to serial processing, in which the computational steps are performed se- quentially. A **coarse-grain** parallel machine consists of a small number of powerful processors; a **massively parallel** or **fine-grain parallel** machine uses thousands of smaller processors. Virtually all high-end machines today offer some degree of coarse-grain parallelism: at least two or four processors. Massively parallel com-  
-
-**778 Chapter 17 Database-System Architectures**
-
-puters can be distinguished from the coarse-grain parallel machines by the much larger degree of parallelism that they support. Parallel computers with hundreds of processors and disks are available commercially.
+In parallel processing, many operations are performed simultaneously, as opposed to serial processing, in which the computational steps are performed se- quentially. A **coarse-grain** parallel machine consists of a small number of powerful processors; a **massively parallel** or **fine-grain parallel** machine uses thousands of smaller processors. Virtually all high-end machines today offer some degree of coarse-grain parallelism: at least two or four processors. Massively parallel computers can be distinguished from the coarse-grain parallel machines by the much larger degree of parallelism that they support. Parallel computers with hundreds of processors and disks are available commercially.
 
 There are two main measures of performance of a database system: (1) **throughput**, the number of tasks that can be completed in a given time inter- val, and (2) **response time**, the amount of time it takes to complete a single task from the time it is submitted. A system that processes a large number of small transactions can improve throughput by processing many transactions in paral- lel. A system that processes large transactions can improve response time as well as throughput by performing subtasks of each transaction in parallel.
 
-**17.3.1 Speedup and Scaleup**
+### 17.3.1 Speedup and Scaleup
 
 Two important issues in studying parallelism are speedup and scaleup. Running a given task in less time by increasing the degree of parallelism is called **speedup**. Handling larger tasks by increasing the degree of parallelism is called **scaleup**.
 
@@ -247,29 +177,9 @@ Consider a database application running on a parallel system with a certain numb
 
 Scaleup relates to the ability to process larger tasks in the same amount of time by providing more resources. Let _Q_ be a task, and let _QN_ be a task that is _N_ times bigger than _Q_. Suppose that the execution time of task _Q_ on a given machine
 
-linear speedup
+![Alt text](speedup.png)
 
-sublinear speedup
-
-resources
-
-sp ee
-
-d
-
-**Figure 17.5** Speedup with increasing resources.  
-
-**17.3 Parallel Systems 779**
-
-linear scaleup
-
-sublinear scaleup
-
-problem size
-
-_TS TL_
-
-**Figure 17.6** Scaleup with increasing problem size and resources.
+![Alt text](scaleup.png)
 
 _MS_ is _TS_, and the execution time of task _QN_ on a parallel machine _ML_ , which is _N_ times larger than _MS_, is _TL_ . The scaleup is then defined as _TS/TL_ . The parallel system _ML_ is said to demonstrate **linear scaleup** on task _Q_ if _TL_ \= _TS_. If _TL > TS_, the system is said to demonstrate **sublinear scaleup**. Figure 17.6 illustrates linear and sublinear scaleups (where the resources increase in proportion to problem size). There are two kinds of scaleup that are relevant in parallel database systems, depending on how the size of the task is measured:
 
@@ -277,11 +187,7 @@ _MS_ is _TS_, and the execution time of task _QN_ on a parallel machine _ML_ , w
 
 • In **transaction scaleup**, the rate at which transactions are submitted to the database increases and the size of the database increases proportionally to the transaction rate. This kind of scaleup is what is relevant in transaction- processing systems where the transactions are small updates—for example, a deposit or withdrawal from an account—and transaction rates grow as more accounts are created. Such transaction processing is especially well adapted for parallel execution, since transactions can run concurrently and independently on separate processors, and each transaction takes roughly the same amount of time, even if the database grows.
 
-Scaleup is usually the more important metric for measuring efficiency of par- allel database systems. The goal of parallelism in database systems is usually to make sure that the database system can continue to perform at an acceptable speed, even as the size of the database and the number of transactions increases. Increasing the capacity of the system by increasing the parallelism provides a smoother path for growth for an enterprise than does replacing a centralized  
-
-**780 Chapter 17 Database-System Architectures**
-
-system with a faster machine (even assuming that such a machine exists). How- ever, we must also look at absolute performance numbers when using scaleup measures; a machine that scales up linearly may perform worse than a machine that scales less than linearly, simply because the latter machine is much faster to start off with.
+Scaleup is usually the more important metric for measuring efficiency of par- allel database systems. The goal of parallelism in database systems is usually to make sure that the database system can continue to perform at an acceptable speed, even as the size of the database and the number of transactions increases. Increasing the capacity of the system by increasing the parallelism provides a smoother path for growth for an enterprise than does replacing a centralized system with a faster machine (even assuming that such a machine exists). How- ever, we must also look at absolute performance numbers when using scaleup measures; a machine that scales up linearly may perform worse than a machine that scales less than linearly, simply because the latter machine is much faster to start off with.
 
 A number of factors work against efficient parallel operation and can diminish both speedup and scaleup.
 
@@ -291,29 +197,15 @@ A number of factors work against efficient parallel operation and can diminish b
 
 • **Skew**. By breaking down a single task into a number of parallel steps, we reduce the size of the average step. Nonetheless, the service time for the single slowest step will determine the service time for the task as a whole. It is often difficult to divide a task into exactly equal-sized parts, and the way that the sizes are distributed is therefore _skewed_. For example, if a task of size 100 is divided into 10 parts, and the division is skewed, there may be some tasks of size less than 10 and some tasks of size more than 10; if even one task happens to be of size 20, the speedup obtained by running the tasks in parallel is only five, instead of ten as we would have hoped.
 
-**17.3.2 Interconnection Networks**
+### 17.3.2 Interconnection Networks
 
 Parallel systems consist of a set of components (processors, memory, and disks) that can communicate with each other via an **interconnection network**. Fig- ure 17.7 shows three commonly used types of interconnection networks:
 
 • **Bus**. All the system components can send data on and receive data from a sin- gle communication bus. This type of interconnection is shown in Figure 17.7a. The bus could be an Ethernet or a parallel interconnect. Bus architectures work well for small numbers of processors. However, they do not scale well with increasing parallelism, since the bus can handle communication from only one component at a time.
 
-• **Mesh**. The components are nodes in a grid, and each component connects to all its adjacent components in the grid. In a two-dimensional mesh each node connects to four adjacent nodes, while in a three-dimensional mesh each node connects to six adjacent nodes. Figure 17.7b shows a two-dimensional mesh.  
+• **Mesh**. The components are nodes in a grid, and each component connects to all its adjacent components in the grid. In a two-dimensional mesh each node connects to four adjacent nodes, while in a three-dimensional mesh each node connects to six adjacent nodes. Figure 17.7b shows a two-dimensional mesh. 
 
-**17.3 Parallel Systems 781**
-
-110
-
-111011 101
-
-100000
-
-(c) hypercube(b) mesh(a) bus
-
-001
-
-010
-
-**Figure 17.7** Interconnection networks.
+![Alt text](interconnection.png)
 
 Nodes that are not directly connected can communicate with one another by routing messages via a sequence of intermediate nodes that are directly connected to one another. The number of communication links grows as the number of components grows, and the communication capacity of a mesh therefore scales better with increasing parallelism.
 
@@ -325,7 +217,7 @@ the other components (or √
 
 _n_ links away, if the mesh interconnection wraps around at the edges of the grid). Thus communication delays in a hypercube are significantly lower than in a mesh.
 
-**17.3.3 Parallel Database Architectures**
+### 17.3.3 Parallel Database Architectures
 
 There are several architectural models for parallel machines. Among the most prominent ones are those in Figure 17.8 (in the figure, M denotes memory, P denotes a processor, and disks are shown as cylinders):
 
@@ -339,99 +231,36 @@ There are several architectural models for parallel machines. Among the most pro
 
 In Sections 17.3.3.1 through 17.3.3.4, we elaborate on each of these models.  
 
-**782 Chapter 17 Database-System Architectures**
+![Alt text](parallel.png)
 
-P
-
-P M
-
-P
-
-P
-
-P
-
-M M M P P P P P
-
-P P P P P
-
-P P P P P
-
-(a) shared memory
-
-P
-
-P
-
-P
-
-P
-
-(c) shared nothing (d) hierarchical
-
-PM
-
-P
-
-P
-
-P
-
-P
-
-(b) shared disk
-
-M
-
-M
-
-M
-
-M
-
-M
-
-M
-
-MP
-
-M
-
-M
-
-**Figure 17.8** Parallel database architectures.
 
 Techniques used to speed up transaction processing on data-server systems, such as data and lock caching and lock de-escalation, outlined in Section 17.2.2, can also be used in shared-disk parallel databases as well as in shared-nothing parallel databases. In fact, they are very important for efficient transaction pro- cessing in such systems.
 
-**17.3.3.1 Shared Memory**
+#### 17.3.3.1 Shared Memory
 
 In a **shared-memory** architecture, the processors and disks have access to a com- mon memory, typically via a bus or through an interconnection network. The benefit of shared memory is extremely efficient communication between proces- sors—data in shared memory can be accessed by any processor without being moved with software. A processor can send messages to other processors much faster by using memory writes (which usually take less than a microsecond) than by sending a message through a communication mechanism. The downside of shared-memory machines is that the architecture is not scalable beyond 32 or 64 processors because the bus or the interconnection network becomes a bottleneck (since it is shared by all processors). Adding more processors does not help after a point, since the processors will spend most of their time waiting for their turn on the bus to access memory.
 
 Shared-memory architectures usually have large memory caches at each pro- cessor, so that referencing of the shared memory is avoided whenever possible.  
 
-**17.3 Parallel Systems 783**
-
 However, at least some of the data will not be in the cache, and accesses will have to go to the shared memory. Moreover, the caches need to be kept coherent; that is, if a processor performs a write to a memory location, the data in that memory location should be either updated at or removed from any processor where the data are cached. Maintaining cache coherency becomes an increasing overhead with increasing numbers of processors. Consequently, shared-memory machines are not capable of scaling up beyond a point; current shared-memory machines cannot support more than 64 processors.
 
-**17.3.3.2 Shared Disk**
+#### 17.3.3.2 Shared Disk
 
 In the **shared-disk** model, all processors can access all disks directly via an in- terconnection network, but the processors have private memories. There are two advantages of this architecture over a shared-memory architecture. First, since each processor has its own memory, the memory bus is not a bottleneck. Second, it offers a cheap way to provide a degree of **fault tolerance**: If a processor (or its memory) fails, the other processors can take over its tasks, since the database is resident on disks that are accessible from all processors. We can make the disk subsystem itself fault tolerant by using a RAID architecture, as described in Chap- ter 10. The shared-disk architecture has found acceptance in many applications.
 
 The main problem with a shared-disk system is again scalability. Although the memory bus is no longer a bottleneck, the interconnection to the disk sub- system is now a bottleneck; it is particularly so in a situation where the database makes a large number of accesses to disks. Compared to shared-memory systems, shared-disk systems can scale to a somewhat larger number of processors, but communication across processors is slower (up to a few milliseconds in the ab- sence of special-purpose hardware for communication), since it has to go through a communication network.
 
-**17.3.3.3 Shared Nothing**
+#### 17.3.3.3 Shared Nothing
 
-In a **shared-nothing** system, each node of the machine consists of a processor, memory, and one or more disks. The processors at one node may communicate with another processor at another node by a high-speed interconnection network. A node functions as the server for the data on the disk or disks that the node owns. Since local disk references are serviced by local disks at each processor, the shared-nothing model overcomes the disadvantage of requiring all I/O to go through a single interconnection network; only queries, accesses to nonlocal disks, and result relations pass through the network. Moreover, the interconnection networks for shared-nothing systems are usually designed to be scalable, so that their transmission capacity increases as more nodes are added. Consequently, shared-nothing architectures are more scalable and can easily support a large number of processors. The main drawbacks of shared-nothing systems are the costs of communication and of nonlocal disk access, which are higher than in a shared-memory or shared-disk architecture since sending data involves software interaction at both ends.  
+In a **shared-nothing** system, each node of the machine consists of a processor, memory, and one or more disks. The processors at one node may communicate with another processor at another node by a high-speed interconnection network. A node functions as the server for the data on the disk or disks that the node owns. Since local disk references are serviced by local disks at each processor, the shared-nothing model overcomes the disadvantage of requiring all I/O to go through a single interconnection network; only queries, accesses to nonlocal disks, and result relations pass through the network. Moreover, the interconnection networks for shared-nothing systems are usually designed to be scalable, so that their transmission capacity increases as more nodes are added. Consequently, shared-nothing architectures are more scalable and can easily support a large number of processors. The main drawbacks of shared-nothing systems are the costs of communication and of nonlocal disk access, which are higher than in a shared-memory or shared-disk architecture since sending data involves software interaction at both ends.
 
-**784 Chapter 17 Database-System Architectures**
-
-**17.3.3.4 Hierarchical**
+#### 17.3.3.4 Hierarchical
 
 The **hierarchical architecture** combines the characteristics of shared-memory, shared-disk, and shared-nothing architectures. At the top level, the system con- sists of nodes that are connected by an interconnection network and do not share disks or memory with one another. Thus, the top level is a shared-nothing ar- chitecture. Each node of the system could actually be a shared-memory system with a few processors. Alternatively, each node could be a shared-disk system, and each of the systems sharing a set of disks could be a shared-memory system. Thus, a system could be built as a hierarchy, with shared-memory architecture with a few processors at the base, and a shared-nothing architecture at the top, with possibly a shared-disk architecture in the middle. Figure 17.8d illustrates a hierarchical architecture with shared-memory nodes connected together in a shared-nothing architecture. Commercial parallel database systems today run on several of these architectures.
 
 Attempts to reduce the complexity of programming such systems have yielded **distributed virtual-memory** architectures, where logically there is a single shared memory, but physically there are multiple disjoint memory systems; the virtual- memory-mapping hardware, coupled with system software, allows each pro- cessor to view the disjoint memories as a single virtual memory. Since access speeds differ, depending on whether the page is available locally or not, such an architecture is also referred to as a **nonuniform memory architecture** (**NUMA**).
 
-**17.4 Distributed Systems**
+## 17.4 Distributed Systems
 
 In a **distributed database system**, the database is stored on several computers. The computers in a distributed system communicate with one another through various communication media, such as high-speed private networks or the In- ternet. They do not share main memory or disks. The computers in a distributed system may vary in size and function, ranging from workstations up to mainframe systems.
 
