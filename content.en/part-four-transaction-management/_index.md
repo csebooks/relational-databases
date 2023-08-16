@@ -7,7 +7,7 @@ weight: 9
 
 **PART 4**
 
-**TRANSACTION MANAGEMENT**
+# TRANSACTION MANAGEMENT
 
 The term _transaction_ refers to a collection of operations that form a single logical unit of work. For instance, transfer of money from one account to another is a transaction consisting of two updates, one to each account.
 
@@ -33,7 +33,7 @@ Collections of operations that form a single logical unit of work are called **t
 
 This chapter introduces the basic concepts of transaction processing. Details on concurrent transaction processing and recovery from failures are in Chapters 15 and 16, respectively. Further topics in transaction processing are discussed in Chapter 26.
 
-# 14.1 Transaction Concept
+## 14.1 Transaction Concept
 
 A **transaction** is a **unit** of program execution that accesses and possibly updates various data items. Usually, a transaction is initiated by a user program written in a high-level data-manipulation language (typically SQL), or programming lan- guage (for example, C++, or Java), with embedded database accesses in JDBC or ODBC. A transaction is delimited by statements (or function calls) of the form **begin transaction** and **end transaction**. The transaction consists of all operations executed between the **begin transaction** and **end transaction**.
 
@@ -67,7 +67,7 @@ These properties are often called the **ACID properties**; the acronym is derive
 
 As we shall see later, ensuring the isolation property may have a significant adverse effect on system performance. For this reason, some applications com- promise on the isolation property. We shall study these compromises after first studying the strict enforcement of the ACID properties.
 
-# 14.2 A Simple Transaction Model
+## 14.2 A Simple Transaction Model
 
 Because SQL is a powerful and complex language, we begin our study of transac- tions with a simple database language that focuses on when data are moved from disk to main memory and from main memory to disk. In doing this, we ignore SQL **insert** and **delete** operations, and defer considering them until Section 15.8. The only actual operations on the data are restricted in our simple language to arithmetic operations. Later we shall discuss transactions in a realistic, SQL-based context with a richer set of operations. The data items in our simplified model con- tain a single data value (a number in our examples). Each data item is identified by a name (typically a single letter in our examples, that is, _A_, _B_, _C_ , etc.).
 
@@ -121,7 +121,7 @@ We discuss the problems caused by concurrently executing transactions in Section
 
 **632 Chapter 14 Transactions**
 
-# 14.3 Storage Structure
+## 14.3 Storage Structure
 
 To understand how to ensure the atomicity and durability properties of a trans- action, we must gain a better understanding of how the various data items in the database may be stored and accessed.
 
@@ -141,7 +141,7 @@ For a transaction to be durable, its changes need to be written to stable storag
 
 transactions are highly important require multiple copies, or, in other words, a closer approximation of the idealized concept of stable storage.
 
-# 14.4 Transaction Atomicity and Durability**
+## 14.4 Transaction Atomicity and Durability
 
 As we noted earlier, a transaction may not always complete its execution suc- cessfully. Such a transaction is termed **aborted**. If we are to ensure the atomicity property, an aborted transaction must have no effect on the state of the database. Thus, any changes that the aborted transaction made to the database must be undone. Once the changes caused by an aborted transaction have been undone, we say that the transaction has been **rolled back**. It is part of the responsibility of the recovery scheme to manage transaction aborts. This is done typically by main- taining a **log**. Each database modification made by a transaction is first recorded in the log. We record the identifier of the transaction performing the modification, the identifier of the data item being modified, and both the old value (prior to modification) and the new value (after modification) of the data item. Only then is the database itself modified. Maintaining a log provides the possibility of redo- ing a modification to ensure atomicity and durability as well as the possibility of undoing a modification to ensure atomicity in case of a failure during transaction execution. Details of log-based recovery are discussed in Chapter 16.
 
@@ -201,7 +201,7 @@ As another example, consider a user making a booking over the Web. It is possibl
 
 For certain applications, it may be desirable to allow active transactions to display data to users, particularly for long-duration transactions that run for minutes or hours. Unfortunately, we cannot allow such output of observable data unless we are willing to compromise transaction atomicity. In Chapter 26, we discuss alternative transaction models that support long-duration, interactive transactions.
 
-# 14.5 Transaction Isolation
+## 14.5 Transaction Isolation
 
 Transaction-processing systems usually allow multiple transactions to run con- currently. Allowing multiple transactions to update data concurrently causes several complications with consistency of the data, as we saw earlier. Ensuring consistency in spite of concurrent execution of transactions requires extra work; it is far easier to insist that transactions run **serially**—that is, one at a time, each starting only after the previous one has completed. However, there are two good reasons for allowing concurrency:
 
@@ -221,9 +221,13 @@ The database system must control the interaction among the concurrent trans- act
 
 Consider again the simplified banking system of Section 14.1, which has several accounts, and a set of transactions that access and update those accounts. Let _T_1 and _T_2 be two transactions that transfer funds from one account to another. Transaction _T_1 transfers $50 from account _A_ to account _B_. It is defined as:
 
-_T_1: read(_A_); _A_ := _A_ − 50; write(_A_); read(_B_); _B_ := _B_ \+ 50; write(_B_).
+T1: read(A);
+ A := A − 50;
+ write(A);
+ read(B);
+ B := B\+ 50; write(B).
 
-Transaction _T_2 transfers 10 percent of the balance from account _A_ to account _B_. It is defined as:  
+Transaction T2 transfers 10 percent of the balance from account A to account B. It is defined as:  
 
 **14.5 Transaction Isolation 637**
 
@@ -239,17 +243,39 @@ Many service providers now use large collections of computers rather than large 
 
 The bibliographic notes refer to texts that describe these advances in com- puter architecture and parallel computing. Chapter 18 describes algorithms for building parallel database systems, which exploit multiple processors and mul- tiple cores.
 
-_T_2: read(_A_); _temp_ := _A_ \* 0.1; _A_ := _A_ − _temp_; write(_A_); read(_B_); _B_ := _B_ \+ _temp_; write(_B_).
+T2: read(A);
+    temp := A \* 0.1;
+     A := A − temp;
+     write(A);
+     read(B);
+     B := B \+ temp;
+     write(B).
 
 Suppose the current values of accounts _A_ and _B_ are $1000 and $2000, respec- tively. Suppose also that the two transactions are executed one at a time in the order _T_1 followed by _T_2\. This execution sequence appears in Figure 14.2. In the figure, the sequence of instruction steps is in chronological order from top to bottom, with instructions of _T_1 appearing in the left column and instructions of _T_2 appearing in the right column. The final values of accounts _A_ and _B_, after the execution in Figure 14.2 takes place, are $855 and $2145, respectively. Thus, the total amount of money in accounts _A_ and _B_—that is, the sum _A_ \+ _B_—is preserved after the execution of both transactions.  
 
 **638 Chapter 14 Transactions**
 
-_T_1 _T_2
+* |T1       | T2           |
+* |---------|--------------|
+* |read(A)  |              |
+* |A:=A−50  |              |
+* |write(A) |              |
+* |read(B)  |              |
+* |B:=B\+ 50|              |
+* |write(B) |              |
+* | commit  |              |
+* |         |read(A)       |
+* |         |temp :=A ∗ 0.1|
+* |         | A:= A−temp   | 
+* |         |write(A)      | 
+* |         |read(B)       |
+* |         |B:= B + temp  |
+* |         |write(B)      |
+* |         |commit        |
 
-read(_A_) _A_ := _A_ − 50 write(_A_) read(_B_) _B_ := _B_ \+ 50 write(_B_) commit
 
-read(_A_) _temp_ := _A_ ∗ 0.1 _A_ := _A_ − _temp_ write(_A_) read(_B_) _B_ := _B_ \+ _temp_ write(_B_) commit
+
+
 
 **Figure 14.2** Schedule 1—a serial schedule in which _T_1 is followed by _T_2.
 
