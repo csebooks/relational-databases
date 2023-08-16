@@ -7,7 +7,9 @@ weight: 12
 
 **PART 7**
 
-**SPECIALTY DATABASES** Several application areas for database systems are limited by the restrictions of the relational data model. As a result, researchers have developed several data models based on an object-oriented approach, to deal with these application domains.
+#SPECIALTY DATABASES
+
+Several application areas for database systems are limited by the restrictions of the relational data model. As a result, researchers have developed several data models based on an object-oriented approach, to deal with these application domains.
 
 The object-relational model, described in Chapter 22, combines features of the relational and object-oriented models. This model provides the rich type system of object-oriented languages, combined with relations as the basis for storage of data. It applies inheritance to relations, not just to types. The object-relational data model provides a smooth migration path from relational databases, which is attractive to relational database vendors. As a result, starting with SQL:1999, the SQL standard includes a number of object-oriented features in its type system, while continuing to use the relational model as the underlying model.
 
@@ -15,23 +17,24 @@ The term object-oriented database is used to describe a database system that sup
 
 The XML language was initially designed as a way of adding markup infor- mation to text documents, but has become important because of its applications in data exchange. XML provides a way to represent data that have nested structure, and furthermore allows a great deal of flexibility in structuring of data, which is important for certain kinds of nontraditional data. Chapter 23 describes the XML language, and then presents different ways of expressing queries on data represented in XML, including the XQuery XML query language, and SQL/XML, an extension of SQL which allows the creation of nested XML output.
 
-**943**  
+ 
 
-_This page intentionally left blank_  
+ 
 
-**_C H A P T E R_22 Object-Based Databases**
+**_C H A P T E R_22 
+#Object-Based Databases
 
 Traditional database applications consist of data-processing tasks, such as bank- ing and payroll management, with relatively simple data types that are well suited to the relational data model. As database systems were applied to a wider range of applications, such as computer-aided design and geographical informa- tion systems, limitations imposed by the relational model emerged as an obstacle. The solution was the introduction of object-based databases, which allow one to deal with complex data types.
 
-**22.1 Overview**
+##22.1 Overview
 
 The first obstacle faced by programmers using the relational data model was the limited type system supported by the relational model. Complex applica- tion domains require correspondingly complex data types, such as nested record structures, multivalued attributes, and inheritance, which are supported by tradi- tional programming languages. Such features are in fact supported in the E-R and extended E-R notations, but had to be translated to simpler SQL data types. The **object-relational data model** extends the relational data model by providing a richer type system including complex data types and object orientation. Relational query languages, in particular SQL, need to be correspondingly extended to deal with the richer type system. Such extensions attempt to preserve the relational foundations—in particular, the declarative access to data—while extending the modeling power. **Object-relational database systems**, that is, database systems based on the object-relation model, provide a convenient migration path for users of relational databases who wish to use object-oriented features.
 
 The second obstacle was the difficulty in accessing database data from pro- grams written in programming languages such as C++ or Java. Merely extending the type system supported by the database was not enough to solve this problem completely. Differences between the type system of the database and the type system of the programming language make data storage and retrieval more com- plicated, and need to be minimized. Having to express database access using a language (SQL) that is different from the programming language again makes the job of the programmer harder. It is desirable, for many applications, to have
 
-**945**  
 
-**946 Chapter 22 Object-Based Databases**
+
+
 
 programming language constructs or extensions that permit direct access to data in the database, without having to go through an intermediate language such as SQL.
 
@@ -47,7 +50,7 @@ We provide a brief introduction to both these approaches. Finally, we outline si
 
 ter than the object-oriented approach, and vice versa, and mention criteria for choosing between them.
 
-**22.2 Complex Data Types**
+##22.2 Complex Data Types
 
 Traditional database applications have conceptually simple data types. The basic data items are records that are fairly small and whose fields are atomic—that is, they are not further structured, and first normal form holds (see Chapter 8). Further, there are only a few record types.
 
@@ -55,7 +58,7 @@ In recent years, demand has grown for ways to deal with more complex data types.
 
 As another example, consider multivalued attributes from the E-R model. Such attributes are natural, for example, for representing phone numbers, since people  
 
-**22.2 Complex Data Types 947**
+
 
 _title author\_array publisher keyword\_set_ (_name, branch_)
 
