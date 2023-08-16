@@ -7,7 +7,8 @@ weight: 10
 
 **PART 5**
 
-**SYSTEM ARCHITECTURE** The architecture of a database system is greatly influenced by the underlying computer system on which the database system runs. Database systems can be centralized, where one server machine executes operations on the database. Database systems can also be designed to exploit parallel computer architectures. Distributed databases span multiple geographically separated machines.
+# SYSTEM ARCHITECTURE
+The architecture of a database system is greatly influenced by the underlying computer system on which the database system runs. Database systems can be centralized, where one server machine executes operations on the database. Database systems can also be designed to exploit parallel computer architectures. Distributed databases span multiple geographically separated machines.
 
 Chapter 17 first outlines the architectures of database systems running on server systems, which are used in centralized and client–server architectures. The various processes that together implement the functionality of a database are outlined here. The chapter then outlines parallel computer architectures, and parallel database architectures designed for different types of parallel computers. Finally, the chapter outlines architectural issues in building a distributed database system.
 
@@ -15,33 +16,26 @@ Chapter 18 describes how various actions of a database, in particular query proc
 
 Chapter 19 presents a number of issues that arise in a distributed database, and describes how to deal with each issue. The issues include how to store data, how to ensure atomicity of transactions that execute at multiple sites, how to perform concurrency control, and how to provide high availability in the presence of failures.a Cloud-based data storage systems, distributed query processing and directory systems are also described in this chapter.
 
-**767**  
 
-_This page intentionally left blank_  
+**C H A P T E R 17**
 
-**_C H A P T E R_17 Database-System Architectures**
+# Database-System Architectures
 
 The architecture of a database system is greatly influenced by the underlying computer system on which it runs, in particular by such aspects of computer architecture as networking, parallelism, and distribution:
 
-• Networking of computers allows some tasks to be executed on a server system and some tasks to be executed on client systems. This division of work has led to _client–server database systems_.
+- Networking of computers allows some tasks to be executed on a server system and some tasks to be executed on client systems. This division of work has led to _client–server database systems_.
 
-• Parallel processing within a computer system allows database-system activi- ties to be speeded up, allowing faster response to transactions, as well as more transactions per second. Queries can be processed in a way that exploits the parallelism offered by the underlying computer system. The need for parallel query processing has led to _parallel database systems_.
+- Parallel processing within a computer system allows database-system activi- ties to be speeded up, allowing faster response to transactions, as well as more transactions per second. Queries can be processed in a way that exploits the parallelism offered by the underlying computer system. The need for parallel query processing has led to _parallel database systems_.
 
-• Distributing data across sites in an organization allows those data to reside where they are generated or most needed, but still to be accessible from other sites and from other departments. Keeping multiple copies of the database across different sites also allows large organizations to continue their database operations even when one site is affected by a natural disaster, such as flood, fire, or earthquake. _Distributed database systems_ handle geographically or ad- ministratively distributed data spread across multiple database systems.
+- Distributing data across sites in an organization allows those data to reside where they are generated or most needed, but still to be accessible from other sites and from other departments. Keeping multiple copies of the database across different sites also allows large organizations to continue their database operations even when one site is affected by a natural disaster, such as flood, fire, or earthquake. _Distributed database systems_ handle geographically or ad- ministratively distributed data spread across multiple database systems.
 
 We study the architecture of database systems in this chapter, starting with the traditional centralized systems, and covering client–server, parallel, and dis- tributed database systems.
 
-**17.1 Centralized and Client–Server Architectures**
+## 17.1 Centralized and Client–Server Architectures
 
-Centralized database systems are those that run on a single computer system and do not interact with other computer systems. Such database systems span a range from single-user database systems running on personal computers to high-performance database systems running on high-end server systems. Client
+Centralized database systems are those that run on a single computer system and do not interact with other computer systems. Such database systems span a range from single-user database systems running on personal computers to high-performance database systems running on high-end server systems. Client server systems, on the other hand, have functionality split between a server system and multiple client systems.
 
-**769**  
-
-**770 Chapter 17 Database-System Architectures**
-
-–server systems, on the other hand, have functionality split between a server system and multiple client systems.
-
-**17.1.1 Centralized Systems**
+### 17.1.1 Centralized Systems
 
 A modern, general-purpose computer system consists of one to a few processors and a number of device controllers that are connected through a common bus that provides access to shared memory (Figure 17.1). The processors have local cache memories that store local copies of parts of the memory, to speed up access to data. Each processor may have several independent **cores**, each of which can execute a separate instruction stream. Each device controller is in charge of a specific type of device (for example, a disk drive, an audio device, or a video display). The processors and the device controllers can execute concurrently, competing for memory access. Cache memory reduces the contention for memory access, since it reduces the number of times that the processor needs to access the shared memory.
 
@@ -49,23 +43,7 @@ We distinguish two ways in which computers are used: as single-user systems and 
 
 Database systems designed for use by single users usually do not provide many of the facilities that a multiuser database provides. In particular, they may not support concurrency control, which is not required when only a single user can generate updates. Provisions for crash recovery in such systems are either absent or primitive—for example, they may consist of simply making a backup of the database before any update. Some such systems do not support SQL, and they provide a simpler query language, such as a variant of QBE. In contrast,
 
-USB controller
-
-keyboard printermouse monitor disks
-
-graphics adapter
-
-disk controller
-
-memory
-
-CPU
-
-on-line
-
-**Figure 17.1** A centralized computer system.  
-
-**17.1 Centralized and Client–Server Architectures 771**
+![Alt text](centralized.png)
 
 database systems designed for multiuser systems support the full transactional features that we have studied earlier.
 
@@ -77,7 +55,7 @@ In contrast, machines with **fine-granularity parallelism** have a large num- be
 
 Parallelism is emerging as a critical issue in the future design of database systems. Whereas today those computer systems with multicore processors have only a few cores, future processors will have large numbers of cores.1 As a re- sult, parallel database systems, which once were specialized systems running on specially designed hardware, will become the norm.
 
-**17.1.2 Client–Server Systems**
+### 17.1.2 Client–Server Systems
 
 As personal computers became faster, more powerful, and cheaper, there was a shift away from the centralized system architecture. Personal computers sup- planted terminals connected to centralized systems. Correspondingly, personal computers assumed the user-interface functionality that used to be handled di- rectly by the centralized systems. As a result, centralized systems today act as **server systems** that satisfy requests generated by _client systems_. Figure 17.2 shows the general structure of a client–server system.
 
