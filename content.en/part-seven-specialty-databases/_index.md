@@ -60,9 +60,12 @@ As another example, consider multivalued attributes from the E-R model. Such att
 
 
 
-_title author\_array publisher keyword\_set_ (_name, branch_)
+|title | author\_array| publisher| keyword\_set |
+| ------ | -------- | -------- | -------- |
+| || |(_name, branch_)|| |
+|Compilers| \[Smith, Jones\]| (McGraw-Hill, NewYork) |{parsing, analysis}| Networks \|[Jones, Frick\] (Oxford, London) {Internet, Web}
+| Netork | [Jones, Frick\]|(Oxford, London) |{Internet, Web}|
 
-Compilers \[Smith, Jones\] (McGraw-Hill, NewYork) {parsing, analysis} Networks \[Jones, Frick\] (Oxford, London) {Internet, Web}
 
 **Figure 22.1** Non-1NF books relation, _books_.
 
@@ -94,21 +97,27 @@ We can see that, if we define a relation for the preceding information, several 
 
 Figure 22.1 shows an example relation, _books_.  
 
-**948 Chapter 22 Object-Based Databases**
+| title | author | position |
+| ----------- | ----------- | -------|
+| Compilers | Smith |    1  |
+| Compilers | jones |  2 |
+| Networks | jones |1|
+| Networks | Frick |2|
+                          author  
 
-_title author position_ Compilers Smith Compilers Jones Networks Jones Networks Frick
+| title| keyword |
+| ----------- | ----------- |
+|  Compilers| parsing |
+| Compilers | analysis |   
+| Networks |Internet |
+| Networks | Web |
+              keywords
 
-1 2 1 2
-
-_authors_
-
-_title keyword_ Compilers parsing Compilers analysis Networks Internet Networks Web
-
-_keywords_
-
-_title pub\_name pub\_branch_ Compilers McGraw-Hill New York Networks Oxford London
-
-_books4_
+| title | pub_name |pub_branch|
+| ----------- | ----------- |-------|
+| Header | Title | New Yock |
+| Paragraph | Text | Londan|
+                         books4
 
 **Figure 22.2** 4NF version of the relation _books_.
 
@@ -128,77 +137,97 @@ On the other hand, it may be better to use a first normal form representation in
 
 1This assumption does not hold in the real world. Books are usually identified by a 10-digit ISBN number that uniquely identifies each published book.  
 
-**22.3 Structured Types and Inheritance in SQL 949**
 
 conceivably store a set of sections with each student, or a set of students with each section, or both. If we store both, we would have data redundancy (the relationship of a particular student to a particular section would be stored twice).
 
 The ability to use complex data types such as sets and arrays can be useful in many applications but should be used with care.
 
-**22.3 Structured Types and Inheritance in SQL**
+##22.3 Structured Types and Inheritance in SQL
 
 Before SQL:1999, the SQL type system consisted of a fairly simple set of predefined types. SQL:1999 added an extensive type system to SQL, allowing structured types and type inheritance.
 
-**22.3.1 Structured Types**
+###22.3.1 Structured Types
 
 Structured types allow composite attributes of E-R designs to be represented directly. For instance, we can define the following structured type to represent a composite attribute _name_ with component attribute _firstname_ and _lastname_:
-
-**create type** _Name_ **as** (firstname **varchar**(20), _lastname_ **varchar**(20)) **final;**
+~~~ j
+create type Name as
+ (firstname varchar(20),
+ lastname varchar(20))
+ final;
+~~~
 
 Similarly, the following structured type can be used to represent a composite attribute _address_:
-
-**create type** _Address_ **as** (_street_ **varchar**(20), _city_ **varchar**(20), _zipcode_ **varchar**(9)) **not final;**
-
+~~~j
+create type Address as
+ (street varchar(20),
+city varchar(20),
+zipcode varchar(9)) 
+not final;
+~~~
 Such types are called **user-defined** types in SQL2. The above definition corre- sponds to the E-R diagram in Figure 7.4. The **final** and **not final** specifications are related to subtyping, which we describe later, in Section 22.3.2.3
 
 We can now use these types to create composite attributes in a relation, by simply declaring an attribute to be of one of these types. For example, we could create a table _person_ as follows:
 
 2To illustrate our earlier note about commercial implementations defining their syntax before the standards were developed, we point out that Oracle requires the keyword **object** following **as**. 3The **final** specification for _Name_ indicates that we cannot create subtypes for _name_, whereas the **not final** specification for _Address_ indicates that we can create subtypes of _address_.  
 
-**950 Chapter 22 Object-Based Databases**
-
-**create table** _person_ ( _name Name_, _address Address_, _dateOfBirth_ **date**);
+~~~j
+create table person (
+     name Name,
+     address Address, 
+     dateOfBirth date);
 
 The components of a composite attribute can be accessed using a “dot” no- tation; for instance _name.firstname_ returns the firstname component of the name attribute. An access to attribute _name_ would return a value of the structured type _Name_.
 
 We can also create a table whose rows are of a user-defined type. For example, we could define a type _PersonType_ and create the table _person_ as follows:4
 
-**create type** _PersonType_ **as** ( _name Name_, _address Address_, _dateOfBirth_ **date**) **not final**
-
-**create table** _person_ **of** _PersonType_;
+~~~j
+create type PersonType as ( 
+    name Name,
+    address Address,
+    dateOfBirth date) 
+    not final
+create table person of PersonType;
+~~~
 
 An alternative way of defining composite attributes in SQL is to use unnamed **row types**. For instance, the relation representing person information could have been created using row types as follows:
-
-**create table** _person r_ ( _name_ **row** (firstname **varchar**(20),
-
-_lastname_ **varchar**(20)), _address_ **row** (_street_ **varchar**(20),
-
-_city_ **varchar**(20), _zipcode_ **varchar**(9)),
-
-_dateOfBirth_ **date**);
+~~~j
+create table person r_ ( 
+    name row (firstname varchar(20),
+    lastname varchar(20)), 
+    address row (street varchar(20),
+    city varchar(20),
+    zipcode varchar(9)),
+dateOfBirth date);
 
 This definition is equivalent to the preceding table definition, except that the attributes _name_ and _address_ have unnamed types, and the rows of the table also have an unnamed type.
 
 The following query illustrates how to access component attributes of a com- posite attribute. The query finds the last name and city of each person.
-
-**select** _name.lastname_, _address.city_ **from** _person_;
+~~~j
+select name.lastname, address.city
+ from person;
+~~~
 
 A structured type can have **methods** defined on it. We declare methods as part of the type definition of a structured type:
 
 4Most actual systems, being case insensitive, would not permit _name_ to be used both as an attribute name and a data type.  
 
-**22.3 Structured Types and Inheritance in SQL 951**
-
-**create type** _PersonType_ **as** ( _name Name_, _address Address_, _dateOfBirth_ **date**) **not final**
-
-**method** _ageOnDate_(_onDate_ **date**) **returns interval year**;
+~~~j
+create type PersonType as (
+     name Name, 
+     address Address,
+     dateOfBirth date) 
+     not final
+method ageOnDate(onDate date) returns interval year;
 
 We create the method body separately:
 
-**create instance method** _ageOnDate_ (_onDate_ **date**) **returns interval year for** _PersonType_
+create instance method ageOnDate(onDate date)
+returns interval year 
+for PersonType
 
-**begin return** _onDate_ − **self**._dateOfBirth_;
-
-**end**
+begin
+ return onDate − self.dateOfBirth;
+end
 
 Note that the **for** clause indicates which type this method is for, while the keyword **instance** indicates that this method executes on an instance of the _Person_ type. The variable **self** refers to the _Person_ instance on which the method is invoked. The body of the method can contain procedural statements, which we saw earlier in Section 5.2. Methods can update the attributes of the instance on which they are executed.
 
@@ -216,8 +245,6 @@ In SQL:1999, **constructor functions** are used to create values of structured t
 
 We can then use **new** _Name_(’John’, ’Smith’) to create a value of the type _Name_. We can construct a row value by listing its attributes within parentheses. For instance, if we declare an attribute _name_ as a row type with components _firstname_  
 
-**952 Chapter 22 Object-Based Databases**
-
 and _lastname_ we can construct this value for it: (’Ted’, ’Codd’) without using a constructor.
 
 By default every structured type has a constructor with no arguments, which sets the attributes to their default values. Any other constructors have to be created explicitly. There can be more than one constructor for the same structured type; although they have the same name, they must be distinguishable by the number of arguments and types of their arguments.
@@ -228,7 +255,7 @@ The following statement illustrates how we can create a new tuple in the _Person
 
 (**new** _Name_(’John’, ’Smith’), **new** _Address_(’20 Main St’, ’New York’, ’11001’), **date** ’1960-8-22’);
 
-**22.3.2 Type Inheritance**
+###22.3.2 Type Inheritance
 
 Suppose that we have the following type definition for people:
 
@@ -244,7 +271,7 @@ Both _Student_ and _Teacher_ inherit the attributes of _Person_—namely, _name_
 
 Methods of a structured type are inherited by its subtypes, just as attributes are. However, a subtype can redefine the effect of a method by declaring the method again, using **overriding method** in place of **method** in the method dec- laration.  
 
-**22.3 Structured Types and Inheritance in SQL 953**
+###22.3.3 Structured Types and Inheritance in SQL 953
 
 The SQL standard requires an extra field at the end of the type definition, whose value is either **final** or **not final.** The keyword **final** says that subtypes may not be created from the given type, while **not final** says that subtypes may be created.
 
@@ -262,11 +289,9 @@ The attributes _name_ and _address_ are actually inherited from a common source,
 
 _Teacher_ **with** (_department_ **as** _teacher dept_);
 
-In SQL, as in most other languages, a value of a structured type must have ex- actly one _most-specific type._ That is, each value must be associated with one specific type, called its **most-specific type**, when it is created. By means of inheritance, it is also associated with each of the supertypes of its most-specific type. For example, suppose that an entity has the type _Person_, as well as the type _Student_. Then, the most-specific type of the entity is _Student_, since _Student_ is a subtype of _Person_. However, an entity cannot have the type _Student_ as well as the type _Teacher_ unless it has a type, such as _TeachingAssistant_, that is a subtype of _Teacher_, as well as of _Student_ (which is not possible in SQL since multiple inheritance is not supported by SQL).  
+In SQL, as in most other languages, a value of a structured type must have ex- actly one _most-specific type._ That is, each value must be associated with one specific type, called its **most-specific type**, when it is created. By means of inheritance, it is also associated with each of the supertypes of its most-specific type. For example, suppose that an entity has the type _Person_, as well as the type _Student_. Then, the most-specific type of the entity is _Student_, since _Student_ is a subtype of _Person_. However, an entity cannot have the type _Student_ as well as the type _Teacher_ unless it has a type, such as _TeachingAssistant_, that is a subtype of _Teacher_, as well as of _Student_ (which is not possible in SQL since multiple inheritance is not supported by SQL). 
 
-**954 Chapter 22 Object-Based Databases**
-
-**22.4 Table Inheritance**
+##22.4 Table Inheritance
 
 Subtables in SQL correspond to the E-R notion of specialization/generalization. For instance, suppose we define the _people_ table as follows:
 
@@ -330,7 +355,7 @@ In other words, we can create our own improved implementation of the subtable me
 
 We note that SQL defines a privilege called **under**, which is required in order to create a subtype or subtable under another type or table. The motivation for this privilege is similar to that for the **references** privilege.
 
-**22.5 Array and Multiset Types in SQL**
+##22.5 Array and Multiset Types in SQL
 
 SQL supports two collection types: arrays and multisets; array types were added in SQL:1999, while multiset types were added in SQL:2003. Recall that a _multiset_ is an unordered collection, where an element may occur multiple times. Multisets are like sets, except that a set allows each element to occur at most once.
 
@@ -344,13 +369,11 @@ Suppose we wish to record information about books, including a set of key- words
 
 The first statement defines a type called _Publisher_ with two components: a name and a branch. The second statement defines a structured type _Book_ that contains a _title_, an _author array_, which is an array of up to 10 author names, a publication date, a publisher (of type _Publisher_), and a multiset of keywords. Finally, a table _books_ containing tuples of type _Book_ is created.  
 
-**22.5 Array and Multiset Types in SQL 957**
-
 Note that we used an array, instead of a multiset, to store the names of authors, since the ordering of authors generally has some significance, whereas we believe that the ordering of keywords associated with a book is not significant.
 
 In general, multivalued attributes from an E-R schema can be mapped to multiset-valued attributes in SQL; if ordering is important, SQL arrays can be used instead of multisets.
 
-**22.5.1 Creating and Accessing Collection Values**
+###22.5.1 Creating and Accessing Collection Values
 
 An array of values can be created in SQL:1999 in this way:
 
@@ -374,7 +397,7 @@ If we want to insert the preceding tuple into the relation _books_, we could exe
 
 We can access or update elements of an array by specifying the array index, for example _author array_\[1\].
 
-**22.5.2 Querying Collection-Valued Attributes**
+###22.5.2 Querying Collection-Valued Attributes
 
 We now consider how to handle collection-valued attributes in queries. An ex- pression evaluating to a collection can appear anywhere that a relation name may appear, such as in a **from** clause, as the following paragraphs illustrate. We use the table _books_ that we defined earlier.
 
@@ -406,7 +429,7 @@ When unnesting an array, the previous query loses information about the ordering
 
 The **with ordinality** clause generates an extra attribute which records the po- sition of the element in the array. A similar query, but without the **with ordinality** clause, can be used to generate the _keyword_ relation.
 
-**22.5.3 Nesting and Unnesting**
+###22.5.3 Nesting and Unnesting
 
 The transformation of a nested relation into a form with fewer (or no) relation- valued attributes is called **unnesting**. The _books_ relation has two attributes, _author array_ and _keyword set_, that are collections, and two attributes, _title_ and _publisher_,
 
