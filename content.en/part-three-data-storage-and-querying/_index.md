@@ -7,7 +7,7 @@ weight: 8
 
 **PART 3**
 
-**DATA STORAGE AND QUERYING**
+##DATA STORAGE AND QUERYING
 
 Although a database system provides a high-level view of data, ultimately data have to be stored as bits on one or more storage devices. A vast majority of databases today store data on magnetic disk (and, increasingly, on flash storage) and fetch data into main memory for processing, or copy data onto tapes and other backup devices for archival storage. The physical characteristics of storage devices play a major role in the way data are stored, in particular because access to a random piece of data on disk is much slower than memory access: Disk access takes tens of milliseconds, whereas memory access takes a tenth of a microsecond.
 
@@ -17,9 +17,7 @@ Many queries reference only a small proportion of the records in a file. An inde
 
 User queries have to be executed on the database contents, which reside on storage devices. It is usually convenient to break up queries into smaller oper- ations, roughly corresponding to the relational-algebra operations. Chapter 12 describes how queries are processed, presenting algorithms for implementing individual operations, and then outlining how the operations are executed in synchrony, to process a query.
 
-There are many alternative ways of processing a query, which can have widely varying costs. Query optimization refers to the process of finding the lowest-cost method of evaluating a given query. Chapter 13 describes the process of query optimization.
-
-**427**  
+There are many alternative ways of processing a query, which can have widely varying costs. Query optimization refers to the process of finding the lowest-cost method of evaluating a given query. Chapter 13 describes the process of query optimization.  
 
 _This page intentionally left blank_  
 
@@ -29,17 +27,15 @@ In preceding chapters, we have emphasized the higher-level models of a database.
 
 In this chapter, however, as well as in Chapters 11, 12, and 13, we probe be- low the higher levels as we describe various methods for implementing the data models and languages presented in preceding chapters. We start with character- istics of the underlying storage media, such as disk and tape systems. We then define various data structures that allow fast access to data. We consider several alternative structures, each best suited to a different kind of access to data. The final choice of data structure needs to be made on the basis of the expected use of the system and of the physical characteristics of the specific machine.
 
-**10.1 Overview of Physical Storage Media**
+##10.1 Overview of Physical Storage Media
 
 Several types of data storage exist in most computer systems. These storage media are classified by the speed with which data can be accessed, by the cost per unit of data to buy the medium, and by the medium’s reliability. Among the media typically available are these:
 
 • **Cache**. The cache is the fastest and most costly form of storage. Cache memory is relatively small; its use is managed by the computer system hardware. We shall not be concerned about managing cache storage in the database system. It is, however, worth noting that database implementors do pay attention to cache effects when designing query processing data structures and algorithms.
 
-• **Main memory**. The storage medium used for data that are available to be op- erated on is main memory. The general-purpose machine instructions operate
+• **Main memory**. The storage medium used for data that are available to be op- erated on is main memory. The general-purpose machine instructions operate 
 
-**429**  
-
-**430 Chapter 10 Storage and File Structure**
+##430 Chapter 10 Storage and File Structure
 
 on main memory. Although main memory may contain several gigabytes of data on a personal computer, or even hundreds of gigabytes of data in large server systems, it is generally too small (or too expensive) for storing the entire database. The contents of main memory are usually lost if a power failure or system crash occurs.
 
