@@ -21,7 +21,7 @@ Keep in mind that the chapters in this part often use industrial rather than aca
 _This page intentionally left blank_  
 
 **_C H A P T E R_27** 
-**PostgreSQL**
+# PostgreSQL
 
 Anastasia Ailamaki, Sailesh Krishnamurthy, Spiros Papadimitriou, Bianca Schroeder, Karl Schnaitter, and Gavin Sherry
 
@@ -62,36 +62,39 @@ PostgreSQL may also be accessed from a Tcl/Tk shell, which provides a flexible s
 The standard distribution of PostgreSQL does not contain any graphical tools. However, several graphical user interface tools exist, and users can choose among  
 
 **27.2 User Interfaces 1125**
+![alt pgAdmin III: An open-source database administration GUI.](pgAdmin.png)
 
-**Figure 27.1** pgAdmin III: An open-source database administration GUI.
+**Figure 27.1**    pgAdmin III: An open-source database administration GUI.
 
 commercial and open-source alternatives. Many of these go through rapid release cycles; the following list reflects the state of affairs at the time of this writing.
 
 There are graphical tools for administration, including pgAccess and pgAd- min, the latter of which is shown in Figure 27.1. Tools for database design include TORA and Data Architect, the latter of which is shown in Figure 27.2. PostgreSQL works with several commercial forms-design and report-generation tools. Open- source alternatives include Rekall (shown in Figures 27.3 and 27.4), GNU Report Generator, and a more comprehensive tool suite, GNU Enterprise.
 
-**27.2.3 Programming Language Interfaces**
+### 27.2.3 Programming Language Interfaces
 
 PostgreSQL provides native interfaces for ODBC and JDBC, as well as bindings for most programming languages, including C, C++, PHP, Perl, Tcl/Tk, ECPG, Python, and Ruby.
 
 The libpq library provides the C API for PostgreSQL; libpq is also the un- derlying engine for most programming-language bindings. The libpq library supports both synchronous and asynchronous execution of SQL commands and prepared statements, through a reentrant and thread-safe interface. The connec- tion parameters of libpq may be configured in several flexible ways, such as  
 
 **1126 Chapter 27 PostgreSQL**
+![alt  Data Architect: A multiplatform database design GUI.](data.png)
 
 **Figure 27.2** Data Architect: A multiplatform database design GUI.
 
 setting environment variables, placing settings in a local file, or creating entries on an LDAP server.
 
-**27.3 SQL Variations and Extensions**
+# 27.3 SQL Variations and Extensions
 
 The current version of PostgreSQL supports almost all entry-level SQL-92 features, as well as many of the intermediate- and full-level features. It also supports many SQL:1999 and SQL:2003 features, including most object-relational features described in Chapter 22 and the SQL/XML features for parsed XML data described in Chapter 23. In fact, some features of the current SQL standard (such as arrays, functions, and inheritance) were pioneered by PostgreSQL or its ancestors. It lacks OLAP features (most notably, **cube** and **rollup**), but data from PostgreSQL can be easily loaded into open-source external OLAP servers (such as Mondrian) as well as commercial products.
 
-**27.3.1 PostgreSQL Types**
+## 27.3.1 PostgreSQL Types
 
 PostgreSQL has support for several nonstandard types, useful for specific appli- cation domains. Furthermore, users can define new types with the **create type**  
 
 **27.3 SQL Variations and Extensions 1127**
+![alt Rekall: Form-design GUI.](rekall.png)
 
-**Figure 27.3** Rekall: Form-design GUI.
+**Figure 27.3 Rekall: Form-design GUI.
 
 command. This includes new low-level base types, typically written in C (see Section 27.3.3.1).
 
@@ -104,6 +107,7 @@ PostgreSQL types fall into the following categories:
 • **Composite types.** These correspond to table rows; that is, they are a list of field names and their respective types. A composite type is created implicitly whenever a table is created, but users may also construct them explicitly.  
 
 **1128 Chapter 27 PostgreSQL**
+![alt Rekall: Report-design GUI.](report.png)
 
 **Figure 27.4** Rekall: Report-design GUI.
 
@@ -119,7 +123,7 @@ PostgreSQL types fall into the following categories:
 
 that requires that: (1) in any particular invocation of a polymorphic function, all occurrences of a polymorphic type must be bound to the same actual type (that is, a function defined as _f_ (_anyelement_, _anyelement_) may operate only on pairs of the same actual type), and (2) if the return type is polymorphic, then at least one of the arguments must be of the same polymorphic type.
 
-**27.3.1.2 Nonstandard Types**
+### 27.3.1.2 Nonstandard Types**
 
 The types described in this section are included in the standard distribution. Fur- thermore, thanks to the open nature of PostgreSQL, there are several contributed extension types, such as complex numbers, and ISBN/ISSNs (see Section 27.3.3).
 
@@ -133,7 +137,7 @@ The PostgreSQL _bit_ type can store both fixed- and variable-length strings of 1
 
 **1130 Chapter 27 PostgreSQL**
 
-**27.3.2 Rules and Other Active-Database Features**
+## 27.3.2 Rules and Other Active-Database Features
 
 PostgreSQL supports SQL constraints and triggers (and stored procedures; see Section 27.3.3). Furthermore, it features query-rewriting rules that can be declared on the server.
 
@@ -145,7 +149,9 @@ The PostgreSQL rules system allows users to define query-rewrite rules on the da
 
 The general syntax for declaring rules is:
 
-**create rule** _rule name_ **as on** _{_ **select** | **insert** | **update** | **delete** _}_ **to** _table_ \[ **where** _rule qualification_ \] **do** \[ **instead** \] _{_ **nothing** | _command_ | ( _command_ ; _command_ ... ) _}_
+**create rule** _rule name_ **as 
+on** { **select** | **insert** | **update** | **delete** }
+ **to** table [ **where** _rule qualification_ ] **do** [ **instead** \] { **nothing** | command_ | (_command ; command ... ) }
 
 The rest of this section provides examples that illustrate the rule system’s capa- bilities. More details on how rules are matched to query trees and how the latter are subsequently transformed can be found in the PostgreSQL documentation (see the bibliographical notes). The rule system is implemented in the rewrite phase of query processing and explained in Section 27.6.1.
 
@@ -179,7 +185,7 @@ Finally, we give a slightly more complicated insert/update rule. Assume that pen
 
 Then the following query:
 
-**insert into** _approved increases_ **select** \* **from** _salary increases_;
+**insert into** _approved increases_ **select** * **from** _salary increases_;
 
 will update all salaries in the _instructor_ table at once. Since the **instead** keyword was specified in the rule, the _approved increases_ table is unchanged.
 
@@ -191,7 +197,7 @@ The implementation of triggers and constraints in PostgreSQL is outlined briefly
 
 **1132 Chapter 27 PostgreSQL**
 
-**27.3.3 Extensibility**
+## 27.3.3 Extensibility
 
 Like most relational database systems, PostgreSQL stores information about data- bases, tables, columns, and so forth, in what are commonly known as **system catalogs**, which appear to the user as normal tables. Other relational database systems are typically extended by changing hard-coded procedures in the source code or by loading special extension modules written by the vendor.
 
@@ -199,45 +205,47 @@ Unlike most relational database systems, PostgreSQL goes one step further and st
 
 Furthermore, the contribmodule of the PostgreSQL distribution includes nu- merous user functions (for example, array iterators, fuzzy string matching, cryp- tographic functions), base types (for example, encrypted passwords, ISBN/ISSNs, _n_\-dimensional cubes) and index extensions (for example, RD-trees, indexing for hierarchical labels). Thanks to the open nature of PostgreSQL, there is a large community of PostgreSQL professionals and enthusiasts who also actively extend PostgreSQL on an almost daily basis. Extension types are identical in functionality to the built-in types (see also Section 27.3.1.2); the latter are simply already linked into the server and preregistered in the system catalog. Similarly, this is the only difference between built-in and extension functions.
 
-**27.3.3.1 Types**
+### 27.3.3.1 Types
 
 PostgreSQL allows users to define composite types, enumeration types, and even new base types.
 
 A composite-type definition is similar to a table definition (in fact, the latter implicitly does the former). Stand-alone composite types are typically useful for function arguments. For example, the definition:
 
-**create type** _city t_ **as** (_name_ **varchar**(80), _state_ **char**(2));
+**create type** city_t **as** (name **varchar**(80), state **char**(2));
 
 allows functions to accept and return _city t_ tuples, even if there is no table that explicitly contains rows of this type.
 
 Enumeration types are easy to define, by simply listing the names of the values. The following example creates an enumerated type to represent the status of a software product.
 
-**create type** _status t_ **as enum** (’alpha’, ’beta’, ’release’);
+**create type** status_t **as enum** (’alpha’, ’beta’, ’release’);
 
 The order of listed names is significant in comparing values of an enumerated type. This can be useful for a statement such as:  
 
 **27.3 SQL Variations and Extensions 1133**
 
-**select** _name_ **from** _products_ **where** _status >_ ’alpha’;
+**select** name **from** products **where** status > ’alpha’;
 
 which retrieves the names of products that have moved past the alpha stage. Adding base types to PostgreSQL is straightforward; an example can be found
 
 in complex.sql and complex.c in the tutorials of the PostgreSQL distribution. The base type can be declared in C, for example:
 
-typedef struct Complex _{_ double x; double y;
-
-_}_ Complex;
+typedef struct Complex {
+     double x; double y;
+    } Complex;
 
 The next step is to define functions to read and write values of the new type in text format (see Section 27.3.3.2). Subsequently, the new type can be registered using the statement:
 
-**create type** _complex { internallength_ \= 16, _input_ \= _complex in_, _output_ \= _complex out_, _alignment_ \= **double**
-
-_}_;
+**create type** complex { 
+    internallength = 16,
+     input = complexin,
+      output = complex out, alignment = **double**
+      };
 
 assuming the text I/O functions have been registered as _complex in_ and _complex out_.
 
 The user has the option of defining binary I/O functions as well (for more efficient data dumping). Extension types can be used like the existing base types of PostgreSQL. In fact, their only difference is that the extension types are dynam- ically loaded and linked into the server. Furthermore, indices may be extended easily to handle new base types; see Section 27.3.3.3.
 
-**27.3.3.2 Functions**
+### 27.3.3.2 Functions
 
 PostgreSQL allows users to define functions that are stored and executed on the server. PostgreSQL also supports function overloading (that is, functions may be declared by using the same name but with arguments of different types). Func- tions can be written as plain SQL statements, or in several procedural languages (covered in Section 27.3.3.4). Finally, PostgreSQL has an application programmer interface for adding functions written in C (explained in this section).
 
@@ -247,17 +255,21 @@ User-defined functions can be written in C (or a language with compatible callin
 
 Once the shared library containing the function has been created, a declaration such as the following registers it on the server:
 
-**create function** _complex out_(_complex_) **returns cstring as** ’shared object filename’ **language C immutable strict**;
+**create function** complex out(complex) **returns cstring** 
+**as** ’shared object_filename’ **language C immutable strict**;
 
 The entry point to the shared object file is assumed to be the same as the SQL function name (here, _complex out_), unless otherwise specified.
 
 The example here continues the one from Section 27.3.3.1. The application program interface hides most of PostgreSQL’s internal details. Hence, the actual C code for the above text output function of _complex_ values is quite simple:
 
-PG FUNCTION INFO V1(complex out); Datum complex out(pg function args) _{_
-
-Complex \*complex = (Complex \*) pg getarg pointer(0); char \*result; result = (char \*) palloc(100); snprintf(result, 100, "(%g,%g)", complex−_\>_x, complex−_\>_y); pg return cstring(result);
-
-_}_
+PG_FUNCTION_INFO_V1(complex out);
+ Datum complex_out(pg_function_args) {
+     Complex *complex = (Complex *) pg getarg pointer(0); 
+     char *result;
+     result = (char *) palloc(100);
+      snprintf(result, 100, "(%g,%g)",           complex−\>x, complex−\>y);
+       pg return_cstring(result);
+       }
 
 The first line declares the function complex out, and the following lines imple- ment the output function. The code uses several PostgreSQL-specific constructs, such as the palloc function, which dynamically allocates memory controlled by PostgreSQL’s memory manager. More details may be found in the PostgreSQL documentation (see the bibliographical notes).
 
@@ -275,7 +287,7 @@ Note the use of function overloading: PostgreSQL will call the appropriate _sum_
 
 User-defined functions can also be invoked by using operator syntax. Beyond simple “syntactic sugar” for function invocation, operator declarations can also provide hints to the query optimizer in order to improve performance. These hints may include information about commutativity, restriction and join selectivity estimation, and various other properties related to join algorithms.
 
-**27.3.3.3 Index Extensions**
+### 27.3.3.3 Index Extensions
 
 PostgreSQL currently supports the usual B-tree and hash indices, as well as two index methods that are unique to PostgreSQL: the Generalized Search Tree (GiST) and the Generalized Inverted Index (GIN), which is useful for full-text indexing (these index structures are explained in Section 27.5.2.1). Finally, PostgreSQL pro- vides indexing of two-dimensional spatial objects with an R-tree index, which is implemented using a GiST index behind the scenes. All of these can be easily extended to accommodate new base types.
 
@@ -289,13 +301,13 @@ Adding index extensions for a type requires definition of an **operator class**,
 
 For example, if the following functions and operators are defined to compare the magnitude of _complex_ numbers (see Section 27.3.3.1), then we can make such objects indexable by the following declaration:
 
-**create operator class** _complex abs ops_ **default for type** _complex_ **using btree as**
+**create operator class** complex_abs_ops **default for type** complex **using btree as**
 
-**operator** 1 _<_ (_complex_, _complex_), **operator** 2 _<_\= (_complex_, _complex_), **operator** 3 = (_complex_, _complex_), **operator** 4 _\>_\= (_complex_, _complex_), **operator** 5 _\>_ (_complex_, _complex_), **function** 1 _complex abs cmp_(_complex_, _complex_);
+**operator** 1 < (complex, complex), **operator** 2 <= (_complex, complex), **operator** 3 = (complex, complex), **operator** 4 >= (complex, complex), **operator** 5 > (complex, complex), **function** 1 complex_abs_cmp(complex, complex);
 
 The **operator** statements define the strategy methods and the **function** statements define the support methods.
 
-**27.3.3.4 Procedural Languages**
+### 27.3.3.4 Procedural Languages
 
 Stored functions and procedures can be written in a number of procedural lan- guages. Furthermore, PostgreSQL defines an application programmer interface for hooking up any programming language for this purpose. Programming lan- guages can be registered on demand and are either **trusted** or **untrusted**. The latter allow unlimited access to the DBMS and the file system, and writing stored functions in them requires superuser privileges.
 
@@ -303,21 +315,21 @@ Stored functions and procedures can be written in a number of procedural lan- gu
 
 • **PL/Tcl**, **PL/Perl**, and **PL/Python**. These leverage the power of Tcl, Perl, and Python to write stored functions and procedures on the server. The first two come in both trusted and untrusted versions (PL/Tcl, PL/Perl and PL/TclU, PL/PerlU, respectively), while PL/Python is untrusted at the time of this writing. Each of these has bindings that allow access to the database system via a language-specific interface.
 
-**27.3.3.5 Server Programming Interface**
+### 27.3.3.5 Server Programming Interface
 
 The server programming interface (SPI) is an application programmer interface that allows user-defined C functions (see Section 27.3.3.2) to run arbitrary SQL commands inside their functions. This gives writers of user-defined functions the ability to implement only essential parts in C and easily leverage the full power of the relational database system engine to do most of the work.  
 
 **27.4 Transaction Management in PostgreSQL 1137**
 
-**27.4 Transaction Management in PostgreSQL**
+# 27.4 Transaction Management in PostgreSQL
 
 Transaction management in PostgreSQL uses both both snapshot isolation and two-phase locking. Which one of the two protocols is used depends on the type of statement being executed. For DML statements1 the snapshot isolation technique presented in Section 15.7 is used; the snapshot isolation scheme is referred to as the multiversion concurrency control (MVCC) scheme in PostgreSQL. Concurrency control for DDL statements, on the other hand, is based on standard two-phase locking.
 
-**27.4.1 PostgreSQL Concurrency Control**
+## 27.4.1 PostgreSQL Concurrency Control
 
 Since the concurrency control protocol used by PostgreSQL depends on the _isola- tion level_ requested by the application, we begin with an overview of the isolation levels offered by PostgreSQL. We then describe the key ideas behind the MVCC scheme, followed by a discussion of their implementation in PostgreSQL and some of the implications of MVCC. We conclude this section with an overview of locking for DDL statements and a discussion of concurrency control for indices.
 
-**27.4.1.1 PostgreSQL Isolation Levels**
+### 27.4.1.1 PostgreSQL Isolation Levels
 
 The SQL standard defines three weak levels of consistency, in addition to the serializable level of consistency, on which most of the discussion in this book is based. The purpose of providing the weak consistency levels is to allow a higher degree of concurrency for applications that don’t require the strong guarantees that serializability provides. Examples of such applications include long-running transactions that collect statistics over the database and whose results do not need to be precise.
 
@@ -329,21 +341,17 @@ The SQL standard defines the different isolation levels in terms of three phe- n
 
 • **Phantom read.** A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed as a result of another recently committed transaction. (A more detailed explanation of the phantom phenomenon, including the
 
-1A DML statement is any statement that updates or reads data within a table, that is, **select**, **insert**, **update**, **fetch**, and **copy**. DDL statements affect entire tables; they can remove a table or change the schema of a table, for example. DDL statements and some other PostgreSQL-specific statements will be discussed later in this section.  
+^1^A DML statement is any statement that updates or reads data within a table, that is, **select**, **insert**, **update**, **fetch**, and **copy**. DDL statements affect entire tables; they can remove a table or change the schema of a table, for example. DDL statements and some other PostgreSQL-specific statements will be discussed later in this section.  
 
 **1138 Chapter 27 PostgreSQL**
-
-_Isolated level Dirty Read Non repeatable Read Phantom Read_
-
-Read Uncommitted Maybe Maybe Maybe Read Committed No Maybe Maybe Repeated Read No No Maybe Serializable No No No
-
+![alt Definition of the four standard SQL isolation levels.](dfn.png)
 **Figure 27.5** Definition of the four standard SQL isolation levels.
 
 concept of a phantom conflict, can be found in Section 15.8.3; eliminating phantom reads does not eliminate all phantom conflicts.)
 
 It should be obvious that each of the above phenomena violates transaction isolation, and hence violates serializability. Figure 27.5 shows the definition of the four SQL isolation levels specified in the SQL standard—read uncommitted, read committed, repeatable read, and serializable—in terms of these phenomena. PostgreSQL supports two of the four different isolation levels, read committed (which is the default isolation level in PostgreSQL) and serializable. However, the PostgreSQL implementation of the serializable isolation level uses snapshot isolation, which does not truly ensure serializability as we have seen earlier in Section 15.7.
 
-**27.4.1.2 Concurrency Control for DML Commands**
+### 27.4.1.2 Concurrency Control for DML Commands
 
 The MVCC scheme used in PostgreSQL is an implementation of the snapshot isolation protocol which we saw in Section 15.7. The key idea behind MVCC is to maintain different versions of each row that correspond to instances of the row at different points in time. This allows a transaction to see a consistent **snapshot** of the data, by selecting the most recent version of each row that was committed before taking the snapshot. The MVCC protocol uses snapshots to ensure that every transaction sees a consistent view of the database: before executing a command, the transaction chooses a snapshot of the data and processes the row versions that are either in the snapshot or created by earlier commands of the same transaction. This view of the data is “consistent” since it only takes full transactions into account, but the snapshot is not necessarily equal to the current state of the data.
 
@@ -355,15 +363,15 @@ The MVCC scheme in PostgreSQL implements the first-updater-wins version of the s
 
 additional validation is done when exclusive locks are obtained, as outlined earlier in Section 15.7.
 
-**27.4.1.3 PostgreSQL Implementation of MVCC**
+### 27.4.1.3 PostgreSQL Implementation of MVCC
 
 At the core of PostgreSQL MVCC is the notion of _tuple visibility_. A PostgreSQL tuple refers to a version of a row. Tuple visibility defines which of the potentially many versions of a row in a table is valid within the context of a given statement or transaction. A transaction determines tuple visibility based on a database snapshot that is chosen before executing a command.
 
 A tuple is visible for a transaction _T_ if the following two conditions hold:
 
-**1\.** The tuple was created by a transaction that committed before transaction _T_ took its snapshot.
+**1.** The tuple was created by a transaction that committed before transaction _T_ took its snapshot.
 
-**2\.** Updates to the tuple (if any) were executed by a transaction that is either
+**2.** Updates to the tuple (if any) were executed by a transaction that is either
 
 • aborted, _or_
 
