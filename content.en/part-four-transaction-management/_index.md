@@ -337,7 +337,7 @@ _B_ := _B_ \+ _temp_ write(_B_) commit
 
 **14.6 Serializability 641**
 
-# 14.6 Serializability
+## 14.6 Serializability
 
 Before we can consider how the concurrency-control component of the database system can ensure serializability, we consider how to determine when a schedule is serializable. Certainly, serial schedules are serializable, but if steps of multiple transactions are interleaved, it is harder to determine whether a schedule is seri- alizable. Since transactions are programs, it is difficult to determine exactly what operations a transaction performs and how operations of various transactions in- teract. For this reason, we shall not consider the various types of operations that a transaction can perform on a data item, but instead consider only two operations: read and write. We assume that, between a read(_Q_) instruction and a write(_Q_) instruction on a data item _Q_, a transaction may perform an arbitrary sequence of operations on the copy of _Q_ that is residing in the local buffer of the transaction. In this model, the only significant operations of a transaction, from a scheduling point of view, are its read and write instructions. Commit operations, though relevant, are not considered until Section 14.7. We therefore may show only read and write instructions in schedules, as we do for schedule 3 in Figure 14.6.
 
@@ -517,7 +517,7 @@ We can see from this example that there are less-stringent definitions of sched-
 
 However, there are other definitions of schedule equivalence based purely on the read and write operations. One such definition is _view equivalence_, a definition that leads to the concept of _view serializability_. View serializability is not used in practice due to its high degree of computational complexity.3 We therefore defer discussion of view serializability to Chapter 15, but, for completeness, note here that the example of schedule 8 is not view serializable.
 
-# 14.7 Transaction Isolation and Atomicity
+## 14.7 Transaction Isolation and Atomicity
 
 So far, we have studied schedules while assuming implicitly that there are no transaction failures. We now address the effect of transaction failures during concurrent execution.
 
@@ -539,13 +539,13 @@ If a transaction _Ti_ fails, for whatever reason, we need to undo the effect of 
 
 In the following two subsections, we address the issue of what schedules are acceptable from the viewpoint of recovery from transaction failure. We describe in Chapter 15 how to ensure that only such acceptable schedules are generated.
 
-## 14.7.1 Recoverable Schedules
+### 14.7.1 Recoverable Schedules
 
 Consider the partial schedule 9 in Figure 14.14, in which _T_7 is a transaction that performs only one instruction: read(_A_). We call this a **partial schedule** because we have not included a **commit** or **abort** operation for _T_6\. Notice that _T_7 commits immediately after executing the read(_A_) instruction. Thus, _T_7 commits while _T_6 is still in the active state. Now suppose that _T_6 fails before it commits. _T_7 has read the value of data item _A_ written by _T_6\. Therefore, we say that _T_7 is **dependent** on _T_6\. Because of this, we must abort _T_7 to ensure atomicity. However, _T_7 has already committed and cannot be aborted. Thus, we have a situation where it is impossible to recover correctly from the failure of _T_6.
 
 Schedule 9 is an example of a _nonrecoverable_ schedule. A **recoverable schedule** is one where, for each pair of transactions _Ti_ and _Tj_ such that _Tj_ reads a data item previously written by _Ti_ , the commit operation of _Ti_ appears before the commit operation of _Tj_ . For the example of schedule 9 to be recoverable, _T_7 would have to delay committing until after _T_6 commits.
 
-## 14.7.2 Cascadeless Schedules
+### 14.7.2 Cascadeless Schedules
 
 Even if a schedule is recoverable, to recover correctly from the failure of a trans- action _Ti_ , we may have to roll back several transactions. Such situations occur if transactions have read data written by _Ti_ . As an illustration, consider the partial schedule of Figure 14.15. Transaction _T_8 writes a value of _A_ that is read by transac- tion _T_9\. Transaction _T_9 writes a value of _A_ that is read by transaction _T_10\. Suppose that, at this point, _T_8 fails. _T_8 must be rolled back. Since _T_9 is dependent on _T_8, _T_9 must be rolled back. Since _T_10 is dependent on _T_9, _T_10 must be rolled back. This  
 
@@ -565,7 +565,7 @@ phenomenon, in which a single transaction failure leads to a series of transacti
 
 Cascading rollback is undesirable, since it leads to the undoing of a significant amount of work. It is desirable to restrict the schedules to those where cascading rollbacks cannot occur. Such schedules are called _cascadeless_ schedules. Formally, a **cascadeless schedule** is one where, for each pair of transactions _Ti_ and _Tj_ such that _Tj_ reads a data item previously written by _Ti_ , the commit operation of _Ti_ appears before the read operation of _Tj_ . It is easy to verify that every cascadeless schedule is also recoverable.
 
-# 14.8 Transaction Isolation Levels
+## 14.8 Transaction Isolation Levels
 
 Serializability is a useful concept because it allows programmers to ignore issues related to concurrency when they code transactions. If every transaction has the property that it maintains database consistency if executed alone, then serial- izability ensures that concurrent executions maintain consistency. However, the protocols required to ensure serializability may allow too little concurrency for certain applications. In these cases, weaker levels of consistency are used. The use of weaker levels of consistency places additional burdens on programmers for ensuring database correctness.
 
@@ -605,7 +605,7 @@ Even if two travelers are selecting seats at the same time, most likely they wil
 
 It is possible to enforce serializability by allowing only one traveler to do seat selection for a particular flight at a time. However, doing so could cause significant delays as travelers would have to wait for their flight to become available for seat selection; in particular a traveler who takes a long time to make a choice could cause serious problems for other travelers. Instead, any such transaction is typically broken up into a part that requires user interaction, and a part that runs exclusively on the database. In the example above, the database transaction would check if the seats chosen by the user are still available, and if so update the seat selection in the database. Serializability is ensured only for the transactions that run on the database, without user interaction.
 
-# 14.9 Implementation of Isolation Levels
+## 14.9 Implementation of Isolation Levels
 
 So far, we have seen what properties a schedule must have if it is to leave the database in a consistent state and allow transaction failures to be handled in a safe manner.
 
@@ -621,13 +621,13 @@ The goal of concurrency-control policies is to provide a high degree of con- cur
 
 Here we provide an overview of how some of most important concurrency- control mechanisms work, and we defer the details to Chapter 15.
 
-## 14.9.1 Locking
+### 14.9.1 Locking
 
 Instead of locking the entire database, a transaction could, instead, lock only those data items that it accesses. Under such a policy, the transaction must hold locks long enough to ensure serializability, but for a period short enough not to harm performance excessively. Complicating matters are SQL statements like those we saw in Section 14.10, where the data items accessed depend on a **where** clause. In Chapter 15, we present the two-phase locking protocol, a simple, widely used technique that ensures serializability. Stated simply, two-phase locking requires a transaction to have two phases, one where it acquires locks but does not release any, and a second phase where the transaction releases locks but does not acquire any. (In practice, locks are usually released only when the transaction completes its execution and has been either committed or aborted.)
 
 Further improvements to locking result if we have two kinds of locks: shared and exclusive. Shared locks are used for data that the transaction reads and exclusive locks are used for those it writes. Many transactions can hold shared locks on the same data item at the same time, but a transaction is allowed an exclusive lock on a data item only if no other transaction holds any lock (regardless of whether shared or exclusive) on the data item. This use of two modes of locks along with two-phase locking allows concurrent reading of data while still ensuring serializability.
 
-## 14.9.2 Timestamps
+### 14.9.2 Timestamps
 
 Another category of techniques for the implementation of isolation assigns each transaction a **timestamp**, typically when it begins. For each data item, the system keeps two timestamps. The read timestamp of a data item holds the largest (that is, the most recent) timestamp of those transactions that read the data item. The write timestamp of a data item holds the timestamp of the transaction that  
 
@@ -635,7 +635,7 @@ Another category of techniques for the implementation of isolation assigns each 
 
 wrote the current value of the data item. Timestamps are used to ensure that transactions access each data item in order of the transactions’ timestamps if their accesses conflict. When this is not possible, offending transactions are aborted and restarted with a new timestamp.
 
-## 14.9.3 Multiple Versions and Snapshot Isolation
+### 14.9.3 Multiple Versions and Snapshot Isolation
 
 By maintaining more than one version of a data item, it is possible to allow a transaction to read an old version of a data item rather than a newer version written by an uncommitted transaction or by a transaction that should come later in the serialization order. There are a variety of multiversion concurrency- control techniques. One in particular, called **snapshot isolation**, is widely used in practice.
 
@@ -653,7 +653,7 @@ The problem with snapshot isolation is that, paradoxically, it provides _too muc
 
 Oracle, PostgreSQL, and SQL Server offer the option of snapshot isolation. Oracle and PostgreSQL implement the **serializable** isolation level using snapshot isolation. As a result, their implementation of serializability can, in exceptional circumstances, result in a nonserializable execution being allowed. SQL Server instead includes an additional isolation level beyond the standard ones, called **snapshot**, to offer the option of snapshot isolation.
 
-# 14.10 Transactions as SQL Statements
+## 14.10 Transactions as SQL Statements
 
 In Section 4.3, we presented the SQL syntax for specifying the beginning and end of transactions. Now that we have seen some of the issues in ensuring the ACID properties for transactions, we are ready to consider how those properties are ensured when transactions are specified as a sequence of SQL statements rather than the restricted model of simple reads and writes that we considered up to this point.
 
@@ -689,7 +689,7 @@ However, using the above approach, it would appear that the existence of a confl
 
 **14.11 Summary 655**
 
-# 14.11 Summary
+## 14.11 Summary
 
 • A _transaction_ is a _unit_ of program execution that accesses and possibly updates various data items. Understanding the concept of a transaction is critical for understanding and implementing updates of data in a database in such a way that concurrent executions and failures of various forms do not result in the database becoming inconsistent.
 
@@ -733,7 +733,7 @@ However, using the above approach, it would appear that the existence of a confl
 
 • The concurrency-control–management component of the database is respon- sible for handling the concurrency-control policies. Chapter 15 describes concurrency-control policies.
 
-# Review Terms
+## Review Terms
 
 • Transaction • ACID properties
 
@@ -781,7 +781,7 @@ However, using the above approach, it would appear that the existence of a confl
 
 • Serializability order • Recoverable schedules • Cascading rollback • Cascadeless schedules • Concurrency-control • Locking • Multiple versions • Snapshot isolation
 
-# Practice Exercises
+## Practice Exercises
 
 **14.1** Suppose that there is a database system that never fails. Is a recovery manager required for this system?
 
@@ -831,7 +831,7 @@ c. Explain why the lost update anomaly is not possible with the **re- peatable r
 
 Does the above situation cause any problem for the definition of conflict serializability? Explain your answer.
 
-# Exercises
+## Exercises
 
 **14.12** List the ACID properties. Explain the usefulness of each.
 
@@ -881,7 +881,7 @@ a. Give an example of a schedule using the pred read operation that exhibits the
 
 b. Give an example of a schedule where one transaction uses the pred read operation on relation _r_ and another concurrent transac- tions deletes a tuple from _r_ , but the schedule does not exhibit a phantom conflict. (To do so, you have to give the schema of relation _r_ , and show the attribute values of the deleted tuple.)
 
-# Bibliographical Notes
+## Bibliographical Notes
 
 Gray and Reuter \[1993\] provides detailed textbook coverage of transaction- processing concepts, techniques and implementation details, including concur- rency control and recovery issues. Bernstein and Newcomer \[1997\] provides text- book coverage of various aspects of transaction processing.
 
