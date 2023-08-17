@@ -80,9 +80,9 @@ Server systems can be broadly categorized as transaction servers and data server
 
 ![Alt text](front.png)
 
-• **Transaction-server** systems, also called **query-server** systems, provide an in- terface to which clients can send requests to perform an action, in response to which they execute the action and send back results to the client. Usually, client machines ship transactions to the server systems, where those transac- tions are executed, and results are shipped back to clients that are in charge of displaying the data. Requests may be specified by using SQL, or through a specialized application program interface.
+- **Transaction-server** systems, also called **query-server** systems, provide an in- terface to which clients can send requests to perform an action, in response to which they execute the action and send back results to the client. Usually, client machines ship transactions to the server systems, where those transac- tions are executed, and results are shipped back to clients that are in charge of displaying the data. Requests may be specified by using SQL, or through a specialized application program interface.
 
-• **Data-server systems** allow clients to interact with the servers by making requests to read or update data, in units such as files or pages. For example, file servers provide a file-system interface where clients can create, update, read, and delete files. Data servers for database systems offer much more functionality; they support units of data—such as pages, tuples, or objects —that are smaller than a file. They provide indexing facilities for data, and provide transaction facilities so that the data are never left in an inconsistent state if a client machine or process fails.
+- **Data-server systems** allow clients to interact with the servers by making requests to read or update data, in units such as files or pages. For example, file servers provide a file-system interface where clients can create, update, read, and delete files. Data servers for database systems offer much more functionality; they support units of data—such as pages, tuples, or objects —that are smaller than a file. They provide indexing facilities for data, and provide transaction facilities so that the data are never left in an inconsistent state if a client machine or process fails.
 
 Of these, the transaction-server architecture is by far the more widely used archi- tecture. We shall elaborate on the transaction-server and data-server architectures in Sections 17.2.1 and 17.2.2.
 
@@ -90,41 +90,41 @@ Of these, the transaction-server architecture is by far the more widely used arc
 
 A typical transaction-server system today consists of multiple processes accessing data in shared memory, as in Figure 17.4. The processes that form part of the database system include:
 
-• **Server processes**: These are processes that receive user queries (transactions), execute them, and send the results back. The queries may be submitted to the server processes from a user interface, or from a user process running embed- ded SQL, or via JDBC, ODBC, or similar protocols. Some database systems use a separate process for each user session, and a few use a single database pro- cess for all user sessions, but with multiple threads so that multiple queries can execute concurrently. (A **thread** is like a process, but multiple threads execute as part of the same process, and all threads within a process run in the same virtual-memory space. Multiple threads within a process can exe- cute concurrently.) Many database systems use a hybrid architecture, with multiple processes, each one running multiple threads.
+- **Server processes**: These are processes that receive user queries (transactions), execute them, and send the results back. The queries may be submitted to the server processes from a user interface, or from a user process running embed- ded SQL, or via JDBC, ODBC, or similar protocols. Some database systems use a separate process for each user session, and a few use a single database pro- cess for all user sessions, but with multiple threads so that multiple queries can execute concurrently. (A **thread** is like a process, but multiple threads execute as part of the same process, and all threads within a process run in the same virtual-memory space. Multiple threads within a process can exe- cute concurrently.) Many database systems use a hybrid architecture, with multiple processes, each one running multiple threads.
 
-• **Lock manager process**: This process implements lock manager functionality, which includes lock grant, lock release, and deadlock detection.
+- **Lock manager process**: This process implements lock manager functionality, which includes lock grant, lock release, and deadlock detection.
 
-• **Database writer process**: There are one or more processes that output modi- fied buffer blocks back to disk on a continuous basis.
+- **Database writer process**: There are one or more processes that output modi- fied buffer blocks back to disk on a continuous basis.
 
-• **Log writer process**: This process outputs log records from the log record buffer to stable storage. Server processes simply add log records to the log  
+- **Log writer process**: This process outputs log records from the log record buffer to stable storage. Server processes simply add log records to the log  
 
 ![Alt text](share.png)
 
 
 record buffer in shared memory, and if a log force is required, they request the log writer process to output log records.
 
-• **Checkpoint process**: This process performs periodic checkpoints.
+- **Checkpoint process**: This process performs periodic checkpoints.
 
-• **Process monitor process**: This process monitors other processes, and if any of them fails, it takes recovery actions for the process, such as aborting any transaction being executed by the failed process, and then restarting the process.
+- **Process monitor process**: This process monitors other processes, and if any of them fails, it takes recovery actions for the process, such as aborting any transaction being executed by the failed process, and then restarting the process.
 
 The shared memory contains all shared data, such as:
 
-• Buffer pool.
+- Buffer pool.
 
-• Lock table.
+- Lock table.
 
-• Log buffer, containing log records waiting to be output to the log on stable storage.  
+- Log buffer, containing log records waiting to be output to the log on stable storage.  
 
 
-• Cached query plans, which can be reused if the same query is submitted again.
+- Cached query plans, which can be reused if the same query is submitted again.
 
 All database processes can access the data in shared memory. Since multiple processes may read or perform updates on data structures in shared memory, there must be a mechanism to ensure that a data structure is modified by at most one process at a time, and no process is reading a data structure while it is being written by others. Such **mutual exclusion** can be implemented by means of operating system functions called semaphores. Alternative implementations, with less overhead, use special **atomic instructions** supported by the computer hardware; one type of atomic instruction tests a memory location and sets it to 1 atomically. Further implementation details of mutual exclusion can be found in any standard operating system textbook. The mutual exclusion mechanisms are also used to implement latches.
 
 To avoid the overhead of message passing, in many database systems, server processes implement locking by directly updating the lock table (which is in shared memory), instead of sending lock request messages to a lock manager process. The lock request procedure executes the actions that the lock manager process would take on getting a lock request. The actions on lock request and release are like those in Section 15.1.4, but with two significant differences:
 
-• Since multiple server processes may access shared memory, mutual exclusion must be ensured on the lock table.
+- Since multiple server processes may access shared memory, mutual exclusion must be ensured on the lock table.
 
-• If a lock cannot be obtained immediately because of a lock conflict, the lock request code may monitor the lock table to check when the lock has been granted. The lock release code updates the lock table to note which process has been granted the lock.
+- If a lock cannot be obtained immediately because of a lock conflict, the lock request code may monitor the lock table to check when the lock has been granted. The lock release code updates the lock table to note which process has been granted the lock.
 
 To avoid repeated checks on the lock table, operating system semaphores can be used by the lock request code to wait for a lock grant notification. The lock release code must then use the semaphore mechanism to notify waiting transactions that their locks have been granted.
 
@@ -137,15 +137,15 @@ Data-server systems are used in local-area networks, where there is a high-speed
 
 Interesting issues arise in such an architecture, since the time cost of com- munication between the client and the server is high compared to that of a local memory reference (milliseconds, versus less than 100 nanoseconds):
 
-• **Page shipping** versus **item shipping**. The unit of communication for data can be of coarse granularity, such as a page, or fine granularity, such as a tuple (or an object, in the context of object-oriented database systems). We use the term **item** to refer to both tuples and objects.
+- **Page shipping** versus **item shipping**. The unit of communication for data can be of coarse granularity, such as a page, or fine granularity, such as a tuple (or an object, in the context of object-oriented database systems). We use the term **item** to refer to both tuples and objects.
 
 If the unit of communication is a single item, the overhead of message passing is high compared to the amount of data transmitted. Instead, when an item is requested, it makes sense also to send back other items that are likely to be used in the near future. Fetching items even before they are requested is called **prefetching**. Page shipping can be considered a form of prefetching if multiple items reside on a page, since all the items in the page are shipped when a process desires to access a single item in the page.
 
-• **Adaptive lock granularity**. Locks are usually granted by the server for the data items that it ships to the client machines. A disadvantage of page ship- ping is that client machines may be granted locks of too coarse a granularity —a lock on a page implicitly locks all items contained in the page. Even if the client is not accessing some items in the page, it has implicitly acquired locks on all prefetched items. Other client machines that require locks on those items may be blocked unnecessarily. Techniques for lock **de-escalation** have been proposed where the server can request its clients to transfer back locks on prefetched items. If the client machine does not need a prefetched item, it can transfer locks on the item back to the server, and the locks can then be allocated to other clients.
+- **Adaptive lock granularity**. Locks are usually granted by the server for the data items that it ships to the client machines. A disadvantage of page ship- ping is that client machines may be granted locks of too coarse a granularity —a lock on a page implicitly locks all items contained in the page. Even if the client is not accessing some items in the page, it has implicitly acquired locks on all prefetched items. Other client machines that require locks on those items may be blocked unnecessarily. Techniques for lock **de-escalation** have been proposed where the server can request its clients to transfer back locks on prefetched items. If the client machine does not need a prefetched item, it can transfer locks on the item back to the server, and the locks can then be allocated to other clients.
 
-• **Data caching**. Data that are shipped to a client on behalf of a transaction can be **cached** at the client, even after the transaction completes, if sufficient storage space is available. Successive transactions at the same client may be able to make use of the cached data. However, **cache coherency** is an issue: Even if a transaction finds cached data, it must make sure that those data are up to date, since they may have been updated by a different client after they were cached. Thus, a message must still be exchanged with the server to check validity of the data, and to acquire a lock on the data.
+- **Data caching**. Data that are shipped to a client on behalf of a transaction can be **cached** at the client, even after the transaction completes, if sufficient storage space is available. Successive transactions at the same client may be able to make use of the cached data. However, **cache coherency** is an issue: Even if a transaction finds cached data, it must make sure that those data are up to date, since they may have been updated by a different client after they were cached. Thus, a message must still be exchanged with the server to check validity of the data, and to acquire a lock on the data.
 
-• **Lock caching**. If the use of data is mostly partitioned among the clients, with clients rarely requesting data that are also requested by other clients, locks can also be cached at the client machine. Suppose that a client finds a data item in the cache, and that it also finds the lock required for an access to the data item in the cache. Then, the access can proceed without any communication with the server. However, the server must keep track of cached locks; if a client requests a lock from the server, the server must **call back** all conflicting locks on the data item from any other client machines that have cached the locks. The task becomes more complicated when machine failures are taken into account. This technique differs from lock de-escalation in that lock caching takes place across transactions; otherwise, the two techniques are similar.  
+- **Lock caching**. If the use of data is mostly partitioned among the clients, with clients rarely requesting data that are also requested by other clients, locks can also be cached at the client machine. Suppose that a client finds a data item in the cache, and that it also finds the lock required for an access to the data item in the cache. Then, the access can proceed without any communication with the server. However, the server must keep track of cached locks; if a client requests a lock from the server, the server must **call back** all conflicting locks on the data item from any other client machines that have cached the locks. The task becomes more complicated when machine failures are taken into account. This technique differs from lock de-escalation in that lock caching takes place across transactions; otherwise, the two techniques are similar.  
 
 The bibliographical references provide more information about client–server database systems.
 
@@ -183,33 +183,33 @@ Scaleup relates to the ability to process larger tasks in the same amount of tim
 
 _MS_ is _TS_, and the execution time of task _QN_ on a parallel machine _ML_ , which is _N_ times larger than _MS_, is _TL_ . The scaleup is then defined as _TS/TL_ . The parallel system _ML_ is said to demonstrate **linear scaleup** on task _Q_ if _TL_ \= _TS_. If _TL > TS_, the system is said to demonstrate **sublinear scaleup**. Figure 17.6 illustrates linear and sublinear scaleups (where the resources increase in proportion to problem size). There are two kinds of scaleup that are relevant in parallel database systems, depending on how the size of the task is measured:
 
-• In **batch scaleup**, the size of the database increases, and the tasks are large jobs whose runtime depends on the size of the database. An example of such a task is a scan of a relation whose size is proportional to the size of the database. Thus, the size of the database is the measure of the size of the problem. Batch scaleup also applies in scientific applications, such as executing a query at an _N_\-times finer resolution or performing an _N_\-times longer simulation.
+- In **batch scaleup**, the size of the database increases, and the tasks are large jobs whose runtime depends on the size of the database. An example of such a task is a scan of a relation whose size is proportional to the size of the database. Thus, the size of the database is the measure of the size of the problem. Batch scaleup also applies in scientific applications, such as executing a query at an _N_\-times finer resolution or performing an _N_\-times longer simulation.
 
-• In **transaction scaleup**, the rate at which transactions are submitted to the database increases and the size of the database increases proportionally to the transaction rate. This kind of scaleup is what is relevant in transaction- processing systems where the transactions are small updates—for example, a deposit or withdrawal from an account—and transaction rates grow as more accounts are created. Such transaction processing is especially well adapted for parallel execution, since transactions can run concurrently and independently on separate processors, and each transaction takes roughly the same amount of time, even if the database grows.
+- In **transaction scaleup**, the rate at which transactions are submitted to the database increases and the size of the database increases proportionally to the transaction rate. This kind of scaleup is what is relevant in transaction- processing systems where the transactions are small updates—for example, a deposit or withdrawal from an account—and transaction rates grow as more accounts are created. Such transaction processing is especially well adapted for parallel execution, since transactions can run concurrently and independently on separate processors, and each transaction takes roughly the same amount of time, even if the database grows.
 
 Scaleup is usually the more important metric for measuring efficiency of par- allel database systems. The goal of parallelism in database systems is usually to make sure that the database system can continue to perform at an acceptable speed, even as the size of the database and the number of transactions increases. Increasing the capacity of the system by increasing the parallelism provides a smoother path for growth for an enterprise than does replacing a centralized system with a faster machine (even assuming that such a machine exists). How- ever, we must also look at absolute performance numbers when using scaleup measures; a machine that scales up linearly may perform worse than a machine that scales less than linearly, simply because the latter machine is much faster to start off with.
 
 A number of factors work against efficient parallel operation and can diminish both speedup and scaleup.
 
-• **Start-up costs**. There is a start-up cost associated with initiating a single process. In a parallel operation consisting of thousands of processes, the _start-up time_ may overshadow the actual processing time, affecting speedup adversely.
+- **Start-up costs**. There is a start-up cost associated with initiating a single process. In a parallel operation consisting of thousands of processes, the _start-up time_ may overshadow the actual processing time, affecting speedup adversely.
 
-• **Interference**. Since processes executing in a parallel system often access shared resources, a slowdown may result from the _interference_ of each new process as it competes with existing processes for commonly held resources, such as a system bus, or shared disks, or even locks. Both speedup and scaleup are affected by this phenomenon.
+- **Interference**. Since processes executing in a parallel system often access shared resources, a slowdown may result from the _interference_ of each new process as it competes with existing processes for commonly held resources, such as a system bus, or shared disks, or even locks. Both speedup and scaleup are affected by this phenomenon.
 
-• **Skew**. By breaking down a single task into a number of parallel steps, we reduce the size of the average step. Nonetheless, the service time for the single slowest step will determine the service time for the task as a whole. It is often difficult to divide a task into exactly equal-sized parts, and the way that the sizes are distributed is therefore _skewed_. For example, if a task of size 100 is divided into 10 parts, and the division is skewed, there may be some tasks of size less than 10 and some tasks of size more than 10; if even one task happens to be of size 20, the speedup obtained by running the tasks in parallel is only five, instead of ten as we would have hoped.
+- **Skew**. By breaking down a single task into a number of parallel steps, we reduce the size of the average step. Nonetheless, the service time for the single slowest step will determine the service time for the task as a whole. It is often difficult to divide a task into exactly equal-sized parts, and the way that the sizes are distributed is therefore _skewed_. For example, if a task of size 100 is divided into 10 parts, and the division is skewed, there may be some tasks of size less than 10 and some tasks of size more than 10; if even one task happens to be of size 20, the speedup obtained by running the tasks in parallel is only five, instead of ten as we would have hoped.
 
 ### 17.3.2 Interconnection Networks
 
 Parallel systems consist of a set of components (processors, memory, and disks) that can communicate with each other via an **interconnection network**. Fig- ure 17.7 shows three commonly used types of interconnection networks:
 
-• **Bus**. All the system components can send data on and receive data from a sin- gle communication bus. This type of interconnection is shown in Figure 17.7a. The bus could be an Ethernet or a parallel interconnect. Bus architectures work well for small numbers of processors. However, they do not scale well with increasing parallelism, since the bus can handle communication from only one component at a time.
+- **Bus**. All the system components can send data on and receive data from a sin- gle communication bus. This type of interconnection is shown in Figure 17.7a. The bus could be an Ethernet or a parallel interconnect. Bus architectures work well for small numbers of processors. However, they do not scale well with increasing parallelism, since the bus can handle communication from only one component at a time.
 
-• **Mesh**. The components are nodes in a grid, and each component connects to all its adjacent components in the grid. In a two-dimensional mesh each node connects to four adjacent nodes, while in a three-dimensional mesh each node connects to six adjacent nodes. Figure 17.7b shows a two-dimensional mesh. 
+- **Mesh**. The components are nodes in a grid, and each component connects to all its adjacent components in the grid. In a two-dimensional mesh each node connects to four adjacent nodes, while in a three-dimensional mesh each node connects to six adjacent nodes. Figure 17.7b shows a two-dimensional mesh. 
 
 ![Alt text](interconnection.png)
 
 Nodes that are not directly connected can communicate with one another by routing messages via a sequence of intermediate nodes that are directly connected to one another. The number of communication links grows as the number of components grows, and the communication capacity of a mesh therefore scales better with increasing parallelism.
 
-• **Hypercube**. The components are numbered in binary, and a component is connected to another if the binary representations of their numbers differ in exactly one bit. Thus, each of the _n_ components is connected to log(_n_) other components. Figure 17.7c shows a hypercube with eight nodes. In a hypercube interconnection, a message from a component can reach any other component by going through at most log(_n_) links. In contrast, in a mesh architecture a component may be 2(
+- **Hypercube**. The components are numbered in binary, and a component is connected to another if the binary representations of their numbers differ in exactly one bit. Thus, each of the _n_ components is connected to log(_n_) other components. Figure 17.7c shows a hypercube with eight nodes. In a hypercube interconnection, a message from a component can reach any other component by going through at most log(_n_) links. In contrast, in a mesh architecture a component may be 2(
 
 √ _n_ − 1) links away from some of
 
@@ -221,13 +221,13 @@ _n_ links away, if the mesh interconnection wraps around at the edges of the gri
 
 There are several architectural models for parallel machines. Among the most prominent ones are those in Figure 17.8 (in the figure, M denotes memory, P denotes a processor, and disks are shown as cylinders):
 
-• **Shared memory**. All the processors share a common memory (Figure 17.8a).
+- **Shared memory**. All the processors share a common memory (Figure 17.8a).
 
-• **Shared disk**. All the processors share a common set of disks (Figure 17.8b). Shared-disk systems are sometimes called **clusters**.
+- **Shared disk**. All the processors share a common set of disks (Figure 17.8b). Shared-disk systems are sometimes called **clusters**.
 
-• **Shared nothing**. The processors share neither a common memory nor com- mon disk (Figure 17.8c).
+- **Shared nothing**. The processors share neither a common memory nor com- mon disk (Figure 17.8c).
 
-• **Hierarchical**. This model is a hybrid of the preceding three architectures (Figure 17.8d).
+- **Hierarchical**. This model is a hybrid of the preceding three architectures (Figure 17.8d).
 
 In Sections 17.3.3.1 through 17.3.3.4, we elaborate on each of these models.  
 
@@ -268,33 +268,22 @@ The computers in a distributed system are referred to by a number of dif- ferent
 
 The main differences between shared-nothing parallel databases and dis- tributed databases are that distributed databases are typically geographically separated, are separately administered, and have a slower interconnection. An- other major difference is that, in a distributed database system, we differentiate between local and global transactions. A **local transaction** is one that accesses data only from sites where the transaction was initiated. A **global transaction**, on the other hand, is one that either accesses data in a site different from the one at which the transaction was initiated, or accesses data in several different sites.  
 
-**17.4 Distributed Systems 785**
-
-site A site C
-
-site B
-
-communication via network
-
-**network**
-
-**Figure 17.9** A distributed system.
+![Alt text](distributed.png)
 
 There are several reasons for building distributed database systems, including sharing of data, autonomy, and availability.
 
-• **Sharing data.** The major advantage in building a distributed database system is the provision of an environment where users at one site may be able to access the data residing at other sites. For instance, in a distributed university system, where each campus stores data related to that campus, it is possible for a user in one campus to access data in another campus. Without this capability, the transfer of student records from one campus to another campus would have to resort to some external mechanism that would couple existing systems.
+- **Sharing data.** The major advantage in building a distributed database system is the provision of an environment where users at one site may be able to access the data residing at other sites. For instance, in a distributed university system, where each campus stores data related to that campus, it is possible for a user in one campus to access data in another campus. Without this capability, the transfer of student records from one campus to another campus would have to resort to some external mechanism that would couple existing systems.
 
-• **Autonomy.** The primary advantage of sharing data by means of data dis- tribution is that each site is able to retain a degree of control over data that are stored locally. In a centralized system, the database administrator of the central site controls the database. In a distributed system, there is a global database administrator responsible for the entire system. A part of these re- sponsibilities is delegated to the local database administrator for each site. Depending on the design of the distributed database system, each adminis- trator may have a different degree of **local autonomy**. The possibility of local autonomy is often a major advantage of distributed databases.
+- **Autonomy.** The primary advantage of sharing data by means of data dis- tribution is that each site is able to retain a degree of control over data that are stored locally. In a centralized system, the database administrator of the central site controls the database. In a distributed system, there is a global database administrator responsible for the entire system. A part of these re- sponsibilities is delegated to the local database administrator for each site. Depending on the design of the distributed database system, each adminis- trator may have a different degree of **local autonomy**. The possibility of local autonomy is often a major advantage of distributed databases.
 
-• **Availability.** If one site fails in a distributed system, the remaining sites may be able to continue operating. In particular, if data items are **replicated** in several sites, a transaction needing a particular data item may find that item in any of several sites. Thus, the failure of a site does not necessarily imply the shutdown of the system.  
+- **Availability.** If one site fails in a distributed system, the remaining sites may be able to continue operating. In particular, if data items are **replicated** in several sites, a transaction needing a particular data item may find that item in any of several sites. Thus, the failure of a site does not necessarily imply the shutdown of the system.  
 
-**786 Chapter 17 Database-System Architectures**
 
 The failure of one site must be detected by the system, and appropriate action may be needed to recover from the failure. The system must no longer use the services of the failed site. Finally, when the failed site recovers or is repaired, mechanisms must be available to integrate it smoothly back into the system.
 
 Although recovery from failure is more complex in distributed systems than in centralized systems, the ability of most of the system to continue to operate despite the failure of one site results in increased availability. Availability is crucial for database systems used for real-time applications. Loss of access to data by, for example, an airline may result in the loss of potential ticket buyers to competitors.
 
-**17.4.1 An Example of a Distributed Database**
+### 17.4.1 An Example of a Distributed Database
 
 Consider a banking system consisting of four branches in four different cities. Each branch has its own computer, with a database of all the accounts maintained at that branch. Each such installation is thus a site. There also exists one single site that maintains information about all the branches of the bank.
 
@@ -302,11 +291,9 @@ To illustrate the difference between the two types of transactions—local and g
 
 In an ideal distributed database system, the sites would share a common global schema (although some relations may be stored only at some sites), all sites would run the same distributed database-management software, and the sites would be aware of each other’s existence. If a distributed database is built from scratch, it would indeed be possible to achieve the above goals. However, in reality a distributed database has to be constructed by linking together mul- tiple already-existing database systems, each with its own schema and possibly running different database-management software. Such systems are sometimes called **multidatabase systems** or **heterogeneous distributed database systems**. We discuss these systems in Section 19.8, where we show how to achieve a degree of global control despite the heterogeneity of the component systems.
 
-**17.4.2 Implementation Issues**
+### 17.4.2 Implementation Issues
 
 Atomicity of transactions is an important issue in building a distributed database system. If a transaction runs across two sites, unless the system designers are careful, it may commit at one site and abort at another, leading to an inconsistent state. Transaction commit protocols ensure such a situation cannot arise. The _two-phase commit protocol (_2PC_)_ is the most widely used of these protocols.  
-
-**17.4 Distributed Systems 787**
 
 The basic idea behind 2PC is for each site to execute the transaction until it enters the partially committed state, and then leave the commit decision to a sin- gle coordinator site; the transaction is said to be in the _ready_ state at a site at this point. The coordinator decides to commit the transaction only if the transaction reaches the ready state at every site where it executed; otherwise (for example, if the transaction aborts at any site), the coordinator decides to abort the transaction. Every site where the transaction executed must follow the decision of the coor- dinator. If a site fails when a transaction is in ready state, when the site recovers from failure it should be in a position to either commit or abort the transaction, depending on the decision of the coordinator. The 2PC protocol is described in detail in Section 19.4.1.
 
@@ -318,35 +305,21 @@ When the tasks to be carried out are complex, involving multiple databases and/o
 
 In case an organization has to choose between a distributed architecture and a centralized architecture for implementing an application, the system architect must balance the advantages against the disadvantages of distribution of data. We have already seen the advantages of using distributed databases. The primary disadvantage of distributed database systems is the added complexity required to ensure proper coordination among the sites. This increased complexity takes various forms:
 
-• **Software-development cost**. It is more difficult to implement a distributed database system; thus, it is more costly.
+- **Software-development cost**. It is more difficult to implement a distributed database system; thus, it is more costly.
 
-• **Greater potential for bugs**. Since the sites that constitute the distributed system operate in parallel, it is harder to ensure the correctness of algorithms,  
+- **Greater potential for bugs**. Since the sites that constitute the distributed system operate in parallel, it is harder to ensure the correctness of algorithms,especially operation during failures of part of the system, and recovery from failures. The potential exists for extremely subtle bugs.
 
-**788 Chapter 17 Database-System Architectures**
-
-especially operation during failures of part of the system, and recovery from failures. The potential exists for extremely subtle bugs.
-
-• **Increased processing overhead**. The exchange of messages and the addi- tional computation required to achieve intersite coordination are a form of overhead that does not arise in centralized systems.
+- **Increased processing overhead**. The exchange of messages and the addi- tional computation required to achieve intersite coordination are a form of overhead that does not arise in centralized systems.
 
 There are several approaches to distributed database design, ranging from fully distributed designs to ones that include a large degree of centralization. We study them in Chapter 19.
 
-**17.5 Network Types**
+## 17.5 Network Types
 
 Distributed databases and client–server systems are built around communica- tion networks. There are basically two types of networks: **local-area networks** and **wide-area networks**. The main difference between the two is the way in which they are distributed geographically. In local-area networks, processors are distributed over small geographical areas, such as a single building or a number of adjacent buildings. In wide-area networks, on the other hand, a number of autonomous processors are distributed over a large geographical area (such as the United States or the entire world). These differences imply major variations in the speed and reliability of the communication network, and are reflected in the distributed operating-system design.
 
-printer laptop file server
+![Alt text](local.png)
 
-workstation workstation workstation
-
-gateway
-
-application server
-
-**Figure 17.10** Local-area network.  
-
-**17.5 Network Types 789**
-
-**17.5.1 Local-Area Networks**
+### 17.5.1 Local-Area Networks
 
 **Local-area networks** (**LANs**) (Figure 17.10) emerged in the early 1970s as a way for computers to communicate and to share data with one another. People recognized that, for many enterprises, numerous small computers, each with its own self- contained applications, are more economical than a single large system. Because each small computer is likely to need access to a full complement of peripheral devices (such as disks and printers), and because some form of data sharing is likely to occur in a single enterprise, it was a natural step to connect these small systems into a network.
 
@@ -356,159 +329,150 @@ A **storage-area network** (**SAN**) is a special type of high-speed local-area 
 
 Thus storage-area networks help build large-scale _shared-disk systems_. The motivation for using storage-area networks to connect multiple computers to large banks of storage devices is essentially the same as that for shared-disk databases, namely:
 
-• Scalability by adding more computers.
+- Scalability by adding more computers.
 
-• High availability, since data are still accessible even if a computer fails.
+- High availability, since data are still accessible even if a computer fails.
 
-LAN/WAN
-
-storage array
-
-storage array
-
-data-processing center
-
-Web content provider
-
-server client
-
-client
-
-client server
-
-tape library
-
-SAN
-
-**Figure 17.11** Storage-area network.  
-
-**790 Chapter 17 Database-System Architectures**
+![Alt text](storage.png)
 
 RAID organizations are used in the storage devices to ensure high availability of the data, permitting processing to continue even if individual disks fail. Storage- area networks are usually built with redundancy, such as multiple paths between nodes, so if a component such as a link or a connection to the network fails, the network continues to function.
 
-**17.5.2 Wide-Area Networks**
+### 17.5.2 Wide-Area Networks
 
 **Wide-area networks** (**WANs**) emerged in the late 1960s, mainly as an academic re- search project to provide efficient communication among sites, allowing hardware and software to be shared conveniently and economically by a wide community of users. Systems that allowed remote terminals to be connected to a central com- puter via telephone lines were developed in the early 1960s, but they were not true WANs. The first WAN to be designed and developed was the _Arpanet_. Work on the Arpanet began in 1968. The Arpanet has grown from a four-site experimental network to a worldwide network of networks, the **Internet**, comprising hundreds of millions of computer systems. Typical links on the Internet are fiber-optic lines and, sometimes, satellite channels. Data rates for wide-area links typically range from a few megabits per second to hundreds of gigabits per second. The last link, to end user sites, has traditionally been the slowest link, using such technologies as _digital subscriber line_ (DSL) technology (supporting a few megabits per second) or dial-up modem connections over land-based telephone lines (supporting up to 56 kilobits per second). Today, the last link is typically a cable modem or fiber optic connection (each supporting tens of megabits per second), or a wireless connection supporting several megabits per second.
 
 In addition to limits on data rates, communication in a WAN must also contend with significant **latency**: a message may take up to a few hundred milliseconds to be delivered across the world, both due to speed of light delays, and due to queu- ing delays at a number of routers in the path of the message. Applications whose data and computing resources are distributed geographically have to be carefully designed to ensure latency does not affect system performance excessively.
 
-WANs can be classified into two types:
+WANs can be classified into **two types:**
 
-• In **discontinuous connection** WANs, such as those based on mobile wireless connections, hosts are connected to the network only part of the time.
+- In **discontinuous connection** WANs, such as those based on mobile wireless connections, hosts are connected to the network only part of the time.
 
-• In **continuous connection** WANs, such as the wired Internet, hosts are con- nected to the network at all times.
+- In **continuous connection** WANs, such as the wired Internet, hosts are con- nected to the network at all times.
 
-Networks that are not continuously connected typically do not allow transac- tions across sites, but may keep local copies of remote data, and refresh the copies periodically (every night, for instance). For applications where consistency is not critical, such as sharing of documents, groupware systems such as Lotus Notes allow updates of remote data to be made locally, and the updates are then prop- agated back to the remote site periodically. There is a potential for conflicting updates at different sites, conflicts that have to be detected and resolved. A mech-  
+Networks that are not continuously connected typically do not allow transac- tions across sites, but may keep local copies of remote data, and refresh the copies periodically (every night, for instance). For applications where consistency is not critical, such as sharing of documents, groupware systems such as Lotus Notes allow updates of remote data to be made locally, and the updates are then prop- agated back to the remote site periodically. There is a potential for conflicting updates at different sites, conflicts that have to be detected and resolved. A mechanism for detecting conflicting updates is described later, in Section 25.5.4; the resolution mechanism for conflicting updates is, however, application dependent.
 
-**17.6 Summary 791**
+## 17.6 Summary
 
-anism for detecting conflicting updates is described later, in Section 25.5.4; the resolution mechanism for conflicting updates is, however, application dependent.
+- Centralized database systems run entirely on a single computer. With the growth of personal computers and local-area networking, the database front- end functionality has moved increasingly to clients, with server systems providing the back-end functionality. Client–server interface protocols have helped the growth of client–server database systems.
 
-**17.6 Summary**
+- Servers can be either transaction servers or data servers, although the use of transaction servers greatly exceeds the use of data servers for providing database services.
 
-• Centralized database systems run entirely on a single computer. With the growth of personal computers and local-area networking, the database front- end functionality has moved increasingly to clients, with server systems providing the back-end functionality. Client–server interface protocols have helped the growth of client–server database systems.
+>- Transaction servers have multiple processes, possibly running on multiple processors. So that these processes have access to common data, such as the database buffer, systems store such data in shared memory. In addition to processes that handle queries, there are system processes that carry out tasks such as lock and log management and checkpointing.
 
-• Servers can be either transaction servers or data servers, although the use of transaction servers greatly exceeds the use of data servers for providing database services.
+>- Data-server systems supply raw data to clients. Such systems strive to minimize communication between clients and servers by caching data and locks at the clients. Parallel database systems use similar optimizations.
 
-◦ Transaction servers have multiple processes, possibly running on multiple processors. So that these processes have access to common data, such as the database buffer, systems store such data in shared memory. In addition to processes that handle queries, there are system processes that carry out tasks such as lock and log management and checkpointing.
+- Parallel database systems consist of multiple processors and multiple disks connected by a fast interconnection network. Speedup measures how much we can increase processing speed by increasing parallelism for a single trans- action. Scaleup measures how well we can handle an increased number of transactions by increasing parallelism. Interference, skew, and start-up costs act as barriers to getting ideal speedup and scaleup.
 
-◦ Data-server systems supply raw data to clients. Such systems strive to minimize communication between clients and servers by caching data and locks at the clients. Parallel database systems use similar optimizations.
+- Parallel database architectures include the shared-memory, shared-disk, share- d-nothing, and hierarchical architectures. These architectures have different trade-offs of scalability versus communication speed.
 
-• Parallel database systems consist of multiple processors and multiple disks connected by a fast interconnection network. Speedup measures how much we can increase processing speed by increasing parallelism for a single trans- action. Scaleup measures how well we can handle an increased number of transactions by increasing parallelism. Interference, skew, and start-up costs act as barriers to getting ideal speedup and scaleup.
+- A distributed database system is a collection of partially independent database systems that (ideally) share a common schema, and coordinate processing of transactions that access nonlocal data. The systems communicate with one another through a communication network.
 
-• Parallel database architectures include the shared-memory, shared-disk, share- d-nothing, and hierarchical architectures. These architectures have different trade-offs of scalability versus communication speed.
+- Local-area networks connect nodes that are distributed over small geograph- ical areas, such as a single building or a few adjacent buildings. Wide-area networks connect nodes spread over a large geographical area. The Internet is the most extensively used wide-area network today.
 
-• A distributed database system is a collection of partially independent database systems that (ideally) share a common schema, and coordinate processing of transactions that access nonlocal data. The systems communicate with one another through a communication network.
-
-• Local-area networks connect nodes that are distributed over small geograph- ical areas, such as a single building or a few adjacent buildings. Wide-area networks connect nodes spread over a large geographical area. The Internet is the most extensively used wide-area network today.
-
-• Storage-area networks are a special type of local-area network designed to provide fast interconnection between large banks of storage devices and multiple computers.  
-
-**792 Chapter 17 Database-System Architectures**
+- Storage-area networks are a special type of local-area network designed to provide fast interconnection between large banks of storage devices and multiple computers.  
 
 **Review Terms**
 
-• Centralized systems • Server systems • Coarse-granularity parallelism • Fine-granularity parallelism • Database process structure • Mutual exclusion • Thread • Server processes
+- Centralized systems 
+- Server systems 
+- Coarse-granularity parallelism 
+- Fine-granularity parallelism 
+- Database process structure 
+- Mutual exclusion 
+- Thread 
+- Server processes
 
-◦ Lock manager process
+>- Lock manager process
 
-◦ Database writer process
+>- Database writer process
 
-◦ Log writer process
+>- Log writer process
 
-◦ Checkpoint process
+>- Checkpoint process
 
-◦ Process monitor process
+>- Process monitor process
 
-• Client–server systems • Transaction server • Query server • Data server
+- Client–server systems 
+- Transaction server 
+- Query server 
+- Data server
 
-◦ Prefetching
+>- Prefetching
 
-◦ De-escalation
+>- De-escalation
 
-◦ Data caching
+>- Data caching
 
-◦ Cache coherency
+>- Cache coherency
 
-◦ Lock caching
+>- Lock caching
 
-◦ Call back
+>- Call back
 
-• Parallel systems • Throughput • Response time • Speedup
+- Parallel systems 
+- Throughput 
+- Response time 
+- Speedup
 
-◦ Linear speedup
+>- Linear speedup
 
-◦ Sublinear speedup
+>- Sublinear speedup
 
-• Scaleup
+- Scaleup
 
-◦ Linear scaleup
+>- Linear scaleup
 
-◦ Sublinear scaleup
+>- Sublinear scaleup
 
-◦ Batch scaleup
+>- Batch scaleup
 
-◦ Transaction scaleup
+>- Transaction scaleup
 
-• Start-up costs • Interference • Skew • Interconnection networks
+- Start-up costs 
+- Interference 
+- Skew 
+- Interconnection networks
 
-◦ Bus
+>- Bus
 
-◦ Mesh
+>- Mesh
 
-◦ Hypercube
+>- Hypercube
 
-• Parallel database architectures
+>- Parallel database architectures
 
-◦ Shared memory
+>-Shared memory
 
-◦ Shared disk (clusters)
+>- Shared disk (clusters)
 
-◦ Shared nothing
+>- Shared nothing
 
-◦ Hierarchical
+>- Hierarchical
 
-• Fault tolerance • Distributed virtual memory • Nonuniform memory architecture
+- Fault tolerance 
+- Distributed virtual memory 
+- Nonuniform memory architecture
+(NUMA) 
+- Distributed systems 
+- Distributed database
 
-(NUMA) • Distributed systems • Distributed database
+>- Sites (nodes)
 
-◦ Sites (nodes)
+>- Local transaction
 
-◦ Local transaction
+>- Global transaction
 
-◦ Global transaction
+>- Local autonomy
 
-◦ Local autonomy
+- Multidatabase systems 
+- Network types
 
-• Multidatabase systems • Network types
+>- Local-area networks (LAN)
 
-◦ Local-area networks (LAN)
+>- Wide-area networks (WAN)
 
-◦ Wide-area networks (WAN)
+>- Storage-area network (SAN)  
 
-◦ Storage-area network (SAN)  
-
-**Exercises 793**
 
 **Practice Exercises**
 
@@ -518,9 +482,9 @@ anism for detecting conflicting updates is described later, in Section 25.5.4; t
 
 **17.3** Consider a database system based on a client–server architecture, with the server acting as a data server.
 
-a. What is the effect of the speed of the interconnection between the client and the server on the choice between tuple and page shipping?
+>1. What is the effect of the speed of the interconnection between the client and the server on the choice between tuple and page shipping?
 
-b. If page shipping is used, the cache of data at the client can be orga- nized either as a tuple cache or a page cache. The page cache stores data in units of a page, while the tuple cache stores data in units of tuples. Assume tuples are smaller than pages. Describe one benefit of a tuple cache over a page cache.
+>2. If page shipping is used, the cache of data at the client can be orga- nized either as a tuple cache or a page cache. The page cache stores data in units of a page, while the tuple cache stores data in units of tuples. Assume tuples are smaller than pages. Describe one benefit of a tuple cache over a page cache.
 
 **17.4** Suppose a transaction is written in C with embedded SQL, and about 80 percent of the time is spent in the SQL code, with the remaining 20 percent spent in C code. How much speedup can one hope to attain if parallelism is used only for the SQL code? Explain.
 
@@ -531,8 +495,6 @@ b. If page shipping is used, the cache of data at the client can be orga- nized 
 **Exercises**
 
 **17.7** Why is it relatively easy to port a database from a single processor machine to a multiprocessor machine if individual queries need not be parallelized?  
-
-**794 Chapter 17 Database-System Architectures**
 
 **17.8** Transaction-server architectures are popular for client–server relational databases, where transactions are short. On the other hand, data-server architectures are popular for client–server object-oriented database sys- tems, where transactions are expected to be relatively long. Give two reasons why data servers may be popular for object-oriented databases but not for relational databases.
 
