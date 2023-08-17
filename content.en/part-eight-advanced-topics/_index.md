@@ -540,7 +540,7 @@ Tuning is best done by identifying bottlenecks and eliminating them. Database sy
 - Object database standards
 
     ◦ ODMG
-    
+
     ◦ CORBA
 
 • XML-based standards
@@ -683,17 +683,14 @@ Two types of spatial data are particularly important:
 
 - **Computer-aided-design (CAD) data**, which includes spatial information about how objects—such as buildings, cars, or aircraft—are constructed. Other im-
 
-1Many temporal database researchers feel this type should have been called **span** since it does not specify an exact start or end time, only the time span between the two.  
-
-**25.3 Spatial and Geographic Data 1065**
-
+1Many temporal database researchers feel this type should have been called **span** since it does not specify an exact start or end time, only the time span between the two. 
 portant examples of computer-aided-design databases are integrated-circuit and electronic-device layouts.
 
 - **Geographic data** such as road maps, land-usage maps, topographic elevation maps, political maps showing boundaries, land-ownership maps, and so on. **Geographic information systems** are special-purpose databases tailored for storing geographic data.
 
-Support for geographic data has been added to many database systems, such as the IBM DB2 Spatial Extender, the Informix Spatial Datablade, and Oracle Spatial.
+Support for geographic data has been added to many database systems, such as the IBM DB2 Spatial Extender, e Informix Spatial Datablade, and Oracle Spati.
 
-**25.3.1 Representation of Geometric Information**
+25.3.1 Representation of Geometric Information**
 
 Figure 25.2 illustrates how various geometric constructs can be represented in a database, in a normalized fashion. We stress here that geometric information can be represented in several different ways, only some of which we describe.
 
