@@ -2,7 +2,7 @@
 title: 'PART TWO: DATABASE DESIGN'
 weight: 7
 ---
-
+# Database Design
   
 Database systems are designed to manage large bodies of information. These large bodies of information do not exist in isolation. They are part of the operation of some enterprise whose end product may be information from the database or may be some device or service for which the database plays only a supporting role.
 
@@ -20,14 +20,14 @@ _This page intentionally left blank_
 
 Up to this point in the text, we have assumed a given database schema and studied how queries and updates are expressed. We now consider how to design a database schema in the first place. In this chapter, we focus on the entity- relationship data model (E-R), which provides a means of identifying entities to be represented in the database and how those entities are related. Ultimately, the database design will be expressed in terms of a relational database design and an associated set of constraints. We show in this chapter how an E-R design can be transformed into a set of relation schemas and how some of the constraints can be captured in that design. Then, in Chapter 8, we consider in detail whether a set of relation schemas is a good or bad database design and study the process of creating good designs using a broader set of constraints. These two chapters cover the fundamental concepts of database design.
 
-# 7.1 Overview of the Design Process
+## 7.1 Overview of the Design Process
 
 The task of creating a database application is a complex one, involving design of the database schema, design of the programs that access and update the data, and design of a security scheme to control access to data. The needs of the users play a central role in the design process. In this chapter, we focus on the design of the database schema, although we briefly outline some of the other design tasks later in the chapter.
 
 The design of a complete database application environment that meets the needs of the enterprise being modeled requires attention to a broad set of issues. These additional aspects of the expected use of the database influence a variety of design choices at the physical, logical, and view levels.
 
 
-## 7.1.1 Design Phases
+### 7.1.1 Design Phases
 
 For small applications, it may be feasible for a database designer who understands the application requirements to decide directly on the relations to be created,
 
@@ -57,7 +57,7 @@ will be used. The implementation data model is typically the relational data mod
 
 The physical schema of a database can be changed relatively easily after an application has been built. However, changes to the logical schema are usually harder to carry out, since they may affect a number of queries and updates scat- tered across application code. It is therefore important to carry out the database design phase with care, before building the rest of the database application.
 
-## 7.1.2 Design Alternatives
+### 7.1.2 Design Alternatives
 
 A major part of the database design process is deciding how to represent in the design the various types of “things” such as people, places, products, and the like. We use the term _entity_ to refer to any such distinctly identifiable item. In a university database, examples of entities would include instructors, students, departments, courses, and course offerings.1 The various entities are related to each other in a variety of ways, all of which need to be captured in the database design. For example, a student takes a course offering, while an instructor teaches a course offering; teaches and takes are examples of relationships between entities.
 
@@ -81,13 +81,13 @@ information is updated without taking precautions to update all copies of the in
 
 Avoiding bad designs is not enough. There may be a large number of good designs from which we must choose. As a simple example, consider a customer who buys a product. Is the sale of this product a relationship between the customer and the product? Alternatively, is the sale itself an entity that is related both to the customer and to the product? This choice, though simple, may make an important difference in what aspects of the enterprise can be modeled well. Considering the need to make choices such as this for the large number of entities and relationships in a real-world enterprise, it is not hard to see that database design can be a challenging problem. Indeed we shall see that it requires a combination of both science and “good taste.”
 
-# 7.2 The Entity-Relationship Model
+## 7.2 The Entity-Relationship Model
 
 The **entity-relationship** (**E-R**) data model was developed to facilitate database design by allowing specification of an _enterprise schema_ that represents the overall logical structure of a database.
 
 The E-R model is very useful in mapping the meanings and interactions of real-world enterprises onto a conceptual schema. Because of this usefulness, many database-design tools draw on concepts from the E-R model. The E-R data model employs three basic concepts: entity sets, relationship sets, and attributes, which we study first. The E-R model also has an associated diagrammatic representation, the E-R diagram, which we study later in this chapter.
 
-## 7.2.1 Entity Sets
+### 7.2.1 Entity Sets
 
 An **entity** is a “thing” or “object” in the real world that is distinguishable from all other objects. For example, each person in a university is an entity. An entity has a set of properties, and the values for some set of properties may uniquely identify an entity. For instance, a person may have a _person id_ property whose  
 
@@ -169,7 +169,7 @@ Brown
 
 with attributes _course id_, _title_, _dept name_ and _credits_. In a real setting, a university database may keep dozens of entity sets.
 
-## 7.2.2 Relationship Sets
+### 7.2.2 Relationship Sets
 
 A **relationship** is an association among several entities. For example, we can define a relationship _advisor_ that associates instructor Katz with student Shankar. This relationship specifies that Katz is an advisor to student Shankar.
 
@@ -333,7 +333,7 @@ Note that a student could have different instructors as guides for different pro
 
 The number of entity sets that participate in a relationship set is the **degree** of the relationship set. A binary relationship set is of degree 2; a ternary relationship set is of degree 3.
 
-## 7.2.3 Attributes
+### 7.2.3 Attributes
 
 For each attribute, there is a set of permitted values, called the **domain**, or **value set**, of that attribute. The domain of attribute _course id_ might be the set of all text strings of a certain length. Similarly, the domain of attribute _semester_ might be strings from the set _{_Fall, Winter, Spring, Summer_}_.
 
@@ -379,11 +379,11 @@ For instance, if the _name_ value for a particular instructor is _null_, we assu
 
 an apartment number (not applicable), that an apartment number exists but we do not know what it is (missing), or that we do not know whether or not an apartment number is part of the instructor’s address (unknown).
 
-# 7.3 Constraints
+## 7.3 Constraints
 
 An E-R enterprise schema may define certain constraints to which the contents of a database must conform. In this section, we examine mapping cardinalities and participation constraints.
 
-## 7.3.1 Mapping Cardinalities**
+### 7.3.1 Mapping Cardinalities**
 
 **Mapping cardinalities**, or cardinality ratios, express the number of entities to which another entity can be associated via a relationship set.
 
@@ -481,7 +481,7 @@ The appropriate mapping cardinality for a particular relationship set obviously 
 
 As an illustration, consider the _advisor_ relationship set. If, in a particular university, a student can be advised by only one instructor, and an instructor can advise several students, then the relationship set from _instructor_ to _student_ is one-to-many. If a student can be advised by several instructors (as in the case of students advised jointly), the relationship set is many-to-many.
 
-## 7.3.2 Participation Constraints
+### 7.3.2 Participation Constraints
 
 The participation of an entity set _E_ in a relationship set _R_ is said to be **total** if every entity in _E_ participates in at least one relationship in _R_. If only some entities in _E_ participate in relationships in _R_, the participation of entity set _E_ in relationship _R_ is said to be **partial**. In Figure 7.5a, the participation of _B_ in the relationship set is total while the participation of _A_ in the relationship set is partial. In Figure 7.5b, the participation of both _A_ and _B_ in the relationship set are total.
 
@@ -489,7 +489,7 @@ For example, we expect every _student_ entity to be related to at least one inst
 
 **7.3 Constraints 271**
 
-## 7.3.3 Keys
+### 7.3.3 Keys
 
 We must have a way to specify how entities within a given entity set are distin- guished. Conceptually, individual entities are distinct; from a database perspec- tive, however, the differences among them must be expressed in terms of their attributes.
 
@@ -529,7 +529,7 @@ The structure of the primary key for the relationship set depends on the mapping
 
 For nonbinary relationships, if no cardinality constraints are present then the superkey formed as described earlier in this section is the only candidate key, and it is chosen as the primary key. The choice of the primary key is more complicated if cardinality constraints are present. Since we have not discussed how to specify cardinality constraints on nonbinary relations, we do not discuss this issue further in this chapter. We consider the issue in more detail later, in Sections 7.5.5 and 8.4.
 
-# 7.4 Removing Redundant Attributes in Entity Sets
+## 7.4 Removing Redundant Attributes in Entity Sets
 
 When we design a database using the E-R model, we usually start by identifying those entity sets that should be included. For example, in the university organiza- tion we have discussed thus far, we decided to include such entity sets as _student_, _instructor_, etc. Once the entity sets are decided upon, we must choose the appro- priate attributes. These attributes are supposed to represent the various values we want to capture in the database. In the university organization, we decided that for the _instructor_ entity set, we will include the attributes _ID_, _name_, _dept name_, and _salary_. We could have added the attributes: _phone number_, _office number_, _home page_, etc. The choice of what attributes to include is up to the designer, who has
 
@@ -609,11 +609,11 @@ The relationship sets in our design are listed below:
 
 You can verify that none of the entity sets has any attribute that is made redundant by one of the relationship sets. Further, you can verify that all the information (other than constraints) in the relational schema for our university database, which we saw earlier in Figure 2.8 in Chapter 2, has been captured by the above design, but with several attributes in the relational design replaced by relationships in the E-R design.
 
-# 7.5 Entity-Relationship Diagrams
+## 7.5 Entity-Relationship Diagrams
 
 As we saw briefly in Section 1.3.3, an **E-R diagram** can express the overall logical structure of a database graphically. E-R diagrams are simple and clear—qualities that may well account in large part for the widespread use of the E-R model.
 
-## 7.5.1 Basic Structure
+### 7.5.1 Basic Structure
 
 An E-R diagram consists of the following major components:  
 
@@ -689,7 +689,7 @@ _advisor_
 
 **Figure 7.9** Relationships. (a) One-to-one. (b) One-to-many. (c) Many-to-many.
 
-## 7.5.2 Mapping Cardinality
+### 7.5.2 Mapping Cardinality
 
 The relationship set _advisor_, between the _instructor_ and _student_ entity sets may be one-to-one, one-to-many, many-to-one, or many-to-many. To distinguish among these types, we draw either a directed line (→) or an undirected line (—) between the relationship set and the entity set in question, as follows:
 
@@ -715,7 +715,7 @@ If both edges have a maximum value of 1, the relationship is one-to-one. If we h
 
 The E-R diagram in Figure 7.10 could alternatively have been drawn with a double line from _student_ to _advisor_, and an arrow on the line from _advisor_ to _instructor_, in place of the cardinality constraints shown. This alternative diagram would enforce exactly the same constraints as the constraints shown in the figure.
 
-## 7.5.3 Complex Attributes
+### 7.5.3 Complex Attributes
 
 Figure 7.11 shows how composite attributes can be represented in the E-R notation. Here, a composite attribute _name_, with component attributes _first name_, _middle initial_, and _last name_ replaces the simple attribute _name_ of _instructor_. As another
 
@@ -753,11 +753,11 @@ _street_, _city_, _state_, and _zip code_. The attribute _street_ is itself a co
 
 Figure 7.11 also illustrates a multivalued attribute _phone number_, denoted by “_{phone number}_”, and a derived attribute _age_, depicted by a “_age_ ( )”.
 
-## 7.5.4 Roles
+### 7.5.4 Roles
 
 We indicate roles in E-R diagrams by labeling the lines that connect diamonds to rectangles. Figure 7.12 shows the role indicators _course id_ and _prereq id_ between the _course_ entity set and the _prereq_ relationship set.
 
-## 7.5.5 Nonbinary Relationship Sets
+### 7.5.5 Nonbinary Relationship Sets
 
 Nonbinary relationship sets can be specified easily in an E-R diagram. Figure 7.13 consists of the three entity sets _instructor_, _student_, and _project_, related through the relationship set _proj guide_.
 
@@ -795,7 +795,7 @@ We permit at most one arrow out of a relationship set, since an E-R diagram with
 
 Each of these interpretations has been used in different books and systems. To avoid confusion, we permit only one arrow out of a relationship set, in which case the two interpretations are equivalent. In Chapter 8 (Section 8.4), we study _functional dependencies_, which allow either of these interpretations to be specified in an unambiguous manner.
 
-## 7.5.6 Weak Entity Sets
+### 7.5.6 Weak Entity Sets
 
 Consider a _section_ entity, which is uniquely identified by a course identifier, semester, year, and section identifier. Clearly, section entities are related to course entities. Suppose we create a relationship set _sec course_ between entity sets _section_ and _course_.
 
@@ -853,7 +853,7 @@ In some cases, the database designer may choose to express a weak entity set as 
 
 **282 Chapter 7 Database Design and the E-R Model**
 
-## 7.5.7 E-R diagram for the University Enterprise
+### 7.5.7 E-R diagram for the University Enterprise
 
 In Figure 7.15, we show an E-R diagram that corresponds to the university enter- prise that we have been using thus far in the text. This E-R diagram is equivalent to the textual description of the university E-R model that we saw in Section 7.4, but with several additional constraints, and _section_ now being a weak entity.
 
@@ -909,7 +909,7 @@ Further, Figure 7.15 shows that the relationship set _takes_ has a descriptive a
 
 In Section 7.6, we shall show how this E-R diagram can be used to derive the various relation schemas we use.
 
-# 7.6 Reduction to Relational Schemas
+## 7.6 Reduction to Relational Schemas
 
 We can represent a database that conforms to an E-R database schema by a col- lection of relation schemas. For each entity set and for each relationship set in the database design, there is a unique relation schema to which we assign the name of the corresponding entity set or relationship set.
 
@@ -917,7 +917,7 @@ Both the E-R model and the relational database model are abstract, logical repre
 
 In this section, we describe how an E-R schema can be represented by relation schemas and how constraints arising from the E-R design can be mapped to constraints on relation schemas.
 
-## 7.6.1 Representation of Strong Entity Sets with Simple Attributes
+### 7.6.1 Representation of Strong Entity Sets with Simple Attributes
 
 Let _E_ be a strong entity set with only simple descriptive attributes _a_1_, a_2_, . . . , an_. We represent this entity by a schema called _E_ with _n_ distinct attributes. Each tuple in a relation on this schema corresponds to one entity of the entity set _E_.
 
@@ -937,7 +937,7 @@ _classroom_ (_building_, _room number_, _capacity_) _department_ (_dept name_, _
 
 As you can see, both the _instructor_ and _student_ schemas are different from the schemas we have used in the previous chapters (they do not contain the attribute _dept name_). We shall revisit this issue shortly.
 
-## 7.6.2 Representation of Strong Entity Sets with Complex Attributes
+### 7.6.2 Representation of Strong Entity Sets with Complex Attributes
 
 When a strong entity set has nonsimple attributes, things are a bit more complex. We handle composite attributes by creating a separate attribute for each of the component attributes; we do not create a separate attribute for the composite attribute itself. To illustrate, consider the version of the _instructor_ entity set de- picted in Figure 7.11. For the composite attribute _name_, the schema generated for _instructor_ contains the attributes _first name_, _middle name_, and _last name_; there is no separate attribute or schema for _name_. Similarly, for the composite attribute _address_, the schema generated contains the attributes _street_, _city_, _state_, and _zip code_. Since _street_ is a composite attribute it is replaced by _street number_, _street name_, and _apt number_. We revisit this matter in Section 8.2.
 
@@ -977,7 +977,7 @@ The relation created from the entity set would have only a single attribute _tim
 
 the resultant database schema, although it has a drawback related to foreign keys, which we briefly discuss in Section 7.6.4.
 
-## 7.6.3 Representation of Weak Entity Sets
+### 7.6.3 Representation of Weak Entity Sets
 
 Let _A_ be a weak entity set with attributes _a_1_, a_2_, . . . , am_. Let _B_ be the strong entity set on which _A_ depends. Let the primary key of _B_ consist of attributes _b_1_, b_2_, . . . , bn_. We represent the entity set _A_ by a relation schema called _A_ with one attribute for each member of the set:
 
@@ -995,7 +995,7 @@ _section_ (_course id_, _sec id_, _semester_, _year_)
 
 The primary key consists of the primary key of the entity set _course_, along with the discriminator of _section_, which is _sec id_, _semester_, and _year_. We also create a foreign-key constraint on the _section_ schema, with the attribute _course id_ refer- encing the primary key of the _course_ schema, and the integrity constraint “on delete cascade”.7 Because of the “on delete cascade” specification on the foreign key constraint, if a _course_ entity is deleted, then so are all the associated _section_ entities.
 
-## 7.6.4 Representation of Relationship Sets
+### 7.6.4 Representation of Relationship Sets
 
 Let _R_ be a relationship set, let _a_1_, a_2_, . . . , am_ be the set of attributes formed by the union of the primary keys of each of the entity sets participating in _R_, and let the descriptive attributes (if any) of _R_ be _b_1_, b_2_, . . . , bn_. We represent this relationship set by a relation schema called _R_ with one attribute for each member of the set:
 
@@ -1049,13 +1049,13 @@ _slot_. We retained the relation created from the multivalued attribute, and nam
 
 The astute reader may wonder why we have not seen the schemas _sec course_, _sec time slot_, _sec class_, _inst dept_, _stud dept_, and _course dept_ in the previous chapters. The reason is that the algorithm we have presented thus far results in some schemas that can be either eliminated or combined with other schemas. We ex- plore this issue next.
 
-### 7.6.4.1 Redundancy of Schemas
+#### 7.6.4.1 Redundancy of Schemas
 
 A relationship set linking a weak entity set to the corresponding strong entity set is treated specially. As we noted in Section 7.5.6, these relationships are many-to- one and have no descriptive attributes. Furthermore, the primary key of a weak entity set includes the primary key of the strong entity set. In the E-R diagram of Figure 7.14, the weak entity set _section_ is dependent on the strong entity set _course_ via the relationship set _sec course_. The primary key of _section_ is _{course id_, _sec id_, _semester_, _year}_ and the primary key of _course_ is _course id_. Since _sec course_ has no descriptive attributes, the _sec course_ schema has attributes _course id_, _sec id_, _semester_, and _year_. The schema for the entity set _section_ includes the attributes _course id_, _sec id_, _semester_, and _year_ (among others). Every (_course id_, _sec id_, _semester_, _year_) combination in a _sec course_ relation would also be present in the relation on schema _section_, and vice versa. Thus, the _sec course_ schema is redundant.
 
 In general, the schema for the relationship set linking a weak entity set to its corresponding strong entity set is redundant and does not need to be present in a relational database design based upon an E-R diagram.
 
-### 7.6.4.2 Combination of Schemas
+#### 7.6.4.2 Combination of Schemas
 
 Consider a many-to-one relationship set _AB_ from entity set _A_ to entity set _B_. Using our relational-schema construction algorithm outlined previously, we get  
 
@@ -1085,11 +1085,11 @@ Finally, we consider the foreign-key constraints that would have appeared in the
 
 added to the _instructor_ relation when the schema for _inst dept_ is merged into _instructor_.
 
-# 7.7 Entity-Relationship Design Issues
+## 7.7 Entity-Relationship Design Issues
 
 The notions of an entity set and a relationship set are not precise, and it is possible to define a set of entities and the relationships among them in a number of different ways. In this section, we examine basic issues in the design of an E-R database schema. Section 7.10 covers the design process in further detail.
 
-## 7.7.1 Use of Entity Sets versus Attributes
+### 7.7.1 Use of Entity Sets versus Attributes
 
 Consider the entity set _instructor_ with the additional attribute _phone number_ (Fig- ure 7.17a.) It can easily be argued that a phone is an entity in its own right with attributes _phone number_ and _location_; the location may be the office or home where the phone is located, with mobile (cell) phones perhaps represented by the value “mobile.” If we take this point of view, we do not add the attribute _phone number_ to the _instructor_. Rather, we create:
 
@@ -1131,7 +1131,7 @@ A common mistake is to use the primary key of an entity set as an attribute of a
 
 Another related mistake that people sometimes make is to designate the primary-key attributes of the related entity sets as attributes of the relationship set. For example, _ID_ (the primary-key attributes of _student_) and _ID_ (the primary key of _instructor_) should not appear as attributes of the relationship _advisor_. This should not be done since the primary-key attributes are already implicit in the relationship set.8
 
-## 7.7.2 Use of Entity Sets versus Relationship Sets
+### 7.7.2 Use of Entity Sets versus Relationship Sets
 
 It is not always clear whether an object is best expressed by an entity set or a relationship set. In Figure 7.15, we used the _takes_ relationship set to model the situation where a student takes a (section of a) course. An alternative is to imagine that there is a course-registration record for each course that each student takes. Then, we have an entity set to represent the course-registration record. Let us call that entity set _registration_. Each _registration_ entity is related to exactly one student and to exactly one section, so we have two relationship sets, one to relate course- registration records to students and one to relate course-registration records to sections. In Figure 7.18, we show the entity sets _section_ and _student_ from Figure 7.15 with the _takes_ relationship set replaced by one entity set and two relationship sets:
 
@@ -1161,7 +1161,7 @@ Both the approach of Figure 7.15 and that of Figure 7.18 accurately represent th
 
 One possible guideline in determining whether to use an entity set or a relationship set is to designate a relationship set to describe an action that occurs between entities. This approach can also be useful in deciding whether certain attributes may be more appropriately expressed as relationships.
 
-## 7.7.3 Binary versus Binary Relationship Sets**
+### 7.7.3 Binary versus Binary Relationship Sets
 
 Relationships in databases are often binary. Some relationships that appear to be nonbinary could actually be better represented by several binary relationships. For instance, one could create a ternary relationship _parent_, relating a child to his/her mother and father. However, such a relationship could also be represented by two binary relationships, _mother_ and _father_, relating a child to his/her mother and father separately. Using the two relationships _mother_ and _father_ provides us a record of a child’s mother, even if we are not aware of the father’s identity; a null value would be required if the ternary relationship _parent_ is used. Using binary relationship sets is preferable in this case.
 
@@ -1285,7 +1285,7 @@ we would be able to record that instructor Katz works on projects _A_ and _B_ wi
 
 The relationship set _proj guide_ can be split into binary relationships by creating a new entity set as described above. However, doing so would not be very natural.
 
-## 7.7.4 Placement of Relationship Attributes
+### 7.7.4 Placement of Relationship Attributes
 
 The cardinality ratio of a relationship can affect the placement of relationship attributes. Thus, attributes of one-to-one or one-to-many relationship sets can be associated with one of the participating entity sets, rather than with the relation- ship set. For instance, let us specify that _advisor_ is a one-to-many relationship set such that one instructor may advise several students, but each student can be advised by only a single instructor. In this case, the attribute _date_, which specifies when the instructor became the advisor of a student, could be associated with the _student_ entity set, as Figure 7.20 depicts. (To keep the figure simple, only some of the attributes of the two entity sets are shown.) Since each _student_ entity participates in a relationship with at most one instance of _instructor_, making this attribute designation has the same meaning as would placing _date_ with the _advisor_ relationship set. Attributes of a one-to-many relationship set can be repositioned to only the entity set on the “many” side of the relationship. For one-to-one rela- tionship sets, on the other hand, the relationship attribute can be associated with either one of the participating entities.
 
@@ -1295,13 +1295,13 @@ The design decision of where to place descriptive attributes in such cases —as
 
 The choice of attribute placement is more clear-cut for many-to-many rela- tionship sets. Returning to our example, let us specify the perhaps more realistic case that _advisor_ is a many-to-many relationship set expressing that an instructor may advise one or more students, and that a student may be advised by one or more instructors. If we are to express the date on which a specific instructor became the advisor of a specific student, _date_ must be an attribute of the _advisor_ relationship set, rather than either one of the participating entities. If _date_ were an attribute of _student_, for instance, we could not determine which instructor became the advisor on that particular date. When an attribute is determined by the com- bination of participating entity sets, rather than by either entity separately, that attribute must be associated with the many-to-many relationship set. Figure 7.3 depicts the placement of _date_ as a relationship attribute; again, to keep the figure simple, only some of the attributes of the two entity sets are shown.
 
-# 7.8 Extended E-R Features
+## 7.8 Extended E-R Features
 
 Although the basic E-R concepts can model most database features, some aspects of a database may be more aptly expressed by certain extensions to the basic E-R model. In this section, we discuss the extended E-R features of specializa- tion, generalization, higher- and lower-level entity sets, attribute inheritance, and aggregation.
 
 To help with the discussions, we shall use a slightly more elaborate database schema for the university. In particular, we shall model the various people within a university by defining an entity set _person_, with attributes _ID_, _name_, and _address_.
 
-## 7.8.1 Specialization
+### 7.8.1 Specialization
 
 An entity set may include subgroupings of entities that are distinct in some way from other entities in the set. For instance, a subset of entities within an entity set may have attributes that are not shared by all the entities in the entity set. The E-R model provides a means for representing these distinctive entity groupings.
 
@@ -1349,7 +1349,7 @@ _employee salary tot\_credits_
 
 sets are depicted as regular entity sets—that is, as rectangles containing the name of the entity set.
 
-## 7.8.2 Generalization
+### 7.8.2 Generalization
 
 The refinement from an initial entity set into successive levels of entity subgroup- ings represents a **top-down** design process in which distinctions are made explicit. The design process may also proceed in a **bottom-up** manner, in which multiple entity sets are synthesized into a higher-level entity set on the basis of common features. The database designer may have first identified:
 
@@ -1369,7 +1369,7 @@ Specialization stems from a single entity set; it emphasizes differences among e
 
 Generalization proceeds from the recognition that a number of entity sets share some common features (namely, they are described by the same attributes and participate in the same relationship sets). On the basis of their commonalities, generalization synthesizes these entity sets into a single, higher-level entity set. Generalization is used to emphasize the similarities among lower-level entity sets and to hide the differences; it also permits an economy of representation in that shared attributes are not repeated.
 
-## 7.8.3 Attribute Inheritance
+### 7.8.3 Attribute Inheritance
 
 A crucial property of the higher- and lower-level entities created by specialization and generalization is **attribute inheritance**. The attributes of the higher-level entity sets are said to be **inherited** by the lower-level entity sets. For example, _student_ and _employee_ inherit the attributes of _person_. Thus, _student_ is described by its _ID_, _name_, and _address_ attributes, and additionally a _tot cred_ attribute; _employee_ is described by its _ID_, _name_, and _address_ attributes, and additionally a _salary_ attribute. Attribute inheritance applies through all tiers of lower-level entity sets; thus, _instructor_ and _secretary_, which are subclasses of _employee_, inherit the attributes _ID_, _name_, and _address_ from _person_, in addition to inheriting _salary_ from _employee_.
 
@@ -1387,7 +1387,7 @@ In what follows, although we often refer to only generalization, the properties 
 
 Figure 7.21 depicts a **hierarchy** of entity sets. In the figure, _employee_ is a lower-level entity set of _person_ and a higher-level entity set of the _instructor_ and _secretary_ entity sets. In a hierarchy, a given entity set may be involved as a lower- level entity set in only one ISA relationship; that is, entity sets in this diagram have only **single inheritance**. If an entity set is a lower-level entity set in more than one ISA relationship, then the entity set has **multiple inheritance**, and the resulting structure is said to be a _lattice_.
 
-## 7.8.4 Constraints on Generalizations
+### 7.8.4 Constraints on Generalizations
 
 To model an enterprise more accurately, the database designer may choose to place certain constraints on a particular generalization. One type of constraint involves determining which entities can be members of a given lower-level entity set. Such membership may be one of the following:
 
@@ -1425,7 +1425,7 @@ _uate student_ into _student_ is a total, disjoint generalization. The completen
 
 We can see that certain insertion and deletion requirements follow from the constraints that apply to a given generalization or specialization. For instance, when a total completeness constraint is in place, an entity inserted into a higher- level entity set must also be inserted into at least one of the lower-level entity sets. With a condition-defined constraint, all higher-level entities that satisfy the condition must be inserted into that lower-level entity set. Finally, an entity that is deleted from a higher-level entity set also is deleted from all the associated lower-level entity sets to which it belongs.
 
-## 7.8.5 Aggregation
+### 7.8.5 Aggregation
 
 One limitation of the E-R model is that it cannot express relationships among relationships. To illustrate the need for such a construct, consider the ternary relationship _proj guide_, which we saw earlier, between an _instructor_, _student_ and _project_ (see Figure 7.13).
 
@@ -1453,11 +1453,11 @@ _proj\_ guide_
 
 _guide_ and _evaluation_ to represent which (_student_, _project_, _instructor_) combination an _evaluation_ is for. Figure 7.23 shows a notation for aggregation commonly used to represent this situation.
 
-## 7.8.6 Reduction to Relation Schemas
+### 7.8.6 Reduction to Relation Schemas
 
 We are in a position now to describe how the extended E-R features can be translated into relation schemas.
 
-### 7.8.6.1 Representation of Generalization
+#### 7.8.6.1 Representation of Generalization
 
 There are two different methods of designing relation schemas for an E-R diagram that includes generalization. Although we refer to the generalization in Figure 7.21 in this discussion, we simplify it by including only the first tier of lower-level entity sets—that is, _employee_ and _student_. We assume that _ID_ is the primary key of _person_.
 
@@ -1499,13 +1499,13 @@ _person_ (_ID_, _name, street, city_)
 
 would be required to represent such people. However, the problem with foreign- key constraints mentioned above would remain. As an attempt to work around the problem, suppose employees and students are additionally represented in the _person_ relation. Unfortunately, name, street, and city information would then be stored redundantly in the _person_ relation and the _student_ relation for students, and similarly in the _person_ relation and the _employee_ relation for employees. That suggests storing name, street, and city information only in the _person_ relation and removing that information from _student_ and _employee_. If we do that, the result is exactly the first method we presented.
 
-### 7.8.6.2 Representation of Aggregation
+#### 7.8.6.2 Representation of Aggregation
 
 Designing schemas for an E-R diagram containing aggregation is straightforward. Consider the diagram of Figure 7.23. The schema for the relationship set _eval for_ between the aggregation of _proj guide_ and the entity set _evaluation_ includes an attribute for each attribute in the primary keys of the entity set _evaluation_, and the relationship set _proj guide_. It also includes an attribute for any descriptive attributes, if they exist, of the relationship set _eval for_. We then transform the relationship sets and entity sets within the aggregated entity set following the rules we have already defined.
 
 The rules we saw earlier for creating primary-key and foreign-key constraints on relationship sets can be applied to relationship sets involving aggregations as well, with the aggregation treated like any other entity set. The primary key of the aggregation is the primary key of its defining relationship set. No separate relation is required to represent the aggregation; the relation created from the defining relationship is used instead.
 
-# 7.9 Alternative Notations for Modeling Data
+## 7.9 Alternative Notations for Modeling Data
 
 A diagrammatic representation of the data model of an application is a very important part of designing a database schema. Creation of a database schema  
 
@@ -1603,7 +1603,7 @@ in this sixth edition of this book which actually differs from the notation we u
 
 In the rest of this section, we study some of the alternative E-R diagram notations, as well as the UML class diagram notation. To aid in comparison of our notation with these alternatives, Figure 7.24 summarizes the set of symbols we have used in our E-R diagram notation.
 
-## 7.9.1 Alternative E-R Notations
+### 7.9.1 Alternative E-R Notations
 
 Figure 7.25 indicates some of the alternative E-R notations that are widely used. One alternative representation of attributes of entities is to show them in ovals connected to the box representing the entity; primary key attributes are indicated by underlining them. The above notation is shown at the top of the figure. Re- lationship attributes can be similarly represented, by connecting the ovals to the diamond representing the relationship.
 
@@ -1687,7 +1687,7 @@ One key difference between entity sets in an E-R diagram and the relation schema
 
 **308 Chapter 7 Database Design and the E-R Model**
 
-## 7.9.2 The Unified Modeling Language UML
+### 7.9.2 The Unified Modeling Language UML
 
 Entity-relationship diagrams help model the data representation component of a software system. Data representation, however, forms only one part of an overall system design. Other components include models of user interactions with the system, specification of functional modules of the system and their interaction, etc. The **Unified Modeling Language** (UML) is a standard developed under the auspices of the Object Management Group (OMG) for creating specifications of various components of a software system. Some of the parts of UML are:
 
@@ -1791,11 +1791,11 @@ UML class diagrams include several other notations that do not correspond to the
 
 UML class diagrams also provide notations to represent object-oriented lan- guage features such as interfaces. See the references in the bibliographic notes for more information on UML class diagrams.
 
-# 7.10 Other Aspects of Database Design
+## 7.10 Other Aspects of Database Design
 
 Our extensive discussion of schema design in this chapter may create the false impression that schema design is the only component of a database design. There are indeed several other considerations that we address more fully in subsequent chapters, and survey briefly here.
 
-## 7.10.1 Data Constraints and Relational Database Design
+### 7.10.1 Data Constraints and Relational Database Design
 
 We have seen a variety of data constraints that can be expressed using SQL, including primary-key constraints, foreign-key constraints, **check** constraints, assertions, and triggers. Constraints serve several purposes. The most obvious one is the automation of consistency preservation. By expressing constraints in the SQL data-definition language, the designer is able to ensure that the database system itself enforces the constraints. This is more reliable than relying on each application program individually to enforce constraints. It also provides a central location for the update of constraints and the addition of new ones.
 
@@ -1811,7 +1811,7 @@ Data constraints are useful as well in determining the physical structure of dat
 
 Constraint enforcement comes at a potentially high price in performance each time the database is updated. For each update, the system must check all of the constraints and either reject updates that fail the constraints or execute appropriate triggers. The significance of the performance penalty depends not only on the frequency of update but also on how the database is designed. Indeed efficiency of the testing of certain types of constraints is an important aspect of the discussion of relational database schema design in Chapter 8.
 
-## 7.10.2 Usage Requirements: Queries, Performance
+### 7.10.2 Usage Requirements: Queries, Performance
 
 Database system performance is a critical aspect of most enterprise information systems. Performance pertains not only to the efficient use of the computing and storage hardware being used, but also to the efficiency of people who interact with the system and of processes that depend upon database data.
 
@@ -1831,11 +1831,11 @@ An understanding of types of queries that are expected to be the most frequent h
 
 Another aspect of queries that affects the choice of indices is the relative mix of update and read operations. While an index may speed queries, it also slows updates, which are forced to do extra work to maintain the accuracy of the index.
 
-## 7.10.3 Authorization Requirements
+### 7.10.3 Authorization Requirements
 
 Authorization constraints affect design of the database as well because SQL allows access to be granted to users on the basis of components of the logical design of the database. A relation schema may need to be decomposed into two or more schemas to facilitate the granting of access rights in SQL. For example, an employee record may include data relating to payroll, job functions, and medical benefits. Because different administrative units of the enterprise may manage each of these types of data, some users will need access to payroll data while being denied access to the job data, medical data, etc. If these data are all in one relation, the desired division of access, though still feasible through the use of views, is more cumbersome. Division of data in this manner becomes even more critical when the data are distributed across systems in a computer network, an issue we consider in Chapter 19.
 
-## 7.10.4 Data Flow, Workflow
+### 7.10.4 Data Flow, Workflow
 
 Database applications are often part of a larger enterprise application that in- teracts not only with the database system but also with various specialized ap- plications. For example, in a manufacturing company, a computer-aided design (CAD) system may assist in the design of new products. The CAD system may extract data from the database via an SQL statement, process the data internally, perhaps interacting with a product designer, and then update the database. Dur- ing this process, control of the data may pass among several product designers as well as other people. As another example, consider a travel-expense report. It is created by an employee returning from a business trip (possibly by means of a special software package) and is subsequently routed to the employee’s manager, perhaps other higher-level managers, and eventually to the accounting depart- ment for payment (at which point it interacts with the enterprise’s accounting information systems).
 
@@ -1843,7 +1843,7 @@ The term _workflow_ refers to the combination of data and tasks involved in pro-
 
 **7.11 Summary 313**
 
-## 7.10.5 Other Issues in Database Design
+### 7.10.5 Other Issues in Database Design
 
 Database design is usually not a one-time activity. The needs of an organization evolve continually, and the data that it needs to store also evolve correspond- ingly. During the initial database-design phases, or during the development of an application, the database designer may realize that changes are required at the conceptual, logical, or physical schema levels. Changes in the schema can affect all aspects of the database application. A good database design anticipates future needs of an organization, and ensures that the schema requires minimal changes as the needs evolve.
 
@@ -1853,7 +1853,7 @@ Furthermore, the enterprise that the database is serving likely interacts with o
 
 Finally, it is worth noting that database design is a human-oriented activity in two senses: the end users of the system are people (even if an application sits between the database and the end users); and the database designer needs to interact extensively with experts in the application domain to understand the data requirements of the application. All of the people involved with the data have needs and preferences that should be taken into account in order for a database design and deployment to succeed within the enterprise.
 
-# 7.11 Summary
+## 7.11 Summary
 
 • Database design mainly involves the design of the database schema. The **entity-relationship (E-R)** data model is a widely used data model for database design. It provides a convenient graphical representation to view data, rela- tionships, and constraints.
 
@@ -2165,7 +2165,7 @@ In general, the goal of relational database design is to generate a set of relat
 
 In this chapter, we introduce a formal approach to relational database design based on the notion of functional dependencies. We then define normal forms in terms of functional dependencies and other types of data dependencies. First, however, we view the problem of relational design from the standpoint of the schemas derived from a given entity-relationship design.
 
-# 8.1 Features of Good Relational Designs**
+## 8.1 Features of Good Relational Designs**
 
 Our study of entity-relationship design in Chapter 7 provides an excellent starting point for creating a relational database design. We saw in Section 7.6 that it is possible to generate a set of relation schemas directly from the E-R design. Obviously, the goodness (or badness) of the resulting set of schemas depends on how good the E-R design was in the first place. Later in this chapter, we shall study precise ways of assessing the desirability of a collection of relation schemas. However, we can go a long way toward a good design using concepts we have already studied.
 
@@ -2179,7 +2179,7 @@ _classroom_(_building_, _room number_, _capacity_) _department_(_dept name_, _bu
 
 **Figure 8.1** Schema for the university database.
 
-## 8.1.1 Design Alternative: Larger Schemas
+### 8.1.1 Design Alternative: Larger Schemas
 
 Now, let us explore features of this relational database design as well as some alternatives. Suppose that instead of having the schemas _instructor_ and _department_, we have the schema:
 
@@ -2203,7 +2203,7 @@ _ID name salary dept name building budget_
 
 is hired for the new department. In the old design, the schema _department_ can handle this, but under the revised design, we would have to create a tuple with a null value for _building_ and _budget_. In some cases null values are troublesome, as we saw in our study of SQL. However, if we decide that this is not a problem to us in this case, then we can proceed to use the revised design.
 
-## 8.1.2 Design Alternative: Smaller Schemas
+### 8.1.2 Design Alternative: Smaller Schemas
 
 Suppose again that, somehow, we had started out with the schema _inst dept_. How would we recognize that it requires repetition of information and should be split into the two schemas _instructor_ and _department_?
 
@@ -2285,7 +2285,7 @@ _natural join_
 
 Figure 8.3 shows these tuples, the resulting tuples using the schemas resulting from the decomposition, and the result if we attempted to regenerate the origi- nal tuples using a natural join. As we see in the figure, the two original tuples appear in the result along with two new tuples that incorrectly mix data values pertaining to the two employees named Kim. Although we have more tuples, we actually have less information in the following sense. We can indicate that a certain street, city, and salary pertain to someone named Kim, but we are unable to distinguish which of the Kims. Thus, our decomposition is unable to represent certain important facts about the university employees. Clearly, we would like to avoid such decompositions. We shall refer to such decompositions as being **lossy decompositions**, and, conversely, to those that are not as **lossless decom- positions**.
 
-**8.2 Atomic Domains and First Normal Form**
+## 8.2 Atomic Domains and First Normal Form
 
 The E-R model allows entity sets and relationship sets to have attributes that have some degree of substructure. Specifically, it allows multivalued attributes such as  
 
@@ -2315,7 +2315,7 @@ The use of set-valued attributes can lead to designs with redundant storage of d
 
 Some types of nonatomic values can be useful, although they should be used with care. For example, composite-valued attributes are often useful, and set- valued attributes are also useful in many cases, which is why both are supported in the E-R model. In many domains where entities have a complex structure, forcing a first normal form representation represents an unnecessary burden on the application programmer, who has to write code to convert data into atomic form. There is also the runtime overhead of converting data back and forth from the atomic form. Support for nonatomic values can thus be very useful in such domains. In fact, modern database systems do support many types of nonatomic values, as we shall see in Chapter 22. However, in this chapter we restrict ourselves to relations in first normal form and, thus, all domains are atomic.
 
-**8.3 Decomposition Using Functional Dependencies**
+## 8.3 Decomposition Using Functional Dependencies
 
 In Section 8.1, we noted that there is a formal methodology for evaluating whether a relational schema should be decomposed. This methodology is based upon the concepts of keys and functional dependencies.
 
@@ -2335,7 +2335,7 @@ of attributes that may or may not be a schema. A Roman letter is used when we wi
 
 • A relation, of course, has a particular value at any given time; we refer to that as an instance and use the term “instance of _r_”. When it is clear that we are talking about an instance, we may use simply the relation name (for example, _r_ ).
 
-**8.3.1 Keys and Functional Dependencies**
+### 8.3.1 Keys and Functional Dependencies
 
 A database models a set of entities and relationships in the real world. There are usually a variety of constraints (rules) on the data in the real world. For example, some of the constraints that are expected to hold in a university database are:
 
@@ -2417,7 +2417,7 @@ the relation. For example, given a schema _r_ (_A, B, C_), if functional depende
 
 We will use the notation _F_ \+ to denote the **closure** of the set _F_ , that is, the set of all functional dependencies that can be inferred given the set _F_ . Clearly _F_ \+ contains all of the functional dependencies in _F_ .
 
-**8.3.2 Boyce–Codd Normal Form**
+### 8.3.2 Boyce–Codd Normal Form
 
 One of the more desirable normal forms that we can obtain is **Boyce–Codd normal form** (**BCNF**). It eliminates all redundancy that can be discovered based on functional dependencies, though, as we shall see in Section 8.6, there may be other types of redundancy remaining. A relation schema _R_ is in BCNF with respect to a set _F_ of functional dependencies if, for all functional dependencies in _F_ \+ of the form  → , where  ⊆ _R_ and  ⊆ _R_, at least one of the following holds:
 
@@ -2461,7 +2461,7 @@ In this example, it turns out that  −  = . We need to state the rule as we 
 
 When we decompose a schema that is not in BCNF, it may be that one or more of the resulting schemas are not in BCNF. In such cases, further decomposition is required, the eventual result of which is a set of BCNF schemas.
 
-**8.3.3 BCNF and Dependency Preservation**
+### 8.3.3 BCNF and Dependency Preservation
 
 We have seen several ways in which to express database consistency constraints: primary-key constraints, functional dependencies, **check** constraints, assertions, and triggers. Testing these constraints each time the database is updated can be costly and, therefore, it is useful to design the database in a way that constraints can be tested efficiently. In particular, if testing a functional dependency can be done by considering just one relation, then the cost of testing this constraint is low. We shall see that, in some cases, decomposition into BCNF can prevent efficient testing of certain functional dependencies.
 
@@ -2513,7 +2513,7 @@ Both the above schemas are BCNF. (In fact, you can verify that any schema with o
 
 Because our design makes it computationally hard to enforce this functional dependency, we say our design is not **dependency preserving**.4 Because depen- dency preservation is usually considered desirable, we consider another normal form, weaker than BCNF, that will allow us to preserve dependencies. That normal form is called third normal form.5
 
-**8.3.4 Third Normal Form**
+### 8.3.4 Third Normal Form
 
 BCNF requires that all nontrivial dependencies be of the form  → , where  is a superkey. Third normal form (3NF) relaxes this constraint slightly by allowing certain nontrivial functional dependencies whose left side is not a superkey. Before we define 3NF, we recall that a candidate key is a minimal superkey—that is, a superkey no proper subset of which is also a superkey.
 
@@ -2547,7 +2547,7 @@ _i ID_ holds on _dept advisor_, the attribute _dept name_ is contained in a cand
 
 We have seen the trade-off that must be made between BCNF and 3NF when there is no dependency-preserving BCNF design. These trade-offs are described in more detail in Section 8.5.4.
 
-**8.3.5 Higher Normal Forms**
+### 8.3.5 Higher Normal Forms
 
 Using functional dependencies to decompose schemas may not be sufficient to avoid unnecessary repetition of information in certain cases. Consider a slight variation in the _instructor_ entity-set definition in which we record with each instructor a set of children’s names and a set of phone numbers. The phone numbers may be shared by multiple people. Thus, _phone number_ and _child name_ would be multivalued attributes and, following our rules for generating schemas from an E-R design, we would have two schemas, one for each of the multivalued attributes, _phone number_ and _child name_:
 
@@ -2569,11 +2569,11 @@ the resultant tuples would imply that David corresponded to 512-555-1234, while 
 
 Because normal forms based on functional dependencies are not sufficient to deal with situations like this, other dependencies and normal forms have been defined. We cover these in Sections 8.6 and 8.7.
 
-**8.4 Functional-Dependency Theory**
+## 8.4 Functional-Dependency Theory
 
 We have seen in our examples that it is useful to be able to reason systematically about functional dependencies as part of a process of testing schemas for BCNF or 3NF.
 
-**8.4.1 Closure of a Set of Functional Dependencies**
+### 8.4.1 Closure of a Set of Functional Dependencies
 
 We shall see that, given a set _F_ of functional dependencies on a schema, we can prove that certain other functional dependencies also hold on the schema. We say that such functional dependencies are “logically implied” by _F_. When testing for normal forms, it is not sufficient to consider the given set of functional dependencies; rather, we need to consider _all_ functional dependencies that hold on the schema.
 
@@ -2643,7 +2643,7 @@ The left-hand and right-hand sides of a functional dependency are both sub- sets
 
 possible functional dependencies, where _n_ is the number of attributes in _R_. Each iteration of the repeat loop of the procedure, except the last iteration, adds at least one functional dependency to _F_ +. Thus, the procedure is guaranteed to terminate.
 
-**8.4.2 Closure of Attribute Sets**
+### 8.4.2 Closure of Attribute Sets
 
 We say that an attribute _B_ is **functionally determined** by  if  → _B_. To test whether a set  is a superkey, we must devise an algorithm for computing the set of attributes functionally determined by . One way of doing this is to compute _F_ +, take all functional dependencies with  as the left-hand side, and take the union of the right-hand sides of all such dependencies. However, doing so can be expensive, since _F_ \+ can be large.
 
@@ -2701,7 +2701,7 @@ There are several uses of the attribute closure algorithm:
 
 • It gives us an alternative way to compute _F_ +: For each  ⊆ _R_, we find the closure +, and for each _S_ ⊆ +, we output a functional dependency  → _S_.
 
-**8.4.3 Canonical Cover**
+### 8.4.3 Canonical Cover
 
 Suppose that we have a set of functional dependencies _F_ on a relation schema. Whenever a user performs an update on the relation, the database system must ensure that the update does not violate any functional dependencies, that is, all the functional dependencies in _F_ are satisfied in the new database state.
 
@@ -2795,7 +2795,7 @@ _Fc_ \= {_A_ → _C_ , _C_ → _B_, and _B_ → _A_} _Fc_ \= {_A_ → _C_ , _B_ 
 
 As an exercise, can you find one more canonical cover for _F_ ?
 
-**8.4.4 Lossless Decomposition**
+### 8.4.4 Lossless Decomposition
 
 Let _r_ (_R_) be a relation schema, and let _F_ be a set of functional dependencies on _r_ (_R_). Let _R_1 and _R_2 form a decomposition of _R_. We say that the decomposition is a **lossless decomposition** if there is no loss of information by replacing _r_ (_R_) with two relation schemas _r_1(_R_1) and _r_2(_R_2). More precisely, we say the decomposition is lossless if, for all legal database instances (that is, database instances that satisfy the specified functional dependencies and other constraints), relation _r_ contains the same set of tuples as the result of the following SQL query:
 
