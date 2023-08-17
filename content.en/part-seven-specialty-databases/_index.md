@@ -487,11 +487,9 @@ The system executes the nested subqueries in the **select** clause for each tupl
 
 SQL:2003 provides a variety of operators on multisets, including a function **set**(_M_) that returns a duplicate-free version of a multiset _M_, an **intersection** aggregate operation, which returns the intersection of all the multisets in a group, a **fusion** aggregate operation, which returns the union of all multisets in a group, and a **submultiset** predicate, which checks if a multiset is contained in another multiset.  
 
-**22.6 Object-Identity and Reference Types in SQL 961**
+##22.6 Object-Identity and Reference Types in SQL
 
 The SQL standard does not provide any way to update multiset attributes except by assigning a new value. For example, to delete a value _v_ from a multiset attribute _A_, we would have to set it to (_A_ **except all multiset**\[_v_\]).
-
-**22.6 Object-Identity and Reference Types in SQL**
 
 Object-oriented languages provide the ability to refer to objects. An attribute of a type can be a reference to an object of a specified type. For example, in SQL we can define a type _Department_ with a field _name_ and a field _head_ that is a reference to the type _Person_, and a table _departments_ of type _Department_, as follows:
 
@@ -547,8 +545,6 @@ It is even possible to use an existing primary-key value as the identifier, by i
 
 **create table** _people_ **of** _Person_ **ref is** _person id_ **derived**;  
 
-**22.7 Implementing O-R Features 963**
-
 Note that the table definition must specify that the reference is derived, and must still specify a self-referential attribute name. When inserting a tuple for _departments_, we can then use:
 
 **insert into** _departments_ **values** (’CS’, ’John’);
@@ -565,7 +561,7 @@ We can use the operation **deref** to return the tuple pointed to by a reference
 
 **select deref**(_head_)._name_ **from** _departments_;
 
-**22.7 Implementing O-R Features**
+##22.7 Implementing O-R Features
 
 Object-relational database systems are basically extensions of existing relational database systems. Changes are clearly required at many levels of the database system. However, to minimize changes to the storage-system code (relation stor- age, indices, etc.), the complex data types supported by object-relational systems can be translated to the simpler type system of relational databases.
 
@@ -587,13 +583,11 @@ Implementations may choose to represent array and multiset types directly, or ma
 
 The ODBC and JDBC application program interfaces have been extended to retrieve and store structured types. JDBC provides a method getObject() that is similar to getString() but returns a Java Struct object, from which the components of the structured type can be extracted. It is also possible to associate a Java class with an SQL structured type, and JDBC will then convert between the types. See the ODBC or JDBC reference manuals for details.
 
-**22.8 Persistent Programming Languages**
+##22.8 Persistent Programming Languages
 
 Database languages differ from traditional programming languages in that they directly manipulate data that are persistent—that is, data that continue to exist even after the program that created it has terminated. A relation in a database and tuples in a relation are examples of persistent data. In contrast, the only persistent data that traditional programming languages directly manipulate are files.
 
 Access to a database is only one component of any real-world application. While a data-manipulation language like SQL is quite effective for accessing data, a programming language is required for implementing other components of the application such as user interfaces or communication with other computers. The traditional way of interfacing database languages to programming languages is by embedding SQL within the programming language.  
-
-**22.8 Persistent Programming Languages 965**
 
 A **persistent programming language** is a programming language extended with constructs to handle persistent data. Persistent programming languages can be distinguished from languages with embedded SQL in at least two ways:
 
@@ -615,11 +609,11 @@ There are certain drawbacks to persistent programming languages, how- ever, that
 
 In this section, we describe a number of conceptual issues that must be ad- dressed when adding persistence to an existing programming language. We first  
 
-**966 Chapter 22 Object-Based Databases**
+**9Object-Based Databases**
 
 address language-independent issues, and in subsequent sections we discuss is- sues that are specific to the C++ language and to the Java language. However, we do not cover details of language extensions; although several standards have been proposed, none has met universal acceptance. See the references in the bib- liographical notes to learn more about specific language extensions and further details of implementations.
 
-**22.8.1 Persistence of Objects**
+###22.8.1 Persistence of Objects
 
 Object-oriented programming languages already have a concept of objects, a type system to define object types, and constructs to create objects. However, these objects are _transient_—they vanish when the program terminates, just as variables in a Java or C program vanish when the program terminates. If we wish to turn such a language into a database programming language, the first step is to provide a way to make objects persistent. Several approaches have been proposed.
 
