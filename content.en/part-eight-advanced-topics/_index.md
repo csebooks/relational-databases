@@ -352,7 +352,7 @@ Testing of programs involves designing a **test suite**, that is, a collection o
 
 In the context of database applications, a test case consists of two parts: a database state, and an input to a specific interface of the application.
 
-SQL queries can have subtle bugs that can be difficult to catch. For example, a query may execute _r  s_, when it should have actually performed _r  s_. The difference between these two queries would be found only if the test database had an _r_ tuple with no matching _s_ tuple. Thus, it is important to create test databases that can catch commonly occurring errors. Such errors are referred to as **mutations**, since they are usually small changes to a query (or program). A test case that produces different outputs on an intended query and a mutant of the query is said to **kill the mutant**. A test suite should have test cases that kill (most) commonly occurring mutants.
+SQL queries can have subtle bugs that can be difficult to catch. For example, a query may execute _r  s_, when it should have actually performed _r  s_. The difference between these two queries would be found only if the test database had an _r_ tuple with no matching _s_ tuple. Thus, it is important to create test databases that can catch commonly occurring errors. Such errors are referred to as **mutations**, since they are usually small changes to a query (or program). A test case that produces different outputs on an intended query and a mutant of the query is said to **kill the mutant**. A test suite should have test cases that kill (most) commonly occurring mutants.
 
 If a test case performs an update on the database, to check that it executed properly one must verify that the contents of the database match the expected contents. Thus, the expected output consists not only of data displayed on the user’s screen, but also (updates to) the database state.
 
@@ -478,7 +478,8 @@ Tuning is best done by identifying bottlenecks and eliminating them. Database sy
 - Performance tuning 
 - Set-orientation 
 -  Batch update (JDBC) 
--  Bulk load • Bulk update 
+-  Bulk load 
+- Bulk update 
 - Merge statement 
 - Bottlenecks 
 - Queueing systems 
@@ -543,7 +544,7 @@ Tuning is best done by identifying bottlenecks and eliminating them. Database sy
 
     ◦ CORBA
 
-• XML-based standards
+- XML-based standards
 
 ## Practice Exercises
 
@@ -671,7 +672,7 @@ The predicates _precedes_, _overlaps_, and _contains_ can be applied on interval
 
 Functional dependencies must be used with care in a temporal relation, as we saw in Section 8.9. Although the instructor _ID_ may functionally determine the salary at any given point in time, obviously the salary can change over time. A **temporal functional dependency** _X_
 
-→ _Y_ holds on a relation schema _R_ if, for all legal instances _r_ of _R_, all snapshots of _r_ satisfy the functional dependency _X_ → _Y_.
+→ _Y_ holds on a relation schema _R_ if, for all legal instances _r_ of _R_, all snapshots of _r_ satisfy the functional dependency _X_ → _Y_.
 
 Several proposals have been made for extending SQL to improve its support of temporal data, but at least until SQL:2008, SQL has not provided any special support for temporal data beyond the time-related data types and operations.
 
@@ -681,16 +682,13 @@ Spatial data support in databases is important for efficiently storing, indexing
 
 Two types of spatial data are particularly important:
 
-- **Computer-aided-design (CAD) data**, which includes spatial information about how objects—such as buildings, cars, or aircraft—are constructed. Other im-
-
-1Many temporal database researchers feel this type should have been called **span** since it does not specify an exact start or end time, only the time span between the two. 
-portant examples of computer-aided-design databases are integrated-circuit and electronic-device layouts.
+- **Computer-aided-design (CAD) data**, which includes spatial information about how objects—such as buildings, cars, or aircraft—are constructed. Other important examples of computer-aided-design databases are integrated-circuit and electronic-device layouts.
 
 - **Geographic data** such as road maps, land-usage maps, topographic elevation maps, political maps showing boundaries, land-ownership maps, and so on. **Geographic information systems** are special-purpose databases tailored for storing geographic data.
 
 Support for geographic data has been added to many database systems, such as the IBM DB2 Spatial Extender, e Informix Spatial Datablade, and Oracle Spati.
 
-25.3.1 Representation of Geometric Information**
+### 25.3.1 Representation of Geometric Information
 
 Figure 25.2 illustrates how various geometric constructs can be represented in a database, in a normalized fashion. We stress here that geometric information can be represented in several different ways, only some of which we describe.
 
@@ -702,64 +700,13 @@ List-based representations of polylines or polygons are often convenient for que
 
 The representation of points and line segments in three-dimensional space is similar to their representation in two-dimensional space, the only difference being that points have an extra _z_ component. Similarly, the representation of pla- nar figures—such as triangles, rectangles, and other polygons—does not change
 
-2Some references use the term _closed polygon_ to refer to what we call polygons, and refer to polylines as open polygons.  
-
-**1066 Chapter 25 Spatial and Temporal Data and Mobility**
-
-1
-
-2
-
-1
-
-1
-
-3
-
-3
-
-45
-
-2
-
-2
-
-1 3
-
-45
-
-2
-
-line segment
-
-triangle
-
-polygon
-
-polygon
-
-{(x1,y1), (x2,y2)}
-
-{(x1,y1), (x2,y2), (x3,y3)}
-
-{(x1,y1), (x2,y2), (x3,y3), (x4,y4), (x5,y5)}
-
-{(x1,y1), (x2,y2), (x3,y3), ID1} {(x1,y1), (x3,y3), (x4,y4), ID1} {(x1,y1), (x4,y4), (x5,y5), ID1}
-
-
-**object representation**
-
-**Figure 25.2** Representation of geometric constructs.
+![Alt text](D1.png)
 
 much when we move to three dimensions. Tetrahedrons and cuboids can be rep- resented in the same way as triangles and rectangles. We can represent arbitrary polyhedra by dividing them into tetrahedrons, just as we triangulate polygons. We can also represent them by listing their faces, each of which is itself a polygon, along with an indication of which side of the face is inside the polyhedron.
 
-**25.3.2 Design Databases**
+### 25.3.2 Design Databases
 
-**Computer-aided-design** (**CAD**) systems traditionally stored data in memory dur- ing editing or other processing, and wrote the data back to a file at the end of a session of editing. The drawbacks of such a scheme include the cost (program- ming complexity, as well as time cost) of transforming data from one form to another, and the need to read in an entire file even if only parts of it are required. For large designs, such as the design of a large-scale integrated circuit or the design of an entire airplane, it may be impossible to hold the complete design in  
-
-**25.3 Spatial and Geographic Data 1067**
-
-memory. Designers of object-oriented databases were motivated in large part by the database requirements of CAD systems. Object-oriented databases represent components of the design as objects, and the connections between the objects indicate how the design is structured.
+**Computer-aided-design** (**CAD**) systems traditionally stored data in memory dur- ing editing or other processing, and wrote the data back to a file at the end of a session of editing. The drawbacks of such a scheme include the cost (program- ming complexity, as well as time cost) of transforming data from one form to another, and the need to read in an entire file even if only parts of it are required. For large designs, such as the design of a large-scale integrated circuit or the design of an entire airplane, it may be impossible to hold the complete design in memory. Designers of object-oriented databases were motivated in large part by the database requirements of CAD systems. Object-oriented databases represent components of the design as objects, and the connections between the objects indicate how the design is structured.
 
 The objects stored in a design database are generally geometric objects. Sim- ple two-dimensional geometric objects include points, lines, triangles, rectangles, and, in general, polygons. Complex two-dimensional objects can be formed from simple objects by means of union, intersection, and difference operations. Simi- larly, complex three-dimensional objects may be formed from simpler objects such as spheres, cylinders, and cuboids, by union, intersection, and difference opera- tions, as in Figure 25.3. Three-dimensional surfaces may also be represented by **wireframe models**, which essentially model the surface as a set of simpler objects, such as line segments, triangles, and rectangles.
 
@@ -769,19 +716,15 @@ Various spatial operations must be performed on a design. For instance, the desi
 
 Spatial-integrity constraints, such as “two pipes should not be in the same location,” are important in design databases to prevent interference errors. Such errors often occur if the design is performed manually, and are detected only when a prototype is being constructed. As a result, these errors can be expensive to fix. Database support for spatial-integrity constraints helps people to avoid design
 
-(a) Difference of cylinders (b) Union of cylinders
-
-**Figure 25.3** Complex three-dimensional objects.  
-
-**1068 Chapter 25 Spatial and Temporal Data and Mobility**
+![Alt text](D2.png)
 
 errors, thereby keeping the design consistent. Implementing such integrity checks again depends on the availability of efficient multidimensional index structures.
 
-**25.3.3 Geographic Data**
+### 25.3.3 Geographic Data
 
 Geographic data are spatial in nature, but differ from design data in certain ways. Maps and satellite images are typical examples of geographic data. Maps may provide not only location information—about boundaries, rivers, and roads, for example—but also much more detailed information associated with locations, such as elevation, soil type, land usage, and annual rainfall.
 
-**25.3.3.1 Applications of Geographic Data**
+#### 25.3.3.1 Applications of Geographic Data
 
 Geographic databases have a variety of uses, including online map services; vehicle-navigation systems; distribution-network information for public-service utilities such as telephone, electric-power, and water-supply systems; and land- usage information for ecologists and planners.
 
@@ -791,29 +734,24 @@ Vehicle-navigation systems are systems that are mounted in automobiles and provi
 
 Geographic databases for public-utility information have become very im- portant as the network of buried cables and pipes has grown. Without detailed maps, work carried out by one utility may damage the cables of another utility, resulting in large-scale disruption of service. Geographic databases, coupled with accurate location-finding systems, help avoid such problems.
 
-3Well, hardly ever!  
 
-**25.3 Spatial and Geographic Data 1069**
-
-**25.3.3.2 Representation of Geographic Data**
+#### 25.3.3.2 Representation of Geographic Data
 
 **Geographic data** can be categorized into two types:
 
-• **Raster data**. Such data consist of bit maps or pixel maps, in two or more dimensions. A typical example of a two-dimensional raster image is a satellite image of an area. In addition to the actual image, the data includes the location of the image, specified for example by the latitude and longitude of its corners, and the resolution, specified either by the total number of pixels, or, more commonly in the context of geographic data, by the area covered by each pixel.
+- **Raster data**. Such data consist of bit maps or pixel maps, in two or more dimensions. A typical example of a two-dimensional raster image is a satellite image of an area. In addition to the actual image, the data includes the location of the image, specified for example by the latitude and longitude of its corners, and the resolution, specified either by the total number of pixels, or, more commonly in the context of geographic data, by the area covered by each pixel.
 
 Raster data is often represented as **tiles**, each covering a fixed sized area. A larger area can be displayed by displaying all the tiles that overlap with the area. To allow the display of data at different zoom levels, a separate set of tiles is created for each zoom level. Once the zoom level is set by the user interface (for example a Web browser), tiles at that zoom level, which overlap the area being displayed, are retrieved and displayed.
 
 Raster data can be three-dimensional—for example, the temperature at different altitudes at different regions, again measured with the help of a satellite. Time could form another dimension—for example, the surface temperature measurements at different points in time.
 
-• **Vector data**. Vector data are constructed from basic geometric objects, such as points, line segments, polylines, triangles, and other polygons in two dimensions, and cylinders, spheres, cuboids, and other polyhedrons in three dimensions. In the context of geographic data, points are usually represented by latitude and longitude, and where the height is relevant, additionally by elevation.
+- **Vector data**. Vector data are constructed from basic geometric objects, such as points, line segments, polylines, triangles, and other polygons in two dimensions, and cylinders, spheres, cuboids, and other polyhedrons in three dimensions. In the context of geographic data, points are usually represented by latitude and longitude, and where the height is relevant, additionally by elevation.
 
 Map data are often represented in vector format. Roads are often repre- sented as polylines. Geographic features, such as large lakes, or even political features such as states and countries, are represented as complex polygons. Some features, such as rivers, may be represented either as complex curves or as complex polygons, depending on whether their width is relevant.
 
 Geographic information related to regions, such as annual rainfall, can be represented as an array—that is, in raster form. For space efficiency, the array can be stored in a compressed form. In Section 25.3.5.2, we study an alternative representation of such arrays by a data structure called a _quadtree_.
 
 As another alternative, we can represent region information in vector form, using polygons, where each polygon is a region within which the array value is the same. The vector representation is more compact than the raster representation in some applications. It is also more accurate for some tasks, such as depicting roads, where dividing the region into pixels (which may be fairly large) leads to a loss of precision in location information. However, the vector representation is unsuitable for applications where the data are intrinsically raster based, such as satellite images.  
-
-**1070 Chapter 25 Spatial and Temporal Data and Mobility**
 
 **Topographical** information, that is information about the elevation (height) of each point on a surface, can be represented in raster form. Alternatively it can be represented in vector form by dividing the surface into polygons covering re- gions of (approximately) equal elevation, with a single elevation value associated with each polygon. As another alternative, the surface can be **triangulated** (that is, divided into triangles), with each triangle represented by the latitude, longi- tude, and elevation of each of its corners. The latter representation, called the **triangulated irregular network** (**TIN**) representation, is a compact representation which is particularly useful for generating three-dimensional views of an area.
 
@@ -823,17 +761,15 @@ It is also interesting to note that even information that is actually stored in 
 
 Map services such as Google Maps and Yahoo! Maps provide APIs that allow users to create specialized map displays, containing application specific data overlaid on top of standard map data. For example, a Web site may show a map of an area with information about restaurants overlaid on the map. The overlays can be constructed dynamically, displaying only restaurants with a specific cuisine, for example, or allowing users to change the zoom level, or pan the display. The maps APIs for a specific language (typically JavaScript or Flash) are built on top of a Web service that provides the underlying map data.
 
-**25.3.4 Spatial Queries**
+### 25.3.4 Spatial Queries
 
 There are a number of types of queries that involve spatial locations.
 
-• **Nearness queries** request objects that lie near a specified location. A query to find all restaurants that lie within a given distance of a given point is an example of a nearness query. The **nearest-neighbor query** requests the object that is nearest to a specified point. For example, we may want to find the nearest gasoline station. Note that this query does not have to specify a limit on the distance, and hence we can ask it even if we have no idea how far the nearest gasoline station lies.
+- **Nearness queries** request objects that lie near a specified location. A query to find all restaurants that lie within a given distance of a given point is an example of a nearness query. The **nearest-neighbor query** requests the object that is nearest to a specified point. For example, we may want to find the nearest gasoline station. Note that this query does not have to specify a limit on the distance, and hence we can ask it even if we have no idea how far the nearest gasoline station lies.
 
-• **Region queries** deal with spatial regions. Such a query can ask for objects that lie partially or fully inside a specified region. A query to find all retail shops within the geographic boundaries of a given town is an example.  
+- **Region queries** deal with spatial regions. Such a query can ask for objects that lie partially or fully inside a specified region. A query to find all retail shops within the geographic boundaries of a given town is an example. 
 
-**25.3 Spatial and Geographic Data 1071**
-
-• Queries may also request **intersections** and **unions** of regions. For example, given region information, such as annual rainfall and population density, a query may request all regions with a low annual rainfall as well as a high population density.
+- Queries may also request **intersections** and **unions** of regions. For example, given region information, such as annual rainfall and population density, a query may request all regions with a low annual rainfall as well as a high population density.
 
 Queries that compute intersections of regions can be thought of as computing the **spatial join** of two spatial relations—for example, one representing rainfall and the other representing population density—with the location playing the role of join attribute. In general, given two relations, each containing spatial objects, the spatial join of the two relations generates either pairs of objects that intersect, or the intersection regions of such pairs.
 
@@ -843,25 +779,15 @@ In general, queries on spatial data may have a combination of spatial and nonspa
 
 Since spatial data are inherently graphical, we usually query them by using a graphical query language. Results of such queries are also displayed graphically, rather than in tables. The user can invoke various operations on the interface, such as choosing an area to be viewed (for example, by pointing and clicking on suburbs west of Manhattan), zooming in and out, choosing what to display on the basis of selection conditions (for example, houses with more than three bedrooms), overlay of multiple maps (for example, houses with more than three bedrooms overlaid on a map showing areas with low crime rates), and so on. The graphical interface constitutes the front end. Extensions of SQL have been proposed to permit relational databases to store and retrieve spatial information efficiently, and also to allow queries to mix spatial and nonspatial conditions. Extensions include allowing abstract data types, such as lines, polygons, and bit maps, and allowing spatial conditions, such as _contains_ or _overlaps_.
 
-**25.3.5 Indexing of Spatial Data**
+### 25.3.5 Indexing of Spatial Data
 
 Indices are required for efficient access to spatial data. Traditional index struc- tures, such as hash indices and B-trees, are not suitable, since they deal only with one-dimensional data, whereas spatial data are typically of two or more dimensions.
 
-**25.3.5.1 k-d Trees**
+#### 25.3.5.1 k-d Trees
 
-To understand how to index spatial data consisting of two or more dimensions, we consider first the indexing of points in one-dimensional data. Tree structures, such as binary trees and B-trees, operate by successively dividing space into smaller parts. For instance, each internal node of a binary tree partitions a one-  
+To understand how to index spatial data consisting of two or more dimensions, we consider first the indexing of points in one-dimensional data. Tree structures, such as binary trees and B-trees, operate by successively dividing space into smaller parts. For instance, each internal node of a binary tree partitions a one-
 
-**1072 Chapter 25 Spatial and Temporal Data and Mobility**
-
-3 1 3
-
-2
-
-3 3
-
-2
-
-**Figure 25.4** Division of space by a k-d tree.
+![Alt text](D3.png)
 
 dimensional interval in two. Points that lie in the left partition go into the left subtree; points that lie in the right partition go into the right subtree. In a balanced binary tree, the partition is chosen so that approximately one-half of the points stored in the subtree fall in each partition. Similarly, each level of a B-tree splits a one-dimensional interval into multiple parts.
 
@@ -869,13 +795,11 @@ We can use that intuition to create tree structures for two-dimensional space, a
 
 The **k-d-B tree** extends the k-d tree to allow multiple child nodes for each internal node, just as a B-tree extends a binary tree, to reduce the height of the tree. k-d-B trees are better suited for secondary storage than k-d trees.
 
-**25.3.5.2 Quadtrees**
+#### 25.3.5.2 Quadtrees
 
-An alternative representation for two-dimensional data is a **quadtree**. An example of the division of space by a quadtree appears in Figure 25.5. The set of points  
+An alternative representation for two-dimensional data is a **quadtree**. An example of the division of space by a quadtree appears in Figure 25.5. The set of points
 
-**25.3 Spatial and Geographic Data 1073**
-
-**Figure 25.5** Division of space by a quadtree.
+![Alt text](D4.png)
 
 is the same as that in Figure 25.4. Each node of a quadtree is associated with a rectangular region of space. The top node is associated with the entire target space. Each nonleaf node in a quadtree divides its region into four equal-sized quadrants, and correspondingly each such node has four child nodes corresponding to the four quadrants. Leaf nodes have between zero and some fixed maximum number of points. Correspondingly, if the region corresponding to a node has more than the maximum number of points, child nodes are created for that node. In the example in Figure 25.5, the maximum number of points in a leaf node is set to 1.
 
@@ -883,13 +807,9 @@ This type of quadtree is called a **PR quadtree**, to indicate it stores points,
 
 Indexing of line segments and polygons presents new problems. There are extensions of k-d trees and quadtrees for this task. However, a line segment or polygon may cross a partitioning line. If it does, it has to be split and represented in each of the subtrees in which its pieces occur. Multiple occurrences of a line segment or polygon can result in inefficiencies in storage, as well as inefficiencies in querying.
 
-**25.3.5.3 R-Trees**
+#### 25.3.5.3 R-Trees
 
-A storage structure called an **R-tree** is useful for indexing of objects such as points, line segments, rectangles, and other polygons. An R-tree is a balanced  
-
-**1074 Chapter 25 Spatial and Temporal Data and Mobility**
-
-tree structure with the indexed objects stored in leaf nodes, much like a B+-tree. However, instead of a range of values, a rectangular **bounding box** is associated with each tree node. The bounding box of a leaf node is the smallest rectangle parallel to the axes that contains all objects stored in the leaf node. The bounding box of internal nodes is, similarly, the smallest rectangle parallel to the axes that contains the bounding boxes of its child nodes. The bounding box of an object (such as a polygon) is defined, similarly, as the smallest rectangle parallel to the axes that contains the object.
+A storage structure called an **R-tree** is useful for indexing of objects such as points, line segments, rectangles, and other polygons. An R-tree is a balanced tree structure with the indexed objects stored in leaf nodes, much like a B+-tree. However, instead of a range of values, a rectangular **bounding box** is associated with each tree node. The bounding box of a leaf node is the smallest rectangle parallel to the axes that contains all objects stored in the leaf node. The bounding box of internal nodes is, similarly, the smallest rectangle parallel to the axes that contains the bounding boxes of its child nodes. The bounding box of an object (such as a polygon) is defined, similarly, as the smallest rectangle parallel to the axes that contains the object.
 
 Each internal node stores the bounding boxes of the child nodes along with the pointers to the child nodes. Each leaf node stores the indexed objects, and may optionally store the bounding boxes of the objects; the bounding boxes help speed up checks for overlaps of the rectangle with the indexed objects—if a query rectangle does not overlap with the bounding box of an object, it cannot overlap with the object, either. (If the indexed objects are rectangles, there is of course no need to store bounding boxes, since they are identical to the rectangles.)
 
@@ -899,95 +819,56 @@ The R-tree itself is at the right side of Figure 25.6. The figure refers to the 
 
 We shall now see how to implement search, insert, and delete operations on an R-tree.
 
-BB1 BB2 BB
+![Alt text](D5.png)
 
-B CA E F H I
+- **Search**. As the figure shows, the bounding boxes associated with sibling nodes may overlap; in B+-trees, k-d trees, and quadtrees, in contrast, the ranges do not overlap. A search for objects containing a point therefore has to follow _all_ child nodes whose associated bounding boxes contain the point; as a result, multiple paths may have to be searched. Similarly, a query to find all objects that intersect a given object has to go down every node where the associated rectangle intersects the given object.
 
-A B
-
-C
-
-I
-
-E F
-
-H
-
-1
-
-2
-
-3
-
-D
-
-G
-
-D G
-
-3
-
-**Figure 25.6** An R-tree.  
-
-**25.3 Spatial and Geographic Data 1075**
-
-• **Search**. As the figure shows, the bounding boxes associated with sibling nodes may overlap; in B+-trees, k-d trees, and quadtrees, in contrast, the ranges do not overlap. A search for objects containing a point therefore has to follow _all_ child nodes whose associated bounding boxes contain the point; as a result, multiple paths may have to be searched. Similarly, a query to find all objects that intersect a given object has to go down every node where the associated rectangle intersects the given object.
-
-• **Insert**. When we insert an object into an R-tree, we select a leaf node to hold the object. Ideally we should pick a leaf node that has space to hold a new entry, and whose bounding box contains the bounding box of the object. However, such a node may not exist; even if it did, finding the node may be very expensive, since it is not possible to find it by a single traversal down from the root. At each internal node we may find multiple children whose bounding boxes contain the bounding box of the object, and each of these children needs to be explored. Therefore, as a heuristic, in a traversal from the root, if any of the child nodes has a bounding box containing the bounding box of the object, the R-tree algorithm chooses one of them arbitrarily. If none of the children satisfy this condition, the algorithm chooses a child node whose bounding box has the maximum overlap with the bounding box of the object for continuing the traversal.
+- **Insert**. When we insert an object into an R-tree, we select a leaf node to hold the object. Ideally we should pick a leaf node that has space to hold a new entry, and whose bounding box contains the bounding box of the object. However, such a node may not exist; even if it did, finding the node may be very expensive, since it is not possible to find it by a single traversal down from the root. At each internal node we may find multiple children whose bounding boxes contain the bounding box of the object, and each of these children needs to be explored. Therefore, as a heuristic, in a traversal from the root, if any of the child nodes has a bounding box containing the bounding box of the object, the R-tree algorithm chooses one of them arbitrarily. If none of the children satisfy this condition, the algorithm chooses a child node whose bounding box has the maximum overlap with the bounding box of the object for continuing the traversal.
 
 Once the leaf node has been reached, if the node is already full, the algorithm performs node splitting (and propagates splitting upward if required) in a manner very similar to B+-tree insertion. Just as with B+-tree insertion, the R- tree insertion algorithm ensures that the tree remains balanced. Additionally, it ensures that the bounding boxes of leaf nodes, as well as internal nodes, remain consistent; that is, bounding boxes of leaves contain all the bounding boxes of the objects stored at the leaf, while the bounding boxes for internal nodes contain all the bounding boxes of the children nodes.
 
 The main difference of the insertion procedure from the B+-tree insertion procedure lies in how the node is split. In a B+-tree, it is possible to find a value such that half the entries are less than the midpoint and half are greater than the value. This property does not generalize beyond one dimension; that is, for more than one dimension, it is not always possible to split the entries into two sets so that their bounding boxes do not overlap. Instead, as a heuristic, the set of entries _S_ can be split into two disjoint sets _S_1 and _S_2 so that the bounding boxes of _S_1 and _S_2 have the minimum total area; another heuristic would be to split the entries into two sets _S_1 and _S_2 in such a way that _S_1 and _S_2 have minimum overlap. The two nodes resulting from the split would contain the entries in _S_1 and _S_2, respectively. The cost of finding splits with minimum total area or overlap can itself be large, so cheaper heuristics, such as the _quadratic split_ heuristic, are used. (The heuristic gets is name from the fact that it takes time quadratic in the number of entries.)
 
-The **quadratic split** heuristic works this way: First, it picks a pair of entries _a_ and _b_ from _S_ such that putting them in the same node would result in a bounding box with the maximum wasted space; that is, the area of the  
-
-**1076 Chapter 25 Spatial and Temporal Data and Mobility**
-
-minimum bounding box of _a_ and _b_ minus the sum of the areas of _a_ and _b_ is the largest. The heuristic places the entries _a_ and _b_ in sets _S_1 and _S_2, respectively.
+The **quadratic split** heuristic works this way: First, it picks a pair of entries _a_ and _b_ from _S_ such that putting them in the same node would result in a bounding box with the maximum wasted space; that is, the area of the minimum bounding box of _a_ and _b_ minus the sum of the areas of _a_ and _b_ is the largest. The heuristic places the entries _a_ and _b_ in sets _S_1 and _S_2, respectively.
 
 It then iteratively adds the remaining entries, one entry per iteration, to one of the two sets _S_1 or _S_2\. At each iteration, for each remaining entry _e_, let _ie,_1 denote the increase in the size of the bounding box of _S_1 if _e_ is added to _S_1 and let _ie,_2 denote the corresponding increase for _S_2\. In each iteration, the heuristic chooses one of the entries with the maximum difference of _ie,_1 and _ie,_2 and adds it to _S_1 if _ie,_1 is less than _ie,_2, and to _S_2 otherwise. That is, an entry with “maximum preference” for one of _S_1 or _S_2 is chosen at each iteration. The iteration stops when all entries have been assigned, or when one of the sets _S_1 or _S_2 has enough entries that all remaining entries have to be added to the other set so the nodes constructed from _S_1 and _S_2 both have the required minimum occupancy. The heuristic then adds all unassigned entries to the set with fewer entries.
 
-• **Deletion**. Deletion can be performed like a B+-tree deletion, borrowing en- tries from sibling nodes, or merging sibling nodes if a node becomes under- full. An alternative approach redistributes all the entries of underfull nodes to sibling nodes, with the aim of improving the clustering of entries in the R-tree.
+- **Deletion**. Deletion can be performed like a B+-tree deletion, borrowing en- tries from sibling nodes, or merging sibling nodes if a node becomes under- full. An alternative approach redistributes all the entries of underfull nodes to sibling nodes, with the aim of improving the clustering of entries in the R-tree.
 
 See the bibliographical references for more details on insertion and deletion op- erations on R-trees, as well as on variants of R-trees, called R∗-trees or R+-trees.
 
 The storage efficiency of R-trees is better than that of k-d trees or quadtrees, since an object is stored only once, and we can ensure easily that each node is at least half full. However, querying may be slower, since multiple paths have to be searched. Spatial joins are simpler with quadtrees than with R-trees, since all quadtrees on a region are partitioned in the same manner. However, because of their better storage efficiency, and their similarity to B-trees, R-trees and their variants have proved popular in database systems that support spatial data.
 
-**25.4 Multimedia Databases**
+## 25.4 Multimedia Databases
 
 Multimedia data, such as images, audio, and video—an increasingly popular form of data—are today almost always stored outside the database, in file sys- tems. This kind of storage is not a problem when the number of multimedia objects is relatively small, since features provided by databases are usually not important.
 
-However, database features become important when the number of multime- dia objects stored is large. Issues such as transactional updates, querying facilities, and indexing then become important. Multimedia objects often have descriptive attributes, such as those indicating when they were created, who created them, and to what category they belong. One approach to building a database for such multimedia objects is to use databases for storing the descriptive attributes and for keeping track of the files in which the multimedia objects are stored.  
-
-**25.4 Multimedia Databases 1077**
+However, database features become important when the number of multime- dia objects stored is large. Issues such as transactional updates, querying facilities, and indexing then become important. Multimedia objects often have descriptive attributes, such as those indicating when they were created, who created them, and to what category they belong. One approach to building a database for such multimedia objects is to use databases for storing the descriptive attributes and for keeping track of the files in which the multimedia objects are stored.
 
 However, storing multimedia outside the database makes it harder to provide database functionality, such as indexing on the basis of actual multimedia data content. It can also lead to inconsistencies, such as a file that is noted in the database, but whose contents are missing, or vice versa. It is therefore desirable to store the data themselves in the database.
 
 Several issues must be addressed if multimedia data are to be stored in a database.
 
-• The database must support large objects, since multimedia data such as videos can occupy up to a few gigabytes of storage. Many database sys- tems do not support objects larger than a few gigabytes. Larger objects could be split into smaller pieces and stored in the database. Alternatively, the multimedia object may be stored in a file system, but the database may con- tain a pointer to the object; the pointer would typically be a file name. The SQL/MED standard (MED stands for Management of External Data) allows external data, such as files, to be treated as if they are part of the database. With SQL/MED, the object would appear to be part of the database, but can be stored externally. We discuss multimedia data formats in Section 25.4.1.
+- The database must support large objects, since multimedia data such as videos can occupy up to a few gigabytes of storage. Many database sys- tems do not support objects larger than a few gigabytes. Larger objects could be split into smaller pieces and stored in the database. Alternatively, the multimedia object may be stored in a file system, but the database may con- tain a pointer to the object; the pointer would typically be a file name. The SQL/MED standard (MED stands for Management of External Data) allows external data, such as files, to be treated as if they are part of the database. With SQL/MED, the object would appear to be part of the database, but can be stored externally. We discuss multimedia data formats in Section 25.4.1.
 
-• The retrieval of some types of data, such as audio and video, has the require- ment that data delivery must proceed at a guaranteed steady rate. Such data are sometimes called **isochronous data**, or **continuous-media data**. For ex- ample, if audio data are not supplied in time, there will be gaps in the sound. If the data are supplied too fast, system buffers may overflow, resulting in loss of data. We discuss continuous-media data in Section 25.4.2.
+- The retrieval of some types of data, such as audio and video, has the require- ment that data delivery must proceed at a guaranteed steady rate. Such data are sometimes called **isochronous data**, or **continuous-media data**. For ex- ample, if audio data are not supplied in time, there will be gaps in the sound. If the data are supplied too fast, system buffers may overflow, resulting in loss of data. We discuss continuous-media data in Section 25.4.2.
 
-• Similarity-based retrieval is needed in many multimedia database applica- tions. For example, in a database that stores fingerprint images, a query fingerprint image is provided, and fingerprints in the database that are sim- ilar to the query fingerprint must be retrieved. Index structures such as B+- trees and R-trees cannot be used for this purpose; special index structures need to be created. We discuss similarity-based retrieval in Section 25.4.3.
+- Similarity-based retrieval is needed in many multimedia database applica- tions. For example, in a database that stores fingerprint images, a query fingerprint image is provided, and fingerprints in the database that are sim- ilar to the query fingerprint must be retrieved. Index structures such as B+- trees and R-trees cannot be used for this purpose; special index structures need to be created. We discuss similarity-based retrieval in Section 25.4.3.
 
-**25.4.1 Multimedia Data Formats**
+### 25.4.1 Multimedia Data Formats
 
-Because of the large number of bytes required to represent multimedia data, it is essential that multimedia data be stored and transmitted in compressed form. For image data, the most widely used format is _JPEG_, named after the standards body that created it, the _Joint Picture Experts Group_. We can store video data by encoding each frame of video in JPEG format, but such an encoding is wasteful, since successive frames of a video are often nearly the same. The _Moving Picture Experts Group_ has developed the _MPEG_ series of standards for encoding video and audio data; these encodings exploit commonalities among a sequence of frames to achieve a greater degree of compression. The _MPEG-1_ standard stores a minute of 30-frame-per-second video and audio in approximately 12.5 megabytes (com- pared to approximately 75 megabytes for video in only JPEG). However, MPEG-1 encoding introduces some loss of video quality, to a level roughly comparable  
-
-**1078 Chapter 25 Spatial and Temporal Data and Mobility**
-
+Because of the large number of bytes required to represent multimedia data, it is essential that multimedia data be stored and transmitted in compressed form. For image data, the most widely used format is _JPEG_, named after the standards body that created it, the _Joint Picture Experts Group_. We can store video data by encoding each frame of video in JPEG format, but such an encoding is wasteful, since successive frames of a video are often nearly the same. The _Moving Picture Experts Group_ has developed the _MPEG_ series of standards for encoding video and audio data; these encodings exploit commonalities among a sequence of frames to achieve a greater degree of compression. The _MPEG-1_ standard stores a minute of 30-frame-per-second video and audio in approximately 12.5 megabytes (com- pared to approximately 75 megabytes for video in only JPEG). However, MPEG-1 encoding introduces some loss of video quality, to a level roughly comparable
 to that of VHS videotape. The _MPEG-2_ standard is designed for digital broadcast systems and digital video disks (DVDs); it introduces only a negligible loss of video quality. MPEG-2 compresses 1 minute of video and audio to approximately 17 megabytes. MPEG-4 provides techniques for further compression of video, with variable bandwidth to support delivery of video data over networks with a wide range of bandwidths. Several competing standards are used for audio encoding, including _MP3_, which stands for MPEG-1 Layer 3, RealAudio, Windows Media Audio, and other formats. High-definition video with audio is encoded in several variants of MPEG-4 that include MPEG-4 AVC and AVCHD.
 
-**25.4.2 Continuous-Media Data**
+### 25.4.2 Continuous-Media Data
 
 The most important types of continuous-media data are video and audio data (for example, a database of movies). Continuous-media systems are characterized by their real-time information-delivery requirements:
 
-• Data must be delivered sufficiently fast that no gaps in the audio or video result.
+- Data must be delivered sufficiently fast that no gaps in the audio or video result.
 
-• Data must be delivered at a rate that does not cause overflow of system buffers.
+- Data must be delivered at a rate that does not cause overflow of system buffers.
 
-• Synchronization among distinct data streams must be maintained. This need arises, for example, when the video of a person speaking must show lips moving synchronously with the audio of the person speaking.
+- Synchronization among distinct data streams must be maintained. This need arises, for example, when the video of a person speaking must show lips moving synchronously with the audio of the person speaking.
 
 To supply data predictably at the right time to a large number of consumers of the data, the fetching of data from disk must be coordinated carefully. Usually, data are fetched in periodic cycles. In each cycle, say of _n_ seconds, _n_ seconds’ worth of data is fetched for each consumer and stored in memory buffers, while the data fetched in the previous cycle is being sent to the consumers from the memory buffers. The cycle period is a compromise: A short period uses less memory but requires more disk-arm movement, which is a waste of resources, while a long period reduces disk-arm movement but increases memory requirements and may delay initial delivery of data. When a new request arrives, **admission control** comes into play: That is, the system checks if the request can be satisfied with available resources (in each period); if so, it is admitted; otherwise it is rejected.
 
@@ -995,41 +876,36 @@ Extensive research on delivery of continuous-media data has dealt with such issu
 
 Several vendors offer video-on-demand servers. Current systems are based on file systems, because existing database systems do not provide the real-time re- sponse that these applications need. The basic architecture of a video-on-demand system comprises:
 
-• **Video server**. Multimedia data are stored on several disks (usually in a RAID configuration). Systems containing a large volume of data may use tertiary storage for less frequently accessed data.  
+- **Video server**. Multimedia data are stored on several disks (usually in a RAID configuration). Systems containing a large volume of data may use tertiary storage for less frequently accessed data.
+- **Terminals.** People view multimedia data through various devices, collec- tively referred to as _terminals_. Examples are personal computers and televi- sions attached to a small, inexpensive computer called a **set-top box**.
 
-**25.5 Mobility and Personal Databases 1079**
-
-• **Terminals.** People view multimedia data through various devices, collec- tively referred to as _terminals_. Examples are personal computers and televi- sions attached to a small, inexpensive computer called a **set-top box**.
-
-• **Network.** Transmission of multimedia data from a server to multiple termi- nals requires a high-capacity network.
+- **Network.** Transmission of multimedia data from a server to multiple termi- nals requires a high-capacity network.
 
 Video-on-demand service over cable networks is widely available.
 
-**25.4.3 Similarity-Based Retrieval**
+### 25.4.3 Similarity-Based Retrieval
 
 In many multimedia applications, data are described only approximately in the database. An example is the fingerprint data in Section 25.4. Other examples are:
 
-• **Pictorial data.** Two pictures or images that are slightly different as represented in the database may be considered the same by a user. For instance, a database may store trademark designs. When a new trademark is to be registered, the system may need first to identify all similar trademarks that were registered previously.
+- **Pictorial data.** Two pictures or images that are slightly different as represented in the database may be considered the same by a user. For instance, a database may store trademark designs. When a new trademark is to be registered, the system may need first to identify all similar trademarks that were registered previously.
 
-• **Audio data.** Speech-based user interfaces are being developed that allow the user to give a command or identify a data item by speaking. The input from the user must then be tested for similarity to those commands or data items stored in the system.
+- **Audio data.** Speech-based user interfaces are being developed that allow the user to give a command or identify a data item by speaking. The input from the user must then be tested for similarity to those commands or data items stored in the system.
 
-• **Handwritten data.** Handwritten input can be used to identify a handwritten data item or command stored in the database. Here again, similarity testing is required.
+- **Handwritten data.** Handwritten input can be used to identify a handwritten data item or command stored in the database. Here again, similarity testing is required.
 
 The notion of similarity is often subjective and user specific. However, sim- ilarity testing is often more successful than speech or handwriting recognition, because the input can be compared to data already in the system and, thus, the set of choices available to the system is limited.
 
 Several algorithms exist for finding the best matches to a given input by sim- ilarity testing. Many voice-activated systems have been deployed commercially, particularly for phone applications and in-vehicle controls. See the bibliographi- cal notes for references.
 
-**25.5 Mobility and Personal Databases**
+## 25.5 Mobility and Personal Databases
 
 Large-scale, commercial databases have traditionally been stored in central com- puting facilities. In distributed database applications, there has usually been strong central database and network administration. Several technology trends have combined to create applications in which this assumption of central control and administration is not entirely correct:
 
-• The widespread use of laptop, notebook, or netbook computers.
+- The widespread use of laptop, notebook, or netbook computers.
 
-• The widespread use of cell phones with the capabilities of a computer.  
+- The widespread use of cell phones with the capabilities of a computer.
 
-**1080 Chapter 25 Spatial and Temporal Data and Mobility**
-
-• The development of a relatively low-cost wireless digital communication infrastructure, based on wireless local-area networks, cellular digital packet networks, and other technologies.
+- The development of a relatively low-cost wireless digital communication infrastructure, based on wireless local-area networks, cellular digital packet networks, and other technologies.
 
 **Mobile computing** has proved useful in many applications. Many business travelers use laptop computers so that they can work and access data en route. Delivery services use mobile computers to assist in package tracking. Emergency- response services use mobile computers at the scene of disasters, medical emer- gencies, and the like to access information and to enter data pertaining to the situation. Cell phones are increasingly becoming devices that provide not only phone services, but are also mobile computers allowing email and Web access. New applications of mobile computers continue to emerge.
 
@@ -1043,13 +919,9 @@ A user is likely to use more than one mobile device. Such users need to be able 
 
 In Sections 25.5.1 through 25.5.4, we discuss techniques in use and under development to deal with the problems of mobility and personal computing.
 
-**25.5.1 A Model of Mobile Computing**
+### 25.5.1 A Model of Mobile Computing
 
-The mobile-computing environment consists of mobile computers, referred to as **mobile hosts**, and a wired network of computers. Mobile hosts communicate  
-
-**25.5 Mobility and Personal Databases 1081**
-
-with the wired network via computers referred to as **mobile support stations**. Each mobile support station manages those mobile hosts within its **cell**—that is, the geographical area that it covers. Mobile hosts may move between cells, thus necessitating a **handoff** of control from one mobile support station to another. Since mobile hosts may, at times, be powered down, a host may leave one cell and rematerialize later at some distant cell. Therefore, moves between cells are not necessarily between adjacent cells. Within a small area, such as a building, mobile hosts may be connected by a wireless local-area network (LAN) that provides lower-cost connectivity than would a wide-area cellular network, and that reduces the overhead of handoffs.
+The mobile-computing environment consists of mobile computers, referred to as **mobile hosts**, and a wired network of computers. Mobile hosts communicate with the wired network via computers referred to as **mobile support stations**. Each mobile support station manages those mobile hosts within its **cell**—that is, the geographical area that it covers. Mobile hosts may move between cells, thus necessitating a **handoff** of control from one mobile support station to another. Since mobile hosts may, at times, be powered down, a host may leave one cell and rematerialize later at some distant cell. Therefore, moves between cells are not necessarily between adjacent cells. Within a small area, such as a building, mobile hosts may be connected by a wireless local-area network (LAN) that provides lower-cost connectivity than would a wide-area cellular network, and that reduces the overhead of handoffs.
 
 It is possible for mobile hosts to communicate directly without the interven- tion of a mobile support station. However, such communication can occur only between nearby hosts. Such direct forms of communication often use **Bluetooth**, a short-range digital radio standard that allows wireless connectivity within a 10- meter range at high speed (up to 721 kilobits per second). Initially conceived as a replacement for cables, Bluetooth’s greatest benefit is in easy ad hoc connection of mobile computers, PDAs, mobile phones, and so-called intelligent appliances.
 
@@ -1059,81 +931,66 @@ The network infrastructure for mobile computing consists in large part of two te
 
 Bluetooth, wireless LANs, and 2.5G and 3G cellular networks make it possible for a wide variety of devices to communicate at low cost. While such communica- tion itself does not fit the domain of a usual database application, the accounting, monitoring, and management data pertaining to this communication generate huge databases. The immediacy of wireless communication generates a need for real-time access to many of these databases. This need for timeliness adds another dimension to the constraints on the system—a matter we shall discuss further in Section 26.4.
 
-The size and power limitations of many mobile computers have led to al- ternative memory hierarchies. Instead of, or in addition to, disk storage, flash memory, which we discussed in Section 10.1, may be included. If the mobile host includes a hard disk, the disk may be allowed to spin down when it is not in use, to save energy. The same considerations of size and energy limit the type and size of the display used in a mobile device. Designers of mobile devices often create special-purpose user interfaces to work within these constraints. However, the need to present Web-based data has necessitated the creation of presentation stan- dards. **Wireless application protocol** (WAP) is a standard for wireless Internet  
+The size and power limitations of many mobile computers have led to al- ternative memory hierarchies. Instead of, or in addition to, disk storage, flash memory, which we discussed in Section 10.1, may be included. If the mobile host includes a hard disk, the disk may be allowed to spin down when it is not in use, to save energy. The same considerations of size and energy limit the type and size of the display used in a mobile device. Designers of mobile devices often create special-purpose user interfaces to work within these constraints. However, the need to present Web-based data has necessitated the creation of presentation stan- dards. **Wireless application protocol** (WAP) is a standard for wireless Internet access. WAP-based browsers access special Web pages that use **wireless markup language** (WML), an XML-based language designed for the constraints of mobile and wireless Web browsing.
 
-**1082 Chapter 25 Spatial and Temporal Data and Mobility**
-
-access. WAP-based browsers access special Web pages that use **wireless markup language** (WML), an XML-based language designed for the constraints of mobile and wireless Web browsing.
-
-**25.5.2 Routing and Query Processing**
+### 25.5.2 Routing and Query Processing
 
 The route between a pair of hosts may change over time if one of the two hosts is mobile. This simple fact has a dramatic effect at the network level, since location- based network addresses are no longer constants within the system.
 
 Mobility also directly affects database query processing. As we saw in Chap- ter 19, we must consider the communication costs when we choose a distributed query-processing strategy. Mobility results in dynamically changing communi- cation costs, thus complicating the optimization process. Furthermore, there are competing notions of cost to consider:
 
-• **User time** is a highly valuable commodity in many business applications.
+- **User time** is a highly valuable commodity in many business applications.
 
-• **Connection time** is the unit by which monetary charges are assigned in some cellular systems.
+- **Connection time** is the unit by which monetary charges are assigned in some cellular systems.
 
-• **Number of bytes, or packets, transferred** is the unit by which charges are computed in some digital cellular systems.
+- **Number of bytes, or packets, transferred** is the unit by which charges are computed in some digital cellular systems.
 
-• **Time-of-day-based charges** vary, depending on whether communication oc- curs during peak or off-peak periods.
+- **Time-of-day-based charges** vary, depending on whether communication oc- curs during peak or off-peak periods.
 
-• **Energy** is limited. Often, battery power is a scarce resource whose use must be optimized. A basic principle of radio communication is that it requires less energy to receive than to transmit radio signals. Thus, transmission and reception of data impose different power demands on the mobile host.
+- **Energy** is limited. Often, battery power is a scarce resource whose use must be optimized. A basic principle of radio communication is that it requires less energy to receive than to transmit radio signals. Thus, transmission and reception of data impose different power demands on the mobile host.
 
-**25.5.3 Broadcast Data**
+### 25.5.3 Broadcast Data
 
 It is often desirable for frequently requested data to be broadcast in a contin- uous cycle by mobile support stations, rather than transmitted to mobile hosts on demand. A typical application of such **broadcast data** is stock-market price information. There are two reasons for using broadcast data. First, the mobile host avoids the energy cost for transmitting data requests. Second, the broadcast data can be received by a large number of mobile hosts at once, at no extra cost. Thus, the available transmission bandwidth is utilized more effectively.
 
-A mobile host can then receive data as they are transmitted, rather than consuming energy by transmitting a request. The mobile host may have local nonvolatile storage available to cache the broadcast data for possible later use. Given a query, the mobile host may optimize energy costs by determining whether it can process that query with only cached data. If the cached data are insufficient, there are two options: wait for the data to be broadcast, or transmit a request for data. To make this decision, the mobile host must know when the relevant data will be broadcast.  
-
-**25.5 Mobility and Personal Databases 1083**
+A mobile host can then receive data as they are transmitted, rather than consuming energy by transmitting a request. The mobile host may have local nonvolatile storage available to cache the broadcast data for possible later use. Given a query, the mobile host may optimize energy costs by determining whether it can process that query with only cached data. If the cached data are insufficient, there are two options: wait for the data to be broadcast, or transmit a request for data. To make this decision, the mobile host must know when the relevant data will be broadcast.
 
 Broadcast data may be transmitted according to a fixed schedule or a change- able schedule. In the former case, the mobile host uses the known fixed schedule to determine when the relevant data will be transmitted. In the latter case, the broadcast schedule must itself be broadcast at a well-known radio frequency and at well-known time intervals.
 
 In effect, the broadcast medium can be modeled as a disk with a high latency. Requests for data can be thought of as being serviced when the requested data are broadcast. The transmission schedules behave like indices on the disk. The bibliographical notes list recent research papers in the area of broadcast data management.
 
-**25.5.4 Disconnectivity and Consistency**
+### 25.5.4 Disconnectivity and Consistency
 
 Since wireless communication may be paid for on the basis of connection time, there is an incentive for certain mobile hosts to be disconnected for substantial periods. Mobile computers without wireless connectivity are disconnected most of the time when they are being used, except periodically when they are connected to their host computers, either physically or through a computer network.
 
 During these periods of disconnection, the mobile host may remain in oper- ation. The user of the mobile host may issue queries and updates on data that reside or are cached locally. This situation creates several problems, in particular:
 
-• **Recoverability**: Updates entered on a disconnected machine may be lost if the mobile host experiences a catastrophic failure. Since the mobile host represents a single point of failure, stable storage cannot be simulated well.
+- **Recoverability**: Updates entered on a disconnected machine may be lost if the mobile host experiences a catastrophic failure. Since the mobile host represents a single point of failure, stable storage cannot be simulated well.
 
-• **Consistency**: Locally cached data may become out-of-date, but the mobile host cannot discover this situation until it is reconnected. Likewise, updates occurring in the mobile host cannot be propagated until reconnection occurs.
+- **Consistency**: Locally cached data may become out-of-date, but the mobile host cannot discover this situation until it is reconnected. Likewise, updates occurring in the mobile host cannot be propagated until reconnection occurs.
 
 We explored the consistency problem in Chapter 19, where we discussed network partitioning, and we elaborate on it here. In wired distributed systems, partitioning is considered to be a failure mode; in mobile computing, partitioning via disconnection is part of the normal mode of operation. It is therefore necessary to allow data access to proceed despite partitioning, even at the risk of some loss of consistency.
 
 For data updated by only the mobile host, it is a simple matter to propagate the updates when the mobile host reconnects. However, if the mobile host caches read-only copies of data that may be updated by other computers, the cached data may become inconsistent. When the mobile host is connected, it can be sent **invalidation reports** that inform it of out-of-date cache entries. However, when the mobile host is disconnected, it may miss an invalidation report. A simple solution to this problem is to invalidate the entire cache on reconnection, but such an extreme solution is highly costly. Several caching schemes are cited in the bibliographical notes.
 
-If updates can occur at both the mobile host and elsewhere, detecting conflict- ing updates is more difficult. **Version-numbering**\-based schemes allow updates  
+If updates can occur at both the mobile host and elsewhere, detecting conflict- ing updates is more difficult. **Version-numbering**\-based schemes allow updates of shared files from disconnected hosts. These schemes do not guarantee that the updates will be consistent. Rather, they guarantee that, if two hosts inde- pendently update the same version of a document, the clash will be detected eventually, when the hosts exchange information either directly or through a common host.
 
-**1084 Chapter 25 Spatial and Temporal Data and Mobility**
+The **version-vector scheme** detects inconsistencies when copies of a document are independently updated. This scheme allows copies of a _document_ to be stored at multiple hosts. Although we use the term _document_, the scheme can be applied to any other data items, such as tuples of a relation.
 
-of shared files from disconnected hosts. These schemes do not guarantee that the updates will be consistent. Rather, they guarantee that, if two hosts inde- pendently update the same version of a document, the clash will be detected eventually, when the hosts exchange information either directly or through a common host.
-
-The **version-vector scheme** detects inconsistencies when copies of a docu- ment are independently updated. This scheme allows copies of a _document_ to be stored at multiple hosts. Although we use the term _document_, the scheme can be applied to any other data items, such as tuples of a relation.
-
-The basic idea is for each host _i_ to store, with its copy of each document _d_, a **version vector**—that is, a set of version numbers {_Vd,i_ \[ _j_\]}, with one entry for each other host _j_ on which the document could potentially be updated. When a host _i_ updates a document _d_, it increments the version number _Vd,i_ \[_i_\] by one.
+The basic idea is for each host _i_ to store, with its copy of each document _d_, a **version vector**—that is, a set of version numbers { V~d~,~i~ [ j ] }, with one entry for each other host _j_ on which the document could potentially be updated. When a host _i_ updates a document _d_, it increments the version number V~d~,~i~ [ i ]  by one.
 
 Whenever two hosts _i_ and _j_ connect with each other, they exchange updated documents, so that both obtain new versions of the documents. However, be- fore exchanging documents, the hosts have to discover whether the copies are consistent:
 
-**1\.** If the version vectors are the same on both hosts—that is, for each _k_, _Vd,i_ \[_k_\] = _Vd, j_ \[_k_\]—then the copies of document _d_ are identical.
+1. If the version vectors are the same on both hosts—that is, for each _k_, V~d~,~i~ [ K ] =V~d~,~i~ [ k ] —then the copies of document _d_ are identical.
 
-**2\.** If, for each _k_, _Vd,i_ \[_k_\] ≤ _Vd, j_ \[_k_\] and the version vectors are not identical, then the copy of document _d_ at host _i_ is older than the one at host _j_ . That is, the copy of document _d_ at host _j_ was obtained by one or more modifications of the copy of the document at host _i_ . Host _i_ replaces its copy of _d_, as well as its copy of the version vector for _d_, with the copies from host _j_ .
+2. If, for each _k_, V~d~,~i~ [ k ] ≤ V~d~,~j~ [ k ] and the version vectors are not identical, then the copy of document _d_ at host _i_ is older than the one at host _j_ . That is, the copy of document _d_ at host _j_ was obtained by one or more modifications of the copy of the document at host _i_ . Host _i_ replaces its copy of _d_, as well as its copy of the version vector for _d_, with the copies from host _j_ .
 
-**3\.** If there are a pair of hosts _k_ and _m_ such that _Vd,i_ \[_k_\] _< Vd, j_ \[_k_\] and _Vd,i_ \[_m_\] _\>_
-
-_Vd, j_ \[_m_\], then the copies are _inconsistent_; that is, the copy of _d_ at _i_ contains updates performed by host _k_ that have not been propagated to host _j_ , and, similarly, the copy of _d_ at _j_ contains updates performed by host _m_ that have not been propagated to host _i_ . Then, the copies of _d_ are inconsistent, since two or more updates have been performed on _d_ independently. Manual intervention may be required to merge the updates.
+3. If there are a pair of hosts _k_ and _m_ such that  V~d~,~i~ [ k ] < V~d~,~j~ [ k ] and 
+V~d~,~i~ [ m ] > V~d~,~j~ [ m ], then the copies are _inconsistent_; that is, the copy of _d_ at _i_ contains updates performed by host _k_ that have not been propagated to host _j_ , and, similarly, the copy of _d_ at _j_ contains updates performed by host _m_ that have not been propagated to host _i_ . Then, the copies of _d_ are inconsistent, since two or more updates have been performed on _d_ independently. Manual intervention may be required to merge the updates.
 
 The version-vector scheme was initially designed to deal with failures in distributed file systems. The scheme gained importance because mobile comput- ers often store copies of files that are also present on server systems, in effect con- stituting a distributed file system that is often disconnected. Another application of the scheme is in groupware systems, where hosts are connected periodically, rather than continuously, and must exchange updated documents.
 
-The version-vector scheme also has applications in replicated databases, where it can be applied to individual tuples. For example, if a calendar or address book is maintained on a mobile device as well as on a host, inserts, deletes and updates can happen either on the mobile device or on the host. By applying the version-vector scheme to individual calendar entries or contacts, it is easy to han- dle situations where a particular entry has been updated on the mobile device  
-
-**25.6 Summary 1085**
-
-while a different one has been updated on the host; such a situation would not be considered a conflict. However, if the same entry is updated independently at both places, a conflict would be detected by the version-vector scheme.
+The version-vector scheme also has applications in replicated databases, where it can be applied to individual tuples. For example, if a calendar or address book is maintained on a mobile device as well as on a host, inserts, deletes and updates can happen either on the mobile device or on the host. By applying the version-vector scheme to individual calendar entries or contacts, it is easy to han- dle situations where a particular entry has been updated on the mobile device while a different one has been updated on the host; such a situation would not be considered a conflict. However, if the same entry is updated independently at both places, a conflict would be detected by the version-vector scheme.
 
 The version-vector scheme, however, fails to address the most difficult and most important issue arising from updates to shared data—the reconciliation of inconsistent copies of data. Many applications can perform reconciliation auto- matically by executing in each computer those operations that had performed updates on remote computers during the period of disconnection. This solution works if update operations commute—that is, they generate the same result, regardless of the order in which they are executed. Alternative techniques may be available in certain applications; in the worst case, however, it must be left to the users to resolve the inconsistencies. Dealing with such inconsistency auto- matically, and assisting users in resolving inconsistencies that cannot be handled automatically, remains an area of research.
 
@@ -1141,67 +998,94 @@ Another weakness is that the version-vector scheme requires substantial com- mun
 
 The potential for disconnection and the cost of wireless communication limit the practicality of transaction-processing techniques discussed in Chapter 19 for distributed systems. Often, it is preferable to let users prepare transactions on mobile hosts, but to require that, instead of executing the transactions locally, they submit transactions to a server for execution. Transactions that span more than one computer and that include a mobile host face long-term blocking during transaction commit, unless disconnectivity is rare or predictable.
 
-**25.6 Summary**
+## 25.6 Summary
 
-• Time plays an important role in database systems. Databases are models of the real world. Whereas most databases model the state of the real world at a point in time (at the current time), temporal databases model the states of the real world across time.
+- Time plays an important role in database systems. Databases are models of the real world. Whereas most databases model the state of the real world at a point in time (at the current time), temporal databases model the states of the real world across time.
 
-• Facts in temporal relations have associated times when they are valid, which can be represented as a union of intervals. Temporal query languages simplify modeling of time, as well as time-related queries.
+- Facts in temporal relations have associated times when they are valid, which can be represented as a union of intervals. Temporal query languages simplify modeling of time, as well as time-related queries.
 
-• Spatial databases are finding increasing use today to store computer-aided- design data as well as geographic data.
+- Spatial databases are finding increasing use today to store computer-aided- design data as well as geographic data.
 
-• Design data are stored primarily as vector data; geographic data consist of a combination of vector and raster data. Spatial-integrity constraints are important for design data.
+- Design data are stored primarily as vector data; geographic data consist of a combination of vector and raster data. Spatial-integrity constraints are important for design data.
 
-• Vector data can be encoded as first-normal-form data, or they can be stored using non-first-normal-form structures, such as lists. Special-purpose index structures are particularly important for accessing spatial data, and for pro- cessing spatial queries.  
+- Vector data can be encoded as first-normal-form data, or they can be stored using non-first-normal-form structures, such as lists. Special-purpose index structures are particularly important for accessing spatial data, and for pro- cessing spatial queries.  
 
-**1086 Chapter 25 Spatial and Temporal Data and Mobility**
+- R-trees are a multidimensional extension of B-trees; with variants such as R+-trees and R∗-trees, they have proved popular in spatial databases. Index structures that partition space in a regular fashion, such as quadtrees, help in processing spatial join queries.
 
-• R-trees are a multidimensional extension of B-trees; with variants such as R+-trees and R∗-trees, they have proved popular in spatial databases. Index structures that partition space in a regular fashion, such as quadtrees, help in processing spatial join queries.
+- Multimedia databases are growing in importance. Issues such as similarity- based retrieval and delivery of data at guaranteed rates are topics of current research.
 
-• Multimedia databases are growing in importance. Issues such as similarity- based retrieval and delivery of data at guaranteed rates are topics of current research.
+- Mobile computing systems have become common, leading to interest in data- base systems that can run on such systems. Query processing in such systems may involve lookups on server databases. The query cost model must include the cost of communication, including monetary cost and battery-power cost, which is relatively high for mobile systems.
 
-• Mobile computing systems have become common, leading to interest in data- base systems that can run on such systems. Query processing in such systems may involve lookups on server databases. The query cost model must include the cost of communication, including monetary cost and battery-power cost, which is relatively high for mobile systems.
+- Broadcast is much cheaper per recipient than is point-to-point communica- tion, and broadcast of data such as stock-market data helps mobile systems to pick up data inexpensively.
 
-• Broadcast is much cheaper per recipient than is point-to-point communica- tion, and broadcast of data such as stock-market data helps mobile systems to pick up data inexpensively.
+- Disconnected operation, use of broadcast data, and caching of data are three important issues being addressed in mobile computing.
 
-• Disconnected operation, use of broadcast data, and caching of data are three important issues being addressed in mobile computing.
+### Review Terms
 
-**Review Terms**
+- Temporal data 
+- Valid time 
+- Transaction time 
+- Temporal relation 
+- Bitemporal relation 
+- Universal coordinated time (UTC) 
+- Snapshot relation 
+- Temporal query languages 
+- Temporal selection 
+- Temporal projection 
+- Temporal join 
+- Spatial and geographic data 
+- Computer-aided-design (CAD)data 
+- Geographic data 
+- Geographic information systems 
+- Triangulation 
+- Design databases
+- Geographic data 
+- Raster data 
+- Vector data 
+- Global positioning system (GPS) 
+- Spatial queries 
+- Nearness queries 
+- Nearest-neighbor queries 
+- Region queries 
+- Spatial join 
+- Indexing of spatial data 
+- k-d trees 
+- k-d-B trees 
+- Quadtrees
 
-• Temporal data • Valid time • Transaction time • Temporal relation • Bitemporal relation • Universal coordinated time (UTC) • Snapshot relation • Temporal query languages • Temporal selection • Temporal projection • Temporal join • Spatial and geographic data • Computer-aided-design (CAD)
+  ◦ PR quadtree
+  
+  ◦ Region quadtree
 
-data • Geographic data • Geographic information systems • Triangulation • Design databases
+- R-trees
 
-• Geographic data • Raster data • Vector data • Global positioning system (GPS) • Spatial queries • Nearness queries • Nearest-neighbor queries • Region queries • Spatial join • Indexing of spatial data • k-d trees • k-d-B trees • Quadtrees
+  ◦ Bounding box  
 
-◦ PR quadtree
+  ◦ Quadratic split
 
-◦ Region quadtree
+- Multimedia databases 
+- Isochronous data 
+- Continuous-media data 
+- Similarity-based retrieval 
+- Multimedia data formats 
+- Video servers 
+- Mobile computing
 
-• R-trees
+  ◦ Mobile hosts
+  
+  ◦ Mobile support stations
+  
+  ◦ Cell
+  
+  ◦ Handoff
 
-◦ Bounding box  
+- Location-dependent queries 
+- Broadcast data 
+- Consistency
 
-**Practice Exercises 1087**
-
-◦ Quadratic split
-
-• Multimedia databases • Isochronous data • Continuous-media data • Similarity-based retrieval • Multimedia data formats • Video servers • Mobile computing
-
-◦ Mobile hosts
-
-◦ Mobile support stations
-
-◦ Cell
-
-◦ Handoff
-
-• Location-dependent queries • Broadcast data • Consistency
-
-◦ Invalidation reports
-
-◦ Version-vector scheme
-
-**Practice Exercises**
+  ◦ Invalidation reports
+  
+  ◦ Version-vector scheme
 
 **25.1** What are the two types of time, and how are they different? Why does it make sense to have both types of time associated with a tuple?
 
@@ -1211,23 +1095,19 @@ data • Geographic data • Geographic information systems • Triangulation �
 
 **25.4** Suppose you want to store line segments in an R-tree. If a line segment is not parallel to the axes, the bounding box for it can be large, containing a large empty area.
 
-• Describe the effect on performance of having large bounding boxes on queries that ask for line segments intersecting a given region.
+- Describe the effect on performance of having large bounding boxes on queries that ask for line segments intersecting a given region.
 
-• Briefly describe a technique to improve performance for such queries and give an example of its benefit. Hint: You can divide segments into smaller pieces.
+- Briefly describe a technique to improve performance for such queries and give an example of its benefit. Hint: You can divide segments into smaller pieces.
 
 **25.5** Give a recursive procedure to efficiently compute the spatial join of two relations with R-tree indices. (Hint: Use bounding boxes to check if leaf entries under a pair of internal nodes may intersect.)
 
 **25.6** Describe how the ideas behind the RAID organization (Section 10.3) can be used in a broadcast-data environment, where there may occasionally be noise that prevents reception of part of the data being transmitted.
 
-**25.7** Define a model of repeatedly broadcast data in which the broadcast medium is modeled as a virtual disk. Describe how access time and data-  
-
-**1088 Chapter 25 Spatial and Temporal Data and Mobility**
-
-transfer rate for this virtual disk differ from the corresponding values for a typical hard disk.
+**25.7** Define a model of repeatedly broadcast data in which the broadcast medium is modeled as a virtual disk. Describe how access time and data transfer rate for this virtual disk differ from the corresponding values for a typical hard disk.
 
 **25.8** Consider a database of documents in which all documents are kept in a central database. Copies of some documents are kept on mobile comput- ers. Suppose that mobile computer A updates a copy of document 1 while it is disconnected, and, at the same time, mobile computer B updates a copy of document 2 while it is disconnected. Show how the version-vector scheme can ensure proper updating of the central database and mobile computers when a mobile computer reconnects.
 
-**Exercises**
+## Exercises
 
 **25.9** Will functional dependencies be preserved if a relation is converted to a temporal relation by adding a time attribute? How is the problem handled in a temporal database?
 
@@ -1247,39 +1127,39 @@ c. A query to find for each restaurant the distance from the nearest restaurant 
 
 **25.14** List three factors that need to be considered in query optimization for mobile computing that are not considered in traditional query optimizers.
 
-**25.15** Give an example to show that the version-vector scheme does not ensure serializability. (Hint: Use the example from Practice Exercise 25.8, with the assumption that documents 1 and 2 are available on both mobile  
+**25.15** Give an example to show that the version-vector scheme does not ensure serializability. (Hint: Use the example from Practice Exercise 25.8, with the assumption that documents 1 and 2 are available on both mobile computers A and B, and take into account the possibility that a document may be read without being updated.)
 
-**Bibliographical Notes 1089**
+## Bibliographical Notes
+Stam and Snodgrass [1988] and Soo [1991] provide surveys on temporal data management. Jensen et al. [1994] presents a glossary of temporal-database concepts,aimed at unifying the terminology. Tansel et al. [1993] is a collection of articles on different aspects of temporal databases. Chomicki [1995] presents techniques for managing temporal integrity constraints.
 
-computers A and B, and take into account the possibility that a document may be read without being updated.)
+Heywood et al. [2002] provides textbook coverage of geographical information systems. Samet [1995b] provides an overview of the large amount of work on
+spatial index structures. Samet [1990] and Samet [2006] provides a textbook coverage of spatial data Structures. An early description of the quad tree is providedby Finkel and Bentley [1974]. Samet [1990] and Samet [1995b] describe numerous variants of quad trees. Bentley [1975] describes the k-d tree, and Robinson [1981] describes the k-d-B tree. The R-tree was originally presented in Guttman [1984].Extensions of the R-tree are presented by Sellis et al. [1987], which describes the R+ tree, and Beckmann et al. [1990], which describes the R∗ tree.
 
-**Bibliographical Notes**
+Brinkhoff et al. [1993] discusses an implementation of spatial joins using Rtrees. Lo and Ravishankar [1996] and Patel and DeWitt [1996] present partitioningbased methods for computation of spatial joins. Samet and Aref [1995] provides an overview of spatial data models, spatial operations, and the integration of
+spatial and nonspatial data. 
 
-Stam and Snodgrass \[1988\] and Soo \[1991\] provide surveys on temporal data man- agement. Jensen et al. \[1994\] presents a glossary of temporal-database concepts, aimed at unifying the terminology. Tansel et al. \[1993\] is a collection of articles on different aspects of temporal databases. Chomicki \[1995\] presents techniques for managing temporal integrity constraints.
+Revesz [2002] provides textbook coverage of the area of constraint databases; temporal intervals and spatial regions can be thought of as special cases of constraints.
 
-Heywood et al. \[2002\] provides textbook coverage of geographical informa- tion systems. Samet \[1995b\] provides an overview of the large amount of work on spatial index structures. Samet \[1990\] and Samet \[2006\] provides a textbook cov- erage of spatial data structures. An early description of the quad tree is provided by Finkel and Bentley \[1974\]. Samet \[1990\] and Samet \[1995b\] describe numerous variants of quad trees. Bentley \[1975\] describes the k-d tree, and Robinson \[1981\] describes the k-d-B tree. The R-tree was originally presented in Guttman \[1984\]. Extensions of the R-tree are presented by Sellis et al. \[1987\], which describes the R+ tree, and Beckmann et al. \[1990\], which describes the R∗ tree.
+Samet [1995a] describes research issues in multimedia databases. Indexing of
+multimedia data is discussed in Faloutsos and Lin [1995].
 
-Brinkhoff et al. \[1993\] discusses an implementation of spatial joins using R- trees. Lo and Ravishankar \[1996\] and Patel and DeWitt \[1996\] present partitioning- based methods for computation of spatial joins. Samet and Aref \[1995\] provides an overview of spatial data models, spatial operations, and the integration of spatial and nonspatial data.
+Dashti et al. [2003] provides a textbook description of streaming media server design, including extensive coverage of data organization on disk subsystems.
+Video servers are discussed in Anderson et al. [1992], Rangan et al. [1992], Ozden et al. [1994], Freedman and DeWitt [1995], and Ozden et al. [1996b]. Fault tolerance
+is discussed in Berson et al. [1995] and Ozden et al. [1996a].
 
-Revesz \[2002\] provides textbook coverage of the area of constraint databases; temporal intervals and spatial regions can be thought of as special cases of con- straints.
+Information management in systems that include mobile computers is studied in Alonso and Korth [1993] and Imielinski and Badrinath [1994]. Imielinski and
+Korth [1996] presents an introduction to mobile computing and a collection of research papers on the subject.
 
-Samet \[1995a\] describes research issues in multimedia databases. Indexing of multimedia data is discussed in Faloutsos and Lin \[1995\].
+The version-vector scheme for detecting inconsistency in distributed file systems is described by Popek et al. [1981] and Parker et al. [1983]. 
 
-Dashti et al. \[2003\] provides a textbook description of streaming media server design, including extensive coverage of data organization on disk subsystems. Video servers are discussed in Anderson et al. \[1992\], Rangan et al. \[1992\], Ozden et al. \[1994\], Freedman and DeWitt \[1995\], and Ozden et al. \[1996b\]. Fault tolerance is discussed in Berson et al. \[1995\] and Ozden et al. \[1996a\].
-
-Information management in systems that include mobile computers is studied in Alonso and Korth \[1993\] and Imielinski and Badrinath \[1994\]. Imielinski and Korth \[1996\] presents an introduction to mobile computing and a collection of research papers on the subject.
-
-The version-vector scheme for detecting inconsistency in distributed file sys- tems is described by Popek et al. \[1981\] and Parker et al. \[1983\].  
-
-_This page intentionally left blank_  
-
-**_C H A P T E R_26 Advanced Transaction Processing**
+# C H A P T E R 26 
+# Advanced Transaction Processing
 
 In Chapters 14, 15, and 16, we introduced the concept of a transaction, a program unit that accesses—and possibly updates—various data items, and whose ex- ecution ensures the preservation of the ACID properties. We discussed in those chapters a variety of techniques for ensuring the ACID properties in an environ- ment where failure can occur, and where the transactions may run concurrently.
 
 In this chapter, we go beyond the basic schemes discussed previously, and cover advanced transaction-processing concepts, including transaction-processing monitors, transactional workflows, and transaction processing in the context of electronic commerce. We also cover main-memory databases, real-time databases, long-duration transactions, and nested transactions.
 
-**26.1 Transaction-Processing Monitors**
+## 26.1 Transaction-Processing Monitors
 
 **Transaction-processing monitors** (**TP monitors**) are systems that were developed in the 1970s and 1980s, initially in response to a need to support a large number of remote terminals (such as airline-reservation terminals) from a single computer. The term _TP monitor_ initially stood for _teleprocessing monitor_.
 
@@ -1287,75 +1167,31 @@ TP monitors have since evolved to provide the core support for distributed trans
 
 Web application server architectures, including servlets, which we studied earlier in Section 9.3, support many of the features of TP monitors and are some- times referred to as “TP lite.” Web application servers are in widespread use, and have supplanted traditional TP monitors for many applications. However, the concepts underlying them, which we study in this section, are essentially the same.
 
-**1091**  
-
-**1092 Chapter 26 Advanced Transaction Processing**
-
-**26.1.1 TP-Monitor Architectures**
+### 26.1.1 TP-Monitor Architectures
 
 Large-scale transaction-processing systems are built around a client–server archi- tecture. One way of building such systems is to have a server process for each client; the server performs authentication, and then executes actions requested by the client. This **process-per-client model** is illustrated in Figure 26.1a. This model presents several problems with respect to memory utilization and processing speed:
 
-• Per-process memory requirements are high. Even if memory for program code is shared by all processes, each process consumes memory for local data and open file descriptors, as well as for operating-system overhead, such as page tables to support virtual memory.
+- Per-process memory requirements are high. Even if memory for program code is shared by all processes, each process consumes memory for local data and open file descriptors, as well as for operating-system overhead, such as page tables to support virtual memory.
 
-• The operating system divides up available CPU time among processes by switching among them; this technique is called **multitasking**. Each **context switch** between one process and the next has considerable CPU overhead; even on today’s fast systems, a context switch can take hundreds of mi- croseconds.
+- The operating system divides up available CPU time among processes by switching among them; this technique is called **multitasking**. Each **context switch** between one process and the next has considerable CPU overhead; even on today’s fast systems, a context switch can take hundreds of mi- croseconds.
 
 The above problems can be avoided by having a single-server process to which all remote clients connect; this model is called the **single-server model**,
 
-remote clients
-
-server files remote clients
-
-(b) Single-server model(a) Process-per-client model
-
-server files
-
-remote clients
-
-router servers files remote clients
-
-(d) Many-server, many-router model(c) Many-server, single-router model
-
-routers
-
-monitor
-
-servers files
-
-**Figure 26.1** TP-monitor architectures.  
-
-**26.1 Transaction-Processing Monitors 1093**
+![Alt text](D6.png)
 
 illustrated in Figure 26.1b. Remote clients send requests to the server process, which then executes those requests. This model is also used in client–server en- vironments, where clients send requests to a single-server process. The server process handles tasks, such as user authentication, that would normally be han- dled by the operating system. To avoid blocking other clients when processing a long request for one client, the server process is **multithreaded**: The server process has a thread of control for each client, and, in effect, implements its own low-overhead multitasking. It executes code on behalf of one client for a while, then saves the internal context and switches to the code for another client. Unlike the overhead of full multitasking, the cost of switching between threads is low (typically only a few microseconds).
 
 Systems based on the single-server model, such as the original version of the IBM CICS TP monitor and file servers such as Novel’s NetWare, successfully pro- vided high transaction rates with limited resources. However, they had problems, especially when multiple applications accessed the same database:
 
-• Since all the applications run as a single process, there is no protection among them. A bug in one application can affect all the other applications as well. It would be best to run each application as a separate process.
+- Since all the applications run as a single process, there is no protection among them. A bug in one application can affect all the other applications as well. It would be best to run each application as a separate process.
 
-• Such systems are not suited for parallel or distributed databases, since a server process cannot execute on multiple computers at once. (However, concurrent threads within a process can be supported in a shared-memory multiproces- sor system.) This is a serious drawback in large organizations, where parallel processing is critical for handling large workloads, and distributed data are becoming increasingly common.
+- Such systems are not suited for parallel or distributed databases, since a server process cannot execute on multiple computers at once. (However, concurrent threads within a process can be supported in a shared-memory multiproces- sor system.) This is a serious drawback in large organizations, where parallel processing is critical for handling large workloads, and distributed data are becoming increasingly common.
 
 One way to solve these problems is to run multiple application-server pro- cesses that access a common database, and to let the clients communicate with the application through a single communication process that routes requests. This model is called the **many-server, single-router model**, illustrated in Figure 26.1c. This model supports independent server processes for multiple applications; fur- ther, each application can have a pool of server processes, any one of which can handle a client session. The request can, for example, be routed to the most lightly loaded server in a pool. As before, each server process can itself be multithreaded, so that it can handle multiple clients concurrently. As a further generalization, the application servers can run on different sites of a parallel or distributed database, and the communication process can handle the coordination among the processes.
 
-The above architecture is also widely used in Web servers. A Web server has a main process that receives HTTP requests, and then assigns the task of handling each request to a separate process (chosen from among a pool of processes). Each of the processes is itself multithreaded, so that it can handle multiple requests. The use of safe programming languages, such as Java, C#, or Visual Basic, allows Web application servers to protect threads from errors in other threads. In contrast, with a language like C or C++, errors such as memory allocation errors in one thread can cause other threads to fail.  
+The above architecture is also widely used in Web servers. A Web server has a main process that receives HTTP requests, and then assigns the task of handling each request to a separate process (chosen from among a pool of processes). Each of the processes is itself multithreaded, so that it can handle multiple requests. The use of safe programming languages, such as Java, C#, or Visual Basic, allows Web application servers to protect threads from errors in other threads. In contrast, with a language like C or C++, errors such as memory allocation errors in one thread can cause other threads to fail.
 
-**1094 Chapter 26 Advanced Transaction Processing**
-
-input queue
-
-authorization
-
-output queuenetwork
-
-lock manager
-
-recovery manager
-
-log manager
-
-application servers
-
-database and resource managers
-
-**Figure 26.2** TP-monitor components.
+![Alt text](D7.png)
 
 A more general architecture has multiple processes, rather than just one, to communicate with clients. The client communication processes interact with one or more router processes, which route their requests to the appropriate server. Later-generation TP monitors therefore have a different architecture, called the **many-server, many-router model**, illustrated in Figure 26.1d. A controller process starts up the other processes and supervises their functioning. Very high perfor- mance Web-server systems also adopt such an architecture. The router processes are often network routers that direct traffic addressed to the same Internet ad- dress to different server computers, depending on where the traffic comes from. What looks like a single server with a single address to the outside world may be a collection of servers.
 
@@ -1364,12 +1200,9 @@ The detailed structure of a TP monitor appears in Figure 26.2. A TP monitor does
 Finally, TP monitors also provide support for persistent messaging. Recall that persistent messaging (Section 19.4.3) provides a guarantee that the message will be delivered if (and only if) the transaction commits.
 
 In addition to these facilities, many TP monitors also provided _presentation facilities_ to create menus/forms interfaces for dumb clients such as terminals;  
-
-**26.1 Transaction-Processing Monitors 1095**
-
 these facilities are no longer important since dumb clients are no longer widely used.
 
-**26.1.2 Application Coordination Using TP monitors**
+### 26.1.2 Application Coordination Using TP monitors
 
 Applications today often have to interact with multiple databases. They may also have to interact with legacy systems, such as special-purpose data-storage systems built directly on file systems. Finally, they may have to communicate with users or other applications at remote sites. Hence, they also have to interact with communication subsystems. It is important to be able to coordinate data accesses, and to implement ACID properties for transactions across such systems.
 
@@ -1381,15 +1214,11 @@ In addition, services provided by a TP monitor, such as persistent messaging and
 
 We can also use TP monitors to administer complex client–server systems consisting of multiple servers and a large number of clients. The TP monitor coordinates activities such as system checkpoints and shutdowns. It provides se- curity and authentication of clients. It administers server pools by adding servers or removing servers without interruption of the the database system. Finally, it controls the scope of failures. If a server fails, the TP monitor can detect this failure, abort the transactions in progress, and restart the transactions. If a node fails, the TP monitor can migrate transactions to servers at other nodes, again backing out incomplete transactions. When failed nodes restart, the TP monitor can govern the recovery of the node’s resource managers.
 
-TP monitors can be used to hide database failures in replicated systems; remote backup systems (Section 16.9) are an example of replicated systems. Transaction requests are sent to the TP monitor, which relays the messages to one of the  
-
-**1096 Chapter 26 Advanced Transaction Processing**
-
-database replicas (the primary site, in case of remote backup systems). If one site fails, the TP monitor can transparently route messages to a backup site, masking the failure of the first site.
+TP monitors can be used to hide database failures in replicated systems; remote backup systems (Section 16.9) are an example of replicated systems. Transaction requests are sent to the TP monitor, which relays the messages to one of the database replicas (the primary site, in case of remote backup systems). If one site fails, the TP monitor can transparently route messages to a backup site, masking the failure of the first site.
 
 In client–server systems, clients often interact with servers via a **remote- procedure-call** (**RPC**) mechanism, where a client invokes a procedure call, which is actually executed at the server, with the results sent back to the client. As far as the client code that invokes the RPC is concerned, the call looks like a local procedure-call invocation. TP monitor systems provide a **transactional RPC** interface to their services. In such an interface, the RPC mechanism provides calls that can be used to enclose a series of RPC calls within a transaction. Thus, updates performed by an RPC are carried out within the scope of the transaction, and can be rolled back if there is any failure.
 
-**26.2 Transactional Workflows**
+## 26.2 Transactional Workflows
 
 A **workflow** is an activity in which multiple tasks are executed in a coordinated way by different processing entities. A **task** defines some work to be done and can be specified in a number of ways, including a textual description in a file or electronic-mail message, a form, a message, or a computer program. The **pro- cessing entity** that performs the tasks may be a person or a software system (for example, a mailer, an application program, or a database-management system).
 
@@ -1397,35 +1226,15 @@ Figure 26.3 shows a few examples of workflows. A simple example is that of an el
 
 In general, workflows may involve one or more humans. For instance, con- sider the processing of a loan. The relevant workflow appears in Figure 26.4. The person who wants a loan fills out a form, which is then checked by a loan officer. An employee who processes loan applications verifies the data in the form, using sources such as credit-reference bureaus. When all the required information has been collected, the loan officer may decide to approve the loan; that decision may
 
-Workflow Typical Typical processing application task entity electronic-mail routing electronic-mail message mailers
-
-loan processing form processing
-
-form processing
-
-humans, application soware
-
-purchase-order processing humans, application soware, DBMSs
+| Workflow application | Typical task |Typical processing entry |
+| ----------- | ----------- |---------- |
+| Typical processing | electronic-mail message |mailers |
+| loan processing | form processing |humans,application soware |
+| purchase-order processing | form processing |humans,application soware, DBMSs |
 
 **Figure 26.3** Examples of workflows.  
 
-**26.2 Transactional Workflows 1097**
-
-customer loan officer
-
-verification
-
-superior officer
-
-loan disbursement
-
-loan application
-
-reject
-
-accept
-
-**Figure 26.4** Workflow in loan processing.
+![Alt text](image.png)
 
 then have to be approved by one or more superior officers, after which the loan can be made. Each human here performs a task; in a bank that has not automated the task of loan processing, the coordination of the tasks is typically carried out by passing of the loan application, with attached notes and other information, from one employee to the next. Other examples of workflows include processing of expense vouchers, of purchase orders, and of credit-card transactions.
 
@@ -1435,17 +1244,13 @@ Workflows are becoming increasingly important for multiple reasons within as wel
 
 Organizations are increasingly automating their services; for example, a sup- plier may provide an automated system for customers to place orders. Several tasks may need to be carried out when an order is placed, including reserving production time to create the ordered product and delivery services to deliver the product.
 
-We have to address two activities, in general, to automate a workflow. The first is **workflow specification:** detailing the tasks that must be carried out and defining the execution requirements. The second problem is **workflow execu- tion**, which we must do while providing the safeguards of traditional database  
-
-**1098 Chapter 26 Advanced Transaction Processing**
-
-systems related to computation correctness and data integrity and durability. For example, it is not acceptable for a loan application or a voucher to be lost, or to be processed more than once, because of a system crash. The idea behind transac- tional workflows is to use and extend the concepts of transactions to the context of workflows.
+We have to address two activities, in general, to automate a workflow. The first is **workflow specification:** detailing the tasks that must be carried out and defining the execution requirements. The second problem is **workflow execu- tion**, which we must do while providing the safeguards of traditional database systems related to computation correctness and data integrity and durability. For example, it is not acceptable for a loan application or a voucher to be lost, or to be processed more than once, because of a system crash. The idea behind transac- tional workflows is to use and extend the concepts of transactions to the context of workflows.
 
 Both activities are complicated by the fact that many organizations use several independently managed information-processing systems that, in most cases, were developed separately to automate different functions. Workflow activities may require interactions among several such systems, each performing a task, as well as interactions with humans.
 
 A number of workflow systems have been developed in recent years. Here, we study properties of workflow systems at a relatively abstract level, without going into the details of any particular system.
 
-**26.2.1 Workflow Specification**
+### 26.2.1 Workflow Specification
 
 Internal aspects of a task do not need to be modeled for the purpose of specification and management of a workflow. In an abstract view of a task, a task may use parameters stored in its input variables, may retrieve and update data in the local system, may store its results in its output variables, and may be queried about its execution state. At any time during the execution, the **workflow state** consists of the collection of states of the workflow’s constituent tasks, and the states (values) of all variables in the workflow specification.
 
@@ -1453,19 +1258,17 @@ The coordination of tasks can be specified either statically or dynamically. A s
 
 A generalization of this strategy is to have a precondition for execution of each task in the workflow, so that all possible tasks in a workflow and their dependencies are known in advance, but only those tasks whose preconditions are satisfied are executed. The preconditions can be defined through dependencies such as the following:
 
-• **Execution states** of other tasks—for example, “task _ti_ cannot start until task _tj_ has ended,” or “task _ti_ must abort if task _tj_ has committed.”
+- **Execution states** of other tasks—for example, “task _ti_ cannot start until task _tj_ has ended,” or “task _ti_ must abort if task _tj_ has committed.”
 
-• **Output values** of other tasks—for example, “task _ti_ can start if task _tj_ re- turns a value greater than 25,” or “the manager-approval task can start if the secretary-approval task returns a value of OK.”
+- **Output values** of other tasks—for example, “task _ti_ can start if task _tj_ re- turns a value greater than 25,” or “the manager-approval task can start if the secretary-approval task returns a value of OK.”
 
-• **External variables** modified by external events—for example, “task _ti_ cannot be started before 9 A.M.,” or “task _ti_ must be started within 24 hours of the completion of task _tj_ .”  
-
-**26.2 Transactional Workflows 1099**
+- **External variables** modified by external events—for example, “task _ti_ cannot be started before 9 A.M.,” or “task _ti_ must be started within 24 hours of the completion of task _tj_ .”  
 
 We can combine the dependencies by the regular logical connectors (**or**, **and**, **not**) to form complex scheduling preconditions.
 
 An example of dynamic scheduling of tasks is an electronic-mail routing system. The next task to be scheduled for a given mail message depends on what the destination address of the message is, and on which intermediate routers are functioning.
 
-**26.2.2 Failure-Atomicity Requirements of a Workflow**
+### 26.2.2 Failure-Atomicity Requirements of a Workflow
 
 The workflow designer may specify the **failure-atomicity** requirements of a work- flow according to the semantics of the workflow. The traditional notion of failure atomicity would require that a failure of any task result in the failure of the work- flow. However, a workflow can, in many cases, survive the failure of one of its tasks—for example, by executing a functionally equivalent task at another site. Therefore, we should allow the designer to define failure-atomicity requirements of a workflow. The system must guarantee that every execution of a workflow will terminate in a state that satisfies the failure-atomicity requirements defined by the designer. We call those states **acceptable termination states** of a work- flow. All other execution states of a workflow constitute a set of **nonacceptable termination states**, in which the failure-atomicity requirements may be violated.
 
@@ -1477,13 +1280,9 @@ For example, in the loan-processing workflow, in the final state, either the loa
 
 In general, a task can commit and release its resources before the workflow reaches a termination state. However, if the multitask transaction later aborts, its failure atomicity may require that we undo the effects of already completed tasks (for example, committed subtransactions) by executing compensating tasks (as subtransactions). The semantics of compensation requires that a compensat- ing transaction eventually complete its execution successfully, possibly after a number of resubmissions.
 
-In an expense-voucher-processing workflow, for example, a department- budget balance may be reduced on the basis of an initial approval of a voucher  
+In an expense-voucher-processing workflow, for example, a department- budget balance may be reduced on the basis of an initial approval of a voucher by the manager. If the voucher is later rejected, whether because of failure or for other reasons, the budget may have to be restored by a compensating transaction.
 
-**1100 Chapter 26 Advanced Transaction Processing**
-
-by the manager. If the voucher is later rejected, whether because of failure or for other reasons, the budget may have to be restored by a compensating transaction.
-
-**26.2.3 Execution of Workflows**
+### 26.2.3 Execution of Workflows
 
 The execution of the tasks may be controlled by a human coordinator or by a soft- ware system called a **workflow-management system**. A workflow-management system consists of a scheduler, task agents, and a mechanism to query the state of the workflow system. A task agent controls the execution of a task by a processing entity. A scheduler is a program that processes workflows by submitting various tasks for execution, monitoring various events, and evaluating conditions related to intertask dependencies. A scheduler may submit a task for execution (to a task agent), or may request that a previously submitted task be aborted. In the case of multidatabase transactions, the tasks are subtransactions, and the processing entities are local database-management systems. In accordance with the work- flow specifications, the scheduler enforces the scheduling dependencies and is responsible for ensuring that tasks reach acceptable termination states.
 
@@ -1493,15 +1292,11 @@ The simplest workflow-execution systems follow the fully distributed ap- proach 
 
 The centralized approach is used in workflow systems where the data are stored in a central database. The scheduler notifies various agents, such as humans or computer programs, that a task has to be carried out, and keeps track of task completion. It is easier to keep track of the state of a workflow with a centralized approach than it is with a fully distributed approach.
 
-The scheduler must guarantee that a workflow will terminate in one of the specified acceptable termination states. Ideally, before attempting to execute a workflow, the scheduler should examine that workflow to check whether the  
-
-**26.2 Transactional Workflows 1101**
-
-workflow may terminate in a nonacceptable state. If the scheduler cannot guar- antee that a workflow will terminate in an acceptable state, it should reject such specifications without attempting to execute the workflow. As an example, let us consider a workflow consisting of two tasks represented by subtransactions _S_1 and _S_2, with the failure-atomicity requirements indicating that either both or neither of the subtransactions should be committed. If _S_1 and _S_2 do not provide prepared-to-commit states (for a two-phase commit), and further do not have compensating transactions, then it is possible to reach a state where one subtrans- action is committed and the other aborted, and there is no way to bring both to the same state. Therefore, such a workflow specification is **unsafe**, and should be rejected.
+The scheduler must guarantee that a workflow will terminate in one of the specified acceptable termination states. Ideally, before attempting to execute a workflow, the scheduler should examine that workflow to check whether the workflow may terminate in a nonacceptable state. If the scheduler cannot guar- antee that a workflow will terminate in an acceptable state, it should reject such specifications without attempting to execute the workflow. As an example, let us consider a workflow consisting of two tasks represented by subtransactions _S_1 and _S_2, with the failure-atomicity requirements indicating that either both or neither of the subtransactions should be committed. If _S_1 and _S_2 do not provide prepared-to-commit states (for a two-phase commit), and further do not have compensating transactions, then it is possible to reach a state where one subtrans- action is committed and the other aborted, and there is no way to bring both to the same state. Therefore, such a workflow specification is **unsafe**, and should be rejected.
 
 Safety checks such as the one just described may be impossible or impractical to implement in the scheduler; it then becomes the responsibility of the person designing the workflow specification to ensure that the workflows are safe.
 
-**26.2.4 Recovery of a Workflow**
+### 26.2.4 Recovery of a Workflow
 
 The objective of **workflow recovery** is to enforce the failure atomicity of the work- flows. The recovery procedures must make sure that, if a failure occurs in any of the workflow-processing components (including the scheduler), the workflow will eventually reach an acceptable termination state (whether aborted or com- mitted). For example, the scheduler could continue processing after failure and recovery, as though nothing happened, thus providing forward recoverability. Otherwise, the scheduler could abort the whole workflow (that is, reach one of the global abort states). In either case, some subtransactions may need to be committed or even submitted for execution (for example, compensating subtrans- actions).
 
@@ -1509,15 +1304,11 @@ We assume that the processing entities involved in the workflow have their own r
 
 We also need to consider the contents of the message queues. When one agent hands off a task to another, the handoff should be carried out exactly once: If the handoff happens twice a task may get executed twice; if the handoff does not occur, the task may get lost. Persistent messaging (Section 19.4.3) provides exactly the features to ensure positive, single handoff.
 
-**26.2.5 Workflow-Management Systems**
+### 26.2.5 Workflow-Management Systems
 
 Workflows are often hand coded as part of application systems. For instance, en- terprise resource planning (ERP) systems, which help coordinate activities across an entire enterprise, have numerous workflows built into them.
 
-The goal of workflow-management systems is to simplify the construction of workflows and make them more reliable, by permitting them to be specified in a high-level manner and executed in accordance with the specification. There are a  
-
-**1102 Chapter 26 Advanced Transaction Processing**
-
-large number of commercial workflow-management systems; some are general- purpose workflow-management systems, while others are specific to particular workflows, such as order processing or bug/failure reporting systems.
+The goal of workflow-management systems is to simplify the construction of workflows and make them more reliable, by permitting them to be specified in a high-level manner and executed in accordance with the specification. There are a large number of commercial workflow-management systems; some are general- purpose workflow-management systems, while others are specific to particular workflows, such as order processing or bug/failure reporting systems.
 
 In today’s world of interconnected organizations, it is not sufficient to man- age workflows only within an organization. Workflows that cross organizational boundaries are becoming increasingly common. For instance, consider an order placed by an organization and communicated to another organization that ful- fills the order. In each organization there may be a workflow associated with the order, and it is important that the workflows be able to interoperate, in order to minimize human intervention.
 
@@ -1527,27 +1318,27 @@ Business process management systems based on the SOA architecture include Micros
 
 The **Web Services Business Process Execution Language** (**WS-BPEL**) is an XML based standard for specifying Web services and business processes (workflows) based on the Web services, which can be executed by a business process manage- ment system. The **Business Process Modeling Notation** (**BPMN**), is a standard for graphical modeling of business processes in a workflow, and **XML Process Definition Language** (**XPDL**) is an XML based representation of business process definitions, based on BPMN diagrams.
 
-**26.3 E-Commerce**
+## 26.3 E-Commerce
 
 E-commerce refers to the process of carrying out various activities related to commerce, through electronic means, primarily through the Internet. The types of activities include:
 
-• Presale activities, needed to inform the potential buyer about the product or service being sold.
+- Presale activities, needed to inform the potential buyer about the product or service being sold.
 
-• The sale process, which includes negotiations on price and quality of service, and other contractual matters.
+- The sale process, which includes negotiations on price and quality of service, and other contractual matters.
 
-• The marketplace: When there are multiple sellers and buyers for a product, a marketplace, such as a stock exchange, helps in negotiating the price to be paid for the product. Auctions are used when there is a single seller and multiple buyers, and reverse auctions are used when there is a single buyer and multiple sellers.  
+- The marketplace: When there are multiple sellers and buyers for a product, a marketplace, such as a stock exchange, helps in negotiating the price to be paid for the product. Auctions are used when there is a single seller and multiple buyers, and reverse auctions are used when there is a single buyer and multiple sellers.  
 
 **26.3 E-Commerce 1103**
 
-• Payment for the sale.
+- Payment for the sale.
 
-• Activities related to delivery of the product or service. Some products and services can be delivered over the Internet; for others the Internet is used only for providing shipping information and for tracking shipments of products.
+- Activities related to delivery of the product or service. Some products and services can be delivered over the Internet; for others the Internet is used only for providing shipping information and for tracking shipments of products.
 
-• Customer support and postsale service.
+- Customer support and postsale service.
 
 Databases are used extensively to support these activities. For some of the activities, the use of databases is straightforward, but there are interesting appli- cation development issues for the other activities.
 
-**26.3.1 E-Catalogs**
+### 26.3.1 E-Catalogs
 
 Any e-commerce site provides users with a catalog of the products and services that the site supplies. The services provided by an e-catalog may vary consider- ably.
 
@@ -1557,39 +1348,33 @@ E-catalogs can be customized for the customer. For instance, a retailer may have
 
 Supporting such customization requires customer information as well as spe- cial pricing/discount information and sales restriction information to be stored in a database. There are also challenges in supporting very high transaction rates, which are often tackled by caching of query results or generated Web pages.
 
-**26.3.2 Marketplaces**
+### 26.3.2 Marketplaces
 
 When there are multiple sellers or multiple buyers (or both) for a product, a marketplace helps in negotiating the price to be paid for the product. There are several different types of marketplaces:
 
-• In a **reverse auction** system a buyer states requirements, and sellers bid for supplying the item. The supplier quoting the lowest price wins. In a closed bidding system, the bids are not made public, whereas in an open bidding system the bids are made public.  
+- In a **reverse auction** system a buyer states requirements, and sellers bid for supplying the item. The supplier quoting the lowest price wins. In a closed bidding system, the bids are not made public, whereas in an open bidding system the bids are made public. 
 
-**1104 Chapter 26 Advanced Transaction Processing**
+- In an **auction** there are multiple buyers and a single seller. For simplicity, assume that there is only one instance of each item being sold. Buyers bid for the items being sold, and the highest bidder for an item gets to buy the item at the bid price. When there are multiple copies of an item, things become more complicated: Suppose there are four items, and one bidder may want three copies for $10 each, while another wants two copies for $13 each. It is not possible to satisfy both bids. If the items will be of no value if they are not sold (for instance, airline seats, which must be sold before the plane leaves), the seller simply picks a set of bids that maximizes the income. Otherwise the decision is more complicated.
 
-• In an **auction** there are multiple buyers and a single seller. For simplicity, assume that there is only one instance of each item being sold. Buyers bid for the items being sold, and the highest bidder for an item gets to buy the item at the bid price. When there are multiple copies of an item, things become more complicated: Suppose there are four items, and one bidder may want three copies for $10 each, while another wants two copies for $13 each. It is not possible to satisfy both bids. If the items will be of no value if they are not sold (for instance, airline seats, which must be sold before the plane leaves), the seller simply picks a set of bids that maximizes the income. Otherwise the decision is more complicated.
-
-• In an **exchange**, such as a stock exchange, there are multiple sellers and multiple buyers. Buyers can specify the maximum price they are willing to pay, while sellers specify the minimum price they want. There is usually a _market maker_ who matches buy and sell bids, deciding on the price for each trade (for instance, at the price of the sell bid).
+- In an **exchange**, such as a stock exchange, there are multiple sellers and multiple buyers. Buyers can specify the maximum price they are willing to pay, while sellers specify the minimum price they want. There is usually a _market maker_ who matches buy and sell bids, deciding on the price for each trade (for instance, at the price of the sell bid).
 
 There are other more complex types of marketplaces. Among the database issues in handling marketplaces are these:
 
-• Bidders need to be authenticated before they are allowed to bid.
+- Bidders need to be authenticated before they are allowed to bid.
 
-• Bids (buy or sell) need to be recorded securely in a database. Bids need to be communicated quickly to other people involved in the marketplace (such as all the buyers or all the sellers), who may be numerous.
+- Bids (buy or sell) need to be recorded securely in a database. Bids need to be communicated quickly to other people involved in the marketplace (such as all the buyers or all the sellers), who may be numerous.
 
-• Delays in broadcasting bids can lead to financial losses to some participants.
+- Delays in broadcasting bids can lead to financial losses to some participants.
 
-• The volumes of trades may be extremely large at times of stock market volatil- ity, or toward the end of auctions. Thus, very high performance databases with large degrees of parallelism are used for such systems.
+- The volumes of trades may be extremely large at times of stock market volatil- ity, or toward the end of auctions. Thus, very high performance databases with large degrees of parallelism are used for such systems.
 
-**26.3.3 Order Settlement**
+### 26.3.3 Order Settlement
 
 After items have been selected (perhaps through an electronic catalog) and the price determined (perhaps by an electronic marketplace), the order has to be settled. Settlement involves payment for goods and the delivery of the goods.
 
 A simple but unsecure way of paying electronically is to send a credit-card number. There are two major problems. First, credit-card fraud is possible. When a buyer pays for physical goods, companies can ensure that the address for delivery matches the cardholder’s address, so no one else can receive the goods, but for goods delivered electronically no such check is possible. Second, the seller has to be trusted to bill only for the agreed-on item and to not pass on the card number to unauthorized people who may misuse it.
 
-Several protocols are available for secure payments that avoid both the prob- lems listed above. In addition, they provide for better privacy, whereby the seller may not be given any unnecessary details about the buyer, and the credit-card  
-
-**26.4 Main-Memory Databases 1105**
-
-company is not provided any unnecessary information about the items pur- chased. All information transmitted must be encrypted so that anyone intercept- ing the data on the network cannot find out the contents. Public-/private-key encryption is widely used for this task.
+Several protocols are available for secure payments that avoid both the prob- lems listed above. In addition, they provide for better privacy, whereby the seller may not be given any unnecessary details about the buyer, and the credit-card company is not provided any unnecessary information about the items pur- chased. All information transmitted must be encrypted so that anyone intercept- ing the data on the network cannot find out the contents. Public-/private-key encryption is widely used for this task.
 
 The protocols must also prevent **person-in-the-middle attacks**, where some- one can impersonate the bank or credit-card company, or even the seller, or buyer, and steal secret information. Impersonation can be perpetrated by passing off a fake key as someone else’s public key (the bank’s or credit-card company’s, or the merchant’s or the buyer’s). Impersonation is prevented by a system of **digital cer- tificates,** whereby public keys are signed by a certification agency, whose public key is well known (or which in turn has its public key certified by another certi- fication agency and so on up to a key that is well known). From the well-known public key, the system can authenticate the other keys by checking the certificates in reverse sequence. Digital certificates were described earlier, in Section 9.8.3.2.
 
@@ -1599,13 +1384,9 @@ Today, many banks provide **secure payment gateways** which allow a pur- chaser 
 
 An alternative approach which is used by the PayPal system is for both the purchaser and the merchant to have an account on a common platform, and the money transfer happens entirely within the common platform. The purchaser first loads her account with money using a credit card, and can then transfer money to the merchants account. This approach has been very successful with small merchants, since it does not require either the purchaser or the merchant to run any software.
 
-**26.4 Main-Memory Databases**
+## 26.4 Main-Memory Databases
 
-To allow a high rate of transaction processing (hundreds or thousands of trans- actions per second), we must use high-performance hardware, and must exploit  
-
-**1106 Chapter 26 Advanced Transaction Processing**
-
-parallelism. These techniques alone, however, are insufficient to obtain very low response times, since disk I/O remains a bottleneck—about 10 milliseconds are required for each I/O, and this number has not decreased at a rate comparable to the increase in processor speeds. Disk I/O is often the bottleneck for reads, as well as for transaction commits. The long disk latency increases not only the time to access a data item, but also limits the number of accesses per second.1
+To allow a high rate of transaction processing (hundreds or thousands of trans- actions per second), we must use high-performance hardware, and must exploit parallelism. These techniques alone, however, are insufficient to obtain very low response times, since disk I/O remains a bottleneck—about 10 milliseconds are required for each I/O, and this number has not decreased at a rate comparable to the increase in processor speeds. Disk I/O is often the bottleneck for reads, as well as for transaction commits. The long disk latency increases not only the time to access a data item, but also limits the number of accesses per second.1
 
 We can make a database system less disk bound by increasing the size of the database buffer. Advances in main-memory technology let us construct large main memories at relatively low cost. Today, commercial 64-bit systems can support main memories of tens of gigabytes. Oracle TimesTen is a currently available main-memory database. Additional information on main-memory databases is given in the references in the bibliographical notes.
 
@@ -1613,33 +1394,27 @@ For some applications, such as real-time control, it is necessary to store data 
 
 Large main memories allow faster processing of transactions, since data are memory resident. However, there are still disk-related limitations:
 
-• Log records must be written to stable storage before a transaction is commit- ted. The improved performance made possible by a large main memory may result in the logging process becoming a bottleneck. We can reduce commit time by creating a stable log buffer in main memory, using nonvolatile RAM (implemented, for example, by battery-backed-up memory). The overhead imposed by logging can also be reduced by the _group-commit_ technique dis- cussed later in this section. Throughput (number of transactions per second) is still limited by the data-transfer rate of the log disk.
+- Log records must be written to stable storage before a transaction is commit- ted. The improved performance made possible by a large main memory may result in the logging process becoming a bottleneck. We can reduce commit time by creating a stable log buffer in main memory, using nonvolatile RAM (implemented, for example, by battery-backed-up memory). The overhead imposed by logging can also be reduced by the _group-commit_ technique dis- cussed later in this section. Throughput (number of transactions per second) is still limited by the data-transfer rate of the log disk.
 
-• Buffer blocks marked as modified by committed transactions still have to be written so that the amount of log that has to be replayed at recovery time is reduced. If the update rate is extremely high, the disk data-transfer rate may become a bottleneck.
+- Buffer blocks marked as modified by committed transactions still have to be written so that the amount of log that has to be replayed at recovery time is reduced. If the update rate is extremely high, the disk data-transfer rate may become a bottleneck.
 
-• If the system crashes, all of main memory is lost. On recovery, the system has an empty database buffer, and data items must be input from disk when they are accessed. Therefore, even after recovery is complete, it takes some time before the database is fully loaded in main memory and high-speed processing of transactions can resume.
+- If the system crashes, all of main memory is lost. On recovery, the system has an empty database buffer, and data items must be input from disk when they are accessed. Therefore, even after recovery is complete, it takes some time before the database is fully loaded in main memory and high-speed processing of transactions can resume.
 
-On the other hand, a main-memory database provides opportunities for op- timizations:
+- Since memory is costlier than disk space, internal data structures in main- memory databases have to be designed to reduce space requirements. How- ever, data structures can have pointers crossing multiple pages, unlike those in disk databases, where the cost of the I/Os to traverse multiple pages would be excessively high. For example, tree structures in main-memory databases can be relatively deep, unlike B+-trees, but should minimize space require- ments. However, the speed difference between cache memory and main-memory, and the fact that data is transferred between main-memory and cache in units of a _cache-line_ (typically about 64 bytes), results in a situation where the relationship between cache and main-memory is not dissimilar to the relationship between main-memory and disk (although with smaller speed differences). As a result, B+-trees with small nodes that fit in a cache line have been found quite useful even in main-memory databases.
 
-1Write latency for flash depends on whether an erase operation must be done first.  
+- There is no need to pin buffer pages in memory before data are accessed, since buffer pages will never be replaced.
 
-**26.4 Main-Memory Databases 1107**
+- Query-processing techniques should be designed to minimize space over- head, so that main-memory limits are not exceeded while a query is being evaluated; that situation would result in paging to swap area, and would slow down query processing.
 
-• Since memory is costlier than disk space, internal data structures in main- memory databases have to be designed to reduce space requirements. How- ever, data structures can have pointers crossing multiple pages, unlike those in disk databases, where the cost of the I/Os to traverse multiple pages would be excessively high. For example, tree structures in main-memory databases can be relatively deep, unlike B+-trees, but should minimize space require- ments. However, the speed difference between cache memory and main-memory, and the fact that data is transferred between main-memory and cache in units of a _cache-line_ (typically about 64 bytes), results in a situation where the relationship between cache and main-memory is not dissimilar to the relationship between main-memory and disk (although with smaller speed differences). As a result, B+-trees with small nodes that fit in a cache line have been found quite useful even in main-memory databases.
+- Once the disk I/O bottleneck is removed, operations such as locking and latching may become bottlenecks. Such bottlenecks must be eliminated by improvements in the implementation of these operations.
 
-• There is no need to pin buffer pages in memory before data are accessed, since buffer pages will never be replaced.
-
-• Query-processing techniques should be designed to minimize space over- head, so that main-memory limits are not exceeded while a query is being evaluated; that situation would result in paging to swap area, and would slow down query processing.
-
-• Once the disk I/O bottleneck is removed, operations such as locking and latching may become bottlenecks. Such bottlenecks must be eliminated by improvements in the implementation of these operations.
-
-• Recovery algorithms can be optimized, since pages rarely need to be written out to make space for other pages.
+- Recovery algorithms can be optimized, since pages rarely need to be written out to make space for other pages.
 
 The process of committing a transaction _T_ requires these records to be written to stable storage:
 
-• All log records associated with _T_ that have not been output to stable storage.
+- All log records associated with _T_ that have not been output to stable storage.
 
-• The _<_T **commit**_\>_ log record.
+- The _<_T **commit**_\>_ log record.
 
 These output operations frequently require the output of blocks that are only partially filled. To ensure that nearly full blocks are output, we use the **group- commit** technique. Instead of attempting to commit _T_ when _T_ completes, the system waits until several transactions have completed, or a certain period of time has passed since a transaction completed execution. It then commits the group of transactions that are waiting, together. Blocks written to the log on stable storage would contain records of several transactions. By careful choice of group size and maximum waiting time, the system can ensure that blocks are full when they are written to stable storage without making transactions wait excessively. This technique results, on average, in fewer output operations per committed transaction.  
 
@@ -1649,63 +1424,51 @@ Although group commit reduces the overhead imposed by logging, it results in a s
 
 Note that group commit is useful even in databases with disk-resident data, not just for main-memory databases. If flash storage is used instead of magnetic disk for storing log records, the commit delay is significantly reduced. However, group commit can still be useful since it minimizes the number of pages written; this translates to performance benefits in flash storage, since pages cannot be overwritten, and the erase operation is expensive. (Flash storage systems remap logical pages to a pre-erased physical page, avoiding delay at the time a page is written, but the erase operation must be performed eventually as part of garbage collection of old versions of pages.)
 
-**26.5 Real-Time Transaction Systems**
+## 26.5 Real-Time Transaction Systems
 
 The integrity constraints that we have considered thus far pertain to the values stored in the database. In certain applications, the constraints include **deadlines** by which a task must be completed. Examples of such applications include plant management, traffic control, and scheduling. When deadlines are included, cor- rectness of an execution is no longer solely an issue of database consistency. Rather, we are concerned with how many deadlines are missed, and by how much time they are missed. Deadlines are characterized as follows:
 
-• **Hard deadline**. Serious problems, such as system crash, may occur if a task is not completed by its deadline.
+- **Hard deadline**. Serious problems, such as system crash, may occur if a task is not completed by its deadline.
 
-• **Firm deadline**. The task has zero value if it is completed after the deadline.
+- **Firm deadline**. The task has zero value if it is completed after the deadline.
 
-• **Soft deadlines**. The task has diminishing value if it is completed after the deadline, with the value approaching zero as the degree of lateness increases.
+- **Soft deadlines**. The task has diminishing value if it is completed after the deadline, with the value approaching zero as the degree of lateness increases.
 
 Systems with deadlines are called **real-time systems**. Transaction management in real-time systems must take deadlines into ac-
 
 count. If the concurrency-control protocol determines that a transaction _Ti_ must wait, it may cause _Ti_ to miss the deadline. In such cases, it may be preferable to pre-empt the transaction holding the lock, and to allow _Ti_ to proceed. Pre-emption must be used with care, however, because the time lost by the pre-empted trans- action (due to rollback and restart) may cause the pre-empted transaction to miss its deadline. Unfortunately, it is difficult to determine whether rollback or waiting is preferable in a given situation.
 
-A major difficulty in supporting real-time constraints arises from the variance in transaction execution time. In the best case, all data accesses reference data in  
-
-**26.6 Long-Duration Transactions 1109**
-
-the database buffer. In the worst case, each access causes a buffer page to be written to disk (preceded by the requisite log records), followed by the reading from disk of the page containing the data to be accessed. Because the two or more disk accesses required in the worst case take several orders of magnitude more time than the main-memory references required in the best case, transaction execution time can be estimated only very poorly if data are resident on disk. Hence, main-memory databases are often used if real-time constraints have to be met.
+A major difficulty in supporting real-time constraints arises from the variance in transaction execution time. In the best case, all data accesses reference data in the database buffer. In the worst case, each access causes a buffer page to be written to disk (preceded by the requisite log records), followed by the reading from disk of the page containing the data to be accessed. Because the two or more disk accesses required in the worst case take several orders of magnitude more time than the main-memory references required in the best case, transaction execution time can be estimated only very poorly if data are resident on disk. Hence, main-memory databases are often used if real-time constraints have to be met.
 
 However, even if data are resident in main memory, variances in execution time arise from lock waits, transaction aborts, and so on. Researchers have devoted considerable effort to concurrency control for real-time databases. They have extended locking protocols to provide higher priority for transactions with early deadlines. They have found that optimistic concurrency protocols perform well in real-time databases; that is, these protocols result in fewer missed deadlines than even the extended locking protocols. The bibliographical notes provide references to research in the area of real-time databases.
 
 In real-time systems, deadlines, rather than absolute speed, are the most important issue. Designing a real-time system involves ensuring that there is enough processing power to meet deadlines without requiring excessive hard- ware resources. Achieving this objective, despite the variance in execution time resulting from transaction management, remains a challenging problem.
 
-**26.6 Long-Duration Transactions**
+## 26.6 Long-Duration Transactions
 
 The transaction concept developed initially in the context of data-processing applications, in which most transactions are noninteractive and of short duration. Although the techniques presented here and earlier in Chapters 14, 15, and 16 work well in those applications, serious problems arise when this concept is applied to database systems that involve human interaction. Such transactions have these key properties:
 
-• **Long duration**. Once a human interacts with an active transaction, that trans- action becomes a **long-duration transaction** from the perspective of the com- puter, since human response time is slow relative to computer speed. Further- more, in design applications, the human activity may involve hours, days, or an even longer period. Thus, transactions may be of long duration in human terms, as well as in machine terms.
+- **Long duration**. Once a human interacts with an active transaction, that trans- action becomes a **long-duration transaction** from the perspective of the com- puter, since human response time is slow relative to computer speed. Further- more, in design applications, the human activity may involve hours, days, or an even longer period. Thus, transactions may be of long duration in human terms, as well as in machine terms.
 
-• **Exposure of uncommitted data**. Data generated and displayed to a user by a long-duration transaction are uncommitted, since the transaction may abort. Thus, users—and, as a result, other transactions—may be forced to read uncommitted data. If several users are cooperating on a project, user transactions may need to exchange data prior to transaction commit.
+- **Exposure of uncommitted data**. Data generated and displayed to a user by a long-duration transaction are uncommitted, since the transaction may abort. Thus, users—and, as a result, other transactions—may be forced to read uncommitted data. If several users are cooperating on a project, user transactions may need to exchange data prior to transaction commit.
 
-• **Subtasks**. An interactive transaction may consist of a set of subtasks initiated by the user. The user may wish to abort a subtask without necessarily causing the entire transaction to abort.  
+- **Subtasks**. An interactive transaction may consist of a set of subtasks initiated by the user. The user may wish to abort a subtask without necessarily causing the entire transaction to abort.  
+- **Recoverability**. It is unacceptable to abort a long-duration interactive trans- action because of a system crash. The active transaction must be recovered to a state that existed shortly before the crash so that relatively little human work is lost.
 
-**1110 Chapter 26 Advanced Transaction Processing**
-
-• **Recoverability**. It is unacceptable to abort a long-duration interactive trans- action because of a system crash. The active transaction must be recovered to a state that existed shortly before the crash so that relatively little human work is lost.
-
-• **Performance**. Good performance in an interactive transaction system is de- fined as fast response time. This definition is in contrast to that in a non- interactive system, in which high throughput (number of transactions per second) is the goal. Systems with high throughput make efficient use of system resources. However, in the case of interactive transactions, the most costly resource is the user. If the efficiency and satisfaction of the user is to be optimized, response time should be fast (from a human perspective). In those cases where a task takes a long time, response time should be predictable (that is, the variance in response times should be low), so that users can manage their time well.
+- **Performance**. Good performance in an interactive transaction system is de- fined as fast response time. This definition is in contrast to that in a non- interactive system, in which high throughput (number of transactions per second) is the goal. Systems with high throughput make efficient use of system resources. However, in the case of interactive transactions, the most costly resource is the user. If the efficiency and satisfaction of the user is to be optimized, response time should be fast (from a human perspective). In those cases where a task takes a long time, response time should be predictable (that is, the variance in response times should be low), so that users can manage their time well.
 
 In Sections 26.6.1 through 26.6.5, we shall see why these five properties are in- compatible with the techniques presented thus far and shall discuss how those techniques can be modified to accommodate long-duration interactive transac- tions.
 
-**26.6.1 Nonserializable Executions**
+### 26.6.1 Nonserializable Executions
 
 The properties that we discussed make it impractical to enforce the requirement used in earlier chapters that only serializable schedules be permitted. Each of the concurrency-control protocols of Chapter 15 has adverse effects on long-duration transactions:
 
-• **Two-phase locking**. When a lock cannot be granted, the transaction request- ing the lock is forced to wait for the data item in question to be unlocked. The duration of this wait is proportional to the duration of the transaction holding the lock. If the data item is locked by a short-duration transaction, we expect that the waiting time will be short (except in case of deadlock or extraordinary system load). However, if the data item is locked by a long- duration transaction, the wait will be of long duration. Long waiting times lead to both longer response time and an increased chance of deadlock.
+- **Two-phase locking**. When a lock cannot be granted, the transaction request- ing the lock is forced to wait for the data item in question to be unlocked. The duration of this wait is proportional to the duration of the transaction holding the lock. If the data item is locked by a short-duration transaction, we expect that the waiting time will be short (except in case of deadlock or extraordinary system load). However, if the data item is locked by a long- duration transaction, the wait will be of long duration. Long waiting times lead to both longer response time and an increased chance of deadlock.
 
-• **Graph-based protocols**. Graph-based protocols allow for locks to be released earlier than under the two-phase locking protocols, and they prevent dead- lock. However, they impose an ordering on the data items. Transactions must lock data items in a manner consistent with this ordering. As a result, a trans- action may have to lock more data than it needs. Furthermore, a transaction must hold a lock until there is no chance that the lock will be needed again. Thus, long-duration lock waits are likely to occur.
+- **Graph-based protocols**. Graph-based protocols allow for locks to be released earlier than under the two-phase locking protocols, and they prevent dead- lock. However, they impose an ordering on the data items. Transactions must lock data items in a manner consistent with this ordering. As a result, a trans- action may have to lock more data than it needs. Furthermore, a transaction must hold a lock until there is no chance that the lock will be needed again. Thus, long-duration lock waits are likely to occur.
 
-• **Timestamp-based protocols**. Timestamp protocols never require a transac- tion to wait. However, they do require transactions to abort under certain cir- cumstances. If a long-duration transaction is aborted, a substantial amount of  
-
-**26.6 Long-Duration Transactions 1111**
-
-work is lost. For noninteractive transactions, this lost work is a performance issue. For interactive transactions, the issue is also one of user satisfaction. It is highly undesirable for a user to find that several hours’ worth of work have been undone.
-
-• **Validation protocols**. Like timestamp-based protocols, validation protocols enforce serializability by means of transaction abort.
+- **Timestamp-based protocols**. Timestamp protocols never require a transac- tion to wait. However, they do require transactions to abort under certain cir- cumstances. If a long-duration transaction is aborted, a substantial amount of work is lost. For noninteractive transactions, this lost work is a performance issue. For interactive transactions, the issue is also one of user satisfaction. It is highly undesirable for a user to find that several hours’ worth of work have been undone.
+- **Validation protocols**. Like timestamp-based protocols, validation protocols enforce serializability by means of transaction abort.
 
 Thus, it appears that the enforcement of serializability results in long-duration waits, in abort of long-duration transactions, or in both. There are theoretical results, cited in the bibliographical notes, that substantiate this conclusion.
 
@@ -1717,25 +1480,18 @@ Snapshot isolation, described in Section 15.7, can provide a partial solution to
 
 However, when transactions are of long duration, conflicting updates are more likely, resulting in additional waits or aborts. These considerations are the basis for the alternative concepts of correctness of concurrent executions and transaction recovery that we consider in the remainder of this section.
 
-**26.6.2 Concurrency Control**
+### 26.6.2 Concurrency Control
 
 The fundamental goal of database concurrency control is to ensure that concur- rent execution of transactions does not result in a loss of database consistency. The concept of serializability can be used to achieve this goal, since all serializable schedules preserve consistency of the database. However, not all schedules that preserve consistency of the database are serializable. For an example, consider again a bank database consisting of two accounts _A_ and _B_, with the consistency requirement that the sum _A_ \+ _B_ be preserved. Although the schedule of Fig- ure 26.5 is not conflict serializable, it nevertheless preserves the sum of _A + B_. It also illustrates two important points about the concept of correctness without serializability.
 
-• Correctness depends on the specific consistency constraints for the database.
+- Correctness depends on the specific consistency constraints for the database.
 
-• Correctness depends on the properties of operations performed by each trans- action.  
+- Correctness depends on the properties of operations performed by each trans- action.  
 
-**1112 Chapter 26 Advanced Transaction Processing**
-
-_T_1 _T_2
-
-read(_A_) _A_ := _A_ − 50 write(_A_)
-
-read(_B_) _B_ := _B_ − 10 write(_B_)
-
-read(_B_) _B_ := _B_ \+ 50 write(_B_)
-
-read(_A_) _A_ := _A_ \+ 10 write(_A_)
+| T~1~ | T~2~ |
+| ----------- | ----------- |
+| read(_A_) _A_ := _A_ − 50 write(_A_) | read(_B_) _B_ := _B_ − 10 write(_B_) |
+| read(_B_) _B_ := _B_ \+ 50 write(_B_) | read(_A_) _A_ := _A_ \+ 10 write(_A_) |
 
 **Figure 26.5** A non-conflict-serializable schedule.
 
@@ -1743,189 +1499,193 @@ In general it is not possible to perform an automatic analysis of low-level oper
 
 The bibliographical notes reference other techniques for ensuring consistency without requiring serializability. Many of these techniques exploit variants of multiversion concurrency control (see Section 15.6). For older data-processing applications that need only one version, multiversion protocols impose a high space overhead to store the extra versions. Since many of the new database applications require the maintenance of versions of data, concurrency-control techniques that exploit multiple versions are practical.
 
-**26.6.3 Nested and Multilevel Transactions**
+### 26.6.3 Nested and Multilevel Transactions
 
 A long-duration transaction can be viewed as a collection of related subtasks or subtransactions. By structuring a transaction as a set of subtransactions, we are able to enhance parallelism, since it may be possible to run several subtransactions in parallel. Furthermore, it is possible to deal with failure of a subtransaction (due to abort, system crash, and so on) without having to roll back the entire long-duration transaction.
 
-A nested or multilevel transaction _T_ consists of a set _T_ \= {_t_1, _t_2, _. . ._ , _tn_} of subtransactions and a partial order _P_ on _T_. A subtransaction _ti_ in _T_ may abort without forcing _T_ to abort. Instead, _T_ may either restart _ti_ or simply choose not to run _ti_ . If _ti_ commits, this action does not make _ti_ permanent (unlike the situation in Chapter 16). Instead, _ti commits to T_, and may still abort (or require compensation —see Section 26.6.4) if _T_ aborts. An execution of _T_ must not violate the partial  
+A nested or multilevel transaction _T_ consists of a set _T_ \= {t~1~,t~2~, _. . ._ , _t~n~_} of subtransactions and a partial order _P_ on _T_. A subtransaction _ti_ in _T_ may abort without forcing _T_ to abort. Instead, _T_ may either restart _ti_ or simply choose not to run _t~i~_ . If _t~i~_ commits, this action does not make _ti_ permanent (unlike the situation in Chapter 16). Instead, _ti commits to T_, and may still abort (or require compensation —see Section 26.6.4) if _T_ aborts. An execution of _T_ must not violate the partial  
 
 **26.6 Long-Duration Transactions 1113**
 
-order _P_. That is, if an edge _ti_ → _tj_ appears in the precedence graph, then _tj_ → _ti_ must not be in the transitive closure of _P_.
+order _P_. That is, if an edge _t~i~_ → _t~j~_ appears in the precedence graph, then _t~j~_ → _t~i~_ must not be in the transitive closure of _P_.
 
 Nesting may be several levels deep, representing a subdivision of a transac- tion into subtasks, subsubtasks, and so on. At the lowest level of nesting, we have the standard database operations **read** and **write** that we have used previously.
 
-If a subtransaction of _T_ is permitted to release locks on completion, _T_ is called a **multilevel transaction**. When a multilevel transaction represents a long- duration activity, the transaction is sometimes referred to as a **saga**. Alternatively, if locks held by a subtransaction _ti_ of _T_ are automatically assigned to _T_ on completion of _ti_ , _T_ is called a **nested transaction**.
+If a subtransaction of _T_ is permitted to release locks on completion, _T_ is called a **multilevel transaction**. When a multilevel transaction represents a long- duration activity, the transaction is sometimes referred to as a **saga**. Alternatively, if locks held by a subtransaction _t~i~_ of _T_ are automatically assigned to _T_ on completion of _t~i~_ , _T_ is called a **nested transaction**.
 
-Although the main practical value of multilevel transactions arises in com- plex, long-duration transactions, we shall use the simple example of Figure 26.5 to show how nesting can create higher-level operations that may enhance con- currency. We rewrite transaction _T_1_,_ using subtransactions _T_1_,_1 and _T_1_,_2, which perform increment or decrement operations:
+Although the main practical value of multilevel transactions arises in com- plex, long-duration transactions, we shall use the simple example of Figure 26.5 to show how nesting can create higher-level operations that may enhance con- currency. We rewrite transaction _T~1~, using subtransactions _T_~1~,~1~ and _T_~1~_,~2~, which perform increment or decrement operations:
 
-• _T_1 consists of:
+- T~1~ consists of:
 
-◦ _T_1_,_1_,_ which subtracts 50 from _A_.
+  ◦ T~1~_,~1~_, which subtracts 50 from _A_.
+  
+  ◦ T~1~_,_~2~_,_ which adds 50 to _B_.
 
-◦ _T_1_,_2_,_ which adds 50 to _B_.
+Similarly, we rewrite transaction _T_~2~_,_ using subtransactions T_~2~,~1~ and _T_~2~_,~2~,_ which also perform increment or decrement operations:
 
-Similarly, we rewrite transaction _T_2_,_ using subtransactions _T_2_,_1 and _T_2_,_2_,_ which also perform increment or decrement operations:
+- T~2~ consists of:
 
-• _T_2 consists of:
+  ◦ T~2~,~1~ which subtracts 10 from _B_.
+  
+  ◦T~2~,~2~ which adds 10 to _A_.
 
-◦ _T_2_,_1_,_ which subtracts 10 from _B_.
-
-◦ _T_2_,_2_,_ which adds 10 to _A_.
-
-No ordering is specified on _T_1_,_1_, T_1_,_2_, T_2_,_1_,_ and _T_2_,_2\. Any execution of these sub- transactions will generate a correct result. The schedule of Figure 26.5 corresponds to the schedule _< T_1_,_1_, T_2_,_1_, T_1_,_2_, T_2_,_2 _\>_.
-
-**26.6.4 Compensating Transactions**
+No ordering is specified on _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~\. Any execution of these sub- transactions will generate a correct result. The schedule of Figure 26.5 corresponds to the schedule _<  _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~\>_.
 
 To reduce the frequency of long-duration waiting, we arrange for uncommit- ted updates to be exposed to other concurrently executing transactions. Indeed, multilevel transactions may allow this exposure. However, the exposure of un- committed data creates the potential for cascading rollbacks. The concept of **com- pensating transactions** helps us to deal with this problem.
 
-Let transaction _T_ be divided into several subtransactions _t_1_, t_2_, . . . , tn_. After a subtransaction _ti_ commits, it releases its locks. Now, if the outer-level transaction _T_ has to be aborted, the effect of its subtransactions must be undone. Suppose that subtransactions _t_1_, . . . , tk_ have committed, and that _tk_+1 was executing when the decision to abort is made. We can undo the effects of _tk_+1 by aborting that  
+Let transaction _T_ be divided into several subtransactions _t_~1~_, t_~2~_, . . . , t~n~_. After a subtransaction _t~i~_ commits, it releases its locks. Now, if the outer-level transaction _T_ has to be aborted, the effect of its subtransactions must be undone. Suppose that subtransactions _t_~1~_, . . . , t~k~_ have committed, and that _t~k+1~ was executing when the decision to abort is made. We can undo the effects of _t~k+1~ by aborting that subtransaction. However, it is not possible to abort subtransactions _t_~1~_, . . . , t~k~_ , since they have committed already.
 
-**1114 Chapter 26 Advanced Transaction Processing**
+Instead, we execute a new subtransaction _ct~i~_ , called a _compensating transaction_, to undo the effect of a subtransaction _t~i~_ . Each subtransaction _t~i~_ is required to have a compensating transaction _ct~i~_ . The compensating transactions must be executed in the inverse order _ct~k~, . . . , ct_~1~\. Here are several examples of compensation:
 
-subtransaction. However, it is not possible to abort subtransactions _t_1_, . . . , tk_ , since they have committed already.
+- Consider the schedule of Figure 26.5, which we have shown to be correct, although not conflict serializable. Each subtransaction releases its locks once it completes. Suppose that T~2~ fails just prior to termination, after T~2,2~ has re- leased its locks. We then run a compensating transaction for T~2,2~ that subtracts 10 from _A_ and a compensating transaction for T~2,1~ that adds 10 to _B_.
 
-Instead, we execute a new subtransaction _cti_ , called a _compensating transaction_, to undo the effect of a subtransaction _ti_ . Each subtransaction _ti_ is required to have a compensating transaction _cti_ . The compensating transactions must be executed in the inverse order _ctk, . . . , ct_1\. Here are several examples of compensation:
-
-• Consider the schedule of Figure 26.5, which we have shown to be correct, although not conflict serializable. Each subtransaction releases its locks once it completes. Suppose that _T_2 fails just prior to termination, after _T_2_,_2 has re- leased its locks. We then run a compensating transaction for _T_2_,_2 that subtracts 10 from _A_ and a compensating transaction for _T_2_,_1 that adds 10 to _B_.
-
-• Consider a database insert by transaction _Ti_ that, as a side effect, causes a B+-tree index to be updated. The insert operation may have modified several nodes of the B+-tree index. Other transactions may have read these nodes in accessing data other than the record inserted by _Ti_ . As mentioned in Sec- tion 16.7, we can undo the insertion by deleting the record inserted by _Ti_ . The result is a correct, consistent B+-tree, but is not necessarily one with exactly the same structure as the one we had before _Ti_ started. Thus, deletion is a compensating action for insertion.
-
-• Consider a long-duration transaction _Ti_ representing a travel reservation. Transaction _T_ has three subtransactions: _Ti,_1, which makes airline reserva- tions; _Ti,_2, which reserves rental cars; and _Ti,_3, which reserves a hotel room. Suppose that the hotel cancels the reservation. Instead of undoing all of _Ti_ , we compensate for the failure of _Ti,_3 by deleting the old hotel reservation and making a new one.
+- Consider a database insert by transaction _T~i~_ that, as a side effect, causes a B+-tree index to be updated. The insert operation may have modified several nodes of the B+-tree index. Other transactions may have read these nodes in accessing data other than the record inserted by _T~i~_ . As mentioned in Sec- tion 16.7, we can undo the insertion by deleting the record inserted by _T~i~_ . The result is a correct, consistent B+-tree, but is not necessarily one with exactly the same structure as the one we had before _T~i~_ started. Thus, deletion is a compensating action for insertion.
+- Consider a long-duration transaction T~i~ representing a travel reservation. Transaction _T_ has three subtransactions: T~i,1~, which makes airline reserva- tions; T~i,2~, which reserves rental cars; and T~i,3~, which reserves a hotel room. Suppose that the hotel cancels the reservation. Instead of undoing all of T~i~ , we compensate for the failure of T~i,3~ by deleting the old hotel reservation and making a new one.
 
 If the system crashes in the middle of executing an outer-level transaction, its subtransactions must be rolled back when it recovers. The techniques described in Section 16.7 can be used for this purpose.
 
 Compensation for the failure of a transaction requires that the semantics of the failed transaction be used. For certain operations, such as incrementation or insertion into a B+-tree, the corresponding compensation is easily defined. For more complex transactions, the application programmers may have to define the correct form of compensation at the time that the transaction is coded. For complex interactive transactions, it may be necessary for the system to interact with the user to determine the proper form of compensation.
 
-**26.6.5 Implementation Issues**
+### 26.6.5 Implementation Issues
 
 The transaction concepts discussed in this section create serious difficulties for implementation. We present a few of them here, and discuss how we can address these problems.
 
-Long-duration transactions must survive system crashes. We can ensure that they will by performing a **redo** on committed subtransactions, and by perform-  
-
-**26.7 Summary 1115**
-
-ing either an **undo** or compensation for any short-duration subtransactions that were active at the time of the crash. However, these actions solve only part of the problem. In typical database systems, such internal system data as lock ta- bles and transaction timestamps are kept in volatile storage. For a long-duration transaction to be resumed after a crash, these data must be restored. Therefore, it is necessary to log not only changes to the database, but also changes to internal system data pertaining to long-duration transactions.
+Long-duration transactions must survive system crashes. We can ensure that they will by performing a **redo** on committed subtransactions, and by performing either an **undo** or compensation for any short-duration subtransactions that were active at the time of the crash. However, these actions solve only part of the problem. In typical database systems, such internal system data as lock ta- bles and transaction timestamps are kept in volatile storage. For a long-duration transaction to be resumed after a crash, these data must be restored. Therefore, it is necessary to log not only changes to the database, but also changes to internal system data pertaining to long-duration transactions.
 
 Logging of updates is made more complex when certain types of data items exist in the database. A data item may be a CAD design, text of a document, or another form of composite design. Such data items are physically large. Thus, storing both the old and new values of the data item in a log record is undesirable.
 
 There are two approaches to reducing the overhead of ensuring the recover- ability of large data items:
 
-• **Operation logging**. Only the operation performed on the data item and the data-item name are stored in the log. Operation logging is also called **logical logging**. For each operation, an inverse operation must exist. We perform **undo** using the inverse operation and **redo** using the operation itself. Recovery through operation logging is more difficult, since **redo** and **undo** are not idempotent. Further, using logical logging for an operation that updates multiple pages is greatly complicated by the fact that some, but not all, of the updated pages may have been written to the disk, so it is hard to apply either the **redo** or the **undo** of the operation on the disk image during recovery. Using physical redo logging and logical undo logging, as described in Section 16.7, provides the concurrency benefits of logical logging while avoiding the above pitfalls.
+- **Operation logging**. Only the operation performed on the data item and the data-item name are stored in the log. Operation logging is also called **logical logging**. For each operation, an inverse operation must exist. We perform **undo** using the inverse operation and **redo** using the operation itself. Recovery through operation logging is more difficult, since **redo** and **undo** are not idempotent. Further, using logical logging for an operation that updates multiple pages is greatly complicated by the fact that some, but not all, of the updated pages may have been written to the disk, so it is hard to apply either the **redo** or the **undo** of the operation on the disk image during recovery. Using physical redo logging and logical undo logging, as described in Section 16.7, provides the concurrency benefits of logical logging while avoiding the above pitfalls.
 
-• **Logging and shadow paging**. Logging is used for modifications to small data items, but large data items are often made recoverable via a shadowing, or copy-on-write, technique. When we use shadowing, it is possible to reduce the overhead by keeping copies of only those pages that are actually modified.
+- **Logging and shadow paging**. Logging is used for modifications to small data items, but large data items are often made recoverable via a shadowing, or copy-on-write, technique. When we use shadowing, it is possible to reduce the overhead by keeping copies of only those pages that are actually modified.
 
 Regardless of the technique used, the complexities introduced by long-duration transactions and large data items complicate the recovery process. Thus, it is desirable to allow certain noncritical data to be exempt from logging, and to rely instead on offline backups and human intervention.
 
-**26.7 Summary**
+## 26.7 Summary
 
-• Workflows are activities that involve the coordinated execution of multiple tasks performed by different processing entities. They exist not just in com- puter applications, but also in almost all organizational activities. With the growth of networks, and the existence of multiple autonomous database sys- tems, workflows provide a convenient way of carrying out tasks that involve multiple systems.
+- Workflows are activities that involve the coordinated execution of multiple tasks performed by different processing entities. They exist not just in com- puter applications, but also in almost all organizational activities. With the growth of networks, and the existence of multiple autonomous database sys- tems, workflows provide a convenient way of carrying out tasks that involve multiple systems.
 
-• Although the usual ACID transactional requirements are too strong or are unimplementable for such workflow applications, workflows must satisfy a  
+- Although the usual ACID transactional requirements are too strong or are unimplementable for such workflow applications, workflows must satisfy a limited set of transactional properties that guarantee that a process is not left in an inconsistent state.
 
-**1116 Chapter 26 Advanced Transaction Processing**
+- Transaction-processing monitors were initially developed as multithreaded servers that could service large numbers of terminals from a single process. They have since evolved, and today they provide the infrastructure for build- ing and administering complex transaction-processing systems that have a large number of clients and multiple servers. They provide services such as durable queueing of client requests and server responses, routing of client messages to servers, persistent messaging, load balancing, and coordination of two-phase commit when transactions access multiple servers.
 
-limited set of transactional properties that guarantee that a process is not left in an inconsistent state.
+- E-commerce systems have become a core part of commerce. There are sev- eral database issues in e-commerce systems. Catalog management, especially personalization of the catalog, is done with databases. Electronic market- places help in pricing of products through auctions, reverse auctions, or exchanges. High-performance database systems are needed to handle such trading. Orders are settled by electronic payment systems, which also need high-performance database systems to handle very high transaction rates.
 
-• Transaction-processing monitors were initially developed as multithreaded servers that could service large numbers of terminals from a single process. They have since evolved, and today they provide the infrastructure for build- ing and administering complex transaction-processing systems that have a large number of clients and multiple servers. They provide services such as durable queueing of client requests and server responses, routing of client messages to servers, persistent messaging, load balancing, and coordination of two-phase commit when transactions access multiple servers.
+- Large main memories are exploited in certain systems to achieve high sys- tem throughput. In such systems, logging is a bottleneck. Under the group- commit concept, the number of outputs to stable storage can be reduced, thus releasing this bottleneck.
 
-• E-commerce systems have become a core part of commerce. There are sev- eral database issues in e-commerce systems. Catalog management, especially personalization of the catalog, is done with databases. Electronic market- places help in pricing of products through auctions, reverse auctions, or exchanges. High-performance database systems are needed to handle such trading. Orders are settled by electronic payment systems, which also need high-performance database systems to handle very high transaction rates.
+- The efficient management of long-duration interactive transactions is more complex, because of the long-duration waits and because of the possibil- ity of aborts. Since the concurrency-control techniques used in Chapter 15 use waits, aborts, or both, alternative techniques must be considered. These techniques must ensure correctness without requiring serializability.
 
-• Large main memories are exploited in certain systems to achieve high sys- tem throughput. In such systems, logging is a bottleneck. Under the group- commit concept, the number of outputs to stable storage can be reduced, thus releasing this bottleneck.
+- A long-duration transaction is represented as a nested transaction with atomic database operations at the lowest level. If a transaction fails, only active short- duration transactions abort. Active long-duration transactions resume once any short-duration transactions have recovered. A compensating transaction is needed to undo updates of nested transactions that have committed, if the outer-level transaction fails.
 
-• The efficient management of long-duration interactive transactions is more complex, because of the long-duration waits and because of the possibil- ity of aborts. Since the concurrency-control techniques used in Chapter 15 use waits, aborts, or both, alternative techniques must be considered. These techniques must ensure correctness without requiring serializability.
+- In systems with real-time constraints, correctness of execution involves not only database consistency but also deadline satisfaction. The wide variance of execution times for read and write operations complicates the transaction- management problem for time-constrained systems.
 
-• A long-duration transaction is represented as a nested transaction with atomic database operations at the lowest level. If a transaction fails, only active short- duration transactions abort. Active long-duration transactions resume once any short-duration transactions have recovered. A compensating transaction is needed to undo updates of nested transactions that have committed, if the outer-level transaction fails.
+### Review Terms
 
-• In systems with real-time constraints, correctness of execution involves not only database consistency but also deadline satisfaction. The wide variance of execution times for read and write operations complicates the transaction- management problem for time-constrained systems.
+- TP monitor 
+- TP-monitor architectures
 
-**Review Terms**
+  ◦ Process per client
+  
+  ◦ Single server 
 
-• TP monitor • TP-monitor architectures
+  ◦ Many server, single router
+  
+  ◦ Many server, many router
 
-◦ Process per client
+- Multitasking 
+- Context switch  
+- Multithreaded server 
+- Queue manager 
+- Application coordination
 
-◦ Single server  
+  ◦ Resource manager
+  
+  ◦ Remote procedure call (RPC)
 
-**Practice Exercises 1117**
+- Transactional workflows
+  
+  ◦ Task
+  
+  ◦ Processing entity
+  
+  ◦ Workflow specification
+  
+  ◦ Workflow execution
 
-◦ Many server, single router
+- Workflow state
 
-◦ Many server, many router
+  ◦ Execution states
+  
+  ◦ Output values
+  
+  ◦ External variables
 
-• Multitasking • Context switch • Multithreaded server • Queue manager • Application coordination
+- Workflow failure atomicity 
+- Workflow termination states
+  
+  ◦ Acceptable
+  
+  ◦ Nonacceptable
+  
+  ◦ Committed
+  
+  ◦ Aborted
 
-◦ Resource manager
+- Workflow recovery 
+- Workflow-management system 
+- Workflow-management system architectures
+  
+  ◦ Centralized
+  
+  ◦ Partially distributed
+  
+  ◦ Fully distributed
 
-◦ Remote procedure call (RPC)
+- Business process management 
+- Orchestration 
+- E-commerce 
+- E-catalogs 
+- Marketplaces
+  
+  ◦ Auctions
+  
+  ◦ Reverse auctions
+  
+  ◦ Exchange
 
-• Transactional workflows
+- Order settlement 
+- Digital certificates 
+- Main-memory databases 
+- Group commit 
+- Real-time systems 
+- Deadlines
 
-◦ Task
+  ◦ Hard deadline
+  
+  ◦ Firm deadline
+  
+  ◦ Soft deadline
 
-◦ Processing entity
+- Real-time databases 
+- Long-duration transactions 
+- Exposure of uncommitted data 
+- Nonserializable executions 
+- Nested transactions 
+- Multilevel transactions 
+- Saga 
+- Compensating transactions 
+- Logical logging
 
-◦ Workflow specification
+### Practice Exercises
 
-◦ Workflow execution
-
-• Workflow state
-
-◦ Execution states
-
-◦ Output values
-
-◦ External variables
-
-• Workflow failure atomicity • Workflow termination states
-
-◦ Acceptable
-
-◦ Nonacceptable
-
-◦ Committed
-
-◦ Aborted
-
-• Workflow recovery • Workflow-management system • Workflow-management system
-
-architectures
-
-◦ Centralized
-
-◦ Partially distributed
-
-◦ Fully distributed
-
-• Business process management • Orchestration • E-commerce • E-catalogs • Marketplaces
-
-◦ Auctions
-
-◦ Reverse auctions
-
-◦ Exchange
-
-• Order settlement • Digital certificates • Main-memory databases • Group commit • Real-time systems • Deadlines
-
-◦ Hard deadline
-
-◦ Firm deadline
-
-◦ Soft deadline
-
-• Real-time databases • Long-duration transactions • Exposure of uncommitted data • Nonserializable executions • Nested transactions • Multilevel transactions • Saga • Compensating transactions • Logical logging
-
-**Practice Exercises**
-
-**26.1** Like database systems, workflow systems also require concurrency and recovery management. List three reasons why we cannot simply apply a relational database system using 2PL, physical undo logging, and 2PC.  
-
-**1118 Chapter 26 Advanced Transaction Processing**
+**26.1** Like database systems, workflow systems also require concurrency and recovery management. List three reasons why we cannot simply apply a relational database system using 2PL, physical undo logging, and 2PC. 
 
 **26.2** Consider a main-memory database system recovering from a system crash. Explain the relative merits of:
 
-• Loading the entire database back into main memory before resuming transaction processing.
+- Loading the entire database back into main memory before resuming transaction processing.
 
-• Loading data as it is requested by transactions.
+- Loading data as it is requested by transactions.
 
 **26.3** Is a high-performance transaction system necessarily a real-time system? Why or why not?
 
@@ -1935,7 +1695,7 @@ architectures
 
 **26.6** Discuss the modifications that need to be made in each of the recovery schemes covered in Chapter 16 if we allow nested transactions. Also, explain any differences that result if we allow multilevel transactions.
 
-**Exercises**
+### Exercises
 
 **26.7** Explain how a TP monitor manages memory and processor resources more effectively than a typical operating system.
 
@@ -1951,15 +1711,13 @@ c. Indicate possible errors (including deadline expiry) and how they are dealt w
 
 d. Study how much of the workflow has been automated at your uni- versity.
 
-**26.10** Answer the following questions regarding electronic payment systems:  
-
-**Bibliographical Notes 1119**
+**26.10** Answer the following questions regarding electronic payment systems: 
 
 a. Explain why electronic transactions carried out using credit-card numbers may be insecure.
 
-b. An alternative is to have an electronic payment gateway maintained by the credit-card company, and the site receiving payment redirects customers to the gateway site to make the payment. i. Explain what benefits such a system offers if the gateway does
-
-not authenticate the user. ii. Explain what further benefits are offered if the gateway has a
+b. An alternative is to have an electronic payment gateway maintained by the credit-card company, and the site receiving payment redirects customers to the gateway site to make the payment.
+i. Explain what benefits such a system offers if the gateway does not authenticate the user. 
+ii. Explain what further benefits are offered if the gateway has a
 
 mechanism to authenticate the user.
 
@@ -1977,18 +1735,18 @@ d. Does either of the above systems guarantee the same privacy that is available
 
 **26.15** Explain the connections between a workflow and a long-duration trans- action.
 
-**Bibliographical Notes**
+### Bibliographical Notes
 
-Gray and Reuter \[1993\] provides a detailed (and excellent) textbook description of transaction-processing systems, including chapters on TP monitors. X/Open \[1991\] defines the X/Open XA interface.
+Gray and Reuter [1993] provides a detailed (and excellent) textbook description of transaction-processing systems, including chapters on TP monitors. X/Open [1991] defines the X/Open XA interface.
 
-Fischer \[2006\] is a handbook on workflow systems, which is published in as- sociation with the Workflow Management Coalition. The Web site of the coalition is www.wfmc.org. Our description of workflows follows the model of Rusinkiewicz and Sheth \[1995\].
+Fischer [2006] is a handbook on workflow systems, which is published in association with the Workflow Management Coalition. The Web site of the coalition is www.wfmc.org. Our description of workflows follows the model of Rusinkiewicz and Sheth [1995].
 
-Loeb \[1998\] provides a detailed description of secure electronic transactions.  
+Loeb [1998] provides a detailed description of secure electronic transactions.
 
-**1120 Chapter 26 Advanced Transaction Processing**
+Garcia-Molina and Salem [1992] provides an overview of main-memory
+databases. Jagadish et al. [1993] describes a recovery algorithm designed for mainmemory databases. A storage manager for main-memory databases is describedin Jagadish et al. [1994].
 
-Garcia-Molina and Salem \[1992\] provides an overview of main-memory databases. Jagadish et al. \[1993\] describes a recovery algorithm designed for main- memory databases. A storage manager for main-memory databases is described in Jagadish et al. \[1994\].
+Real-time databases are discussed by Lam and Kuo [2001]. Concurrency control and scheduling in real-time databases are discussed by Haritsa et al. [1990],Hong et al. [1993], and Pang et al. [1995]. Ozsoyoglu and Snodgrass [1995] is a survey of research in real-time and temporal databases.
 
-Real-time databases are discussed by Lam and Kuo \[2001\]. Concurrency con- trol and scheduling in real-time databases are discussed by Haritsa et al. \[1990\], Hong et al. \[1993\], and Pang et al. \[1995\]. Ozsoyoglu and Snodgrass \[1995\] is a survey of research in real-time and temporal databases.
-
-Nested and multilevel transactions are presented by Moss \[1985\], Lynch and Merritt \[1986\], Moss \[1987\], Haerder and Rothermel \[1987\], Rothermel and Mohan \[1989\], Weikum et al. \[1990\], Korth and Speegle \[1990\], Weikum \[1991\], and Korth and Speegle \[1994\], Theoretical aspects of multilevel transactions are presented in Lynch et al. \[1988\]. The concept of Saga was introduced in Garcia-Molina and Salem \[1987\].
+Nested and multilevel transactions are presented by Moss [1985], Lynch and Merritt [1986], Moss [1987], Haerder and Rothermel [1987], Rothermel and Mohan [1989], Weikum et al. [1990], Korth and Speegle [1990], Weikum [1991], and Korth and Speegle [1994], Theoretical aspects of multilevel transactions are presented
+in Lynch et al. [1988]. The concept of Saga was introduced in Garcia-Molina and Salem [1987]
