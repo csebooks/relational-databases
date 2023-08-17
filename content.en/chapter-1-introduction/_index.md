@@ -869,7 +869,7 @@ We list below general-purpose books, research paper collections, and Web sites o
 
 Codd \[1970\] is the landmark paper that introduced the relational model. Textbooks covering database systems include Abiteboul et al. \[1995\], O’Neil
 
-and O’Neil \[2000\], Ramakrishnan and Gehrke \[2002\], Date \[2003\], Kifer et al. \[2005\], Elmasri and Navathe \[2006\], and Garcia-Molina et al. \[2008\]. Textbook coverage of transaction processing is provided by Bernstein and Newcomer \[1997\] and Gray and Reuter \[1993\]. A book containing a collection of research papers on database management is offered by Hellerstein and Stonebraker \[2005\].
+and O’Neil \[2000\], Ramakrishnan and Gehrke \[2002\], Date \[2003\], Kifer et al. \[2005\], Elmasri and Navathe \[2006\], and Garcia-Molina et al. \[2008\]. Textbook coverage of transaction processing is provided by Bernstein and Newcomer \[1997\] and Gray and Reuter \[1993\]. A book containing a collection of research papers on database management is offered by Hellerstein  and Stonebraker \[2005\].
 
 A review of accomplishments in database management and an assessment of future research challenges appears in Silberschatz et al. \[1990\], Silberschatz et al. \[1996\], Bernstein et al. \[1998\], Abiteboul et al. \[2003\], and Agrawal et al. \[2009\]. The home page of the ACM Special Interest Group on Management of Data (www.acm.org/sigmod) provides a wealth of information about database research. Database vendor Web sites (see the Tools section above) provide details about their respective products.  
 
