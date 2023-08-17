@@ -1603,7 +1603,7 @@ in this sixth edition of this book which actually differs from the notation we u
 
 In the rest of this section, we study some of the alternative E-R diagram notations, as well as the UML class diagram notation. To aid in comparison of our notation with these alternatives, Figure 7.24 summarizes the set of symbols we have used in our E-R diagram notation.
 
-**7.9.1 Alternative E-R Notations**
+## 7.9.1 Alternative E-R Notations
 
 Figure 7.25 indicates some of the alternative E-R notations that are widely used. One alternative representation of attributes of entities is to show them in ovals connected to the box representing the entity; primary key attributes are indicated by underlining them. The above notation is shown at the top of the figure. Re- lationship attributes can be similarly represented, by connecting the ovals to the diamond representing the relationship.
 
@@ -1687,7 +1687,7 @@ One key difference between entity sets in an E-R diagram and the relation schema
 
 **308 Chapter 7 Database Design and the E-R Model**
 
-**7.9.2 The Unified Modeling Language UML**
+## 7.9.2 The Unified Modeling Language UML
 
 Entity-relationship diagrams help model the data representation component of a software system. Data representation, however, forms only one part of an overall system design. Other components include models of user interactions with the system, specification of functional modules of the system and their interaction, etc. The **Unified Modeling Language** (UML) is a standard developed under the auspices of the Object Management Group (OMG) for creating specifications of various components of a software system. Some of the parts of UML are:
 
@@ -1791,11 +1791,11 @@ UML class diagrams include several other notations that do not correspond to the
 
 UML class diagrams also provide notations to represent object-oriented lan- guage features such as interfaces. See the references in the bibliographic notes for more information on UML class diagrams.
 
-**7.10 Other Aspects of Database Design**
+# 7.10 Other Aspects of Database Design
 
 Our extensive discussion of schema design in this chapter may create the false impression that schema design is the only component of a database design. There are indeed several other considerations that we address more fully in subsequent chapters, and survey briefly here.
 
-**7.10.1 Data Constraints and Relational Database Design**
+## 7.10.1 Data Constraints and Relational Database Design
 
 We have seen a variety of data constraints that can be expressed using SQL, including primary-key constraints, foreign-key constraints, **check** constraints, assertions, and triggers. Constraints serve several purposes. The most obvious one is the automation of consistency preservation. By expressing constraints in the SQL data-definition language, the designer is able to ensure that the database system itself enforces the constraints. This is more reliable than relying on each application program individually to enforce constraints. It also provides a central location for the update of constraints and the addition of new ones.
 
@@ -1811,7 +1811,7 @@ Data constraints are useful as well in determining the physical structure of dat
 
 Constraint enforcement comes at a potentially high price in performance each time the database is updated. For each update, the system must check all of the constraints and either reject updates that fail the constraints or execute appropriate triggers. The significance of the performance penalty depends not only on the frequency of update but also on how the database is designed. Indeed efficiency of the testing of certain types of constraints is an important aspect of the discussion of relational database schema design in Chapter 8.
 
-**7.10.2 Usage Requirements: Queries, Performance**
+## 7.10.2 Usage Requirements: Queries, Performance
 
 Database system performance is a critical aspect of most enterprise information systems. Performance pertains not only to the efficient use of the computing and storage hardware being used, but also to the efficiency of people who interact with the system and of processes that depend upon database data.
 
@@ -1831,11 +1831,11 @@ An understanding of types of queries that are expected to be the most frequent h
 
 Another aspect of queries that affects the choice of indices is the relative mix of update and read operations. While an index may speed queries, it also slows updates, which are forced to do extra work to maintain the accuracy of the index.
 
-**7.10.3 Authorization Requirements**
+## 7.10.3 Authorization Requirements
 
 Authorization constraints affect design of the database as well because SQL allows access to be granted to users on the basis of components of the logical design of the database. A relation schema may need to be decomposed into two or more schemas to facilitate the granting of access rights in SQL. For example, an employee record may include data relating to payroll, job functions, and medical benefits. Because different administrative units of the enterprise may manage each of these types of data, some users will need access to payroll data while being denied access to the job data, medical data, etc. If these data are all in one relation, the desired division of access, though still feasible through the use of views, is more cumbersome. Division of data in this manner becomes even more critical when the data are distributed across systems in a computer network, an issue we consider in Chapter 19.
 
-**7.10.4 Data Flow, Workflow**
+## 7.10.4 Data Flow, Workflow
 
 Database applications are often part of a larger enterprise application that in- teracts not only with the database system but also with various specialized ap- plications. For example, in a manufacturing company, a computer-aided design (CAD) system may assist in the design of new products. The CAD system may extract data from the database via an SQL statement, process the data internally, perhaps interacting with a product designer, and then update the database. Dur- ing this process, control of the data may pass among several product designers as well as other people. As another example, consider a travel-expense report. It is created by an employee returning from a business trip (possibly by means of a special software package) and is subsequently routed to the employee’s manager, perhaps other higher-level managers, and eventually to the accounting depart- ment for payment (at which point it interacts with the enterprise’s accounting information systems).
 
@@ -1843,7 +1843,7 @@ The term _workflow_ refers to the combination of data and tasks involved in pro-
 
 **7.11 Summary 313**
 
-**7.10.5 Other Issues in Database Design**
+## 7.10.5 Other Issues in Database Design
 
 Database design is usually not a one-time activity. The needs of an organization evolve continually, and the data that it needs to store also evolve correspond- ingly. During the initial database-design phases, or during the development of an application, the database designer may realize that changes are required at the conceptual, logical, or physical schema levels. Changes in the schema can affect all aspects of the database application. A good database design anticipates future needs of an organization, and ensures that the schema requires minimal changes as the needs evolve.
 
@@ -1853,7 +1853,7 @@ Furthermore, the enterprise that the database is serving likely interacts with o
 
 Finally, it is worth noting that database design is a human-oriented activity in two senses: the end users of the system are people (even if an application sits between the database and the end users); and the database designer needs to interact extensively with experts in the application domain to understand the data requirements of the application. All of the people involved with the data have needs and preferences that should be taken into account in order for a database design and deployment to succeed within the enterprise.
 
-**7.11 Summary**
+# 7.11 Summary
 
 • Database design mainly involves the design of the database schema. The **entity-relationship (E-R)** data model is a widely used data model for database design. It provides a convenient graphical representation to view data, rela- tionships, and constraints.
 
@@ -2165,7 +2165,7 @@ In general, the goal of relational database design is to generate a set of relat
 
 In this chapter, we introduce a formal approach to relational database design based on the notion of functional dependencies. We then define normal forms in terms of functional dependencies and other types of data dependencies. First, however, we view the problem of relational design from the standpoint of the schemas derived from a given entity-relationship design.
 
-**8.1 Features of Good Relational Designs**
+# 8.1 Features of Good Relational Designs**
 
 Our study of entity-relationship design in Chapter 7 provides an excellent starting point for creating a relational database design. We saw in Section 7.6 that it is possible to generate a set of relation schemas directly from the E-R design. Obviously, the goodness (or badness) of the resulting set of schemas depends on how good the E-R design was in the first place. Later in this chapter, we shall study precise ways of assessing the desirability of a collection of relation schemas. However, we can go a long way toward a good design using concepts we have already studied.
 
@@ -2179,7 +2179,7 @@ _classroom_(_building_, _room number_, _capacity_) _department_(_dept name_, _bu
 
 **Figure 8.1** Schema for the university database.
 
-**8.1.1 Design Alternative: Larger Schemas**
+## 8.1.1 Design Alternative: Larger Schemas
 
 Now, let us explore features of this relational database design as well as some alternatives. Suppose that instead of having the schemas _instructor_ and _department_, we have the schema:
 
@@ -2203,7 +2203,7 @@ _ID name salary dept name building budget_
 
 is hired for the new department. In the old design, the schema _department_ can handle this, but under the revised design, we would have to create a tuple with a null value for _building_ and _budget_. In some cases null values are troublesome, as we saw in our study of SQL. However, if we decide that this is not a problem to us in this case, then we can proceed to use the revised design.
 
-**8.1.2 Design Alternative: Smaller Schemas**
+## 8.1.2 Design Alternative: Smaller Schemas
 
 Suppose again that, somehow, we had started out with the schema _inst dept_. How would we recognize that it requires repetition of information and should be split into the two schemas _instructor_ and _department_?
 
