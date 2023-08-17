@@ -21,7 +21,7 @@ The XML language was initially designed as a way of adding markup infor- mation 
 
  
 
-**_C H A P T E R_22 
+A 
 #Object-Based Databases
 
 Traditional database applications consist of data-processing tasks, such as bank- ing and payroll management, with relatively simple data types that are well suited to the relational data model. As database systems were applied to a wider range of applications, such as computer-aided design and geographical informa- tion systems, limitations imposed by the relational model emerged as an obstacle. The solution was the introduction of object-based databases, which allow one to deal with complex data types.
@@ -149,15 +149,17 @@ Before SQL:1999, the SQL type system consisted of a fairly simple set of predefi
 ###22.3.1 Structured Types
 
 Structured types allow composite attributes of E-R designs to be represented directly. For instance, we can define the following structured type to represent a composite attribute _name_ with component attribute _firstname_ and _lastname_:
-~~~ j
+~~~json
+
 create type Name as
  (firstname varchar(20),
  lastname varchar(20))
  final;
+
 ~~~
 
 Similarly, the following structured type can be used to represent a composite attribute _address_:
-~~~j
+~~~json
 create type Address as
  (street varchar(20),
 city varchar(20),
@@ -170,17 +172,18 @@ We can now use these types to create composite attributes in a relation, by simp
 
 2To illustrate our earlier note about commercial implementations defining their syntax before the standards were developed, we point out that Oracle requires the keyword **object** following **as**. 3The **final** specification for _Name_ indicates that we cannot create subtypes for _name_, whereas the **not final** specification for _Address_ indicates that we can create subtypes of _address_.  
 
-~~~j
+~~~json
 create table person (
      name Name,
      address Address, 
      dateOfBirth date);
+~~~
 
 The components of a composite attribute can be accessed using a “dot” no- tation; for instance _name.firstname_ returns the firstname component of the name attribute. An access to attribute _name_ would return a value of the structured type _Name_.
 
 We can also create a table whose rows are of a user-defined type. For example, we could define a type _PersonType_ and create the table _person_ as follows:4
 
-~~~j
+~~~json
 create type PersonType as ( 
     name Name,
     address Address,
@@ -190,7 +193,7 @@ create table person of PersonType;
 ~~~
 
 An alternative way of defining composite attributes in SQL is to use unnamed **row types**. For instance, the relation representing person information could have been created using row types as follows:
-~~~j
+~~~json
 create table person r_ ( 
     name row (firstname varchar(20),
     lastname varchar(20)), 
@@ -198,11 +201,11 @@ create table person r_ (
     city varchar(20),
     zipcode varchar(9)),
 dateOfBirth date);
-
+~~~
 This definition is equivalent to the preceding table definition, except that the attributes _name_ and _address_ have unnamed types, and the rows of the table also have an unnamed type.
 
 The following query illustrates how to access component attributes of a com- posite attribute. The query finds the last name and city of each person.
-~~~j
+~~~json
 select name.lastname, address.city
  from person;
 ~~~
@@ -211,24 +214,24 @@ A structured type can have **methods** defined on it. We declare methods as part
 
 4Most actual systems, being case insensitive, would not permit _name_ to be used both as an attribute name and a data type.  
 
-~~~j
+~~~json
 create type PersonType as (
      name Name, 
      address Address,
      dateOfBirth date) 
      not final
 method ageOnDate(onDate date) returns interval year;
+~~~
 
 We create the method body separately:
-
+~~~json
 create instance method ageOnDate(onDate date)
 returns interval year 
 for PersonType
-
 begin
  return onDate − self.dateOfBirth;
 end
-
+~~~
 Note that the **for** clause indicates which type this method is for, while the keyword **instance** indicates that this method executes on an instance of the _Person_ type. The variable **self** refers to the _Person_ instance on which the method is invoked. The body of the method can contain procedural statements, which we saw earlier in Section 5.2. Methods can update the attributes of the instance on which they are executed.
 
 Methods can be invoked on instances of a type. If we had created a table _person_ of type _PersonType_, we could invoke the method _ageOnDate_() as illustrated below, to find the age of each person.
