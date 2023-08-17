@@ -5,7 +5,8 @@ weight: 5
 
   
 
-**_C H A P T E R_1 Introduction**
+**_C H A P T E R_1**
+# Introduction
 
 A **database-management system (DBMS)** is a collection of interrelated data and a set of programs to access those data. The collection of data, usually referred to as the **database**, contains information relevant to an enterprise. The primary goal of a DBMS is to provide a way to store and retrieve database information that is both _convenient_ and _efficient._
 
@@ -13,7 +14,7 @@ Database systems are designed to manage large bodies of information. Man- agemen
 
 Because information is so important in most organizations, computer scien- tists have developed a large body of concepts and techniques for managing data. These concepts and techniques form the focus of this book. This chapter briefly introduces the principles of database systems.
 
-**1.1 Database-System Applications**
+# 1.1 Database-System Applications
 
 Databases are widely used. Here are some representative applications:
 
@@ -53,7 +54,7 @@ Over the course of the last four decades of the twentieth century, use of databa
 
 The Internet revolution of the late 1990s sharply increased direct user access to databases. Organizations converted many of their phone interfaces to databases into Web interfaces, and made a variety of services and information available online. For instance, when you access an online bookstore and browse a book or music collection, you are accessing data stored in a database. When you enter an order online, your order is stored in a database. When you access a bank Web site and retrieve your bank balance and transaction information, the information is retrieved from the bank’s database system. When you access a Web site, informa-  
 
-**1.2 Purpose of Database Systems 3**
+# 1.2 Purpose of Database Systems
 
 tion about you may be retrieved from a database to select which advertisements you should see. Furthermore, data about your Web accesses may be stored in a database.
 
@@ -107,11 +108,11 @@ As another example, suppose a registration program maintains a count of students
 
 These difficulties, among others, prompted the development of database sys- tems. In what follows, we shall see the concepts and algorithms that enable database systems to solve the problems with file-processing systems. In most of this book, we use a university organization as a running example of a typical data-processing application.
 
-**1.3 View of Data**
+# 1.3 View of Data
 
 A database system is a collection of interrelated data and a set of programs that allow users to access and modify these data. A major purpose of a database system is to provide users with an _abstract_ view of the data. That is, the system hides certain details of how the data are stored and maintained.
 
-**1.3.1 Data Abstraction**
+## 1.3.1 Data Abstraction
 
 For the system to be usable, it must retrieve data efficiently. The need for efficiency has led designers to use complex data structures to represent data in the database. Since many database-system users are not computer trained, developers hide the complexity from users through several levels of abstraction, to simplify users’ interactions with the system:
 
@@ -137,7 +138,9 @@ view _n_…
 
 view level
 
-**Figure 1.1** The three levels of data abstraction.
+![Alt  The three levels of data abstraction.](three.png)
+
+![The three levels of data abstraction.](Figure 1-1.png)
 
 languages support the notion of a structured type. For example, we may describe a record as follows:1
 
@@ -163,7 +166,7 @@ At the logical level, each such record is described by a type definition, as in 
 
 Finally, at the view level, computer users see a set of application programs that hide details of the data types. At the view level, several views of the database are defined, and a database user sees some or all of these views. In addition to hiding details of the logical level of the database, the views also provide a security mechanism to prevent users from accessing certain parts of the database. For example, clerks in the university registrar office can see only that part of the database that has information about students; they cannot access information about salaries of instructors.
 
-**1.3.2 Instances and Schemas**
+## 1.3.2 Instances and Schemas**
 
 Databases change over time as information is inserted and deleted. The collection of information stored in the database at a particular moment is called an **instance** of the database. The overall design of the database is called the database **schema**. Schemas are changed infrequently, if at all.
 
@@ -278,8 +281,9 @@ _dept name building budget_
 Comp. Sci. Taylor 100000 Biology Watson 90000 Elec. Eng. Taylor 85000 Music Packard 80000 Finance Painter 120000 History Painter 50000 Physics Watson 70000
 
 (b) The _department_ table
+![Alt A sample relational database.](sample.png)
 
-**Figure 1.2** A sample relational database.
+![A sample relational database.](Figure 1-2.png)
 
 associated with the Physics department. In Chapter 8, we shall study how to distinguish good schema designs from bad schema designs.
 
@@ -397,7 +401,8 @@ _department dept\_name building budget_
 
 _member_
 
-**Figure 1.3** A sample E-R diagram.
+
+![A sample E-R diagram.](Figure-1-3.png)
 
 • Entity sets are represented by a rectangular box with the entity set name in the header and the attributes listed below it.
 
@@ -425,7 +430,7 @@ _ID name salary dept name building budget_
 
 22222 Einstein 95000 Physics Watson 70000 12121 Wu 90000 Finance Painter 120000 32343 El Said 60000 History Painter 50000 45565 Katz 75000 Comp. Sci. Taylor 100000 98345 Kim 80000 Elec. Eng. Taylor 85000 76766 Crick 72000 Biology Watson 90000 10101 Srinivasan 65000 Comp. Sci. Taylor 100000 58583 Califieri 62000 History Painter 50000 83821 Brandt 92000 Comp. Sci. Taylor 100000 15151 Mozart 40000 Music Packard 80000 33456 Gold 87000 Physics Watson 70000 76543 Singh 80000 Finance Painter 120000
 
-**Figure 1.4** The _faculty_ table.
+![The _faculty_ table.](Figure 1-4.png)
 
 We shall discuss these problems with the help of a modified database design for our university example.
 
@@ -577,7 +582,7 @@ database administrators
 
 use write use use
 
-**Figure 1.5** System structure.  
+![System structure.  ](Figure 1-5.png)
 
 **1.10 Data Mining and Information Retrieval 25**
 
@@ -607,7 +612,7 @@ application server
 
 (b) Three-tier architecture
 
-**Figure 1.6** Two-tier and three-tier architectures.
+![Two-tier and three-tier architectures.](Figure 1-6.png)
 
 query language statements. Application program interface standards like ODBC and JDBC are used for interaction between the client and the server.
 
