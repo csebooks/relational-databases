@@ -161,9 +161,7 @@ A third model uses a cloud computing service as a data server; such _cloud-based
 
 ## 17.3 Parallel Systems
 
-Parallel systems improve processing and I/O speeds by using multiple processors and disks in parallel. Parallel machines are becoming increasingly common, mak- ing the study of parallel database systems correspondingly more important. The driving force behind parallel database systems is the demands of applications that have to query extremely large databases (of the order of terabytes—that is, 1012
-
-bytes) or that have to process an extremely large number of transactions per sec- ond (of the order of thousands of transactions per second). Centralized and client –server database systems are not powerful enough to handle such applications.
+Parallel systems improve processing and I/O speeds by using multiple processors and disks in parallel. Parallel machines are becoming increasingly common, mak- ing the study of parallel database systems correspondingly more important. The driving force behind parallel database systems is the demands of applications that have to query extremely large databases (of the order of terabytes—that is, 10^12^ bytes) or that have to process an extremely large number of transactions per sec- ond (of the order of thousands of transactions per second). Centralized and client –server database systems are not powerful enough to handle such applications.
 
 In parallel processing, many operations are performed simultaneously, as opposed to serial processing, in which the computational steps are performed se- quentially. A **coarse-grain** parallel machine consists of a small number of powerful processors; a **massively parallel** or **fine-grain parallel** machine uses thousands of smaller processors. Virtually all high-end machines today offer some degree of coarse-grain parallelism: at least two or four processors. Massively parallel computers can be distinguished from the coarse-grain parallel machines by the much larger degree of parallelism that they support. Parallel computers with hundreds of processors and disks are available commercially.
 
@@ -173,7 +171,7 @@ There are two main measures of performance of a database system: (1) **throughpu
 
 Two important issues in studying parallelism are speedup and scaleup. Running a given task in less time by increasing the degree of parallelism is called **speedup**. Handling larger tasks by increasing the degree of parallelism is called **scaleup**.
 
-Consider a database application running on a parallel system with a certain number of processors and disks. Now suppose that we increase the size of the system by increasing the number of processors, disks, and other components of the system. The goal is to process the task in time inversely proportional to the number of processors and disks allocated. Suppose that the execution time of a task on the larger machine is _TL_ , and that the execution time of the same task on the smaller machine is _TS_. The speedup due to parallelism is defined as _TS/TL_ . The parallel system is said to demonstrate **linear speedup** if the speedup is _N_ when the larger system has _N_ times the resources (processors, disk, and so on) of the smaller system. If the speedup is less than _N_, the system is said to demonstrate **sublinear speedup**. Figure 17.5 illustrates linear and sublinear speedup.
+Consider a database application running on a parallel system with a certain number of processors and disks. Now suppose that we increase the size of the system by increasing the number of processors, disks, and other components of the system. The goal is to process the task in time inversely proportional to the number of processors and disks allocated. Suppose that the execution time of a task on the larger machine is _T_~L~ , and that the execution time of the same task on the smaller machine is _T_~S~. The speedup due to parallelism is defined as _T~S~/T~L~_ . The parallel system is said to demonstrate **linear speedup** if the speedup is _N_ when the larger system has _N_ times the resources (processors, disk, and so on) of the smaller system. If the speedup is less than _N_, the system is said to demonstrate **sublinear speedup**. Figure 17.5 illustrates linear and sublinear speedup.
 
 Scaleup relates to the ability to process larger tasks in the same amount of time by providing more resources. Let _Q_ be a task, and let _QN_ be a task that is _N_ times bigger than _Q_. Suppose that the execution time of task _Q_ on a given machine
 
@@ -209,13 +207,7 @@ Parallel systems consist of a set of components (processors, memory, and disks) 
 
 Nodes that are not directly connected can communicate with one another by routing messages via a sequence of intermediate nodes that are directly connected to one another. The number of communication links grows as the number of components grows, and the communication capacity of a mesh therefore scales better with increasing parallelism.
 
-- **Hypercube**. The components are numbered in binary, and a component is connected to another if the binary representations of their numbers differ in exactly one bit. Thus, each of the _n_ components is connected to log(_n_) other components. Figure 17.7c shows a hypercube with eight nodes. In a hypercube interconnection, a message from a component can reach any other component by going through at most log(_n_) links. In contrast, in a mesh architecture a component may be 2(
-
-√ _n_ − 1) links away from some of
-
-the other components (or √
-
-_n_ links away, if the mesh interconnection wraps around at the edges of the grid). Thus communication delays in a hypercube are significantly lower than in a mesh.
+- **Hypercube**. The components are numbered in binary, and a component is connected to another if the binary representations of their numbers differ in exactly one bit. Thus, each of the _n_ components is connected to log(_n_) other components. Figure 17.7c shows a hypercube with eight nodes. In a hypercube interconnection, a message from a component can reach any other component by going through at most log(_n_) links. In contrast, in a mesh architecture a component may be 2(√ _n_ − 1) links away from some of the other components (or √ _n_ links away, if the mesh interconnection wraps around at the edges of the grid). Thus communication delays in a hypercube are significantly lower than in a mesh.
 
 ### 17.3.3 Parallel Database Architectures
 
@@ -274,7 +266,7 @@ There are several reasons for building distributed database systems, including s
 
 - **Sharing data.** The major advantage in building a distributed database system is the provision of an environment where users at one site may be able to access the data residing at other sites. For instance, in a distributed university system, where each campus stores data related to that campus, it is possible for a user in one campus to access data in another campus. Without this capability, the transfer of student records from one campus to another campus would have to resort to some external mechanism that would couple existing systems.
 
-- **Autonomy.** The primary advantage of sharing data by means of data dis- tribution is that each site is able to retain a degree of control over data that are stored locally. In a centralized system, the database administrator of the central site controls the database. In a distributed system, there is a global database administrator responsible for the entire system. A part of these re- sponsibilities is delegated to the local database administrator for each site. Depending on the design of the distributed database system, each adminis- trator may have a different degree of **local autonomy**. The possibility of local autonomy is often a major advantage of distributed databases.
+- **Autonomy.** The primary advantage of sharing data by means of data distribution is that each site is able to retain a degree of control over data that are stored locally. In a centralized system, the database administrator of the central site controls the database. In a distributed system, there is a global database administrator responsible for the entire system. A part of these responsibilities is delegated to the local database administrator for each site. Depending on the design of the distributed database system, each administrator may have a different degree of **local autonomy**. The possibility of local autonomy is often a major advantage of distributed databases.
 
 - **Availability.** If one site fails in a distributed system, the remaining sites may be able to continue operating. In particular, if data items are **replicated** in several sites, a transaction needing a particular data item may find that item in any of several sites. Thus, the failure of a site does not necessarily imply the shutdown of the system.  
 
@@ -289,17 +281,17 @@ Consider a banking system consisting of four branches in four different cities. 
 
 To illustrate the difference between the two types of transactions—local and global—at the sites, consider a transaction to add $50 to account number A-177 located at the Valleyview branch. If the transaction was initiated at the Valleyview branch, then it is considered local; otherwise, it is considered global. A transaction to transfer $50 from account A-177 to account A-305, which is located at the Hillside branch, is a global transaction, since accounts in two different sites are accessed as a result of its execution.
 
-In an ideal distributed database system, the sites would share a common global schema (although some relations may be stored only at some sites), all sites would run the same distributed database-management software, and the sites would be aware of each other’s existence. If a distributed database is built from scratch, it would indeed be possible to achieve the above goals. However, in reality a distributed database has to be constructed by linking together mul- tiple already-existing database systems, each with its own schema and possibly running different database-management software. Such systems are sometimes called **multidatabase systems** or **heterogeneous distributed database systems**. We discuss these systems in Section 19.8, where we show how to achieve a degree of global control despite the heterogeneity of the component systems.
+In an ideal distributed database system, the sites would share a common global schema (although some relations may be stored only at some sites), all sites would run the same distributed database-management software, and the sites would be aware of each other’s existence. If a distributed database is built from scratch, it would indeed be possible to achieve the above goals. However, in reality a distributed database has to be constructed by linking together multiple already-existing database systems, each with its own schema and possibly running different database-management software. Such systems are sometimes called **multidatabase systems** or **heterogeneous distributed database systems**. We discuss these systems in Section 19.8, where we show how to achieve a degree of global control despite the heterogeneity of the component systems.
 
 ### 17.4.2 Implementation Issues
 
 Atomicity of transactions is an important issue in building a distributed database system. If a transaction runs across two sites, unless the system designers are careful, it may commit at one site and abort at another, leading to an inconsistent state. Transaction commit protocols ensure such a situation cannot arise. The _two-phase commit protocol (_2PC_)_ is the most widely used of these protocols.  
 
-The basic idea behind 2PC is for each site to execute the transaction until it enters the partially committed state, and then leave the commit decision to a sin- gle coordinator site; the transaction is said to be in the _ready_ state at a site at this point. The coordinator decides to commit the transaction only if the transaction reaches the ready state at every site where it executed; otherwise (for example, if the transaction aborts at any site), the coordinator decides to abort the transaction. Every site where the transaction executed must follow the decision of the coor- dinator. If a site fails when a transaction is in ready state, when the site recovers from failure it should be in a position to either commit or abort the transaction, depending on the decision of the coordinator. The 2PC protocol is described in detail in Section 19.4.1.
+The basic idea behind 2PC is for each site to execute the transaction until it enters the partially committed state, and then leave the commit decision to a sin- gle coordinator site; the transaction is said to be in the _ready_ state at a site at this point. The coordinator decides to commit the transaction only if the transaction reaches the ready state at every site where it executed; otherwise (for example, if the transaction aborts at any site), the coordinator decides to abort the transaction. Every site where the transaction executed must follow the decision of the coordinator. If a site fails when a transaction is in ready state, when the site recovers from failure it should be in a position to either commit or abort the transaction, depending on the decision of the coordinator. The 2PC protocol is described in detail in Section 19.4.1.
 
-Concurrency control is another issue in a distributed database. Since a trans- action may access data items at several sites, transaction managers at several sites may need to coordinate to implement concurrency control. If locking is used, lock- ing can be performed locally at the sites containing accessed data items, but there is also a possibility of deadlock involving transactions originating at multiple sites. Therefore deadlock detection needs to be carried out across multiple sites. Failures are more common in distributed systems since not only may computers fail, but communication links may also fail. Replication of data items, which is the key to the continued functioning of distributed databases when failures occur, further complicates concurrency control. Section 19.5 provides detailed coverage of concurrency control in distributed databases.
+Concurrency control is another issue in a distributed database. Since a transaction may access data items at several sites, transaction managers at several sites may need to coordinate to implement concurrency control. If locking is used, lock- ing can be performed locally at the sites containing accessed data items, but there is also a possibility of deadlock involving transactions originating at multiple sites. Therefore deadlock detection needs to be carried out across multiple sites. Failures are more common in distributed systems since not only may computers fail, but communication links may also fail. Replication of data items, which is the key to the continued functioning of distributed databases when failures occur, further complicates concurrency control. Section 19.5 provides detailed coverage of concurrency control in distributed databases.
 
-The standard transaction models, based on multiple actions carried out by a single program unit, are often inappropriate for carrying out tasks that cross the boundaries of databases that cannot or will not cooperate to implement protocols such as 2PC. Alternative approaches, based on _persistent messaging_ for commu- nication, are generally used for such tasks; persistent messaging is discussed in Section 19.4.3.
+The standard transaction models, based on multiple actions carried out by a single program unit, are often inappropriate for carrying out tasks that cross the boundaries of databases that cannot or will not cooperate to implement protocols such as 2PC. Alternative approaches, based on _persistent messaging_ for communication, are generally used for such tasks; persistent messaging is discussed in Section 19.4.3.
 
 When the tasks to be carried out are complex, involving multiple databases and/or multiple interactions with humans, coordination of the tasks and en- suring transaction properties for the tasks become more complicated. _Workflow management systems_ are systems designed to help with carrying out such tasks, and are described in Section 26.2.
 
@@ -339,21 +331,21 @@ RAID organizations are used in the storage devices to ensure high availability o
 
 ### 17.5.2 Wide-Area Networks
 
-**Wide-area networks** (**WANs**) emerged in the late 1960s, mainly as an academic re- search project to provide efficient communication among sites, allowing hardware and software to be shared conveniently and economically by a wide community of users. Systems that allowed remote terminals to be connected to a central com- puter via telephone lines were developed in the early 1960s, but they were not true WANs. The first WAN to be designed and developed was the _Arpanet_. Work on the Arpanet began in 1968. The Arpanet has grown from a four-site experimental network to a worldwide network of networks, the **Internet**, comprising hundreds of millions of computer systems. Typical links on the Internet are fiber-optic lines and, sometimes, satellite channels. Data rates for wide-area links typically range from a few megabits per second to hundreds of gigabits per second. The last link, to end user sites, has traditionally been the slowest link, using such technologies as _digital subscriber line_ (DSL) technology (supporting a few megabits per second) or dial-up modem connections over land-based telephone lines (supporting up to 56 kilobits per second). Today, the last link is typically a cable modem or fiber optic connection (each supporting tens of megabits per second), or a wireless connection supporting several megabits per second.
+**Wide-area networks** (**WANs**) emerged in the late 1960s, mainly as an academic research project to provide efficient communication among sites, allowing hardware and software to be shared conveniently and economically by a wide community of users. Systems that allowed remote terminals to be connected to a central computer via telephone lines were developed in the early 1960s, but they were not true WANs. The first WAN to be designed and developed was the _Arpanet_. Work on the Arpanet began in 1968. The Arpanet has grown from a four-site experimental network to a worldwide network of networks, the **Internet**, comprising hundreds of millions of computer systems. Typical links on the Internet are fiber-optic lines and, sometimes, satellite channels. Data rates for wide-area links typically range from a few megabits per second to hundreds of gigabits per second. The last link, to end user sites, has traditionally been the slowest link, using such technologies as _digital subscriber line_ (DSL) technology (supporting a few megabits per second) or dial-up modem connections over land-based telephone lines (supporting up to 56 kilobits per second). Today, the last link is typically a cable modem or fiber optic connection (each supporting tens of megabits per second), or a wireless connection supporting several megabits per second.
 
-In addition to limits on data rates, communication in a WAN must also contend with significant **latency**: a message may take up to a few hundred milliseconds to be delivered across the world, both due to speed of light delays, and due to queu- ing delays at a number of routers in the path of the message. Applications whose data and computing resources are distributed geographically have to be carefully designed to ensure latency does not affect system performance excessively.
+In addition to limits on data rates, communication in a WAN must also contend with significant **latency**: a message may take up to a few hundred milliseconds to be delivered across the world, both due to speed of light delays, and due to queuing delays at a number of routers in the path of the message. Applications whose data and computing resources are distributed geographically have to be carefully designed to ensure latency does not affect system performance excessively.
 
 WANs can be classified into **two types:**
 
 - In **discontinuous connection** WANs, such as those based on mobile wireless connections, hosts are connected to the network only part of the time.
 
-- In **continuous connection** WANs, such as the wired Internet, hosts are con- nected to the network at all times.
+- In **continuous connection** WANs, such as the wired Internet, hosts are connected to the network at all times.
 
-Networks that are not continuously connected typically do not allow transac- tions across sites, but may keep local copies of remote data, and refresh the copies periodically (every night, for instance). For applications where consistency is not critical, such as sharing of documents, groupware systems such as Lotus Notes allow updates of remote data to be made locally, and the updates are then prop- agated back to the remote site periodically. There is a potential for conflicting updates at different sites, conflicts that have to be detected and resolved. A mechanism for detecting conflicting updates is described later, in Section 25.5.4; the resolution mechanism for conflicting updates is, however, application dependent.
+Networks that are not continuously connected typically do not allow transactions across sites, but may keep local copies of remote data, and refresh the copies periodically (every night, for instance). For applications where consistency is not critical, such as sharing of documents, groupware systems such as Lotus Notes allow updates of remote data to be made locally, and the updates are then propagated back to the remote site periodically. There is a potential for conflicting updates at different sites, conflicts that have to be detected and resolved. A mechanism for detecting conflicting updates is described later, in Section 25.5.4; the resolution mechanism for conflicting updates is, however, application dependent.
 
 ## 17.6 Summary
 
-- Centralized database systems run entirely on a single computer. With the growth of personal computers and local-area networking, the database front- end functionality has moved increasingly to clients, with server systems providing the back-end functionality. Client–server interface protocols have helped the growth of client–server database systems.
+- Centralized database systems run entirely on a single computer. With the growth of personal computers and local-area networking, the database front-end functionality has moved increasingly to clients, with server systems providing the back-end functionality. Client–server interface protocols have helped the growth of client–server database systems.
 
 - Servers can be either transaction servers or data servers, although the use of transaction servers greatly exceeds the use of data servers for providing database services.
 
@@ -541,16 +533,15 @@ At one point over two decades ago, parallel database systems had been nearly wri
 
 - Organizations are using these increasingly large volumes of data—such as data about what items people buy, what Web links users click on, and when people make telephone calls—to plan their activities and pricing. Queries used for such purposes are called **decision-support queries**, and the data requirements for such queries may run into terabytes. Single-processor sys- tems are not capable of handling such large volumes of data at the required rates.
 
-- The set-oriented nature of database queries naturally lends itself to paral- lelization. A number of commercial and research systems have demonstrated the power and scalability of parallel query processing.
+- The set-oriented nature of database queries naturally lends itself to parallelization. A number of commercial and research systems have demonstrated the power and scalability of parallel query processing.
 
-- As microprocessors have become cheap, parallel machines have become com- mon and relatively inexpensive.
+- As microprocessors have become cheap, parallel machines have become common and relatively inexpensive.
 
-- Individual processors have themselves become parallel machines using mul- ticore architectures.
-
+- Individual processors have themselves become parallel machines using multicore architectures.
 
 As we discussed in Chapter 17, parallelism is used to provide speedup, where queries are executed faster because more resources, such as processors and disks, are provided. Parallelism is also used to provide scaleup, where increasing work- loads are handled without increased response time, via an increase in the degree of parallelism.
 
-We outlined in Chapter 17 the different architectures for parallel database systems: shared-memory, shared-disk, shared-nothing, and hierarchical architec- tures. Briefly, in shared-memory architectures, all processors share a common memory and disks; in shared-disk architectures, processors have independent memories, but share disks; in shared-nothing architectures, processors share nei- ther memory nor disks; and hierarchical architectures have nodes that share neither memory nor disks with each other, but internally each node has a shared- memory or a shared-disk architecture.
+We outlined in Chapter 17 the different architectures for parallel database systems: shared-memory, shared-disk, shared-nothing, and hierarchical architectures. Briefly, in shared-memory architectures, all processors share a common memory and disks; in shared-disk architectures, processors have independent memories, but share disks; in shared-nothing architectures, processors share neither memory nor disks; and hierarchical architectures have nodes that share neither memory nor disks with each other, but internally each node has a shared- memory or a shared-disk architecture.
 
 ## 18.2 I/O Parallelism
 
@@ -558,13 +549,13 @@ In its simplest form, **I/O parallelism** refers to reducing the time required t
 
 ### 18.2.1 Partitioning Techniques
 
-We present three basic data-partitioning strategies. Assume that there are _n_ disks, _D_0_, D_1_, . . . , Dn_−1, across which the data are to be partitioned.
+We present three basic data-partitioning strategies. Assume that there are _n_ disks, _D_~0~, D_~1~, . . . , _D_~n−1~, across which the data are to be partitioned.
 
-- **Round-robin**. This strategy scans the relation in any order and sends the _i_th tuple to disk number _Di mod n_. The round-robin scheme ensures an even distribution of tuples across disks; that is, each disk has approximately the same number of tuples as the others.
+- **Round-robin**. This strategy scans the relation in any order and sends the _i_th tuple to disk number _D~i~ mod n_. The round-robin scheme ensures an even distribution of tuples across disks; that is, each disk has approximately the same number of tuples as the others.
 
-- **Hash partitioning**. This declustering strategy designates one or more attrib- utes from the given relation’s schema as the partitioning attributes. A hash function is chosen whose range is {0_,_ 1_, . . . , n_ − 1}. Each tuple of the original relation is hashed on the partitioning attributes. If the hash function returns _i_ , then the tuple is placed on disk _Di_ .1
+- **Hash partitioning**. This declustering strategy designates one or more attributes from the given relation’s schema as the partitioning attributes. A hash function is chosen whose range is {0_,_ 1_, . . . , n_ − 1}. Each tuple of the original relation is hashed on the partitioning attributes. If the hash function returns _i_ , then the tuple is placed on disk _D_~i~ .1
 
-- **Range partitioning**. This strategy distributes tuples by assigning contiguous attribute-value ranges to each disk. It chooses a partitioning attribute, _A_, and a **partitioning vector** [_v_0_, v_1_, . . . , vn_−2\], such that, if _i < j_ , then _vi < v j_ . The relation is partitioned as follows: Consider a tuple _t_ such that _t_[_A_\] = _x_. If _x < v_0, then _t_ goes on disk _D_0\. If _x_ ≥ _vn_−2, then _t_ goes on disk _Dn_−1. If _vi_ ≤ _x < vi_+1, then _t_ goes on disk _Di_+1.
+- **Range partitioning**. This strategy distributes tuples by assigning contiguous attribute-value ranges to each disk. It chooses a partitioning attribute, _A_, and a **partitioning vector** [_v_~0~, _v_~1~, . . . , _v_~n−2~\], such that, if _i < j_ , then _v~i~ < _v_~j~ . The relation is partitioned as follows: Consider a tuple _t_ such that _t_[_A_\] = _x_. If _x < v_~0~, then _t_ goes on disk _D_~0~\. If _x_ ≥ _v~n−2~, then _t_ goes on disk _D_~n−1~. If _v~i~_ ≤ _x < v~i~_+1, then _t_ goes on disk _D_~+1~.
 
 For example, range partitioning with three disks numbered 0, 1, and 2 may assign tuples with values less than 5 to disk 0, values between 5 and 40 to disk 1, and values greater than 40 to disk 2.
 
@@ -624,7 +615,7 @@ ranges. Round-robin allocation of virtual processors to real processors would di
 
 ## 18.3 Interquery Parallelism
 
-In **interquery parallelism**, different queries or transactions execute in parallel with one another. Transaction throughput can be increased by this form of paral- lelism. However, the response times of individual transactions are no faster than they would be if the transactions were run in isolation. Thus, the primary use of interquery parallelism is to scale up a transaction-processing system to support a larger number of transactions per second.
+In **interquery parallelism**, different queries or transactions execute in parallel with one another. Transaction throughput can be increased by this form of parallelism. However, the response times of individual transactions are no faster than they would be if the transactions were run in isolation. Thus, the primary use of interquery parallelism is to scale up a transaction-processing system to support a larger number of transactions per second.
 
 Interquery parallelism is the easiest form of parallelism to support in a database system—particularly in a shared-memory parallel system. Database systems designed for single-processor systems can be used with few or no changes on a shared-memory parallel architecture, since even sequential database systems support concurrent processing. Transactions that would have operated in a time- shared concurrent manner on a sequential machine operate in parallel in the shared-memory parallel architecture.
 
@@ -632,7 +623,7 @@ Supporting interquery parallelism is more complicated in a shared-disk or shared
 
 ## 18.4 Intraquery Parallelism 803
 
-Various protocols are available to guarantee cache coherency; often, cache- coherency protocols are integrated with concurrency-control protocols so that their overhead is reduced. One such protocol for a shared-disk system is this:
+Various protocols are available to guarantee cache coherency; often, cachecoherency protocols are integrated with concurrency-control protocols so that their overhead is reduced. One such protocol for a shared-disk system is this:
 
 **1\.** Before any read or write access to a page, a transaction locks the page in shared or exclusive mode, as appropriate. Immediately after the transaction obtains either a shared or exclusive lock on a page, it also reads the most recent copy of the page from the shared disk.
 
@@ -640,7 +631,7 @@ Various protocols are available to guarantee cache coherency; often, cache- cohe
 
 This protocol ensures that, when a transaction sets a shared or exclusive lock on a page, it gets the correct copy of the page.
 
-More complex protocols avoid the repeated reading and writing to disk re- quired by the preceding protocol. Such protocols do not write pages to disk when exclusive locks are released. When a shared or exclusive lock is obtained, if the most recent version of a page is in the buffer pool of some processor, the page is obtained from there. The protocols have to be designed to handle concurrent requests. The shared-disk protocols can be extended to shared-nothing architec- tures by this scheme: Each page has a **home processor** _Pi_ , and is stored on disk _Di_ . When other processors want to read or write the page, they send requests to the home processor _Pi_ of the page, since they cannot directly communicate with the disk. The other actions are the same as in the shared-disk protocols.
+More complex protocols avoid the repeated reading and writing to disk required by the preceding protocol. Such protocols do not write pages to disk when exclusive locks are released. When a shared or exclusive lock is obtained, if the most recent version of a page is in the buffer pool of some processor, the page is obtained from there. The protocols have to be designed to handle concurrent requests. The shared-disk protocols can be extended to shared-nothing architectures by this scheme: Each page has a **home processor** _P_~i~ , and is stored on disk _D_~i~ . When other processors want to read or write the page, they send requests to the home processor _P_~i~ of the page, since they cannot directly communicate with the disk. The other actions are the same as in the shared-disk protocols.
 
 The Oracle and Oracle Rdb systems are examples of shared-disk parallel database systems that support interquery parallelism.
 
@@ -658,11 +649,11 @@ In summary, the execution of a single query can be parallelized in two different
 
 - **Interoperation parallelism**. We can speed up processing of a query by exe- cuting in parallel the different operations in a query expression. We consider this form of parallelism inection 18.6.
 
-The two forms of parallelism are complementary, and can be used simulta- neously on a query. Since the number of operations in a typical query is small, compared to the number of tuples processed by each operation, the first form of parallelism can scale better with increasing parallelism. However, with the rela- tively small number of processors in typical parallel systems today, both forms of parallelism are important.
+The two forms of parallelism are complementary, and can be used simultaneously on a query. Since the number of operations in a typical query is small, compared to the number of tuples processed by each operation, the first form of parallelism can scale better with increasing parallelism. However, with the relatively small number of processors in typical parallel systems today, both forms of parallelism are important.
 
-In the following discussion of parallelization of queries, we assume that the queries are **read only**. The choice of algorithms for parallelizing query evalu- ation depends on the machine architecture. Rather than present algorithms for each architecture separately, we use a shared-nothing architecture model in our description. Thus, we explicitly describe when data have to be transferred from one processor to another. We can simulate this model easily by using the other architectures, since transfer of data can be done via shared memory in a shared- memory architecture, and via shared disks in a shared-disk architecture. Hence, algorithms for shared-nothing architectures can be used on the other architec- tures, too. We mention occasionally how the algorithms can be further optimized for shared-memory or shared-disk systems.
+In the following discussion of parallelization of queries, we assume that the queries are **read only**. The choice of algorithms for parallelizing query evaluation depends on the machine architecture. Rather than present algorithms for each architecture separately, we use a shared-nothing architecture model in our description. Thus, we explicitly describe when data have to be transferred from one processor to another. We can simulate this model easily by using the other architectures, since transfer of data can be done via shared memory in a shared- memory architecture, and via shared disks in a shared-disk architecture. Hence, algorithms for shared-nothing architectures can be used on the other architectures, too. We mention occasionally how the algorithms can be further optimized for shared-memory or shared-disk systems.
 
-To simplify the presentation of the algorithms, assume that there are _n_ proces- sors, _P_0_, P_1_, . . . , Pn_−1, and _n_ disks _D_0_, D_1_, . . . , Dn_−1, where disk _Di_ is associated with processor _Pi_ . A real system may have multiple disks per processor. It is not hard to extend the algorithms to allow multiple disks per processor: We simply allow _Di_ to be a set of disks. However, for simplicity, we assume here that _Di_ is a single disk.
+To simplify the presentation of the algorithms, assume that there are _n_ proces- sors, _P_~0~, _P_~1~, . . . ,_P~n−1~, and _n_ disks _D_~0~, _D_~1~, . . . , _D~n−1~, where disk _D~i~ is associated with processor _P_~i~ . A real system may have multiple disks per processor. It is not hard to extend the algorithms to allow multiple disks per processor: We simply allow _D_~i~ to be a set of disks. However, for simplicity, we assume here that _D_~i~ is a single disk.
 
 ## 18.5 Intraoperation Parallelism
 
@@ -671,7 +662,7 @@ Since relational operations work on relations containing large sets of tuples, w
 
 ### 18.5.1 Parallel Sort
 
-Suppose that we wish to sort a relation that resides on _n_ disks D~0~, D~1~, . . . , D~n−1~. If the relation has been range-partitioned on the attributes on which it is to be sorted, then, as noted in Section 18.2.2, we can sort each partition separately, and can concatenate the results to get the full sorted relation. Since the tuples are partitioned on **n** disks, the time required for reading the entire relation is reduced by the parallel access.
+Suppose that we wish to sort a relation that resides on _n_ disks _D_~0~, _D_~1~, . . . , _D_~n−1~. If the relation has been range-partitioned on the attributes on which it is to be sorted, then, as noted in Section 18.2.2, we can sort each partition separately, and can concatenate the results to get the full sorted relation. Since the tuples are partitioned on **n** disks, the time required for reading the entire relation is reduced by the parallel access.
 
 If the relation has been partitioned in any other way, we can sort it in one of two ways:
 
@@ -681,31 +672,30 @@ If the relation has been partitioned in any other way, we can sort it in one of 
 
 #### 18.5.1.1 Range-Partitioning Sort
 
-**Range-partitioning sort** works in two steps: first range partitioning the relation, then sorting each partition separately. When we sort by range partitioning the relation, it is not necessary to range-partition the relation on the same set of processors or disks as those on which that relation is stored. Suppose that we choose processors _P_0_, P_1_, . . . , Pm_, where _m < n_, to sort the relation. There are two steps involved in this operation:
+**Range-partitioning sort** works in two steps: first range partitioning the relation, then sorting each partition separately. When we sort by range partitioning the relation, it is not necessary to range-partition the relation on the same set of processors or disks as those on which that relation is stored. Suppose that we choose processors _P_~0~, _P_~1~, . . . , _P~m~, where _m < n_, to sort the relation. There are two steps involved in this operation:
 
-**1\.** Redistribute the tuples in the relation, using a range-partition strategy, so that all tuples that lie within the _i_th range are sent to processor _Pi_ , which stores the relation temporarily on disk _Di_ .
+**1\.** Redistribute the tuples in the relation, using a range-partition strategy, so that all tuples that lie within the _i_th range are sent to processor _P_~i~ , which stores the relation temporarily on disk _D_~i~ .
 
 To implement range partitioning, in parallel every processor reads the tuples from its disk and sends the tuples to their destination processors. Each processor P~0~, P~1~, . . . , P~m~ also receives tuples belonging to its partition, and stores them locally. This step requires disk I/O and communication overhead.
 
 **2\.** Each of the processors sorts its partition of the relation locally, without interaction with the other processors. Each processor executes the same operation—namely, sorting—on a different data set. (Execution of the same operation in parallel on different sets of data is called **data parallelism**.)
 
-The final merge operation is trivial, because the range partitioning in the first phase ensures that, for 1 ≤ i < j ≤ m, the key values in processor _Pi_ are all less than the key values in Pj .
+The final merge operation is trivial, because the range partitioning in the first phase ensures that, for 1 ≤ i < j ≤ m, the key values in processor _P_~i~ are all less than the key values in _P_~j~ .
 
 We must do range partitioning with a good range-partition vector, so that each partition will have approximately the same number of tuples. Virtual processor partitioning can also be used to reduce skew.  
-
 
 
 #### 18.5.1.2 Parallel External Sort–Merge
 
 **Parallel external sort–merge** is an alternative to range partitioning. Suppose that a relation has already been partitioned among disks D~0~, D~1~, . . . , D~n−1~ (it does not matter how the relation has been partitioned). Parallel external sort–merge then works this way:
 
-**1\.** Each processor _Pi_ locally sorts the data on disk Di .
+**1\.** Each processor _P_~i~ locally sorts the data on disk _D_~i~ .
 
 **2\.** The system then merges the sorted runs on each processor to get the final sorted output.
 
 The merging of the sorted runs in step 2 can be parallelized by this sequence of actions:
 
-**1\.** The system range-partitions the sorted partitions at each processor Pi (all by the same partition vector) across the processors P~0~, P~1~, . . . , P~m−1~. It sends the tuples in sorted order, so that each processor receives the tuples in sorted streams.
+**1\.** The system range-partitions the sorted partitions at each processor _P_~i~ (all by the same partition vector) across the processors P~0~, P~1~, . . . , P~m−1~. It sends the tuples in sorted order, so that each processor receives the tuples in sorted streams.
 
 **2\.** Each processor **Pi** performs a merge on the streams as they are received, to get a single sorted run.
 
@@ -713,7 +703,7 @@ The merging of the sorted runs in step 2 can be parallelized by this sequence of
 
 As described, this sequence of actions results in an interesting form of **execution skew**, since at first every processor sends all blocks of partition 0 to P~0~, then every processor sends all blocks of partition 1 to P~1~, and so on. Thus, while sending happens in parallel, receiving tuples becomes sequential: First only P~0~ receives tuples, then only P~1~ receives tuples, and so on. To avoid this problem, each processor repeatedly sends a block of data to each partition. In other words, each processor sends the first block of every partition, then sends the second block of every partition, and so on. As a result, all processors receive data in parallel.
 
-Some machines, such as the Teradata Purpose-Built Platform Family ma- chines, use specialized hardware to perform merging. The BYNET interconnection network in the Teradata machines can merge output from multiple processors to give a single sorted output.
+Some machines, such as the Teradata Purpose-Built Platform Family machines, use specialized hardware to perform merging. The BYNET interconnection network in the Teradata machines can merge output from multiple processors to give a single sorted output.
 
 ### 18.5.2 Parallel Join
 
@@ -721,9 +711,9 @@ The join operation requires that the system test pairs of tuples to see whether 
 
 #### 18.5.2.1 Partitioned Join
 
-For certain kinds of joins, such as equi-joins and natural joins, it is possible to _partition_ the two input relations across the processors and to compute the join locally at each processor. Suppose that we are using _n_ processors and that the relations to be joined are _r_ and _s_. **Partitioned join** then works this way: The system partitions the relations r and s each into n partitions, denoted r~0~, r~1~, . . . , r~n−1~ and s~0~, s~1~, . . . , s~n−1~. The system sends partitions _ri_ and _si_ to processor _Pi_ , where their join is computed locally.
+For certain kinds of joins, such as equi-joins and natural joins, it is possible to _partition_ the two input relations across the processors and to compute the join locally at each processor. Suppose that we are using _n_ processors and that the relations to be joined are _r_ and _s_. **Partitioned join** then works this way: The system partitions the relations r and s each into n partitions, denoted r~0~, r~1~, . . . , r~n−1~ and s~0~, s~1~, . . . , s~n−1~. The system sends partitions _r_~i~ and _s_~i~ to processor _P_~i~ , where their join is computed locally.
 
-The partitioned join technique works correctly only if the join is an equi-join (for example, _r r.A_\=_s.B s_) and if we partition _r_ and _s_ by the same partitioning function on their join attributes. The idea of partitioning is exactly the same as that behind the partitioning step of hash join. In a partitioned join, however, there are two different ways of partitioning _r_ and _s_:
+The partitioned join technique works correctly only if the join is an equi-join (for example, _r ⨝r.~A_\=_s.B~ s_) and if we partition _r_ and _s_ by the same partitioning function on their join attributes. The idea of partitioning is exactly the same as that behind the partitioning step of hash join. In a partitioned join, however, there are two different ways of partitioning _r_ and _s_:
 
 - Range partitioning on the join attributes.
 
@@ -731,19 +721,19 @@ The partitioned join technique works correctly only if the join is an equi-join 
 
 In either case, the same partitioning function must be used for both relations. For range partitioning, the same partition vector must be used for both relations. For hash partitioning, the same hash function must be used on both relations. Figure 18.2 depicts the partitioning in a partitioned parallel join.
 
-Once the relations are partitioned, we can use any join technique locally at each processor _Pi_ to compute the join of _ri_ and _si_ . For example, hash join, merge join, or nested-loop join could be used. Thus, we can use partitioning to parallelize any join technique.
+Once the relations are partitioned, we can use any join technique locally at each processor _P_~i~ to compute the join of _r_~i~ and _s_~i~ . For example, hash join, merge join, or nested-loop join could be used. Thus, we can use partitioning to parallelize any join technique.
 
 ![Alt text](partitional.png)
 
-If one or both of the relations _r_ and _s_ are already partitioned on the join attributes (by either hash partitioning or range partitioning), the work needed for partitioning is reduced greatly. If the relations are not partitioned, or are partitioned on attributes other than the join attributes, then the tuples need to be repartitioned. Each processor _Pi_ reads in the tuples on disk _Di_ , computes for each tuple _t_ the partition _j_ to which _t_ belongs, and sends tuple _t_ to processor _Pj_ . Processor _Pj_ stores the tuples on disk _Dj_ .
+If one or both of the relations _r_ and _s_ are already partitioned on the join attributes (by either hash partitioning or range partitioning), the work needed for partitioning is reduced greatly. If the relations are not partitioned, or are partitioned on attributes other than the join attributes, then the tuples need to be repartitioned. Each processor _P_~i~ reads in the tuples on disk _D_~i~ , computes for each tuple _t_ the partition _j_ to which _t_ belongs, and sends tuple _t_ to processor _P_~j~ . Processor _P_~j~ stores the tuples on disk _D_~j~ .
 
 We can optimize the join algorithm used locally at each processor to reduce I/O by buffering some of the tuples to memory, instead of writing them to disk. We describe such optimizations in Section 18.5.2.3.
 
-Skew presents a special problem when range partitioning is used, since a partition vector that splits one relation of the join into equal-sized partitions may split the other relations into partitions of widely varying size. The partition vector should be such that |_ri_ | + |_si_ | (that is, the sum of the sizes of _ri_ and _si_ ) is roughly equal over all the _i_ \= 0_,_ 1_, . . . , n_ − 1. With a good hash function, hash partitioning is likely to have a smaller skew, except when there are many tuples with the same values for the join attributes.
+Skew presents a special problem when range partitioning is used, since a partition vector that splits one relation of the join into equal-sized partitions may split the other relations into partitions of widely varying size. The partition vector should be such that |_r_~i~ | + |_s~i~_ | (that is, the sum of the sizes of _r~i~_ and _s~i~_ ) is roughly equal over all the _i_ \= 0_,_ 1_, . . . , n − 1. With a good hash function, hash partitioning is likely to have a smaller skew, except when there are many tuples with the same values for the join attributes.
 
 #### 18.5.2.2 Fragment-and-Replicate Join
 
-Partitioning is not applicable to all types of joins. For instance, if the join condition is an inequality, such as _r r.a<s.b s_, it is possible that all tuples in _r_ join with some tuple in _s_ (and vice versa). Thus, there may be no easy way of partitioning _r_ and _s_ so that tuples in partition _ri_ join with only tuples in partition _si_ .
+Partitioning is not applicable to all types of joins. For instance, if the join condition is an inequality, such as _r ⨝~r.a<s.b ~s_, it is possible that all tuples in _r_ join with some tuple in _s_ (and vice versa). Thus, there may be no easy way of partitioning _r_ and _s_ so that tuples in partition _r_~i~ join with only tuples in partition _s_~i~ .
 
 We can parallelize such joins by using a technique called _fragment and replicate_. We first consider a special case of fragment and replicate—**asymmetric fragment- and-replicate join**—which works as follows:
 
@@ -751,7 +741,7 @@ We can parallelize such joins by using a technique called _fragment and replicat
 
 **2\.** The system replicates the other relation, _s_, across all the processors.
 
-**3\.** Processor _Pi_ then locally computes the join of _ri_ with all of _s_, using any join technique.
+**3\.** Processor _P_~i~ then locally computes the join of _r_~i~ with all of _s_, using any join technique.
 
 The asymmetric fragment-and-replicate scheme appears in Figure 18.3a. If _r_ is already stored by partitioning, there is no need to partition it further in step 1. All that is required is to replicate _s_ across all processors.
 
@@ -760,7 +750,7 @@ The general case of **fragment-and-replicate join** appears in Figure 18.3b; it 
 ![Alt text](fragment.png)
 
 
-Let the processors be P~0~,~0~, P~0~,~1~, . . . , P~0~,~m−1~, P~1~,~0~, . . . , P~n−1~,~m−1~. Processor _Pi, j_ computes the join of _ri_ with _s j_ . Each processor must get those tuples in the partitions on which it works. To accomplish this, the system replicates _ri_ to processors ~P~i~,~0~, P~i~,~1~, . . . , P~i~,~m−1~ (which form a row in Figure 18.3b), and replicates _si_ to processors P~0~,~i~ , P~1~,~i~ , . . . , P~n−1~,~i~ (which form a column in Figure 18.3b). Any join technique can be used at each processor _Pi, j_ .
+Let the processors be P~0~,~0~, P~0~,~1~, . . . , P~0~,~m−1~, P~1~,~0~, . . . , P~n−1~,~m−1~. Processor _P_~i~, ~j~_ computes the join of _ri_ with _s j_ . Each processor must get those tuples in the partitions on which it works. To accomplish this, the system replicates _ri_ to processors ~P~i~,~0~, P~i~,~1~, . . . , P~i~,~m−1~ (which form a row in Figure 18.3b), and replicates _si_ to processors P~0~,~i~ , P~1~,~i~ , . . . , P~n−1~,~i~ (which form a column in Figure 18.3b). Any join technique can be used at each processor _P_~i~, ~j~_ .
 
 Fragment and replicate works with any join condition, since every tuple in _r_ can be tested with every tuple in _s_. Thus, it can be used where partitioning cannot be.
 
@@ -770,7 +760,7 @@ Fragment and replicate usually has a higher cost than partitioning when both rel
 
 The partitioned hash join of Section 12.5.5 can be parallelized. Suppose that we have _n_ processors, P~0~, ~P~1, . . . , P~n−1~, and two relations _r_ and _s_, such that the relations _r_ and _s_ are partitioned across multiple disks. Recall from Section 12.5.5 that the smaller relation is chosen as the build relation. If the size of _s_ is less than that of _r_ , the parallel hash-join algorithm proceeds this way:
 
-**1\.** Choose a hash function—say, h~1~ that takes the join attribute value of each tuple in _r_ and _s_ and maps the tuple to one of the _n_ processors. Let _ri_ denote the tuples of relation _r_ that are mapped to processor P~i~ ; similarly, let s~i~ denote the tuples of relation _s_ that are mapped to processor P~i~ . Each processor P~i~ reads the tuples of _s_ that are on its disk D~i~ and sends each tuple to the appropriate processor on the basis of hash function h~1~.
+**1\.** Choose a hash function—say, h~1~ that takes the join attribute value of each tuple in _r_ and _s_ and maps the tuple to one of the _n_ processors. Let _r_~i~ denote the tuples of relation _r_ that are mapped to processor P~i~ ; similarly, let s~i~ denote the tuples of relation _s_ that are mapped to processor P~i~ . Each processor P~i~ reads the tuples of _s_ that are on its disk D~i~ and sends each tuple to the appropriate processor on the basis of hash function h~1~.
 
 **2\.** As the destination processor P~i~ receives the tuples of s~i~ , it further partitions them by another hash function, h~2~, which the processor uses to compute the hash join locally. The partitioning at this stage is exactly the same as in the partitioning phase of the sequential hash-join algorithm. Each processor P~i~ executes this step independently from the other processors.
 
@@ -786,13 +776,13 @@ To illustrate the use of fragment-and-replicate–based parallelization, conside
 
 We use asymmetric fragment and replicate, with relation _s_ being replicated and with the existing partitioning of relation _r_ . Each processor _P~j~_ where a partition of relation _s_ is stored reads the tuples of relation _s_ stored in _D~j~_ , and replicates the tuples to every other processor _P~i~_ . At the end of this phase, relation _s_ is replicated at all sites that store tuples of relation _r_ .
 
-Now, each processor _Pi_ performs an indexed nested-loop join of relation _s_ with the _i_th partition of relation _r_ . We can overlap the indexed nested-loop join with the distribution of tuples of relation _s_, to reduce the costs of writing the tuples of relation _s_ to disk, and of reading them back. However, the replication of relation _s_ must be synchronized with the join so that there is enough space in the in-memory buffers at each processor _P~i~_ to hold the tuples of relation _s_ that have been received but that have not yet been used in the join.
+Now, each processor _P_~i~ performs an indexed nested-loop join of relation _s_ with the _i_th partition of relation _r_ . We can overlap the indexed nested-loop join with the distribution of tuples of relation _s_, to reduce the costs of writing the tuples of relation _s_ to disk, and of reading them back. However, the replication of relation _s_ must be synchronized with the join so that there is enough space in the in-memory buffers at each processor _P~i~_ to hold the tuples of relation _s_ that have been received but that have not yet been used in the join.
 
 ### 18.5.3 Other Relational Operations
 
 The evaluation of other relational operations also can be parallelized:
 
-- **Selection**. Let the selection be (_r_ ). Consider first the case where  is of the form _a~i~_ \= _v_, where _ai_ is an attribute and _v_ is a value. If the relation _r_ is partitioned on _a~i~_ , the selection proceeds at a single processor. If  is of the form _l_ ≤ _a~i~_ ≤ _u_—that is,  is a range selection—and the relation has been range-partitioned on _a~i~_ , then the selection proceeds at each processor whose partition overlaps with the specified range of values. In all other cases, the selection proceeds in parallel at all the processors.
+- **Selection**. Let the selection be σ~θ~(_r_ ). Consider first the case where θ is of the form _a~i~_ \= _v_, where _ai_ is an attribute and _v_ is a value. If the relation _r_ is partitioned on _a~i~_ , the selection proceeds at a single processor. If θ is of the form _l_ ≤ _a~i~_ ≤ _u_—that is, θ is a range selection—and the relation has been range-partitioned on _a~i~_ , then the selection proceeds at each processor whose partition overlaps with the specified range of values. In all other cases, the selection proceeds in parallel at all the processors.
 
 - **Duplicate elimination**. Duplicates can be eliminated by sorting; either of the parallel sort techniques can be used, optimized to eliminate duplicates as soon as they appear during sorting. We can also parallelize duplicate elimination by partitioning the tuples (by either range or hash partitioning) and eliminating duplicates locally at each processor.
 
@@ -845,9 +835,9 @@ Parallel systems use pipelining primarily for the same reason that sequential sy
 
 Consider a join of four relations:
 
-_r_~1~  r_~2~  r_~3~  r_~4~
+_r_~1~ ⨝ _r_~2~ ⨝ _r_~3~ ⨝ _r_~4~
 
-We can set up a pipeline that allows the three joins to be computed in parallel. Suppose processor _P_~1~ is assigned the computation of _temp_~1~ ← _r_~1~ _ r_~2~, and _P_~2~ is assigned the computation of _r_~3~ _ temp_~1~\. As _P_~1~ computes tuples in _r_~1~ _ r_~2~, it makes these tuples available to processor _P_~2~\. Thus, _P_~2~ has available to it some of the tuples in _r_~1~ _ r_~2~ before _P_~1~ has finished its computation. _P_~2~ can use those tuples that are available to begin computation of _temp_~1~ _ r_~3~, even before _r_~1~ _ r_~2~ is fully computed by _P_~1~\. Likewise, as _P_~2~ computes tuples in (_r_~1~ _ r_~2~) _ r_~3~, it makes these tuples available to _P_~3~, which computes the join of these tuples with _r_~4~.
+We can set up a pipeline that allows the three joins to be computed in parallel. Suppose processor _P_~1~ is assigned the computation of _temp_~1~ ← _r_~1~ _⨝ r_~2~, and _P_~2~ is assigned the computation of _r_~3~  ⨝ temp~1~\. As _P_~1~ computes tuples in _r_~1~ _⨝ _r_~2~, it makes these tuples available to processor _P_~2~\. Thus, _P_~2~ has available to it some of the tuples in _r_~1~ _⨝ r_~2~ before _P_~1~ has finished its computation. _P_~2~ can use those tuples that are available to begin computation of _temp_~1~ _⨝ r_~3~, even before _r_~1~ _⨝ r_~2~ is fully computed by _P_~1~\. Likewise, as _P_~2~ computes tuples in (_r_~1~ _⨝ r_~2~) _⨝ r_~3~, it makes these tuples available to _P_~3~, which computes the join of these tuples with _r_~4~.
 
 Pipelined parallelism is useful with a small number of processors, but does not scale up well. First, pipeline chains generally do not attain sufficient length to provide a high degree of parallelism. Second, it is not possible to pipeline rela- tional operators that do not produce output until all inputs have been accessed, such as the set-difference operation. Third, only marginal speedup is obtained for the frequent cases in which one operator’s execution cost is much higher than are those of the others.
 
@@ -858,17 +848,17 @@ All things considered, when the degree of parallelism is high, pipelining is a l
 
 Operations in a query expression that do not depend on one another can be executed in parallel. This form of parallelism is called **independent parallelism**.
 
-Consider the join _r_~1~ _ r_~2~ _ r_~3~ _ r_~4~\. Clearly, we can compute _temp_~1~ ← _r_~1~ _ r_~2~ in parallel with temp~2~ ← _r_~3~_ r_~4~\. When these two computations complete, we compute:
+Consider the join _r_~1~ _⨝ r_~2~ _⨝ r_~3~ _⨝ r_~4~\. Clearly, we can compute _temp_~1~ ← _r_~1~ _⨝ r_~2~ in parallel with temp~2~ ← _r_~3~_⨝ r_~4~\. When these two computations complete, we compute:
 
-temp1  temp2
+temp1 ⨝ temp2
 
-To obtain further parallelism, we can pipeline the tuples in _temp_~1~ and _temp_~2~ into the computation of _temp_~1~ _ temp_~2~, which is itself carried out by a pipelined join (Section 12.7.2.2).
+To obtain further parallelism, we can pipeline the tuples in _temp_~1~ and _temp_~2~ into the computation of _temp_~1~ ⨝ _temp_~2~, which is itself carried out by a pipelined join (Section 12.7.2.2).
 
 Like pipelined parallelism, independent parallelism does not provide a high degree of parallelism and is less useful in a highly parallel system, although it is useful with a lower degree of parallelism.
 
 ## 18.7 Query Optimization
 
-Query optimizers account in large measure for the success of relational technol- ogy. Recall that a query optimizer takes a query and finds the cheapest execution plan among the many possible execution plans that give the same answer.
+Query optimizers account in large measure for the success of relational technology. Recall that a query optimizer takes a query and finds the cheapest execution plan among the many possible execution plans that give the same answer.
 
 Query optimizers for parallel query evaluation are more complicated than query optimizers for sequential query evaluation. First, the cost models are more complicated, since partitioning costs have to be accounted for, and issues such as skew and resource contention must be taken into account. More important is the issue of how to parallelize a query. Suppose that we have somehow chosen an expression (from among those equivalent to the query) to be used for evaluating the query. The expression can be represented by an operator tree, as in Section 12.1.
 
@@ -878,9 +868,7 @@ To evaluate an operator tree in a parallel system, we must make the following de
 
 - What operations to pipeline across different processors, what operations to execute independently in parallel, and what operations to execute sequen- tially, one after the other.
 
-These decisions constitute the task of **scheduling** the execution tree. Determining the resources of each kind—such as processors, disks, and mem-
-
-ory—that should be allocated to each operation in the tree is another aspect of the optimization problem. For instance, it may appear wise to use the maximum amount of parallelism available, but it is a good idea not to execute certain opera- tions in parallel. Operations whose computational requirements are significantly smaller than the communication overhead should be clustered with one of their neighbors. Otherwise, the advantage of parallelism is negated by the overhead of communication.
+These decisions constitute the task of **scheduling** the execution tree. Determining the resources of each kind such as processors, disks, and memory that should be allocated to each operation in the tree is another aspect of the optimization problem. For instance, it may appear wise to use the maximum amount of parallelism available, but it is a good idea not to execute certain operations in parallel. Operations whose computational requirements are significantly smaller than the communication overhead should be clustered with one of their neighbors. Otherwise, the advantage of parallelism is negated by the overhead of communication.
 
 One concern is that long pipelines do not lend themselves to good resource utilization. Unless the operations are coarse grained, the final operation of the pipeline may wait for a long time to get inputs, while holding precious resources, such as memory. Hence, long pipelines should be avoided.
 
@@ -945,13 +933,13 @@ The architecture trend of slower increase in raw speed accompanied by the growth
 
 It would appear that database systems are an ideal application to take advantage of large numbers of cores and threads, since database systems support large numbers of concurrent transactions. However, there are a variety of factors that make optimal use of modern processors challenging.
 
-As we allow a higher degree of concurrency to take advantage of the par- allelism of modern processors, we increase the amount of data that needs to be in cache. This can result in more cache misses, perhaps so many that even a multithreaded core has to wait for data from memory.
+As we allow a higher degree of concurrency to take advantage of the parallelism of modern processors, we increase the amount of data that needs to be in cache. This can result in more cache misses, perhaps so many that even a multithreaded core has to wait for data from memory.
 
-Concurrent transactions need some sort of concurrency control to ensure the ACID properties that we discussed in Chapter 14. When concurrent transactions access data in common, some sort of restrictions must be imposed on that concur- rent access. Those restrictions, whether based on locks, timestamps, or validation, result in waiting or the loss of work due to transaction aborts. To avoid excessive amounts of waiting or lost work, it is ideal that concurrent transactions conflict rarely, but attempting to ensure that can increase the amount of data needed in cache, resulting in more cache misses.
+Concurrent transactions need some sort of concurrency control to ensure the ACID properties that we discussed in Chapter 14. When concurrent transactions access data in common, some sort of restrictions must be imposed on that concurrent access. Those restrictions, whether based on locks, timestamps, or validation, result in waiting or the loss of work due to transaction aborts. To avoid excessive amounts of waiting or lost work, it is ideal that concurrent transactions conflict rarely, but attempting to ensure that can increase the amount of data needed in cache, resulting in more cache misses.
 
 Finally, there are components of a database system shared by all transactions. In a system using locking, the lock table is shared by all transactions and access to 3Technically, in operating-system terminology, its address space it can become a bottleneck. Similar problems exist for other forms of concurrency control. Similarly, the buffer manager, the log manager, and the recovery manager serve all transactions and are potential bottlenecks.
 
-Because having a large number of concurrent transactions may not take opti- mal advantage of modern processors, it is desirable to find ways to allow multiple cores to work on a single transaction. This requires the database query processor to find effective ways to parallelize queries without creating excessive demands on cache. This can be done by creating pipelines of database operations from queries and by finding ways to parallelize individual database operations.
+Because having a large number of concurrent transactions may not take optimal advantage of modern processors, it is desirable to find ways to allow multiple cores to work on a single transaction. This requires the database query processor to find effective ways to parallelize queries without creating excessive demands on cache. This can be done by creating pipelines of database operations from queries and by finding ways to parallelize individual database operations.
 
 The adaptation of database system design and database query processing to multicore and multithreaded systems remains an area of active research. See the bibliographical notes for further details.
 
@@ -971,16 +959,16 @@ The adaptation of database system design and database query processing to multic
 
 - There are two basic approaches to parallelizing a binary operation such as a join.
 
->- In partitioned parallelism, the relations are split into several parts, and tuples in _ri_ are joined only with tuples from _si_ . Partitioned parallelism can be used only for natural and equi-joins.
+>- In partitioned parallelism, the relations are split into several parts, and tuples in _r_~i~ are joined only with tuples from _s_~i~ . Partitioned parallelism can be used only for natural and equi-joins.
 
 >- In fragment and replicate, both relations are partitioned and each partition is replicated. In asymmetric fragment and replicate, one of the relations is replicated while the other is partitioned. Unlike partitioned parallelism, fragment and replicate and asymmetric fragment and replicate can be used with any join condition.  
 
 
-Both parallelization techniques can work in conjunction with any join tech- nique.
+Both parallelization techniques can work in conjunction with any join technique.
 
 - In independent parallelism, different operations that do not depend on one another are executed in parallel.
 
-- In pipelined parallelism, processors send the results of one operation to an- other operation as those results are computed, without waiting for the entire operation to finish.
+- In pipelined parallelism, processors send the results of one operation to another operation as those results are computed, without waiting for the entire operation to finish.
 
 - Query optimization in parallel databases is significantly more complex than query optimization in sequential databases.
 
@@ -1084,7 +1072,7 @@ Both parallelization techniques can work in conjunction with any join tech- niqu
 
 **18.4** Consider join processing using symmetric fragment and replicate with range partitioning. How can you optimize the evaluation if the join con- dition is of the form | _r.A_− _s.B_ | ≤ _k_, where _k_ is a small constant? Here, | _x_ | denotes the absolute value of _x_. A join with such a join condition is called a **band join**.
 
-**18.5** Recall that histograms are used for constructing load-balanced range par- titions.
+**18.5** Recall that histograms are used for constructing load-balanced range partitions.
 
 >1. Suppose you have a histogram where values are between 1 and 100, and are partitioned into 10 ranges, 1–10, 11–20, _. . . ,_ 91–100, with frequencies 15, 5, 20, 10, 10, 5, 5, 20, 5, and 5, respectively. Give a load-balanced range partitioning function to divide the values into 5 partitions.  
 
@@ -1103,11 +1091,11 @@ Both parallelization techniques can work in conjunction with any join tech- niqu
 
 >1. Where the index is on the partitioning attribute of the relation.
 
->2. Where the index is on an attribute other than the partitioning at- tribute of the relation.
+>2. Where the index is on an attribute other than the partitioning attribute of the relation.
 
 **18.8** Suppose a well-balanced range-partitioning vector had been chosen for a relation, but the relation is subsequently updated, making the partitioning unbalanced. Even if virtual-processor partitioning is used, a particular virtual processor may end up with a very large number of tuples after the update, and repartitioning would then be required.
 
->1. Suppose a virtual processor has a significant excess of tuples (say, twice the average). Explain how repartitioning can be done by split- ting the partition, thereby increasing the number of virtual proces- sors.
+>1. Suppose a virtual processor has a significant excess of tuples (say, twice the average). Explain how repartitioning can be done by splitting the partition, thereby increasing the number of virtual processors.
 
 >2. If, instead of round-robin allocation of virtual processors, virtual partitions can be allocated to processors in an arbitrary fashion, with a mapping table tracking the allocation. If a particular node has excess load (compared to the others), explain how load can be balanced.
 
@@ -1126,7 +1114,7 @@ Both parallelization techniques can work in conjunction with any join tech- niqu
 
 In each case, what can be done to reduce the skew?
 
-**18.11** Give an example of a join that is not a simple equi-join for which parti- tioned parallelism can be used. What attributes should be used for parti- tioning?
+**18.11** Give an example of a join that is not a simple equi-join for which partitioned parallelism can be used. What attributes should be used for partitioning?
 
 **18.12** Describe a good way to parallelize each of the following:
 
@@ -1153,8 +1141,6 @@ a. Is intraquery parallelism required in such a situation? If not, why, and what
 b. What form of skew would be of significance with such a workload?
 
 c. Suppose most transactions accessed one _account_ record, which in- cludes an _account type_ attribute, and an associated _account type master_ record, which provides information about the account type. How would you partition and/or replicate data to speed up transactions? You may assume that the _account type master_ relation is rarely up- dated.  
-
-**824 Chapter 18 Parallel Databases**
 
 **18.15** The attribute on which a relation is partitioned can have a significant impact on the cost of a query.
 
@@ -1186,11 +1172,11 @@ The adaptation of database-system design and query-processing algorithms to mult
 
 # Distributed Databases
 
-Unlike parallel systems, in which the processors are tightly coupled and consti- tute a single database system, a distributed database system consists of loosely coupled sites that share no physical components. Furthermore, the database sys- tems that run on each site may have a substantial degree of mutual independence. We discussed the basic structure of distributed systems in Chapter 17.
+Unlike parallel systems, in which the processors are tightly coupled and constitute a single database system, a distributed database system consists of loosely coupled sites that share no physical components. Furthermore, the database sys- tems that run on each site may have a substantial degree of mutual independence. We discussed the basic structure of distributed systems in Chapter 17.
 
 Each site may participate in the execution of transactions that access data at one site, or several sites. The main difference between centralized and distributed database systems is that, in the former, the data reside in one single location, whereas in the latter, the data reside in several locations. This distribution of data is the cause of many difficulties in transaction processing and query processing. In this chapter, we address these difficulties.
 
-We start by classifying distributed databases as homogeneous or heteroge- neous, in Section 19.1. We then address the question of how to store data in a distributed database in Section 19.2. In Section 19.3, we outline a model for trans- action processing in a distributed database. In Section 19.4, we describe how to implement atomic transactions in a distributed database by using special com- mit protocols. In Section 19.5, we describe concurrency control in distributed databases. In Section 19.6, we outline how to provide high availability in a dis- tributed database by exploiting replication, so the system can continue processing transactions even when there is a failure. We address query processing in dis- tributed databases in Section 19.7. In Section 19.8, we outline issues in handling heterogeneous databases. In Section 19.10, we describe directory systems, which can be viewed as a specialized form of distributed databases.
+We start by classifying distributed databases as homogeneous or heterogeneous, in Section 19.1. We then address the question of how to store data in a distributed database in Section 19.2. In Section 19.3, we outline a model for transaction processing in a distributed database. In Section 19.4, we describe how to implement atomic transactions in a distributed database by using special commit protocols. In Section 19.5, we describe concurrency control in distributed databases. In Section 19.6, we outline how to provide high availability in a dis- tributed database by exploiting replication, so the system can continue processing transactions even when there is a failure. We address query processing in distributed databases in Section 19.7. In Section 19.8, we outline issues in handling heterogeneous databases. In Section 19.10, we describe directory systems, which can be viewed as a specialized form of distributed databases.
 
 In this chapter, we illustrate all our examples using the bank database of Figure 19.1.
 
@@ -1208,7 +1194,7 @@ system software. That software must also cooperate with other sites in exchangin
 
 In contrast, in a **heterogeneous distributed database**, different sites may use different schemas, and different database-management system software. The sites may not be aware of one another, and they may provide only limited facilities for cooperation in transaction processing. The differences in schemas are often a major problem for query processing, while the divergence in software becomes a hindrance for processing transactions that access multiple sites.
 
-In this chapter, we concentrate on homogeneous distributed databases. How- ever, in Section 19.8 we briefly discuss issues in heterogeneous distributed database systems.
+In this chapter, we concentrate on homogeneous distributed databases. However, in Section 19.8 we briefly discuss issues in heterogeneous distributed database systems.
 
 ## 19.2 Distributed Data Storage
 
@@ -1232,7 +1218,7 @@ There are a number of advantages and disadvantages to replication.
 
 - **Increased overhead on update**. The system must ensure that all replicas of a relation _r_ are consistent; otherwise, erroneous computations may result. Thus, whenever _r_ is updated, the update must be propagated to all sites containing replicas. The result is increased overhead. For example, in a banking system, where account information is replicated in various sites, it is necessary to ensure that the balance in a particular account agrees in all sites.
 
-In general, replication enhances the performance of read operations and in- creases the availability of data to read-only transactions. However, update trans- actions incur greater overhead. Controlling concurrent updates by several trans- actions to replicated data is more complex than in centralized systems, which we studied in Chapter 15. We can simplify the management of replicas of relation _r_ by choosing one of them as the **primary copy** of _r_. For example, in a banking system, an account can be associated with the site in which the account has been opened. Similarly, in an airline-reservation system, a flight can be associated with the site at which the flight originates. We shall examine the primary copy scheme and other options for distributed concurrency control in Section 19.5.
+In general, replication enhances the performance of read operations and increases the availability of data to read-only transactions. However, update transactions incur greater overhead. Controlling concurrent updates by several transactions to replicated data is more complex than in centralized systems, which we studied in Chapter 15. We can simplify the management of replicas of relation _r_ by choosing one of them as the **primary copy** of _r_. For example, in a banking system, an account can be associated with the site in which the account has been opened. Similarly, in an airline-reservation system, a flight can be associated with the site at which the flight originates. We shall examine the primary copy scheme and other options for distributed concurrency control in Section 19.5.
 
 ## 19.2.2 Data Fragmentation
 
@@ -1289,7 +1275,7 @@ The user of a distributed database system should not be required to know where t
 
 Data items—such as relations, fragments, and replicas—must have unique names. This property is easy to ensure in a centralized database. In a distributed database, however, we must take care to ensure that two sites do not use the same name for distinct data items.
 
-One solution to this problem is to require all names to be registered in a central **name server**. The name server helps to ensure that the same name does not get used for different data items. We can also use the name server to locate a data item, given the name of the item. This approach, however, suffers from two major disadvantages. First, the name server may become a performance bottle- neck when data items are located by their names, resulting in poor performance. Second, if the name server crashes, it may not be possible for any site in the distributed system to continue to run.
+One solution to this problem is to require all names to be registered in a central **name server**. The name server helps to ensure that the same name does not get used for different data items. We can also use the name server to locate a data item, given the name of the item. This approach, however, suffers from two major disadvantages. First, the name server may become a performance bottle neck when data items are located by their names, resulting in poor performance. Second, if the name server crashes, it may not be possible for any site in the distributed system to continue to run.
 
 A more widely used alternative approach requires that each site prefix its own site identifier to any name that it generates. This approach ensures that no two sites generate the same name (since each site has a unique identifier). Furthermore, no central control is required. This solution, however, fails to achieve location transparency, since site identifiers are attached to names. Thus, the _account_ relation might be referred to as _site_17\. _account_, or _account@site_17, rather than as simply _account_. Many database systems use the Internet address (IP address) of a site to identify it.
 
@@ -1305,9 +1291,9 @@ In this section, we study the system structure of a distributed database and its
 
 ### 19.3.1 System Structure
 
-Each site has its own _local_ transaction manager, whose function is to ensure the ACID properties of those transactions that execute at that site. The various trans- action managers cooperate to execute global transactions. To understand how such a manager can be implemented, consider an abstract model of a transaction system, in which each site contains two subsystems:
+Each site has its own _local_ transaction manager, whose function is to ensure the ACID properties of those transactions that execute at that site. The various transaction managers cooperate to execute global transactions. To understand how such a manager can be implemented, consider an abstract model of a transaction system, in which each site contains two subsystems:
 
-- The **transaction manager** manages the execution of those transactions (or subtransactions) that access data stored in a local site. Note that each such transaction may be either a local transaction (that is, a transaction that exe- cutes at only that site) or part of a global transaction (that is, a transaction that executes at several sites).
+- The **transaction manager** manages the execution of those transactions (or subtransactions) that access data stored in a local site. Note that each such transaction may be either a local transaction (that is, a transaction that executes at only that site) or part of a global transaction (that is, a transaction that executes at several sites).
 
 - The **transaction coordinator** coordinates the execution of the various trans- actions (both local and global) initiated at that site.
 
@@ -1353,13 +1339,13 @@ Among the simplest and most widely used commit protocols is the **two-phase comm
 
 ### 19.4.1 Two-Phase Commit
 
-We first describe how the two-phase commit protocol (2PC) operates during nor- mal operation, then describe how it handles failures and finally how it carries out recovery and concurrency control.
+We first describe how the two-phase commit protocol (2PC) operates during normal operation, then describe how it handles failures and finally how it carries out recovery and concurrency control.
 
 Consider a transaction _T_ initiated at site _S_~i~ , where the transaction coordinator is _C_~i~ .
 
 #### 19.4.1.1 The Commit Protocol
 
-When _T_ completes its execution—that is, when all the sites at which _T_ has executed inform _C_~i~ that _T_ has completed—_C_~i~ starts the 2PC protocol.
+When _T_ completes its execution that is, when all the sites at which _T_ has executed inform _C_~i~ that _T_ has completed—_C_~i~ starts the 2PC protocol.
 
 - **Phase 1**. _C_~i~ adds the record _<_prepare _T>_ to the log, and forces the log onto stable storage. It then sends a prepare _T_ message to all sites at which _T_ executed. On receiving such a message, the transaction manager at that site determines whether it is willing to commit its portion of _T_. If the answer is no, it adds a record _<_no _T>_ to the log, and then responds by sending an abort _T_ message to _C_~i~ . If the answer is yes, it adds a record _<_ready _T>_ to the log, and forces the log (with all the log records corresponding to _T_) onto stable storage. The transaction manager then replies with a ready _T_ message to _C_~i~ .
 
@@ -1367,7 +1353,7 @@ When _T_ completes its execution—that is, when all the sites at which _T_ has 
 
 A site at which _T_ executed can unconditionally abort _T_ at any time before it sends the message ready _T_ to the coordinator. Once the message is sent, the transaction is said to be in the **ready state** at the site. The ready _T_ message is, in effect, a promise by a site to follow the coordinator’s order to commit _T_ or to abort _T_. To make such a promise, the needed information must first be stored in stable storage. Otherwise, if the site crashes after sending ready _T_, it may be unable to make good on its promise. Further, locks acquired by the transaction must continue to be held until the transaction completes.
 
-Since unanimity is required to commit a transaction, the fate of _T_ is sealed as soon as at least one site responds abort _T_. Since the coordinator site _Si_ is one of the sites at which _T_ executed, the coordinator can decide unilaterally to abort _T_. The final verdict regarding _T_ is determined at the time that the coordinator writes that verdict (commit or abort) to the log and forces that verdict to stable storage. In some implementations of the 2PC protocol, a site sends an acknowledge _T_ message to the coordinator at the end of the second phase of the protocol. When the coordinator receives the acknowledge _T_ message from all the sites, it adds the record _<_complete _T>_ to the log.
+Since unanimity is required to commit a transaction, the fate of _T_ is sealed as soon as at least one site responds abort _T_. Since the coordinator site _S_~i~ is one of the sites at which _T_ executed, the coordinator can decide unilaterally to abort _T_. The final verdict regarding _T_ is determined at the time that the coordinator writes that verdict (commit or abort) to the log and forces that verdict to stable storage. In some implementations of the 2PC protocol, a site sends an acknowledge _T_ message to the coordinator at the end of the second phase of the protocol. When the coordinator receives the acknowledge _T_ message from all the sites, it adds the record _<_complete _T>_ to the log.
 
 #### 19.4.1.2 Handling of Failures
 
@@ -1415,13 +1401,13 @@ After lock reacquisition is complete for all in-doubt transactions, transaction 
 
 ### 19.4.2 Three-Phase Commit
 
-The three-phase commit (3PC) protocol is an extension of the two-phase commit protocol that avoids the blocking problem under certain assumptions. In partic- ular, it is assumed that no network partition occurs, and not more than _k_ sites fail, where _k_ is some predetermined number. Under these assumptions, the pro- tocol avoids blocking by introducing an extra third phase where multiple sites are involved in the decision to commit. Instead of directly noting the commit decision in its persistent storage, the coordinator first ensures that at least _k_ other sites know that it intended to commit the transaction. If the coordinator fails, the remaining sites first select a new coordinator. This new coordinator checks the status of the protocol from the remaining sites; if the coordinator had decided to commit, at least one of the other _k_ sites that it informed will be up and will ensure that the commit decision is respected. The new coordinator restarts the third phase of the protocol if some site knew that the old coordinator intended to commit the transaction. Otherwise the new coordinator aborts the transaction.
+The three-phase commit (3PC) protocol is an extension of the two-phase commit protocol that avoids the blocking problem under certain assumptions. In particular, it is assumed that no network partition occurs, and not more than _k_ sites fail, where _k_ is some predetermined number. Under these assumptions, the protocol avoids blocking by introducing an extra third phase where multiple sites are involved in the decision to commit. Instead of directly noting the commit decision in its persistent storage, the coordinator first ensures that at least _k_ other sites know that it intended to commit the transaction. If the coordinator fails, the remaining sites first select a new coordinator. This new coordinator checks the status of the protocol from the remaining sites; if the coordinator had decided to commit, at least one of the other _k_ sites that it informed will be up and will ensure that the commit decision is respected. The new coordinator restarts the third phase of the protocol if some site knew that the old coordinator intended to commit the transaction. Otherwise the new coordinator aborts the transaction.
 
 While the 3PC protocol has the desirable property of not blocking unless _k_ sites fail, it has the drawback that a partitioning of the network may appear to be the same as more than _k_ sites failing, which would lead to blocking. The protocol also has to be implemented carefully to ensure that network partitioning (or more than _k_ sites failing) does not result in inconsistencies, where a transaction is committed in one partition and aborted in another. Because of its overhead, the 3PC protocol is not widely used. See the bibliographical notes for references giving more details of the 3PC protocol.
 
 ### 19.4.3 Alternative Models of Transaction Processing
 
-For many applications, the blocking problem of two-phase commit is not accept- able. The problem here is the notion of a single transaction that works across multiple sites. In this section, we describe how to use _persistent messaging_ to avoid the problem of distributed commit, and then briefly outline the larger issue of _workflows;_ workflows are considered in more detail in Section 26.2.
+For many applications, the blocking problem of two-phase commit is not acceptable. The problem here is the notion of a single transaction that works across multiple sites. In this section, we describe how to use _persistent messaging_ to avoid the problem of distributed commit, and then briefly outline the larger issue of _workflows;_ workflows are considered in more detail in Section 26.2.
 
 To understand persistent messaging, consider how one might transfer funds between two different banks, each with its own computer. One approach is to have a transaction span the two sites and use two-phase commit to ensure atomicity. However, the transaction may have to update the total bank balance, and blocking could have a serious impact on all other transactions at each bank, since almost all transactions at the bank would update the total bank balance.
 
@@ -1435,7 +1421,7 @@ The types of exception conditions that may arise depend on the application, so i
 
 There are many applications where the benefit of eliminating blocking is well worth the extra effort to implement systems that use persistent messages. In fact, few organizations would agree to support two-phase commit for transactions originating outside the organization, since failures could result in blocking of access to local data. Persistent messaging therefore plays an important role in carrying out transactions that cross organizational boundaries.
 
-_Workflows_ provide a general model of transaction processing involving mul- tiple sites and possibly human processing of certain steps. For instance, when a bank receives a loan application, there are many steps it must take, including contacting external credit-checking agencies, before approving or rejecting a loan application. The steps, together, form a workflow. We study workflows in more detail in Section 26.2. We also note that persistent messaging forms the underlying basis for workflows in a distributed environment.
+_Workflows_ provide a general model of transaction processing involving multiple sites and possibly human processing of certain steps. For instance, when a bank receives a loan application, there are many steps it must take, including contacting external credit-checking agencies, before approving or rejecting a loan application. The steps, together, form a workflow. We study workflows in more detail in Section 26.2. We also note that persistent messaging forms the underlying basis for workflows in a distributed environment.
 
 We now consider the **implementation** of persistent messaging. Persistent messaging can be implemented on top of an unreliable messaging infrastructure, which may lose messages or deliver them multiple times, by these protocols:
 
@@ -1443,7 +1429,7 @@ We now consider the **implementation** of persistent messaging. Persistent messa
 
 The message delivery process deletes a message from the relation only after it receives an acknowledgment from the destination site. If it receives no acknowledgement from the destination site, after some time it sends the message again. It repeats this until an acknowledgment is received. In case of permanent failures, the system will decide, after some period of time, that the message is undeliverable. Exception handling code provided by the application is then invoked to deal with the failure.
 
-Writing the message to a relation and processing it only after the trans- action commits ensures that the message will be delivered if and only if the transaction commits. Repeatedly sending it guarantees it will be delivered even if there are (temporary) system or network failures.
+Writing the message to a relation and processing it only after the transaction commits ensures that the message will be delivered if and only if the transaction commits. Repeatedly sending it guarantees it will be delivered even if there are (temporary) system or network failures.
 
 - **Receiving site protocol**. When a site receives a persistent message, it runs a transaction that adds the message to a special _received messages_ relation, provided it is not already present in the relation (the unique message iden- tifier allows duplicates to be detected). After the transaction commits, or if the message was already present in the relation, the receiving site sends an acknowledgment back to the sending site.
 
@@ -1453,7 +1439,7 @@ In many messaging systems, it is possible for messages to get delayed arbitraril
 
 ## 19.5 Concurrency Control in Distributed Databases
 
-We show here how some of the concurrency-control schemes discussed in Chap- ter 15 can be modified so that they can be used in a distributed environment. We assume that each site participates in the execution of a commit protocol to ensure global transaction atomicity.
+We show here how some of the concurrency-control schemes discussed in Chapter 15 can be modified so that they can be used in a distributed environment. We assume that each site participates in the execution of a commit protocol to ensure global transaction atomicity.
 
 The protocols we describe in this section require updates to be done on all replicas of a data item. If any site containing a replica of a data item has failed, updates to the data item cannot be processed. In Section 19.6, we describe protocols that can continue transaction processing even if some sites or links have failed, thereby providing high availability.
 
@@ -1499,13 +1485,13 @@ The **majority protocol** works this way: If data item _Q_ is replicated in _n_ 
 
 We assume for now that writes are performed on all replicas, requiring all sites containing replicas to be available. However, the major benefit of the majority protocol is that it can be extended to deal with site failures, as we shall see in Section 19.6.1. The protocol also deals with replicated data in a decentralized manner, thus avoiding the drawbacks of central control. However, it suffers from these disadvantages:
 
-- **Implementation**. The majority protocol is more complicated to implement than are the previous schemes. It requires at least 2(_n/_2 + 1) messages for handling lock requests and at least (_n/_2 + 1) messages for handling unlock requests.
+- **Implementation**. The majority protocol is more complicated to implement than are the previous schemes. It requires at least 2(n/2 + 1) messages for handling lock requests and at least (n/2 + 1) messages for handling unlock requests.
 
-- **Deadlock handling**. In addition to the problem of global deadlocks due to the use of a distributed-lock-manager approach, it is possible for a deadlock to occur even if only one data item is being locked. As an illustration, consider a system with four sites and full replication. Suppose that transactions _T_~1~ and _T_~2~ wish to lock data item _Q_ in exclusive mode. Transaction _T_1 may succeed in locking _Q_ at sites _S_~1~ and _S_~3~, while transaction _T_2 may succeed in locking _Q_ at sites _S_~2~ and _S_~4~\. Each then must wait to acquire the third lock; hence, a deadlock has occurred. Luckily, we can avoid such deadlocks with relative ease, by requiring all sites to request locks on the replicas of a data item in the same predetermined order.
+- **Deadlock handling**. In addition to the problem of global deadlocks due to the use of a distributed-lock-manager approach, it is possible for a deadlock to occur even if only one data item is being locked. As an illustration, consider a system with four sites and full replication. Suppose that transactions _T_~1~ and _T_~2~ wish to lock data item _Q_ in exclusive mode. Transaction _T_~1~ may succeed in locking _Q_ at sites _S_~1~ and _S_~3~, while transaction _T_~2~ may succeed in locking _Q_ at sites _S_~2~ and _S_~4~\. Each then must wait to acquire the third lock; hence, a deadlock has occurred. Luckily, we can avoid such deadlocks with relative ease, by requiring all sites to request locks on the replicas of a data item in the same predetermined order.
 
 #### 19.5.1.5 Biased Protocol
 
-The **biased protocol** is another approach to handling replication. The difference from the majority protocol is that requests for shared locks are given more favor- able treatment than requests for exclusive locks.
+The **biased protocol** is another approach to handling replication. The difference from the majority protocol is that requests for shared locks are given more favorable treatment than requests for exclusive locks.
 
 - **Shared locks**. When a transaction needs to lock data item _Q_, it simply requests a lock on _Q_ from the lock manager at one site that contains a replica of _Q_.
 
@@ -1513,7 +1499,7 @@ The **biased protocol** is another approach to handling replication. The differe
 
 As before, the response to the request is delayed until it can be granted. The biased scheme has the advantage of imposing less overhead on read
 
-operations than does the majority protocol. This savings is especially significant in common cases in which the frequency of read is much greater than the fre- quency of write. However, the additional overhead on writes is a disadvantage. Furthermore, the biased protocol shares the majority protocol’s disadvantage of complexity in handling deadlock.
+operations than does the majority protocol. This savings is especially significant in common cases in which the frequency of read is much greater than the frequency of write. However, the additional overhead on writes is a disadvantage. Furthermore, the biased protocol shares the majority protocol’s disadvantage of complexity in handling deadlock.
 
 #### 19.5.1.6 Quorum Consensus Protocol
 
@@ -1538,7 +1524,7 @@ In the distributed scheme, each site generates a unique local timestamp by using
 ![Alt text](figure-19.3.png)
 
 
-We may still have a problem if one site generates local timestamps at a rate faster than that of the other sites. In such a case, the fast site’s logical counter will be larger than that of other sites. Therefore, all timestamps generated by the fast site will be larger than those generated by other sites. What we need is a mechanism to ensure that local timestamps are generated fairly across the system. We define within each site _Si_ a **logical clock** (_LCi_ ), which generates the unique local timestamp. The logical clock can be implemented as a counter that is incremented after a new local timestamp is generated. To ensure that the various logical clocks are synchronized, we require that a site _Si_ advance its logical clock whenever a transaction _Ti_ with timestamp _<x,y>_ visits that site and _x_ is greater than the current value of _LCi_ . In this case, site _Si_ advances its logical clock to the value _x_ \+ 1.
+We may still have a problem if one site generates local timestamps at a rate faster than that of the other sites. In such a case, the fast site’s logical counter will be larger than that of other sites. Therefore, all timestamps generated by the fast site will be larger than those generated by other sites. What we need is a mechanism to ensure that local timestamps are generated fairly across the system. We define within each site _S_~i~ a **logical clock** (_LC_~i~ ), which generates the unique local timestamp. The logical clock can be implemented as a counter that is incremented after a new local timestamp is generated. To ensure that the various logical clocks are synchronized, we require that a site _Si_ advance its logical clock whenever a transaction _T_~i~ with timestamp _<x,y>_ visits that site and _x_ is greater than the current value of _LCi_ . In this case, site _S_~i~ advances its logical clock to the value _x_ \+ 1.
 
 If the system clock is used to generate timestamps, then timestamps will be assigned fairly, provided that no site has a system clock that runs fast or slow. Since clocks may not be perfectly accurate, a technique similar to that for logical clocks must be used to ensure that no clock gets far ahead of or behind another clock.
 
@@ -1555,23 +1541,23 @@ Master–slave replication is particularly useful for distributing information, 
 The Oracle database system supports a **create snapshot** statement, which can create a transaction-consistent snapshot copy of a relation, or set of relations, at a remote site. It also supports snapshot refresh, which can be done either by recomputing the snapshot or by incrementally updating it. Oracle supports automatic refresh, either continuously or at periodic intervals.  
 
 
-With **multimaster replication** (also called **update-anywhere replication**) up- dates are permitted at any replica of a data item, and are automatically propa- gated to all replicas. This model is the basic model used to manage replicas in distributed databases. Transactions update the local copy and the system updates other replicas transparently.
+With **multimaster replication** (also called **update-anywhere replication**) updates are permitted at any replica of a data item, and are automatically propagated to all replicas. This model is the basic model used to manage replicas in distributed databases. Transactions update the local copy and the system updates other replicas transparently.
 
 One way of updating replicas is to apply immediate update with two-phase commit, using one of the distributed concurrency-control techniques we have seen. Many database systems use the biased protocol, where writes have to lock and update all replicas and reads lock and read any one replica, as their currency- control technique.
 
-Many database systems provide an alternative form of updating: They update at one site, with **lazy propagation** of updates to other sites, instead of immedi- ately applying updates to all replicas as part of the transaction performing the update. Schemes based on lazy propagation allow transaction processing (in- cluding updates) to proceed even if a site is disconnected from the network, thus improving availability, but, unfortunately, do so at the cost of consistency. One of two approaches is usually followed when lazy propagation is used:
+Many database systems provide an alternative form of updating: They update at one site, with **lazy propagation** of updates to other sites, instead of immediately applying updates to all replicas as part of the transaction performing the update. Schemes based on lazy propagation allow transaction processing (in- cluding updates) to proceed even if a site is disconnected from the network, thus improving availability, but, unfortunately, do so at the cost of consistency. One of two approaches is usually followed when lazy propagation is used:
 
 - Updates at replicas are translated into updates at a primary site, which are then propagated lazily to all replicas. This approach ensures that updates to an item are ordered serially, although serializability problems can occur, since transactions may read an old value of some other data item and use it to perform an update.
 
 - Updates are performed at any replica and propagated to all other replicas. This approach can cause even more problems, since the same data item may be updated concurrently at multiple sites.
 
-Some conflicts due to the lack of distributed concurrency control can be detected when updates are propagated to other sites (we shall see how in Section 25.5.4), but resolving the conflict involves rolling back committed transactions, and dura- bility of committed transactions is therefore not guaranteed. Further, human in- tervention may be required to deal with conflicts. The above schemes should therefore be avoided or used with care.
+Some conflicts due to the lack of distributed concurrency control can be detected when updates are propagated to other sites (we shall see how in Section 25.5.4), but resolving the conflict involves rolling back committed transactions, and durability of committed transactions is therefore not guaranteed. Further, human intervention may be required to deal with conflicts. The above schemes should therefore be avoided or used with care.
 
 ### 19.5.4 Deadlock Handling
 
 The deadlock-prevention and deadlock-detection algorithms in Chapter 15 can be used in a distributed system, provided that modifications are made. For example, we can use the tree protocol by defining a _global_ tree among the system data items. Similarly, the timestamp-ordering approach could be directly applied to a distributed environment, as we saw in Section 19.5.2.
 
-Deadlock prevention may result in unnecessary waiting and rollback. Fur- thermore, certain deadlock-prevention techniques may require more sites to be involved in the execution of a transaction than would otherwise be the case.
+Deadlock prevention may result in unnecessary waiting and rollback. Furthermore, certain deadlock-prevention techniques may require more sites to be involved in the execution of a transaction than would otherwise be the case.
 
 If we allow deadlocks to occur and rely on deadlock detection, the main problem in a distributed system is deciding how to maintain the wait-for graph.  
 
@@ -1591,7 +1577,7 @@ In the **centralized deadlock detection** approach, the system constructs and ma
 
 approximation generated by the controller during the execution of the controller’s algorithm. Obviously, the controller must generate the constructed graph in such a way that, whenever the detection algorithm is invoked, the reported results are correct. _Correct_ means in this case that, if a deadlock exists, it is reported promptly, and if the system reports a deadlock, it is indeed in a deadlock state.
 
-The global wait-for graph can be reconstructed or updated under these con- ditions:
+The global wait-for graph can be reconstructed or updated under these conditions:
 
 - Whenever a new edge is inserted in or removed from one of the local wait-for graphs.
 
@@ -1670,7 +1656,7 @@ An easy solution is to halt the entire system temporarily while the failed site 
 
 ### 19.6.4 Comparison with Remote Backup
 
-Remote backup systems, which we studied in Section 16.9, and replication in dis- tributed databases are two alternative approaches to providing high availability. The main difference between the two schemes is that with remote backup sys- tems, actions such as concurrency control and recovery are performed at a single site, and only data and log records are replicated at the other site. In particular, re- mote backup systems help avoid two-phase commit, and its resultant overheads. Also, transactions need to contact only one site (the primary site), and thus avoid the overhead of running transaction code at multiple sites. Thus remote backup systems offer a lower-cost approach to high availability than replication.
+Remote backup systems, which we studied in Section 16.9, and replication in distributed databases are two alternative approaches to providing high availability. The main difference between the two schemes is that with remote backup systems, actions such as concurrency control and recovery are performed at a single site, and only data and log records are replicated at the other site. In particular, remote backup systems help avoid two-phase commit, and its resultant overheads. Also, transactions need to contact only one site (the primary site), and thus avoid the overhead of running transaction code at multiple sites. Thus remote backup systems offer a lower-cost approach to high availability than replication.
 
 On the other hand, replication can provide greater availability by having multiple replicas available and using the majority protocol.
 
@@ -1678,11 +1664,11 @@ On the other hand, replication can provide greater availability by having multip
 
 Several of the algorithms that we have presented require the use of a coordinator. If the coordinator fails because of a failure of the site at which it resides, the system can continue execution only by restarting a new coordinator on another site. One way to continue execution is by maintaining a backup to the coordinator, which is ready to assume responsibility if the coordinator fails.
 
-A **backup coordinator** is a site that, in addition to other tasks, maintains enough information locally to allow it to assume the role of coordinator with minimal disruption to the distributed system. All messages directed to the co- ordinator are received by both the coordinator and its backup. The backup co- ordinator executes the same algorithms and maintains the same internal state information (such as, for a concurrency coordinator, the lock table) as does the actual coordinator. The only difference in function between the coordinator and its backup is that the backup does not take any action that affects other sites. Such actions are left to the actual coordinator.
+A **backup coordinator** is a site that, in addition to other tasks, maintains enough information locally to allow it to assume the role of coordinator with minimal disruption to the distributed system. All messages directed to the coordinator are received by both the coordinator and its backup. The backup co- ordinator executes the same algorithms and maintains the same internal state information (such as, for a concurrency coordinator, the lock table) as does the actual coordinator. The only difference in function between the coordinator and its backup is that the backup does not take any action that affects other sites. Such actions are left to the actual coordinator.
 
-In the event that the backup coordinator detects the failure of the actual coor- dinator, it assumes the role of coordinator. Since the backup has all the information available to it that the failed coordinator had, processing can continue without interruption.
+In the event that the backup coordinator detects the failure of the actual coordinator, it assumes the role of coordinator. Since the backup has all the information available to it that the failed coordinator had, processing can continue without interruption.
 
-The prime advantage to the backup approach is the ability to continue pro- cessing immediately. If a backup were not ready to assume the coordinator’s responsibility, a newly appointed coordinator would have to seek information from all sites in the system so that it could execute the coordination tasks. Frequently, the only source of some of the requisite information is the failed coordinator. In this case, it may be necessary to abort several (or all) active transactions, and to restart them under the control of the new coordinator.
+The prime advantage to the backup approach is the ability to continue processing immediately. If a backup were not ready to assume the coordinator’s responsibility, a newly appointed coordinator would have to seek information from all sites in the system so that it could execute the coordination tasks. Frequently, the only source of some of the requisite information is the failed coordinator. In this case, it may be necessary to abort several (or all) active transactions, and to restart them under the control of the new coordinator.
 
 Thus, the backup-coordinator approach avoids a substantial amount of delay while the distributed system recovers from a coordinator failure. The disadvantage is the overhead of duplicate execution of the coordinator’s tasks. Further- more, a coordinator and its backup need to communicate regularly to ensure that their activities are synchronized.
 
@@ -1692,7 +1678,7 @@ In the absence of a designated backup coordinator, or in order to handle multipl
 
 The **bully algorithm** for election works as follows: To keep the notation and the discussion simple, assume that the identification number of site _S_~i~ is _i_ and that the chosen coordinator will always be the active site with the largest identification number. Hence, when a coordinator fails, the algorithm must elect the active site that has the largest identification number. The algorithm must send this number to each active site in the system. In addition, the algorithm must provide a mechanism by which a site recovering from a crash can identify the current coordinator. Suppose that site _S_~i~ sends a request that is not answered by the coordinator within a prespecified time interval _T_. In this situation, it is assumed that the coordinator has failed, and _S_~i~ tries to elect itself as the site for the new coordinator.  
 
-Site _S_~i~ sends an election message to every site that has a higher identification number. Site _Si_ then waits, for a time interval _T_, for an answer from any one of these sites. If it receives no response within time _T_, it assumes that all sites with numbers greater than _i_ have failed, and it elects itself as the site for the new coordinator and sends a message to inform all active sites with identification numbers lower than _i_ that it is the site at which the new coordinator resides.
+Site _S_~i~ sends an election message to every site that has a higher identification number. Site _S_~i~ then waits, for a time interval _T_, for an answer from any one of these sites. If it receives no response within time _T_, it assumes that all sites with numbers greater than _i_ have failed, and it elects itself as the site for the new coordinator and sends a message to inform all active sites with identification numbers lower than _i_ that it is the site at which the new coordinator resides.
 
 If _S_~i~ does receive an answer, it begins a time interval _T_ ′, to receive a message informing it that a site with a higher identification number has been elected. (Some other site is electing itself coordinator, and should report the results within time _T_ ′.) If _S_~i~ receives no message within _T_ ′, then it assumes the site with a higher number has failed, and site _S_~i~ restarts the algorithm.
 
@@ -1718,7 +1704,7 @@ In any large-scale distributed system, partitions cannot be prevented, and as a 
 
 Consider a Web-based social-networking system that replicates its data on three servers, and a network partition occurs that prevents the servers from communicating with each other. Since none of the partitions has a majority, it would not be possible to execute updates on any of the partitions. If one of these servers is in the same partition as a user, the user actually has access to data, but would be unable to update the data, since another user may be concurrently updating the same object in another partition, which could potentially lead to inconsistency. Inconsistency is not as great a risk in a social-networking system as in a banking database. A designer of such a system may decide that a user who can access the system should be allowed to perform updates on whatever replicas are accessible, even at the risk of inconsistency.
 
-In contrast to systems such as banking databases that require the ACID prop- erties, systems such as the social-networking system mentioned above are said to require the **BASE** properties:
+In contrast to systems such as banking databases that require the ACID properties, systems such as the social-networking system mentioned above are said to require the **BASE** properties:
 
 - Basically available.
 
@@ -1781,37 +1767,37 @@ Assume that the three relations are neither replicated nor fragmented, and that 
 
 - Ship copies of all three relations to site _S_~I~ . Using the techniques of Chapter 13, choose a strategy for processing the entire query locally at site _S_~I~ .
 
-- Ship a copy of the _account_ relation to site _S_~2~, and compute _temp_~1~ = _account _depositor_ at _S_~2~\. Ship _temp_~1~ from _S_~2~ to _S_~3~, and compute _temp_~2~ = _temp_~1~_branch_ at _S_~3~\. Ship the result _temp_~2~ to _S_~I~ .
+- Ship a copy of the _account_ relation to site _S_~2~, and compute _temp_~1~ = _account ⨝_depositor_ at _S_~2~\. Ship _temp_~1~ from _S_~2~ to _S_~3~, and compute _temp_~2~ = _temp_~1~_branch_ at _S_~3~\. Ship the result _temp_~2~ to _S_~I~ .
 
 - Devise strategies similar to the previous one, with the roles of _S_~1~, _S_~2~, _S_~3~exchanged.
 
-No one strategy is always the best one. Among the factors that must be considered are the volume of data being shipped, the cost of transmitting a block of data between a pair of sites, and the relative speed of processing at each site. Consider the first two strategies listed. Suppose indices present at _S_~2~ and _S_~3~ are useful for computing the join. If we ship all three relations to _S_~I~  , we would need to either re-create these indices at _S_~I~  , or use a different, possibly more expensive, join strategy. Re-creation of indices entails extra processing overhead and extra disk accesses. With the second strategy a potentially large relation (_account  depositor_) must be shipped from _S_~2~ to _S_~3~\. This relation repeats the name of a customer once for each account that the customer has. Thus, the second strategy may result in extra network transmission compared to the first strategy.
+No one strategy is always the best one. Among the factors that must be considered are the volume of data being shipped, the cost of transmitting a block of data between a pair of sites, and the relative speed of processing at each site. Consider the first two strategies listed. Suppose indices present at _S_~2~ and _S_~3~ are useful for computing the join. If we ship all three relations to _S_~I~  , we would need to either re-create these indices at _S_~I~  , or use a different, possibly more expensive, join strategy. Re-creation of indices entails extra processing overhead and extra disk accesses. With the second strategy a potentially large relation (_account ⨝ depositor_) must be shipped from _S_~2~ to _S_~3~\. This relation repeats the name of a customer once for each account that the customer has. Thus, the second strategy may result in extra network transmission compared to the first strategy.
 
 ### 19.7.3 Semijoin Strategy
 
-Suppose that we wish to evaluate the expression _r_~1~ _ r_~2~, where _r_~1~ and _r_~2~ are stored at sites _S_~1~ and _S_~2~, respectively. Let the schemas of _r_~1~ and _r_~2~ be _R_~1~ and _R_~2~\. Suppose that we wish to obtain the result at _S_~1~\. If there are many tuples of _r_~2~ that do not join with any tuple of _r_~1~, then shipping _r_~2~ to _S_~1~ entails shipping tuples that fail to contribute to the result. We want to remove such tuples before shipping data to _S_~1~, particularly if network costs are high.
+Suppose that we wish to evaluate the expression _r_~1~ _⨝ r_~2~, where _r_~1~ and _r_~2~ are stored at sites _S_~1~ and _S_~2~, respectively. Let the schemas of _r_~1~ and _r_~2~ be _R_~1~ and _R_~2~\. Suppose that we wish to obtain the result at _S_~1~\. If there are many tuples of _r_~2~ that do not join with any tuple of _r_~1~, then shipping _r_~2~ to _S_~1~ entails shipping tuples that fail to contribute to the result. We want to remove such tuples before shipping data to _S_~1~, particularly if network costs are high.
 
 A possible strategy to accomplish all this is:
 
 ![Alt text](f10.png)
 
-Before considering the efficiency of this strategy, let us verify that the strategy computes the correct answer. In step 3, _temp_2 has the result of _r_2 _ R_1 ∩ _R_2 (_r_1). In step 5, we compute:
+Before considering the efficiency of this strategy, let us verify that the strategy computes the correct answer. In step 3, _temp_2 has the result of _r_2 _⨝ ΠR_1 ∩ _R_2 (_r_1). In step 5, we compute:
 
-_r_~1~ _ r_~2~ _ R_~1~ ∩ _R_~2~ (_r_~1~)
+_r_~1~ _⨝ r_~2~ _⨝ ΠR_~1~ ∩ _R_~2~ (_r_~1~)
 
 Since join is associative and commutative, we can rewrite this expression as:
 
-(_r_~1~ _ R_~1~ ∩ _R_~2~ (_r_~1~)) _ r_~2~
+(_r_~1~ _⨝ ΠR_~1~ ∩ _R_~2~ (_r_~1~)) _⨝ r_~2~
 
 Since _r_~1~ (_R_~1~ ∩ _R_~2~) (_r_~1~) = _r_~1~, the expression is, indeed, equal to _r_~1~ _ r_~2~, the expression we are trying to evaluate.
 
 This strategy is particularly advantageous when relatively few tuples of _r_~2~ contribute to the join. This situation is likely to occur if _r_~1~ is the result of a relational-algebra expression involving selection. In such a case, _temp_~2~ may have significantly fewer tuples than _r_~2~\. The cost savings of the strategy result from having to ship only _temp_~2~, rather than all of _r_~2~, to _S_~1~\. Additional cost is incurred in shipping _temp_~1~ to _S_~2~\. If a sufficiently small fraction of tuples in _r_~2~ contribute to the join, the overhead of shipping _temp_~1~ will be dominated by the savings of shipping only a fraction of the tuples in _r_~2~.
 
-This strategy is called a **semijoin strategy**, after the semijoin operator of the relational algebra, denoted . The semijoin of _r_1 with _r_2, denoted _r_1  _r_2, is:
+This strategy is called a **semijoin strategy**, after the semijoin operator of the relational algebra, denoted ⨝. The semijoin of _r_1 with _r_2, denoted _r_1 ⨝ _r_2, is:
 
-_R_~1~ (_r_~1~ _ r_~2~)
+_ΠR_~1~ (_r_~1~ _⨝ r_~2~)
 
-Thus, _r_~1~  _r_~2~ selects those tuples of relation _r_~1~ that contributed to _r_~1~ _ r_~2~\. In step 3, _temp_~2~ = _r_~2~  _r_~1~.
+Thus, _r_~1~ ⨝ _r_~2~ selects those tuples of relation _r_~1~ that contributed to _r_~1~ _⨝ r_~2~\. In step 3, _temp_~2~ = _r_~2~ ⨝ _r_~1~.
 
 For joins of several relations, this strategy can be extended to a series of semijoin steps. A substantial body of theory has been developed regarding the use of semijoins for query optimization. Some of this theory is referenced in the bibliographical notes.
 
@@ -1819,18 +1805,18 @@ For joins of several relations, this strategy can be extended to a series of sem
 
 Consider a join of four relations:
 
-_r_~1~ _ r_~2~ _ r_~3~ _ r_~4~
+_r_~1~ _⨝ r_~2~ _⨝ r_~3~ _⨝ r_~4~
 
-where relation _ri_ is stored at site _S_~i~ . Assume that the result must be presented at site _S_~1~\. There are many possible strategies for parallel evaluation. (We studied the issue of parallel processing of queries in detail in Chapter 18.) In one such strategy, _r_~1~ is shipped to _S_~2~, and _r_~1~ _ r_~2~ computed at _S_~2~\. At the same time, _r_~3~ is shipped to _S_~4~, and _r_~3~_ r_~4~ computed at _S_~4~\. Site _S_~2~ can ship tuples of (_r_~1~ _ r_~2``) to _S_~1~ as they are produced, rather than wait for the entire join to be computed. Similarly, _S_~4~ can ship tuples of (_r_~3~ _ r_~4~) to _S_~1~\. Once tuples of (_r_~1~ _ r_~2~) and (_r_~3~ _ r_~4~) arrive at _S_~1~, the computation of (_r_~1~ _ r_~2~)  (_r_~3~ _ r_~4~) can begin, with the pipelined join technique of Section 12.7.2.2. Thus, computation of the final join result at _S_~1~ can be done in parallel with the computation of (_r_~1~ _ r_~2~) at _S_~2~, and with the computation of (_r_~~ _ r_~4~) at _S_~4~.
+where relation _ri_ is stored at site _S_~i~ . Assume that the result must be presented at site _S_~1~\. There are many possible strategies for parallel evaluation. (We studied the issue of parallel processing of queries in detail in Chapter 18.) In one such strategy, _r_~1~ is shipped to _S_~2~, and _r_~1~ _⨝  r_~2~ computed at _S_~2~\. At the same time, _r_~3~ is shipped to _S_~4~, and _r_~3~_⨝ r_~4~ computed at _S_~4~\. Site _S_~2~ can ship tuples of (_r_~1~ _⨝ r_~2``) to _S_~1~ as they are produced, rather than wait for the entire join to be computed. Similarly, _S_~4~ can ship tuples of (_r_~3~ _⨝ r_~4~) to _S_~1~\. Once tuples of (_r_~1~ _⨝ r_~2~) and (_r_~3~ _⨝ r_~4~) arrive at _S_~1~, the computation of (_r_~1~ _⨝ r_~2~)  (_r_~3~ _⨝ r_~4~) can begin, with the pipelined join technique of Section 12.7.2.2. Thus, computation of the final join result at _S_~1~ can be done in parallel with the computation of (_r_~1~ _⨝ r_~2~) at _S_~2~, and with the computation of (_r_~~ _⨝ r_~4~) at _S_~4~.
 
 ## 19.8 Heterogeneous Distributed Databases
 
-Many new database applications require data from a variety of preexisting databases located in a heterogeneous collection of hardware and software en- vironments. Manipulation of information located in a heterogeneous distributed database requires an additional software layer on top of existing database sys- tems. This software layer is called a **multidatabase system**. The local database systems may employ different logical models and data-definition and data- manipulation languages, and may differ in their concurrency-control and trans- action-management mechanisms. A multidatabase system creates the illusion of logical database integration without requiring physical database integration.
+Many new database applications require data from a variety of preexisting databases located in a heterogeneous collection of hardware and software environments. Manipulation of information located in a heterogeneous distributed database requires an additional software layer on top of existing database sys- tems. This software layer is called a **multidatabase system**. The local database systems may employ different logical models and data-definition and data- manipulation languages, and may differ in their concurrency-control and transaction-management mechanisms. A multidatabase system creates the illusion of logical database integration without requiring physical database integration.
 
 Full integration of heterogeneous systems into a homogeneous distributed database is often difficult or impossible:  
 
 
-- **Technical difficulties.** The investment in application programs based on ex- isting database systems may be huge, and the cost of converting these appli- cations may be prohibitive.
+- **Technical difficulties.** The investment in application programs based on ex- isting database systems may be huge, and the cost of converting these applications may be prohibitive.
 
 - **Organizational difficulties.** Even if integration is _technically_ possible, it may not be _politically_ possible, because the existing database systems belong to different corporations or organizations. In such cases, it is important for a multidatabase system to allow the local database systems to retain a high degree of **autonomy** over the local database and transactions running against that data.
 
@@ -1846,7 +1832,7 @@ Another difficulty is the provision of a common conceptual schema. Each local sy
 
 Schema integration is not simply straightforward translation between data- definition languages. The same attribute names may appear in different local databases but with different meanings. The data types used in one system may not be supported by other systems, and translation between types may not be simple. Even for identical data types, problems may arise from the physical representation of data: One system may use 8-bit ASCII, another 16-bit Unicode, and yet another EBCDIC; floating-point representations may differ; integers may be represented in _big-endian_ or _little-endian_ form. At the semantic level, an integer value for length may be inches in one system and millimeters in another, thus creating an awkward situation in which equality of integers is only an approximate notion (as is always the case for floating-point numbers). The same name may appear in different languages in different systems. For example, a system based in the United States may refer to the city “Cologne,” whereas one in Germany refers to it as “Köln.”
 
-All these seemingly minor distinctions must be properly recorded in the com- mon global conceptual schema. Translation functions must be provided. Indices must be annotated for system-dependent behavior (for example, the sort order of nonalphanumeric characters is not the same in ASCII as in EBCDIC). As we noted earlier, the alternative of converting each database to a common format may not be feasible without obsoleting existing application programs.
+All these seemingly minor distinctions must be properly recorded in the common global conceptual schema. Translation functions must be provided. Indices must be annotated for system-dependent behavior (for example, the sort order of nonalphanumeric characters is not the same in ASCII as in EBCDIC). As we noted earlier, the alternative of converting each database to a common format may not be feasible without obsoleting existing application programs.
 
 ### 19.8.2 Query Processing
 
@@ -1879,16 +1865,16 @@ A multidatabase system supports two types of transactions:
 
 The multidatabase system is aware of the fact that local transactions may run at the local sites, but it is not aware of what specific transactions are being executed, or of what data they may access.
 
-Ensuring the local autonomy of each database system requires that no changes be made to its software. A database system at one site thus is not able to commu- nicate directly with one at any other site to synchronize the execution of a global transaction active at several sites.
+Ensuring the local autonomy of each database system requires that no changes be made to its software. A database system at one site thus is not able to communicate directly with one at any other site to synchronize the execution of a global transaction active at several sites.
 
-Since the multidatabase system has no control over the execution of local transactions, each local system must use a concurrency-control scheme (for exam- ple, two-phase locking or timestamping) to ensure that its schedule is serializable. In addition, in case of locking, the local system must be able to guard against the possibility of local deadlocks.
+Since the multidatabase system has no control over the execution of local transactions, each local system must use a concurrency-control scheme (for example, two-phase locking or timestamping) to ensure that its schedule is serializable. In addition, in case of locking, the local system must be able to guard against the possibility of local deadlocks.
 
-The guarantee of local serializability is not sufficient to ensure global serial- izability. As an illustration, consider two global transactions _T_~1~ and _T_~2~, each of which accesses and updates two data items, _A_ and _B_, located at sites _S_~1~ and _S_~2~, respectively. Suppose that the local schedules are serializable. It is still possible to have a situation where, at site _S_~1~, _T_~2~ follows _T_~1~, whereas, at _S_~2~, _T_~1~ follows _T_~2~, resulting in a nonserializable global schedule. Indeed, even if there is no concur- rency among global transactions (that is, a global transaction is submitted only after the previous one commits or aborts), local serializability is not sufficient to ensure global serializability (see Practice Exercise 19.14).
+The guarantee of local serializability is not sufficient to ensure global serializability. As an illustration, consider two global transactions _T_~1~ and _T_~2~, each of which accesses and updates two data items, _A_ and _B_, located at sites _S_~1~ and _S_~2~, respectively. Suppose that the local schedules are serializable. It is still possible to have a situation where, at site _S_~1~, _T_~2~ follows _T_~1~, whereas, at _S_~2~, _T_~1~ follows _T_~2~, resulting in a nonserializable global schedule. Indeed, even if there is no concur- rency among global transactions (that is, a global transaction is submitted only after the previous one commits or aborts), local serializability is not sufficient to ensure global serializability (see Practice Exercise 19.14).
 
-Depending on the implementation of the local database systems, a global transaction may not be able to control the precise locking behavior of its local subtransactions. Thus, even if all local database systems follow two-phase lock- ing, it may be possible only to ensure that each local transaction follows the rules of the protocol. For example, one local database system may commit its subtrans- action and release locks, while the subtransaction at another local system is still executing. If the local systems permit control of locking behavior and all systems follow two-phase locking, then the multidatabase system can ensure that global transactions lock in a two-phase manner and the lock points of conflicting transac- tions would then define their global serialization order. If different local systems follow different concurrency-control mechanisms, however, this straightforward sort of global control does not work.  
+Depending on the implementation of the local database systems, a global transaction may not be able to control the precise locking behavior of its local subtransactions. Thus, even if all local database systems follow two-phase locking, it may be possible only to ensure that each local transaction follows the rules of the protocol. For example, one local database system may commit its subtransaction and release locks, while the subtransaction at another local system is still executing. If the local systems permit control of locking behavior and all systems follow two-phase locking, then the multidatabase system can ensure that global transactions lock in a two-phase manner and the lock points of conflicting transactions would then define their global serialization order. If different local systems follow different concurrency-control mechanisms, however, this straightforward sort of global control does not work.  
 
 
-There are many protocols for ensuring consistency despite concurrent execu- tion of global and local transactions in multidatabase systems. Some are based on imposing sufficient conditions to ensure global serializability. Others ensure only a form of consistency weaker than serializability, but achieve this consistency by less restrictive means. Section 26.6 describes approaches to consistency without serializability; other approaches are cited in the bibliographical notes.
+There are many protocols for ensuring consistency despite concurrent execution of global and local transactions in multidatabase systems. Some are based on imposing sufficient conditions to ensure global serializability. Others ensure only a form of consistency weaker than serializability, but achieve this consistency by less restrictive means. Section 26.6 describes approaches to consistency without serializability; other approaches are cited in the bibliographical notes.
 
 Early multidatabase systems restricted global transactions to be read only. They thus avoided the possibility of global transactions introducing inconsistency to the data, but were not sufficiently restrictive to ensure global serializability. It is indeed possible to get such global schedules and to develop a scheme to ensure global serializability, and we ask you to do both in Practice Exercise 19.15.
 
@@ -1908,7 +1894,7 @@ A variety of vendors offer cloud services. They include traditional computing ve
 
 Web applications that need to store and retrieve data for very large numbers of users (ranging from millions to hundreds of millions) have been a major driver of cloud-based databases. The needs of these applications differ from those of traditional database applications, since they value availability and scalability over consistency. Several cloud-based data-storage systems have been developed in recent years to serve the needs of such applications. We discuss issues in building such data-storage systems on the cloud in Section 19.9.1.
 
-In Section 19.9.2, we consider issues in running traditional database systems on a cloud. Cloud-based databases have features of both homogeneous and het- erogeneous systems. Although the data are owned by one organization (the client) and are part of one unified distributed database, the underlying computers are owned and operated by another organization (the service vendor). The comput- ers are remote from the client’s location(s) and are accessed over the Internet. As a result, some of the challenges of heterogeneous distributed systems remain, par- ticularly as regards transaction processing. However, many of the organizational and political challenges of heterogeneous systems are avoided.
+In Section 19.9.2, we consider issues in running traditional database systems on a cloud. Cloud-based databases have features of both homogeneous and heterogeneous systems. Although the data are owned by one organization (the client) and are part of one unified distributed database, the underlying computers are owned and operated by another organization (the service vendor). The computers are remote from the client’s location(s) and are accessed over the Internet. As a result, some of the challenges of heterogeneous distributed systems remain, particularly as regards transaction processing. However, many of the organizational and political challenges of heterogeneous systems are avoided.
 
 Finally, in Section 19.9.3, we discuss several technical as well as nontechnical challenges that cloud databases face today.
 
@@ -1924,7 +1910,7 @@ In this section, we provide an overview of the architecture of such data- storag
 
 As an example of data management needs of Web applications, consider the pro- file of a user, which needs to be accessible to a number of different applications that are run by an organization. The profile contains a variety of attributes, and there are frequent additions to the attributes stored in the profile. Some attributes may contain complex data. A simple relational representation is often not sufficient for such complex data.
 
-Some cloud-based data-storage systems support XML (described in Chap- ter 23) for representing such complex data. Others support the **JavaScript Object Notation** (**JSON**) representation, which has found increasing acceptance for repre- senting complex data. The XML and JSON representations provide flexibility in the set of attributes that a record contains, as well as the types of these attributes. Yet others, such as Bigtable, define their own data model for complex data including support for records with a very large number of optional columns. We revisit the Bigtable data model later in this section.
+Some cloud-based data-storage systems support XML (described in Chapter 23) for representing such complex data. Others support the **JavaScript Object Notation** (**JSON**) representation, which has found increasing acceptance for representing complex data. The XML and JSON representations provide flexibility in the set of attributes that a record contains, as well as the types of these attributes. Yet others, such as Bigtable, define their own data model for complex data including support for records with a very large number of optional columns. We revisit the Bigtable data model later in this section.
 
 Further, many such Web applications either do not need extensive query language support, or at least, can manage without such support. The primary mode of data access is to store data with an associated key, and to retrieve data with that key. In the above user profile example, the key for user-profile data would be the user’s identifier. There are applications that conceptually require joins, but implement the joins by a form of view materialization. For example, in a social-networking application, each user should be shown new posts from all her friends. Unfortunately, finding the set of friends and then querying each one to find their posts may lead to a significant amount of delay when the data are distributed across a large number of machines. An alternative is as follows: whenever a user makes a post, a message is sent to all friends of that user, and the data associated with each of the friends is updated with a summary of the new post. When that user checks for updates, all required data are available in one place and can be retrieved quickly.
 
@@ -1979,7 +1965,7 @@ To solve both these problems, data-storage systems typically partition data into
 
 The site to which a tablet is assigned acts as the master site for that tablet. All updates are routed through this site, and updates are then propagated to replicas of the tablet. Lookups are also sent to the same site, so that reads are consistent with writes.
 
-The partitioning of data into tablets is not fixed up front, but happens dy- namically. As data are inserted, if a tablet grows too big, it is broken into smaller parts. Further, even if a tablet is not large enough to merit being broken up, if the load (get/put operations) on that tablet are excessive, the tablet may be broken into smaller tablets, which can be distributed across two or more sites to share the load. Usually the number of tablets is much larger than the number of sites, for the same reason that virtual partitioning is used in parallel databases.
+The partitioning of data into tablets is not fixed up front, but happens dynamically. As data are inserted, if a tablet grows too big, it is broken into smaller parts. Further, even if a tablet is not large enough to merit being broken up, if the load (get/put operations) on that tablet are excessive, the tablet may be broken into smaller tablets, which can be distributed across two or more sites to share the load. Usually the number of tablets is much larger than the number of sites, for the same reason that virtual partitioning is used in parallel databases.
 
 It is important to know which site in the overall system is responsible for a particular tablet. This can be done by having a tablet controller site which tracks the partitioning function, to map a get() request to one or more tablets, and a mapping function from tablets to sites, to find which site were responsible for which tablet. Each request coming into the system must be routed to the correct site; if a single tablet controller site is responsible for this task, it would soon  
 
@@ -1988,11 +1974,11 @@ It is important to know which site in the overall system is responsible for a pa
 
 get overloaded. Instead, the mapping information can be replicated on a set of router sites, which route requests to the site with the appropriate tablet. Protocols to update mapping information when a tablet is split or moved are designed in such a way that no locking is used; a request may as a result end up at a wrong site. The problem is handled by detecting that the site is no longer responsible for the key specified by the request, and rerouting the request based on up-to-date mapping information.
 
-Figure 19.7 depicts the architecture of a cloud data-storage system, based loosely on the PNUTS architecture. Other systems provide similar functionality, although their architecture may vary. For example, Bigtable does not have sepa- rate routers; the partitioning and tablet-server mapping information is stored in the Google file system, and clients read the information from the file system, and decide where to send their requests.
+Figure 19.7 depicts the architecture of a cloud data-storage system, based loosely on the PNUTS architecture. Other systems provide similar functionality, although their architecture may vary. For example, Bigtable does not have separate routers; the partitioning and tablet-server mapping information is stored in the Google file system, and clients read the information from the file system, and decide where to send their requests.
 
 #### 19.9.1.3 Transactions and Replication
 
-Data-storage systems on the cloud typically do not fully support ACID trans- actions. The cost of two-phase commit is too high, and two-phase commit can lead to blocking in the event of failures, which is not acceptable to typical Web applications. This means that such systems typically do not even support a trans- actionally consistent secondary index: the secondary index would be partitioned on a different attribute from the key used for storing the data, and an insert or update would then need to update two sites, which would require two-phase commit. At best, such systems support transactions on data within a single tablet, which is controlled by a a single master site. Sherpa/PNUTS also provides a test-and-set function, which allows an update to a data item to be conditional on the current version of the data item being the same as a specified version number. If the current version number of the data item is more recent than the specified ver- sion number, the update is not performed. The test-and-set function can be used by applications to implement a limited form of validation-based concurrency control, with validation restricted to data items in a single tablet.
+Data-storage systems on the cloud typically do not fully support ACID transactions. The cost of two-phase commit is too high, and two-phase commit can lead to blocking in the event of failures, which is not acceptable to typical Web applications. This means that such systems typically do not even support a trans- actionally consistent secondary index: the secondary index would be partitioned on a different attribute from the key used for storing the data, and an insert or update would then need to update two sites, which would require two-phase commit. At best, such systems support transactions on data within a single tablet, which is controlled by a a single master site. Sherpa/PNUTS also provides a test-and-set function, which allows an update to a data item to be conditional on the current version of the data item being the same as a specified version number. If the current version number of the data item is more recent than the specified ver- sion number, the update is not performed. The test-and-set function can be used by applications to implement a limited form of validation-based concurrency control, with validation restricted to data items in a single tablet.
 
 In a system with thousands of sites, at any time it is almost guaranteed that several of the sites will be down. A data-storage system on the cloud must be able to continue normal processing even with many sites down. Such systems replicate data (such as tablets) to multiple machines in a cluster, so that a copy of the data is likely to be available even if some machines of a cluster are down. (A **cluster** is a collection of machines in a data center.) For example, the _Google File System_ (GFS), which is a distributed fault-tolerant file system, replicates all file system blocks at three or more nodes in a cluster. Normal operation can continue as long as at least one copy of the data is available (key system data, such as the mapping of files to nodes, is replicated at more nodes, a majority of which need to be available). In addition, replication is also used across geographically distributed clusters, for reasons that we shall see shortly.
 
@@ -2000,9 +1986,9 @@ Since each tablet is controlled by a single master site, if the site fails the t
 
 In Bigtable, as an example, mapping information is stored in an index struc- ture, and the index as well as the actual tablet data are stored in the file system. Tablet data updates are not flushed immediately, but log data are. The file system ensures that the file system data are replicated and will be available even in the face of failure of a few nodes in the cluster. Thus, when a tablet is reassigned, the new master site for the tablet has access to up-to-date log data. Yahoo!’s Sherpa/PNUTS system, on the other hand, explicitly replicates tablets to multiple nodes in a cluster, instead of using a distributed file system, and uses a reliable distributed-messaging system to implement a highly available log.
 
-Unfortunately, it is not uncommon for an entire data center to become unavail- able-for example, due to natural disasters or fires. Replication at a remote site is therefore essential for high availability. For many Web applications, round-trip delays across a long-distance network can affect performance significantly, a problem that is increasing with the use of Ajax applications that require multiple rounds of communication between the browser and the application. To deal with this problem, users are connected with application servers that are closest to them geographically, and data are replicated at multiple data centers so that one of the replicas is likely to be close to the application server.
+Unfortunately, it is not uncommon for an entire data center to become unavailable-for example, due to natural disasters or fires. Replication at a remote site is therefore essential for high availability. For many Web applications, round-trip delays across a long-distance network can affect performance significantly, a problem that is increasing with the use of Ajax applications that require multiple rounds of communication between the browser and the application. To deal with this problem, users are connected with application servers that are closest to them geographically, and data are replicated at multiple data centers so that one of the replicas is likely to be close to the application server.
 
-However, the danger of partitioning of the network is increased as a result. Given that most Web applications place a greater premium on availability than on consistency, data-storage systems on the cloud usually allow updates to proceed even in the event of a partitioning, and provide support for restoring consis- tency later, as discussed earlier in Section 19.6.6. Multimaster replication with lazy propagation of updates, which we saw in Section 19.5.3, is typically used for processing updates. Lazy propagation implies that updates are not propa- gated to replicas as part of the updating transaction, although they are typically propagated as soon as possible, typically using a messaging infrastructure.
+However, the danger of partitioning of the network is increased as a result. Given that most Web applications place a greater premium on availability than on consistency, data-storage systems on the cloud usually allow updates to proceed even in the event of a partitioning, and provide support for restoring consis- tency later, as discussed earlier in Section 19.6.6. Multimaster replication with lazy propagation of updates, which we saw in Section 19.5.3, is typically used for processing updates. Lazy propagation implies that updates are not propagated to replicas as part of the updating transaction, although they are typically propagated as soon as possible, typically using a messaging infrastructure.
 
 In addition to propagating updates to replicas of a data item, updates to secondary indices, or to certain kinds of materialized views (such as the updates from friends, in a social-networking application we saw earlier in Section 19.9.1.1), can be sent using the messaging infrastructure. Secondary indices are basically tables, partitioned just like regular tables, based on the index search key; an update of a record in a table can be mapped to updates of one or more tablets in a secondary index on the table. There is no transactional guarantee on the updates of such secondary indices or materialized views, and only a best-effort guarantee in terms of when the updates reach their destination.
 
@@ -2012,7 +1998,7 @@ We now consider the issue of implementing a traditional distributed database sys
 
 The concept of computing utilities is an old one, envisioned back in the 1960s. The first manifestation of the concept was in timesharing systems in which several users shared access to a single mainframe computer. Later, in the late 1960s, the concept of **virtual machines** was developed, in which a user was given the illusion of having a private computer, while in reality a single computer simulated several virtual machines.
 
-Cloud computing makes extensive use of the virtual-machine concept to pro- vide computing services. Virtual machines provide great flexibility since clients may choose their own software environment including not only the application software but also the operating system. Virtual machines of several clients can run on a single physical computer, if the computing needs of the clients are low. On the other hand, an entire computer can be allocated to each virtual machine of a client whose virtual machines have a high load. A client may request several virtual machines over which to run an application. This makes it easy to add or subtract computing power as workloads grow and shrink simply by adding or releasing virtual machines.
+Cloud computing makes extensive use of the virtual-machine concept to provide computing services. Virtual machines provide great flexibility since clients may choose their own software environment including not only the application software but also the operating system. Virtual machines of several clients can run on a single physical computer, if the computing needs of the clients are low. On the other hand, an entire computer can be allocated to each virtual machine of a client whose virtual machines have a high load. A client may request several virtual machines over which to run an application. This makes it easy to add or subtract computing power as workloads grow and shrink simply by adding or releasing virtual machines.
 
 Having a set of virtual machines works well for applications that are easily parallelized. Database systems, as we have seen, fall into this category. Each virtual machine can run database system code locally and behave in a manner similar to a site in a homogeneous distributed database system.
 
@@ -2042,7 +2028,7 @@ The market for cloud services continues to evolve rapidly, but it is clear that 
 
 ## 19.10 Directory Systems
 
-Consider an organization that wishes to make data about its employees avail- able to a variety of people in the organization; examples of the kinds of data include name, designation, employee-id, address, email address, phone number, fax number, and so on. In the precomputerization days, organizations would cre- ate physical directories of employees and distribute them across the organization. Even today, telephone companies create physical directories of customers.
+Consider an organization that wishes to make data about its employees available to a variety of people in the organization; examples of the kinds of data include name, designation, employee-id, address, email address, phone number, fax number, and so on. In the precomputerization days, organizations would cre- ate physical directories of employees and distribute them across the organization. Even today, telephone companies create physical directories of customers.
 
 In general, a directory is a listing of information about some class of objects such as persons. Directories can be used to find information about a specific object, or in the reverse direction to find objects that meet a certain requirement. In the world of physical telephone directories, directories that satisfy lookups in the forward direction are called **white pages**, while directories that satisfy lookups in the reverse direction are called **yellow pages**.
 
@@ -2052,7 +2038,7 @@ In today’s networked world, the need for directories is still present and, if 
 
 Directory information can be made available through Web interfaces, as many organizations, and phone companies in particular, do. Such interfaces are good for humans. However, programs too need to access directory information. Direc- tories can be used for storing other types of information, much like file system directories. For instance, Web browsers can store personal bookmarks and other browser settings in a directory system. A user can thus access the same settings from multiple locations, such as at home and at work, without having to share a file system.  
 
-Several **directory access protocols** have been developed to provide a stan- dardized way of accessing data in a directory. The most widely used among them today is the **Lightweight Directory Access Protocol** (**LDAP**).
+Several **directory access protocols** have been developed to provide a standardized way of accessing data in a directory. The most widely used among them today is the **Lightweight Directory Access Protocol** (**LDAP**).
 
 Obviously all the types of data in our examples can be stored without much trouble in a database system, and accessed through protocols such as JDBC or ODBC. The question then is, why come up with a specialized protocol for accessing directory information? There are at least two answers to the question.
 
@@ -2060,7 +2046,7 @@ Obviously all the types of data in our examples can be stored without much troub
 
 - Second, and more important, directory systems provide a simple mecha- nism to name objects in a hierarchical fashion, similar to file system directory names, which can be used in a distributed directory system to specify what information is stored in each of the directory servers. For example, a partic- ular directory server may store information for Bell Laboratories employees in Murray Hill, while another may store information for Bell Laboratories employees in Bangalore, giving both sites autonomy in controlling their lo- cal data. The directory access protocol can be used to obtain data from both directories across a network. More important, the directory system can be set up to automatically forward queries made at one site to the other site, without user intervention.
 
-For these reasons, several organizations have directory systems to make or- ganizational information available online through a directory access protocol. Information in an organizational directory can be used for a variety of purposes, such as to find addresses, phone numbers, or email addresses of people, to find which departments people are in, and to track department hierarchies. Directories are also used to authenticate users: applications can collect authentication infor- mation such as passwords from users and authenticate them using the directory.
+For these reasons, several organizations have directory systems to make or- ganizational information available online through a directory access protocol. Information in an organizational directory can be used for a variety of purposes, such as to find addresses, phone numbers, or email addresses of people, to find which departments people are in, and to track department hierarchies. Directories are also used to authenticate users: applications can collect authentication information such as passwords from users and authenticate them using the directory.
 
 As may be expected, several directory implementations find it beneficial to use relational databases to store data, instead of creating special-purpose storage systems.
 
@@ -2080,9 +2066,9 @@ As you can see, the distinguished name in this example is a combination of a nam
 
 Entries can also have attributes. LDAP provides binary, string, and time types, and additionally the types tel for telephone numbers, and PostalAddress for addresses (lines separated by a “$” character). Unlike those in the relational model, attributes are multivalued by default, so it is possible to store multiple telephone numbers or addresses for an entry.
 
-LDAP allows the definition of **object classes** with attribute names and types. Inheritance can be used in defining object classes. Moreover, entries can be spec- ified to be of one or more object classes. It is not necessary that there be a single most-specific object class to which an entry belongs.
+LDAP allows the definition of **object classes** with attribute names and types. Inheritance can be used in defining object classes. Moreover, entries can be specified to be of one or more object classes. It is not necessary that there be a single most-specific object class to which an entry belongs.
 
-Entries are organized into a **directory information tree (DIT)**, according to their distinguished names. Entries at the leaf level of the tree usually represent specific objects. Entries that are internal nodes represent objects such as orga- nizational units, organizations, or countries. The children of a node have a DN containing all the RDNs of the parent, and one or more additional RDNs. For in- stance, an internal node may have a DN c=USA, and all entries below it have the value USA for the RDN c.
+Entries are organized into a **directory information tree (DIT)**, according to their distinguished names. Entries at the leaf level of the tree usually represent specific objects. Entries that are internal nodes represent objects such as organizational units, organizations, or countries. The children of a node have a DN containing all the RDNs of the parent, and one or more additional RDNs. For instance, an internal node may have a DN c=USA, and all entries below it have the value USA for the RDN c.
 
 The entire distinguished name need not be stored in an entry. The system can generate the distinguished name of an entry by traversing up the DIT from the entry, collecting the RDN=value components to create the full distinguished name.
 
@@ -2097,7 +2083,7 @@ The querying mechanism in LDAP is very simple, consisting of just selections and
 
 - A base—that is, a node within a DIT—by giving its distinguished name (the path from the root to the node).
 
-- A search condition, which can be a Boolean combination of conditions on individual attributes. Equality, matching by wild-card characters, and ap- proximate equality (the exact definition of approximate equality is system dependent) are supported.
+- A search condition, which can be a Boolean combination of conditions on individual attributes. Equality, matching by wild-card characters, and approximate equality (the exact definition of approximate equality is system dependent) are supported.
 
 - A scope, which can be just the base, the base and its children, or the entire subtree beneath the base.
 
@@ -2109,7 +2095,8 @@ The query can also specify whether to automatically dereference aliases; if alia
 
 One way of querying an LDAP data source is by using LDAP URLs. Examples of LDAP URLs are:
 
-ldap:://codex.cs.yale.edu/o=Yale University,c=USA ldap:://codex.cs.yale.edu/o=Yale University,c=USA??sub?cn=Silberschatz
+ldap://codex.cs.yale.edu/o=Yale University,c=USA 
+ldap://codex.cs.yale.edu/o=Yale University,c=USA??sub?cn=Silberschatz
 
 The first URL returns all attributes of all entries at the server with organization being Yale University, and country being USA. The second URL executes a search query (selection) cn=Silberschatz on the subtree of the node with distinguished name o=Yale University, c=USA. The question marks in the URL separate different fields. The first field is the distinguished name, here o=Yale University,c=USA. The second field, the list of attributes to return, is left empty, meaning return all attributes. The third attribute, sub, indicates that the entire subtree is to be searched. The last parameter is the search condition.
 
@@ -2158,11 +2145,10 @@ allocated by the LDAP libraries. Figure 19.8 does not show code for handling err
 
 The LDAP API also contains functions to create, update, and delete entries, as well as other operations on the DIT. Each function call behaves like a separate transaction; LDAP does not support atomicity of multiple updates.
 
-**19.10.2.3 Distributed Directory Trees**
+#### 19.10.2.3 Distributed Directory Trees
 
 Information about an organization may be split into multiple DITs, each of which stores information about some entries. The **suffix** of a DIT is a sequence of  
 
-**19.11 Summary 875**
 
 RDN=value pairs that identify what information the DIT stores; the pairs are con- catenated to the rest of the distinguished name generated by traversing from the entry to the root. For instance, the suffix of a DIT may be o=Lucent, c=USA, while another may have the suffix o=Lucent, c=India. The DITs may be organizationally and geographically separated.
 
@@ -2178,7 +2164,7 @@ Many LDAP implementations support master–slave and multimaster repli- cation o
 
 ## 19.11 Summary
 
-- A distributed database system consists of a collection of sites, each of which maintains a local database system. Each site is able to process local transac- tions: those transactions that access data in only that single site. In addition, a site may participate in the execution of global transactions: those transactions that access data in several sites. The execution of global transactions requires communication among the sites.
+- A distributed database system consists of a collection of sites, each of which maintains a local database system. Each site is able to process local transactions: those transactions that access data in only that single site. In addition, a site may participate in the execution of global transactions: those transactions that access data in several sites. The execution of global transactions requires communication among the sites.
 
 - Distributed databases may be homogeneous, where all sites have a common schema and database system code, or heterogeneous, where the schemas and system codes may differ.
 
@@ -2194,7 +2180,7 @@ Many LDAP implementations support master–slave and multimaster repli- cation o
 
 - The various concurrency-control schemes used in a centralized system can be modified for use in a distributed environment.
 
->- In the case of locking protocols, the only change that needs to be incor- porated is in the way that the lock manager is implemented. There are a variety of different approaches here. One or more central coordinators may be used. If, instead, a distributed-lock-manager approach is taken, replicated data must be treated specially.
+>- In the case of locking protocols, the only change that needs to be incorporated is in the way that the lock manager is implemented. There are a variety of different approaches here. One or more central coordinators may be used. If, instead, a distributed-lock-manager approach is taken, replicated data must be treated specially.
 
 >- Protocols for handling replicated data include the primary copy, majority, biased, and quorum consensus protocols. These have different trade-offs in terms of cost and ability to work in the presence of failures.
 
@@ -2202,17 +2188,17 @@ Many LDAP implementations support master–slave and multimaster repli- cation o
 
 >- Many database systems support lazy replication, where updates are prop- agated to replicas outside the scope of the transaction that performed the update. Such facilities must be used with great care, since they may result in nonserializable executions.
 
-- Deadlock detection in a distributed-lock-manager environment requires co- operation between multiple sites, since there may be global deadlocks even when there are no local deadlocks.  
+- Deadlock detection in a distributed-lock-manager environment requires co-operation between multiple sites, since there may be global deadlocks even when there are no local deadlocks.  
 
-- To provide high availability, a distributed database must detect failures, re- configure itself so that computation may continue, and recover when a pro- cessor or a link is repaired. The task is greatly complicated by the fact that it is hard to distinguish between network partitions and site failures.
+- To provide high availability, a distributed database must detect failures, reconfigure itself so that computation may continue, and recover when a pro- cessor or a link is repaired. The task is greatly complicated by the fact that it is hard to distinguish between network partitions and site failures.
 
 The majority protocol can be extended by using version numbers to permit transaction processing to proceed even in the presence of failures. While the protocol has a significant overhead, it works regardless of the type of failure. Less-expensive protocols are available to deal with site failures, but they assume network partitioning does not occur.
 
-- Some of the distributed algorithms require the use of a coordinator. To pro- vide high availability, the system must maintain a backup copy that is ready to assume responsibility if the coordinator fails. Another approach is to choose the new coordinator after the coordinator has failed. The algorithms that de- termine which site should act as a coordinator are called **election algorithms**.
+- Some of the distributed algorithms require the use of a coordinator. To provide high availability, the system must maintain a backup copy that is ready to assume responsibility if the coordinator fails. Another approach is to choose the new coordinator after the coordinator has failed. The algorithms that determine which site should act as a coordinator are called **election algorithms**.
 
 - Queries on a distributed database may need to access multiple sites. Several optimization techniques are available to identify the best set of sites to access. Queries can be rewritten automatically in terms of fragments of relations and then choices can be made among the replicas of each fragment. Semijoin techniques may be employed to reduce data transfer involved in joining relations (or fragments or relicas thereof) across distinct sites.
 
-- Heterogeneous distributed databases allow sites to have their own schemas and database system code. A multidatabase system provides an environment in which new database applications can access data from a variety of pre- existing databases located in various heterogeneous hardware and software environments. The local database systems may employ different logical mod- els and data-definition and data-manipulation languages, and may differ in their concurrency-control and transaction-management mechanisms. A mul- tidatabase system creates the illusion of logical database integration, without requiring physical database integration.
+- Heterogeneous distributed databases allow sites to have their own schemas and database system code. A multidatabase system provides an environment in which new database applications can access data from a variety of pre-existing databases located in various heterogeneous hardware and software environments. The local database systems may employ different logical mod- els and data-definition and data-manipulation languages, and may differ in their concurrency-control and transaction-management mechanisms. A multidatabase system creates the illusion of logical database integration, without requiring physical database integration.
 
 - A large number of data-storage systems on the cloud have been built in recent years, in response to data storage needs of extremely large-scale Web applications. These data-storage systems allow scalability to thousands of nodes, with geographic distribution, and high availability. However, they do not support the usual ACID properties, and they achieve availability during partitions at the cost of consistency of replicas. Current data-storage systems also do not support SQL, and provide only a simple put()/get() interface. While cloud computing is attractive even for traditional databases, there are several challenges due to lack of control on data placement and geographic replication.
 
@@ -2397,7 +2383,7 @@ Assume that each fragment has two replicas: one stored at the New York site and 
 
 4. Find the lowest-paid employee in the company.
 
-**19.11** Compute _r_  _s_ for the relations of Figure 19.9.
+**19.11** Compute _r_ ⨝ _s_ for the relations of Figure 19.9.
 
 **19.12** Give an example of an application ideally suited for the cloud and another that would be hard to implement successfully in the cloud. Explain your answer.
 
@@ -2462,7 +2448,7 @@ plant site. Assume that the _machine_ relation is stored in its entirety at the 
 
 2. The site at which the result is desired.
 
-**19.25** Is the expression _r~i~_  _r ~j~_ necessarily equal to _r ~j~_  _r~i~_ ? Under what conditions does _r~i~_  _r ~j~_ \= _r ~j~_  _r~i~_ hold?
+**19.25** Is the expression _r~i~_ ⨝ _r ~j~_ necessarily equal to _r ~j~_ ⨝ _r~i~_ ? Under what conditions does _r~i~_ ⨝ _r ~j~_ \= _r ~j~_ ⨝ _r~i~_ hold?
 
 **19.26** If a cloud data-storage service is used to store two relations _r_ and _s_ and we need to join _r_ and _s_, why might it be useful to maintain the join as a materialized view? In your answer, be sure to distinguish among various meanings of “useful”: overall throughput, efficient use of space, and response time to user queries.
 
