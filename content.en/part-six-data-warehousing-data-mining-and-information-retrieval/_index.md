@@ -165,7 +165,7 @@ income is 40K, starting from the root we follow the edge labeled “masters,” 
 
 The question then is how to build a decision-tree classifier, given a set of training instances. The most common way of doing so is to use a **greedy** algorithm, which works recursively, starting at the root and building the tree downward. Initially there is only one node, the root, and all training instances are associated with that node.
 
-At each node, if all, or “almost all” training instances associated with the node belong to the same class, then the node becomes a leaf node associated with that class. Otherwise, a **partitioning attribute** and **partitioning conditions** must be selected to create child nodes. The data associated with each child node is the set of training instances that satisfy the partitioning condition for that child node. In our example, the attribute _degree_ is chosen, and four children, one for each value of degree, are created. The conditions for the four children nodes are _degree_ \= none, _degree_ \= bachelors, _degree_ \= masters, and _degree_ \= doctorate, respectively. The data associated with each child consist of training instances satisfying the condition associated with that child. At the node corresponding to masters, the attribute _income_ is chosen, with the range of values partitioned into intervals 0 to 25K, 25K to 50K, 50K to 75K, and over 75K. The data associated with each node consist of training instances with the _degree_ attribute being masters and the _income_ attribute being in each of these ranges, respectively. As an optimization, since the class for the range 25K to 50K and the range 50K to 75K is the same under the node _degree_ \= masters, the two ranges have been merged into a single range 25K to 75K.
+At each node, if all, or “almost all” training instances associated with the node belong to the same class, then the node becomes a leaf node associated with that class. Otherwise, a **partitioning attribute** and **partitioning conditions** must be selected to create child nodes. The data associated with each child node is the set of training instances that satisfy the partitioning condition for that child node. In our example, the attribute _degree_ is chosen, and four children, one for each value of degree, are created. The conditions for the four children nodes are _degree_ \= none, _degree_ \= bachelors, _degree_ \= masters, and _degree_ \= doctorate, respectively. The data associated with each child consist of training instances satisfying the condition associated with that child. At the node corresponding to masters, the attribute _income_ is chosen, with the range of values partitioned into intervals 0 to 25K, 25K to 50K, 50K to 75K, and over 75K. The data associated with each node consist of training instances with the _degree_ attribute being masters and the _income_ attribute being in each of these ranges, respectively. As an optimization, since the thesclass for the range 25K to 50K and the range 50K to 75K is the same under the node _degree_ \= masters, the two ranges have been merged into a single range 25K to 75K.
 
 ####20.4.1.2 Best Splits
 
@@ -173,29 +173,17 @@ Intuitively, by choosing a sequence of partitioning attributes, we start with th
 
 The purity of a set _S_ of training instances can be measured quantitatively in several ways. Suppose there are _k_ classes, and of the instances in _S_ the fraction of instances in class _i_ is _pi_ . One measure of purity, the **Gini measure**, is defined as:
 
-Gini(_S_) = 1 − _k_∑
-
-_i_−1
-
-_p_2 _i_
+![Alt text](176.png)
 
 When all instances are in a single class, the Gini value is 0, while it reaches its maximum (of 1 − 1_/k_) if each class has the same number of instances. Another measure of purity is the **entropy measure**, which is defined as:
 
-Entropy(_S_) = − _k_∑
-
-_i_−1
-
-_pi_ log2 _pi_
+![Alt text](180.png)
 
 The entropy value is 0 if all instances are in a single class, and reaches its maximum when each class has the same number of instances. The entropy measure derives from information theory.
 
 When a set _S_ is split into multiple sets _Si , i_ \= 1_,_ 2_, . . . , r_ , we can measure the purity of the resultant set of sets as:
 
-Purity(_S_1_, S_2_, . . . , Sr_ ) = _r_∑
-
-_i_\=1
-
-|_Si_ | |_S_| purity(_Si_ )
+![Alt text](186.png)
 
 That is, the purity is the weighted average of the purity of the sets _Si_ . The above formula can be used with both the Gini measure and the entropy measure of purity.
 
@@ -203,23 +191,15 @@ The **information gain** due to a particular split of _S_ into _Si , i_ \= 1_,_ 
 
 Information gain(_S,_ {_S_1_, S_2_, . . . , Sr_ }) = purity(_S_) − purity(_S_1_, S_2_, . . . , Sr_ )  
 
-**898 Chapter 20 Data Warehousing and Mining**
-
 Splits into fewer sets are preferable to splits into many sets, since they lead to simpler and more meaningful decision trees. The number of elements in each of the sets _Si_ may also be taken into account; otherwise, whether a set _Si_ has 0 elements or 1 element would make a big difference in the number of sets, although the split is the same for almost all the elements. The **information content** of a particular split can be defined in terms of entropy as:
 
-Information content(_S,_ {_S_1_, S_2_, . . . , Sr_ }) = − _r_∑
-
-_i_−1
-
-|_Si_ | |_S_| log2
-
-|_Si_ | |_S_|
+![Alt text](196.png)
 
 All of this leads to a definition: The **best split** for an attribute is the one that gives the maximum **information gain ratio**, defined as:
 
 Information gain(_S,_ {_S_1_, S_2_, . . . , Sr_ }) Information content(_S,_ {_S_1_, S_2_, . . . , Sr_ })
 
-**20.4.1.3 Finding Best Splits**
+####20.4.1.3 Finding Best Splits
 
 How do we find the best split for an attribute? How to split an attribute depends on the type of the attribute. Attributes can be either **continuous valued**, that is, the values can be ordered in a fashion meaningful to classification, such as age or income, or they can be **categorical**; that is, they have no meaningful order, such as department names or country names. We do not expect the sort order of department names or country names to have any significance to classification.
 
@@ -228,26 +208,13 @@ Usually attributes that are numbers (integers/reals) are treated as continuous v
 We first consider how to find best splits for continuous-valued attributes. For simplicity, we shall consider only **binary splits** of continuous-valued attributes, that is, splits that result in two children. The case of **multiway splits** is more complicated; see the bibliographical notes for references on the subject.
 
 To find the best binary split of a continuous-valued attribute, we first sort the attribute values in the training instances. We then compute the information gain obtained by splitting at each value. For example, if the training instances have values 1_,_ 10_,_ 15, and 25 for an attribute, the split points considered are 1, 10, and 15; in each case values less than or equal to the split point form one partition and the rest of the values form the other partition. The best binary split for the attribute is the split that gives the maximum information gain.
-
 For a categorical attribute, we can have a multiway split, with a child for each value of the attribute. This works fine for categorical attributes with only a few distinct values, such as degree or gender. However, if the attribute has many distinct values, such as department names in a large company, creating a child for each value is not a good idea. In such cases, we would try to combine multiple values into each child, to create a smaller number of children. See the bibliographical notes for references on how to do so.  
 
-**20.4 Classification 899**
+##20.4 Classification 
 
-**procedure** GrowTree(_S_) Partition(_S_);
+![Alt text](214.png)
 
-**procedure** Partition (_S_) **if** (_purity_(_S_) _\>_ _p_ **or** |_S_| _<_ _s_ ) **then**
-
-**return**; **for each** attribute _A_
-
-evaluate splits on attribute _A_; Use best split found (across all attributes) to partition
-
-_S_ into _S_1_, S_2_, . . . , Sr_ ; **for** _i_ \= 1_,_ 2_, . . . , r_
-
-Partition(_Si_ );
-
-**Figure 20.4** Recursive construction of a decision tree.
-
-**20.4.1.4 Decision-Tree Construction Algorithm**
+####20.4.1.4 Decision-Tree Construction Algorithm
 
 The main idea of decision-tree construction is to evaluate different attributes and different partitioning conditions, and pick the attribute and partitioning condi- tion that results in the maximum information-gain ratio. The same procedure works recursively on each of the sets resulting from the split, thereby recursively constructing a decision tree. If the data can be perfectly classified, the recursion stops when the purity of a set is 0. However, often data are noisy, or a set may be so small that partitioning it further may not be justified statistically. In this case, the recursion stops when the purity of a set is “sufficiently high,” and the class of the resulting leaf is defined as the class of the majority of the elements of the set. In general, different branches of the tree could grow to different levels.
 
@@ -257,13 +224,11 @@ There are a wide variety of decision-tree construction algorithms, and we outlin
 
 Several of the algorithms also prune subtrees of the generated decision tree to reduce **overfitting:** A subtree is overfitted if it has been so highly tuned to the specifics of the training data that it makes many classification errors on other data. A subtree is pruned by replacing it with a leaf node. There are different pruning heuristics; one heuristic uses part of the training data to build the tree and another part of the training data to test it. The heuristic prunes a subtree if it finds that misclassification on the test instances would be reduced if the subtree were replaced by a leaf node.  
 
-**900 Chapter 20 Data Warehousing and Mining**
-
 We can generate classification rules from a decision tree, if we so desire. For each leaf we generate a rule as follows: The left-hand side is the conjunction of all the split conditions on the path to the leaf, and the class is the class of the majority of the training instances at the leaf. An example of such a classification rule is:
 
-_degree_ \= _masters_ **and** _income >_ 75000 ⇒ _excellent_
+degree = ma ster s and income > 75000 ⇒ excellent
 
-**20.4.2 Other Types of Classifiers**
+###20.4.2 Other Types of Classifiers
 
 There are several types of classifiers other than decision-tree classifiers. Two types that have been quite useful are _neural-net classifiers, Bayesian classifiers,_ and _Support Vector Machine_ classifiers. Neural-net classifiers use the training data to train artificial neural nets. There is a large body of literature on neural nets, and we do not consider them further here.
 
@@ -271,7 +236,7 @@ There are several types of classifiers other than decision-tree classifiers. Two
 
 To find the probability _p_(_c j_ |_d_) of instance _d_ being in class _c j_ , Bayesian classi- fiers use **Bayes’ theorem**, which says:
 
-_p_(_c j_ |_d_) = _p_(_d_|_c j_ )_p_(_c j_ ) _p_(_d_)
+![Alt text](239.png)
 
 where _p_(_d_|_c j_ ) is the probability of generating instance _d_ given class _c j_ , _p_(_c j_ ) is the probability of occurrence of class _c j_ , and _p_(_d_) is the probability of instance _d_ occurring. Of these, _p_(_d_) can be ignored since it is the same for all classes. _p_(_c j_ ) is simply the fraction of training instances that belong to class _c j_ .
 
@@ -279,11 +244,10 @@ For example, let us consider a special case where only one attribute, _income_, 
 
 In general, multiple attributes need to be considered for classification. Then, finding _p_(_d_|_c j_ ) exactly is difficult, since it requires the distribution of instances of _c j_ , across all combinations of values for the attributes used for classification. The number of such combinations (for example of income buckets, with degree values and other attributes) can be very large. With a limited training set used to find the distribution, most combinations would not have even a single training set matching them, leading to incorrect classification decisions. To avoid this  
 
-**20.4 Classification 901**
+##20.4 Classification 901
 
 problem, as well as to simplify the task of classification, **naive Bayesian classifiers** assume attributes have independent distributions, and thereby estimate:
-
-_p_(_d_|_c j_ ) = _p_(_d_1|_c j_ ) ∗ _p_(_d_2|_c j_ ) ∗ · · · ∗ _p_(_dn_|_c j_ )
+![Alt text](256.png)
 
 That is, the probability of the instance _d_ occurring is the product of the probability of occurrence of each of the attribute values _di_ of _d_, given the class is _c j_ .
 
@@ -299,29 +263,28 @@ Suppose we can draw a line on the plane, such that all points in class _A_ lie t
 
 The above intuition can be generalized to more than two dimensions, allowing multiple attributes to be used for classification; in this case, the classifier finds a dividing plane, not a line. Further, by first transforming the input points using certain functions, called _kernel functions_, Support Vector Machine classifiers can find nonlinear curves separating the sets of points. This is important for cases  
 
-**902 Chapter 20 Data Warehousing and Mining**
 
-**Figure 20.5** Example of a support vector machine classifier.
+![Alt text](266.png)
 
 where the points are not separable by a line or plane. In the presence of noise, some points of one class may lie in the midst of points of the other class. In such cases, there may not be any line or meaningful curve that separates the points in the two classes; then, the line or curve that most accurately divides the points into the two classes is chosen.
 
 Although the basic formulation of Support Vector Machines is for binary classifiers, i.e., those with only two classes, they can be used for classification into multiple classes as follows: If there are _N_ classes, we build _N_ classifiers, with classifier _i_ performing a binary classification, classifying a point either as in class _i_ or not in class _i_ . Given a point, each classifier _i_ also outputs a value indicating how related a given point is to class _i_ . We then apply all _N_ classifiers on a given point, and choose the class for which the relatedness value is the highest.
 
-**20.4.3 Regression**
+###20.4.3 Regression
 
 **Regression** deals with the prediction of a value, rather than a class. Given values for a set of variables, _X_1_, X_2_, . . . , Xn_, we wish to predict the value of a variable _Y_. For instance, we could treat the level of education as a number and income as another number, and, on the basis of these two variables, we wish to predict the likelihood of default, which could be a percentage chance of defaulting, or the amount involved in the default.
 
 One way is to infer coefficients _a_0_, a_1_, a_2_, . . . , an_ such that:
 
-_Y_ \= _a_0 + _a_1 ∗ _X_1 + _a_2 ∗ _X_2 + · · · + _an_ ∗ _Xn_
+![Alt text](279.png)
 
 Finding such a linear polynomial is called **linear regression**. In general, we wish to find a curve (defined by a polynomial or other formula) that fits the data; the process is also called **curve fitting.**  
 
-**20.4 Classification 903**
+##20.4 Classification 
 
 The fit may be only approximate, because of noise in the data or because the relationship is not exactly a polynomial, so regression aims to find coefficients that give the best possible fit. There are standard techniques in statistics for finding regression coefficients. We do not discuss these techniques here, but the bibliographical notes provide references.
 
-**20.4.4 Validating a Classifier**
+###20.4.4 Validating a Classifier
 
 It is important to validate a classifier, that is, to measure its classification error rate, before deciding to use it for an application. Consider an example of a classi- fication problem where a classifier has to predict, based on some inputs (the exact inputs are not relevant here), whether a person is suffering from a particular dis- ease _X_ or not. A positive prediction says that the person has the disease, and a negative prediction says the person does not have the disease. (The terminology of positive/negative prediction can be used for any binary classification problem, not just disease classification.)
 
@@ -341,19 +304,18 @@ The quality of classification can be measured in several different ways:
 
 Which of these measures should be used for a specific application depends on the needs of that application. For example, a high recall is important for a screening test, which is to be followed up by a more precise test, so that patients with the disease are not missed out. In contrast a researcher who wants to find a few actual patients of the disease for further follow up, but is not interested in finding all patients, may value high precision over recall. Different classifiers may be appropriate for each of these applications. This issue is explored further in Exercise 20.5.  
 
-**904 Chapter 20 Data Warehousing and Mining**
 
 A set of test cases where the outcome is already known can be used either to train or to measure the quality the classifier. It is a bad idea to use exactly the same set of test cases to train as well as to measure the quality of the classifier, since the classifier has already seen the correct classification of the test cases during training; this can lead to artificially high measures of quality. The quality of a classifier must therefore be measured on test cases that have not been seen during training.
 
 Therefore, a subset of the available test cases is used for training and a disjoint subset is used for validation. In **cross validation**, the available test cases are divided into _k_ parts numbered 1 to _k_, from which _k_ different test sets are created as follows: test set _i_ uses the _i_th part for validation, after training the classifier using the other _k_−1 parts. The results (_t pos_, _f pos_, etc.) from all _k_ test sets are added up before computing the quality measures. Cross validation provides much more accurate measures than merely partitioning the data into a single training and a single test set.
 
-**20.5 Association Rules**
+##20.5 Association Rules
 
 Retail shops are often interested in **associations** between different items that people buy. Examples of such associations are:
 
-• Someone who buys bread is quite likely also to buy milk.
+- Someone who buys bread is quite likely also to buy milk.
 
-• A person who bought the book _Database System Concepts_ is quite likely also to buy the book _Operating System Concepts_.
+- A person who bought the book _Database System Concepts_ is quite likely also to buy the book _Operating System Concepts_.
 
 Association information can be used in several ways. When a customer buys a particular book, an online shop may suggest associated books. A grocery shop may decide to place bread close to milk, since they are often bought together, to help shoppers finish their task faster. Or, the shop may place them at opposite ends of a row, and place other associated items in between to tempt people to buy those items as well, as the shoppers walk from one end of the row to the other. A shop that offers discounts on one associated item may not offer a discount on the other, since the customer will probably buy the other anyway.
 
@@ -361,11 +323,7 @@ An example of an association rule is:
 
 _bread_ ⇒ _milk_
 
-In the context of grocery-store purchases, the rule says that customers who buy bread also tend to buy milk with a high probability. An association rule must have an associated **population**: The population consists of a set of **instances**. In the grocery-store example, the population may consist of all grocery-store purchases; each purchase is an instance. In the case of a bookstore, the population may consist of all people who made purchases, regardless of when they made a purchase. Each customer is an instance. In the bookstore example, the analyst has  
-
-**20.5 Association Rules 905**
-
-decided that when a purchase is made is not significant, whereas for the grocery- store example, the analyst may have decided to concentrate on single purchases, ignoring multiple visits by the same customer.
+In the context of grocery-store purchases, the rule says that customers who buy bread also tend to buy milk with a high probability. An association rule must have an associated **population**: The population consists of a set of **instances**. In the grocery-store example, the population may consist of all grocery-store purchases; each purchase is an instance. In the case of a bookstore, the population may consist of all people who made purchases, regardless of when they made a purchase. Each customer is an instance. In the bookstore example, the analyst has decided that when a purchase is made is not significant, whereas for the grocery- store example, the analyst may have decided to concentrate on single purchases, ignoring multiple visits by the same customer.
 
 Rules have an associated _support_, as well as an associated _confidence._ These are defined in the context of the population:
 
@@ -395,8 +353,6 @@ we first find sets of items with sufficient support, called **large itemsets**. 
 
 For each large itemset, we then output all rules with sufficient confidence that involve all and only the elements of the set. For each large itemset _S_, we output a rule _S_ − _s_ ⇒ _s_ for every subset _s_ ⊂ _S_, provided _S_ − _s_ ⇒ _s_ has sufficient confidence; the confidence of the rule is given by support of _s_ divided by support of _S_.  
 
-**906 Chapter 20 Data Warehousing and Mining**
-
 We now consider how to generate all large itemsets. If the number of possible sets of items is small, a single pass over the data suffices to detect the level of support for all the sets. A count, initialized to 0, is maintained for each set of items. When a purchase record is fetched, the count is incremented for each set of items such that all items in the set are contained in the purchase. For instance, if a purchase included items _a_ , _b_, and _c_, counts would be incremented for {_a_}, {_b_}, {_c_}, {_a , b_}, {_b, c_}, {_a , c_}, and {_a , b, c_}. Those sets with a sufficiently high count at the end of the pass correspond to items that have a high degree of association.
 
 The number of sets grows exponentially, making the procedure just described infeasible if the number of items is large. Luckily, almost all the sets would normally have very low support; optimizations have been developed to eliminate most such sets from consideration. These techniques use multiple passes on the database, considering only some sets in each pass.
@@ -405,21 +361,18 @@ In the **a priori** technique for generating large itemsets, only sets with sing
 
 At the end of a pass, all sets with sufficient support are output as large itemsets. Sets found to have too little support at the end of a pass are eliminated. Once a set is eliminated, none of its supersets needs to be considered. In other words, in pass _i_ we need to count only supports for sets of size _i_ such that all subsets of the set have been found to have sufficiently high support; it suffices to test all subsets of size _i_ − 1 to ensure this property. At the end of some pass _i_ , we would find that no set of size _i_ has sufficient support, so we do not need to consider any set of size _i_ \+ 1. Computation then terminates.
 
-**20.6 Other Types of Associations**
+##20.6 Other Types of Associations
 
 Using plain association rules has several shortcomings. One of the major short- comings is that many associations are not very interesting, since they can be predicted. For instance, if many people buy cereal and many people buy bread, we can predict that a fairly large number of people would buy both, even if there is no connection between the two purchases. In fact, even if buying cereal has a mild negative influence on buying bread (that is, customers who buy cereal tend to purchase bread less often than the average customer), the association between cereal and bread may still have a high support.
 
 What would be more interesting is if there is a **deviation** from the expected co-occurrence of the two. In statistical terms, we look for **correlations** between items; correlations can be positive, in that the co-occurrence is higher than would have been expected, or negative, in that the items co-occur less frequently than predicted. Thus, if purchase of bread is not correlated with cereal, it would not be reported, even if there was a strong association between the two. There are standard measures of correlation, widely used in the area of statistics. See a standard textbook on statistics for more information about correlations.
 
-Another important class of data-mining applications is sequence associations (or sequence correlations). Time-series data, such as stock prices on a sequence  
-
-**20.7 Clustering 907**
-
+Another important class of data-mining applications is sequence associations (or sequence correlations). Time-series data, such as stock prices on a sequence
 of days, form an example of sequence data. Stock-market analysts want to find associations among stock-market price sequences. An example of such an associ- ation is the following rule: “Whenever bond rates go up, the stock prices go down within 2 days.” Discovering such associations between sequences can help us to make intelligent investment decisions. See the bibliographical notes for references to research on this topic.
 
 Deviations from temporal patterns are often interesting. For instance, if a company has been growing at a steady rate each year, a deviation from the usual growth rate is surprising. If sales of winter clothes go down in summer, it is not surprising, since we can predict it from past years; a deviation that we could not have predicted from past experience would be considered interesting. Mining techniques can find deviations from what one would have expected on the basis of past temporal or sequential patterns. See the bibliographical notes for references to research on this topic.
 
-**20.7 Clustering**
+##20.7 Clustering
 
 Intuitively, clustering refers to the problem of finding clusters of points in the given data. The problem of **clustering** can be formalized from distance metrics in several ways. One way is to phrase it as the problem of grouping points into _k_ sets (for a given _k_) so that the average distance of points from the _centroid_ of their assigned cluster is minimized.2 Another way is to group points so that the average distance between every pair of points in each cluster is minimized. There are other definitions too; see the bibliographical notes for details. But the intuition behind all these definitions is to group similar points together in a single set.
 
@@ -427,17 +380,7 @@ Another type of clustering appears in classification systems in biology. (Such c
 
 Hierarchical clustering is also useful in other domains—for clustering doc- uments, for example. Internet directory systems (such as the Yahoo! directory) cluster related documents in a hierarchical fashion (see Section 21.9). Hierarchical clustering algorithms can be classified as **agglomerative clustering** algorithms, which start by building small clusters and then create higher levels, or **divisive**
 
-2The centroid of a set of points is defined as a point whose coordinate on each dimension is the average of the coordinates of all the points of that set on that dimension. For example in two dimensions, the centroid of a set of points _{_ (_x_1_, y_1),
-
-(_x_2_, y_2), _. . ._ , (_xn, yn_) _}_ is given by ( ∑_n_
-
-_i_\=1 _xi n ,_
-
-∑_n i_\=1 _yi n_
-
-) .  
-
-**908 Chapter 20 Data Warehousing and Mining**
+2The centroid of a set of points is defined as a point whose coordinate on each dimension is the average of the coordinates of all the points of that set on that dimension. For example in two dimensions, the centroid of a set of points
 
 **clustering** algorithms, which first create higher levels of the hierarchical cluster- ing, then refine each resulting cluster into lower-level clusters.
 
@@ -453,19 +396,17 @@ An interesting application of clustering is to predict what new movies (or books
 
 One approach to this problem is as follows: To find people with similar past preferences we create clusters of people based on their preferences for movies. The accuracy of clustering can be improved by previously clustering movies by their similarity, so even if people have not seen the same movies, if they have seen similar movies they would be clustered together. We can repeat the clustering, alternately clustering people, then movies, then people, and so on until we reach an equilibrium. Given a new user, we find a cluster of users most similar to that user, on the basis of the user’s preferences for movies already seen. We then predict movies in movie clusters that are popular with that user’s cluster as likely to be interesting to the new user. In fact, this problem is an instance of _collaborative filtering,_ where users collaborate in the task of filtering information to find information of interest.
 
-**20.8 Other Forms of Data Mining**
+##20.8 Other Forms of Data Mining
 
 **Text mining** applies data-mining techniques to textual documents. For instance, there are tools that form clusters on pages that a user has visited; this helps users when they browse the history of their browsing to find pages they have visited earlier. The distance between pages can be based, for instance, on common words in the pages (see Section 21.2.2). Another application is to classify pages into a Web directory automatically, according to their similarity with other pages (see Section 21.9).  
 
-**20.9 Summary 909**
+##20.9 Summary 
 
 **Data-visualization** systems help users to examine large volumes of data, and to detect patterns visually. Visual displays of data—such as maps, charts, and other graphical representations—allow data to be presented compactly to users. A single graphical screen can encode as much information as a far larger number of text screens. For example, if the user wants to find out whether production problems at plants are correlated to the locations of the plants, the problem locations can be encoded in a special color—say, red—on a map. The user can then quickly discover locations where problems are occurring. The user may then form hypotheses about why problems are occurring in those locations, and may verify the hypotheses quantitatively against the database.
 
 As another example, information about values can be encoded as a color, and can be displayed with as little as one pixel of screen area. To detect associations between pairs of items, we can use a two-dimensional pixel matrix, with each row and each column representing an item. The percentage of transactions that buy both items can be encoded by the color intensity of the pixel. Items with high association will show up as bright pixels in the screen—easy to detect against the darker background.
 
 Data-visualization systems do not automatically detect patterns, but they provide system support for users to detect patterns. Since humans are very good at detecting visual patterns, data visualization is an important component of data mining.
-
-**20.9 Summary**
 
 • Decision-support systems analyze online data collected by transaction-pro- cessing systems, to help people make business decisions. Since most organi- zations are extensively computerized today, a very large body of information is available for decision support. Decision-support systems come in various forms, including OLAP systems and data-mining systems.
 
@@ -475,17 +416,13 @@ Data-visualization systems do not automatically detect patterns, but they provid
 
 • Data mining is the process of semiautomatically analyzing large databases to find useful patterns. There are a number of applications of data mining, such as prediction of values based on past examples, finding of associations between purchases, and automatic clustering of people and movies.
 
-• Classification deals with predicting the class of test instances by using at- tributes of the test instances, based on attributes of training instances, and  
+• Classification deals with predicting the class of test instances by using at- tributes of the test instances, based on attributes of training instances, andthe actual class of training instances. There are several types of classifiers, such as:
 
-**910 Chapter 20 Data Warehousing and Mining**
+ ◦ Decision-tree classifiers, which perform classification by constructing a tree based on training instances with leaves having class labels. The tree is traversed for each test instance to find a leaf, and the class of the leaf is the predicted class. Several techniques are available to construct decision trees, most of them based on greedy heuristics.
 
-the actual class of training instances. There are several types of classifiers, such as:
+ ◦ Bayesian classifiers are simpler to construct than decision-tree classifiers, and they work better in the case of missing/null attribute values.
 
-◦ Decision-tree classifiers, which perform classification by constructing a tree based on training instances with leaves having class labels. The tree is traversed for each test instance to find a leaf, and the class of the leaf is the predicted class. Several techniques are available to construct decision trees, most of them based on greedy heuristics.
-
-◦ Bayesian classifiers are simpler to construct than decision-tree classifiers, and they work better in the case of missing/null attribute values.
-
-◦ The Support Vector Machine is another widely used classification tech- nique.
+ ◦ The Support Vector Machine is another widely used classification tech- nique.
 
 • Association rules identify items that co-occur frequently, for instance, items that tend to be bought by the same customer. Correlations look for deviations from expected levels of association.
 
@@ -541,7 +478,7 @@ Entropy measure
 
 ◦ Continuous-valued attribute  
 
-**Practice Exercises 911**
+**Practice Exercises **
 
 ◦ Categorical attribute
 
@@ -605,11 +542,7 @@ Entropy measure
 
 **20.4** Consider the schema depicted in Figure 20.2. Give an SQL query to summa- rize sales numbers and price by store and date, along with the hierarchies on store and date.
 
-**20.5** Consider a classification problem where the classifier predicts whether a person has a particular disease. Suppose that 95% of the people tested do  
-
-**912 Chapter 20 Data Warehousing and Mining**
-
-not suffer from the disease. (That is, _pos_ corresponds to 5% and _neg_ to 95% of the test cases.) Consider the following classifiers:
+**20.5** Consider a classification problem where the classifier predicts whether a person has a particular disease. Suppose that 95% of the people tested do not suffer from the disease. (That is, _pos_ corresponds to 5% and _neg_ to 95% of the test cases.) Consider the following classifiers:
 
 • Classifier _C_1 which always predicts negative (a rather useless classifier of course).
 
@@ -635,10 +568,7 @@ c. On the other hand, if you intend to use the result of classification to start
 
 (1, 2, a), (2, 1, a), (2, 5, b), (3, 3, b), (3, 6, b), (4, 5, b), (5, 5, c), (6, 3, b), (6, 7, c)
 
-**20.9** Suppose half of all the transactions in a clothes shop purchase jeans, and one third of all transactions in the shop purchase T-shirts. Suppose also  
-
-**Tools 913**
-
+**20.9** Suppose half of all the transactions in a clothes shop purchase jeans, and one third of all transactions in the shop purchase T-shirts. Suppose also 
 that half of the transactions that purchase jeans also purchase T-shirts. Write down all the (nontrivial) association rules you can deduce from the above information, giving support and confidence of each rule.
 
 **20.10** Consider the problem of finding large itemsets.
@@ -663,7 +593,6 @@ There is also a wide variety of general-purpose data-mining tools, including dat
 
 A good deal of expertise is required to apply general-purpose mining tools for specific applications. As a result, a large number of mining tools have been developed to address specialized applications. The Web site www.kdnuggets.com provides an extensive directory of mining software, solutions, publications, and so on.  
 
-**914 Chapter 20 Data Warehousing and Mining**
 
 **Bibliographical Notes**
 
@@ -683,21 +612,17 @@ Clustering has long been studied in the area of statistics, and Jain and Dubes \
 
 Chakrabarti \[2002\] and Manning et al. \[2008\] provide textbook description of information retrieval, including extensive coverage of data-mining tasks related to textual and hypertext data, such as classification and clustering. Chakrabarti \[2000\] provides a survey of hypertext mining techniques such as hypertext clas- sification and clustering.  
 
-**_C H A P T E R_21 Information Retrieval**
+##C H A P T E R 21 Information Retrieval
 
 Textual data is unstructured, unlike the rigidly structured data in relational databases. The term **information retrieval** generally refers to the querying of unstructured textual data. Information-retrieval systems have much in common with database systems, in particular, the storage and retrieval of data on sec- ondary storage. However, the emphasis in the field of information systems is different from that in database systems, concentrating on issues such as querying based on keywords; the relevance of documents to the query; and the analysis, classification, and indexing of documents. Web search engines today go beyond the paradigm of retrieving documents, and address broader issues such as what information to display in response to a keyword query, to satisfy the information needs of a user.
 
-**21.1 Overview**
+##21.1 Overview
 
 The field of **information retrieval** has developed in parallel with the field of databases. In the traditional model used in the field of information retrieval, information is organized into documents, and it is assumed that there is a large number of documents. Data contained in documents are unstructured, without any associated schema. The process of information retrieval consists of locating relevant documents, on the basis of user input, such as keywords or example documents.
 
 The Web provides a convenient way to get to, and to interact with, information sources across the Internet. However, a persistent problem facing the Web is the explosion of stored information, with little guidance to help the user to locate what is interesting. Information retrieval has played a critical role in making the Web a productive and useful tool, especially for researchers.
 
-Traditional examples of information-retrieval systems are online library cata- logs and online document-management systems such as those that store newspa- per articles. The data in such systems are organized as a collection of _documents_; a newspaper article and a catalog entry (in a library catalog) are examples of documents. In the context of the Web, usually each HTML page is considered to be a document.
-
-**915**  
-
-**916 Chapter 21 Information Retrieval**
+Traditional examples of information-retrieval systems are online library cata- logs and online document-management systems such as those that store newspa- per articles. The data in such systems are organized as a collection of _documents_; a newspaper article and a catalog entry (in a library catalog) are examples of documents. In the context of the Web, usually each HTML page is considered to be a document.  
 
 A user of such a system may want to retrieve a particular document or a particular class of documents. The intended documents are typically described by a set of **keywords**—for example, the keywords “database system” may be used to locate books on database systems, and the keywords “stock” and “scandal” may be used to locate articles about stock-market scandals. Documents have associated with them a set of keywords, and documents whose keywords contain those supplied by the user are retrieved.
 
@@ -713,31 +638,25 @@ In addition to simple keyword queries that are just sets of words, information- 
 
 In **full text** retrieval, all the words in each document are considered to be keywords. For unstructured documents, full text retrieval is essential since there may be no information about what words in the document are keywords. We shall use the word **term** to refer to the words in a document, since all words are keywords.  
 
-**21.2 Relevance Ranking Using Terms 917**
+##21.2 Relevance Ranking Using Terms 
 
 In its simplest form, an information-retrieval system locates and returns all documents that contain all the keywords in the query, if the query has no connec- tives; connectives are handled as you would expect. More-sophisticated systems estimate relevance of documents to a query so that the documents can be shown in order of estimated relevance. They use information about term occurrences, as well as hyperlink information, to estimate relevance.
 
 Information-retrieval systems, as exemplified by Web search engines, have today evolved beyond just retrieving documents based on a ranking scheme. Today, search engines aim to satisfy a user’s information needs, by judging what topic a query is about, and displaying not only Web pages judged as relevant, but also displaying other kinds of information about the topic. For example, given a query term “cricket”, a search engine may display scores from ongoing or recent cricket matches, rather than just display top-ranked documents related to cricket. As another example, in response to a query “New York”, a search engine may show a map of New York, and images of New York, in addition to Web pages related to New York.
 
-**21.2 Relevance Ranking Using Terms**
+##21.2 Relevance Ranking Using Terms
 
 The set of all documents that satisfy a query expression may be very large; in particular, there are billions of documents on the Web, and most keyword queries on a Web search engine find hundreds of thousands of documents containing the keywords. Full text retrieval makes this problem worse: each document may contain many terms, and even terms that are mentioned only in passing are treated equivalently with documents where the term is indeed relevant. Irrelevant documents may be retrieved as a result.
 
 Information-retrieval systems therefore estimate relevance of documents to a query, and return only highly ranked documents as answers. Relevance ranking is not an exact science, but there are some well-accepted approaches.
 
-**21.2.1 Ranking Using TF-IDF**
+###21.2.1 Ranking Using TF-IDF
 
 The first question to address is, given a particular term _t_, how relevant is a particu- lar document _d_ to the term. One approach is to use the the number of occurrences of the term in the document as a measure of its relevance, on the assumption that relevant terms are likely to be mentioned many times in a document. Just counting the number of occurrences of a term is usually not a good indicator: first, the number of occurrences depends on the length of the document, and second, a document containing 10 occurrences of a term may not be 10 times as relevant as a document containing one occurrence.
 
 One way of measuring _TF_ (_d, t_), the relevance of a document _d_ to a term _t_, is:
 
-_TF_ (_d, t_) = log (
-
-1 + _n_(_d, t_) _n_(_d_)
-
-)  
-
-**918 Chapter 21 Information Retrieval**
+![Alt text](659.png) 
 
 where _n_(_d_) denotes the number of terms in the document and _n_(_d, t_) denotes the number of occurrences of term _t_ in the document _d_. Observe that this metric takes the length of the document into account. The relevance grows with more occurrences of a term in the document, although it is not directly proportional to the number of occurrences.
 
@@ -747,13 +666,11 @@ A query _Q_ may contain multiple keywords. The relevance of a document to a quer
 
 To fix the above problem, weights are assigned to terms using the **inverse document frequency** (**IDF**), defined as:
 
-_IDF_ (_t_) = 1 _n_(_t_)
+![Alt text](670.png)
 
 where _n_(_t_) denotes the number of documents (among those indexed by the sys- tem) that contain the term _t_. The **relevance** of a document _d_ to a set of terms _Q_ is then defined as:
 
-_r_ (_d, Q_) = ∑ _t_∈_Q_
-
-_T F_ (_d, t_) ∗ _IDF_ (_t_)
+![Alt text](673.png)
 
 This measure can be further refined if the user is permitted to specify weights _w_(_t_) for terms in the query, in which case the user-specified weights are also taken into account by multiplying _T F_ (_t_) by _w_(_t_) in the above formula.
 
@@ -761,23 +678,19 @@ The above approach of using term frequency and inverse document frequency as a m
 
 Almost all text documents (in English) contain words such as “and,” “or,” “a,” and so on, and hence these words are useless for querying purposes since their inverse document frequency is extremely low. Information-retrieval systems define a set of words, called **stop words**, containing 100 or so of the most common words, and ignore these words when indexing a document. Such words are not used as keywords, and are discarded if present in the keywords supplied by the user.  
 
-**21.2 Relevance Ranking Using Terms 919**
+##21.2 Relevance Ranking Using Terms 
 
 Another factor taken into account when a query contains multiple terms is the **proximity** of the terms in the document. If the terms occur close to each other in the document, the document would be ranked higher than if they occur far apart. The formula for _r_ (_d, Q_) can be modified to take proximity of the terms into account.
 
 Given a query _Q_, the job of an information-retrieval system is to return doc- uments in descending order of their relevance to _Q_. Since there may be a very large number of documents that are relevant, information-retrieval systems typ- ically return only the first few documents with the highest degree of estimated relevance, and permit users to interactively request further documents.
 
-**21.2.2 Similarity-Based Retrieval**
+###21.2.2 Similarity-Based Retrieval
 
 Certain information-retrieval systems permit **similarity-based retrieval**. Here, the user can give the system document _A_, and ask the system to retrieve docu- ments that are “similar” to _A_. The similarity of a document to another may be defined, for example, on the basis of common terms. One approach is to find _k_ terms in _A_ with highest values of _TF_ (_A, t_) ∗ _IDF_ (_t_), and to use these _k_ terms as a query to find relevance of other documents. The terms in the query are themselves weighted by _TF_ (_A, t_) ∗ _IDF_ (_t_).
 
 More generally, the similarity of documents is defined by the **cosine similarity** metric. Let the terms occurring in either of the two documents be _t_1_, t_2_, . . . , tn_. Let _r_ (_d, t_) = _TF_ (_d , t_) ∗ _IDF_ (_t_). Then the cosine similarity metric between documents _d_ and _e_ is defined as:
 
-∑_n i_\=1 _r_ (_d, ti_ )_r_ (_e, ti_ )√∑_n_
-
-_i_\=1 _r_ (_d, ti_ )2 √∑_n_
-
-_i_\=1 _r_ (_e, ti_ )2
+![Alt text](693.png)
 
 You can easily verify that the cosine similarity metric of a document with itself is 1, while that between two documents that do not share any terms is 0.
 
@@ -785,27 +698,21 @@ The name “cosine similarity” comes from the fact that the above formula comp
 
 If the set of documents similar to a query document _A_ is large, the system may present the user a few of the similar documents, allow the user to choose the most relevant few, and start a new search based on similarity to _A and_ to the chosen documents. The resultant set of documents is likely to be what the user intended to find. This idea is called **relevance feedback**.
 
-Relevance feedback can also be used to help users find relevant documents from a large set of documents matching the given query keywords. In such a  
-
-**920 Chapter 21 Information Retrieval**
-
-situation, users may be allowed to identify one or a few of the returned documents as relevant; the system then uses the identified documents to find other similar ones. The resultant set of documents is likely to be what the user intended to find. An alternative to the relevance feedback approach is to require users to modify the query by adding more keywords; relevance feedback can be easier to use, in addition to giving a better final set of documents as the answer.
+Relevance feedback can also be used to help users find relevant documents from a large set of documents matching the given query keywords. In such a situation, users may be allowed to identify one or a few of the returned documents as relevant; the system then uses the identified documents to find other similar ones. The resultant set of documents is likely to be what the user intended to find. An alternative to the relevance feedback approach is to require users to modify the query by adding more keywords; relevance feedback can be easier to use, in addition to giving a better final set of documents as the answer.
 
 In order to show the user a representative set of documents when the number of documents is very large, a search system may cluster the documents, based on their cosine similarity. Then, a few documents from each cluster may be shown, so that more than one cluster is represented in the set of answers. Clustering was described earlier in Section 20.7, and several techniques have been developed to cluster sets of documents. See the bibliographical notes for references to more information on clustering.
 
 As a special case of similarity, there are often multiple copies of a document on the Web; this could happen, for example, if a Web site mirrors the contents of another Web site. In this case, it makes no sense to return multiple copies of a highly ranked document as separate answers; duplicates should be detected, and only one copy should be returned as an answer.
 
-**21.3 Relevance Using Hyperlinks**
+##21.3 Relevance Using Hyperlinks
 
 Early Web-search engines ranked documents by using only TF–IDF based rele- vance measures like those described in Section 21.2. However, these techniques had some limitations when used on very large collections of documents, such as the set of all Web pages. In particular, many Web pages have all the keywords specified in a typical search engine query; further, some of the pages that users want as answers often have just a few occurrences of the query terms, and would not get a very high TF–IDF score.
 
 However, researchers soon realized that Web pages have very important information that plain text documents do not have, namely hyperlinks. These can be exploited to get better relevance ranking; in particular, the relevance ranking of a page is influenced greatly by hyperlinks that point _to_ the page. In this section, we study how hyperlinks are used for ranking of Web pages.
 
-**21.3.1 Popularity Ranking**
+###21.3.1 Popularity Ranking
 
 The basic idea of **popularity ranking** (also called **prestige ranking**) is to find pages that are popular, and to rank them higher than other pages that contain the specified keywords. Since most searches are intended to find information from popular pages, ranking such pages higher is generally a good idea. For instance, the term “google” may occur in vast numbers of pages, but the page google.com is the most popular among the pages that contain the term “google.” The page google.com should therefore be ranked as the most relevant answer to a query consisting of the term “google”.  
-
-**21.3 Relevance Using Hyperlinks 921**
 
 Traditional measures of relevance of a page such as the TF–IDF based measures that we saw in Section 21.2, can be combined with the popularity of the page to get an overall measure of the relevance of the page to the query. Pages with the highest overall relevance value are returned as the top answers to a query.
 
@@ -822,14 +729,11 @@ A simpler alternative is to allow **transfer of prestige** from popular pages to
 This notion of popularity is in fact circular, since the popularity of a page is defined by the popularity of other pages, and there may be cycles of links between pages. However, the popularity of pages can be defined by a system of simultaneous linear equations, which can be solved by matrix manipulation
 
 1This is similar in some sense to giving extra weight to endorsements of products by celebrities (such as film stars), so its significance is open to question, although it is effective and widely used in practice.  
-
-**922 Chapter 21 Information Retrieval**
-
 techniques. The linear equations can be defined in such a way that they have a unique and well-defined solution.
 
 It is interesting to note that the basic idea underlying popularity ranking is actually quite old, and first appeared in a theory of social networking developed by sociologists in the 1950s. In the social-networking context, the goal was to define the prestige of people. For example, the president of the United States has high prestige since a large number of people know him. If someone is known by multiple prestigious people, then she also has high prestige, even if she is not known by as large a number of people. The use of a set of linear equations to define the popularity measure also dates back to this work.
 
-**21.3.2 PageRank**
+###21.3.2 PageRank
 
 The Web search engine Google introduced **PageRank**, which is a measure of popularity of a page based on the popularity of pages that link to the page. Using the PageRank popularity measure to rank answers to a query gave results so much better than previously used ranking techniques that Google became the most widely used search engine, in a rather short period of time.
 
@@ -838,22 +742,16 @@ PageRank can be understood intuitively using a **random walk model**. Sup- pose 
 Note that pages that are pointed to from many Web pages are more likely to be visited, and thus will have a higher PageRank. Similarly, pages pointed to by Web pages with a high PageRank will also have a higher probability of being visited, and thus will have a higher PageRank.
 
 PageRank can be defined by a set of linear equations, as follows: First, Web pages are given integer identifiers. The jump probability matrix _T_ is defined with _T_\[_i, j_\] set to the probability that a random walker who is following a link out of page _i_ follows the link to page _j_ . Assuming that each link from _i_ has an equal probability of being followed _T_ \[_i, j_\] = 1_/Ni_ , where _Ni_ is the number of links out of page _i_ . Most entries of _T_ are 0 and it is best represented as an adjacency list. Then the PageRank _P_\[ _j_\] for each page _j_ can be defined as:
-
-_P_\[ _j_\] = _/N_ \+ (1 − ) ∗ _N_∑
-
-_i_\=1
-
-(_T_\[_i, j_\] ∗ _P_\[_i_\])
+![Alt text](746.png)
 
 where  is a constant between 0 and 1, and _N_ the number of pages;  represents the probability of a step in the random walk being a jump.
 
 The set of equations generated as above are usually solved by an an iterative technique, starting with each _P_\[_i_\] set to 1_/N_. Each step of the iteration computes new values for each _P_\[_i_\] using the _P_ values from the previous iteration. Iteration  
 
-**21.3 Relevance Using Hyperlinks 923**
 
 stops when the maximum change in any _P_\[_i_\] value in an iteration goes below some cutoff value.
 
-**21.3.3 Other Measures of Popularity**
+###1.3.3 Other Measures of Popularity
 
 Basic measures of popularity such as PageRank play an important role in ranking of query answers, but are by no means the only factor. The TF–IDF scores of a page are used to judge its relevance to the query keywords, and must be combined with the popularity ranking. Other factors must also be taken into account, to handle limitations of PageRank and related popularity measures.
 
@@ -867,33 +765,27 @@ _<_a href="http://stanford.edu"_\>_ Stanford University_<_/a_\>_
 
 is “Stanford University”. If many links to the page stanford.edu have the word Stanford in their anchor text, the page can be judged to be very relevant to the keyword Stanford. Text near the anchor text may also be taken into account; for example, a Web site may contain the text “Stanford’s home page is here”, but may have used only the word “here” as anchor text in the link to the Stanford Web site.
 
-Popularity based on anchor text is combined with other measures of popu- larity, and with TF–IDF measures, to get an overall ranking for query answers, as discussed in Section 21.3.5. As an implementation trick, the words in the anchor
-
-2Sometimes this indirection is hidden from the user. For example when you point the mouse at a link (such as db- book.com) in a Google query result, the link appears to point directly to the site. However, at least as of mid 2009, when you actually click on the link, Javascript code associated with the page actually rewrites the link to go indirectly through Google’s site. If you use the back button of the browser to go back to the query result page, and point to the link again, the change in the linked URL becomes visible.  
-
-**924 Chapter 21 Information Retrieval**
-
+Popularity based on anchor text is combined with other measures of popu- larity, and with TF–IDF measures, to get an overall ranking for query answers, as discussed in Section 21.3.5. As an implementation trick, the words in the anchor 2Sometimes this indirection is hidden from the user. For example when you point the mouse at a link (such as db- book.com) in a Google query result, the link appears to point directly to the site. However, at least as of mid 2009, when you actually click on the link, Javascript code associated with the page actually rewrites the link to go indirectly through Google’s site. If you use the back button of the browser to go back to the query result page, and point to the link again, the change in the linked URL becomes visible.  
 text are often treated as part of the page, with a term frequency based on the the popularity of the pages where the anchor text appears. Then, TF–IDF ranking automatically takes anchor text into account.
 
 An alternative approach to taking keywords into account when defining popularity is to compute a measure of popularity using _only_ pages that contain the query keywords, instead of computing popularity using all available Web pages. This approach is more expensive, since the computation of popularity ranking has to be done dynamically when a query is received, whereas PageRank is computed statically once, and reused for all queries. Web search engines handling billions of queries per day cannot afford to spend so much time answering a query. As a result, although this approach can give better answers, it is not very widely used.
 
 The HITS algorithm was based on the above idea of first finding pages that contain the query keywords, and then computing a popularity measure using just this set of related pages. In addition it introduced a notion of _hubs_ and _authorities_. A **hub** is a page that stores links to many related pages; it may not in itself contain actual information on a topic, but points to pages that contain actual information. In contrast, an **authority** is a page that contains actual information on a topic, although it may not store links to many related pages. Each page then gets a prestige value as a hub (_hub-prestige_), and another prestige value as an authority (_authority-prestige_). The definitions of prestige, as before, are cyclic and are defined by a set of simultaneous linear equations. A page gets higher hub-prestige if it points to many pages with high authority-prestige, while a page gets higher authority-prestige if it is pointed to by many pages with high hub-prestige. Given a query, pages with highest authority-prestige are ranked higher than other pages. See the bibliographical notes for references giving further details.
 
-**21.3.4 Search Engine Spamming**
+###21.3.4 Search Engine Spamming
 
 **Search engine spamming** refers to the practice of creating Web pages, or sets of Web pages, designed to get a high relevance rank for some queries, even though the sites are not actually popular sites. For example, a travel site may want to be ranked high for queries with the keyword “travel”. It can get high TF–IDF scores by repeating the word “travel” many times in its page.3 Even a site unrelated to travel, such as a pornographic site, could do the same thing, and would get highly ranked for a query on the word travel. In fact, this sort of spamming of TF–IDF was common in the early days of Web search, and there was a constant battle between such sites and search engines that tried to detect spamming and deny them a high ranking.
 
 Popularity ranking schemes such as PageRank make the job of search engine spamming more difficult, since just repeating words to get a high TF–IDF score was no longer sufficient. However, even these techniques can be spammed, by creating a collection of Web pages that point to each other, increasing their popularity
-
 3Repeated words in a Web page may confuse users; spammers can tackle this problem by delivering different pages to search engines than to other users, for the same URL, or by making the repeated words invisible, for example, by formatting the words in small white font on a white background.  
 
-**21.4 Synonyms, Homonyms, and Ontologies 925**
+##21.4 Synonyms, Homonyms, and Ontologies 
 
 rank. Techniques such as using sites instead of pages as the unit of ranking (with appropriately normalized jump probabilities) have been proposed to avoid some spamming techniques, but are not fully effective against other spamming techniques. The war between search engine spammers and the search engines continues even today.
 
 The hubs and authorities approach of the HITS algorithm is more susceptible to spamming. A spammer can create a Web page containing links to good authorities on a topic, and gains a high hub score as a result. In addition the spammer’s Web page includes links to pages that they wish to popularize, which may not have any relevance to the topic. Because these linked pages are pointed to by a page with high hub score, they get a high but undeserved authority score.
 
-**21.3.5 Combining TF-IDF and Popularity Ranking Measures**
+###21.3.5 Combining TF-IDF and Popularity Ranking Measures
 
 We have seen two broad kinds of features used in ranking, namely TF–IDF and popularity scores such as PageRank. TF–IDF itself reflects a combination of several factors including raw term frequency and inverse document frequency, occur- rence of a term in anchor text linking to the page, and a variety of other factors such as occurrence of the term in the title, occurrence of the term early in the document, and larger font size for the term, among other factors.
 
@@ -901,13 +793,11 @@ How to combine the scores of a page on each these factors, to generate an overal
 
 We note that most search engines do not reveal how they compute relevance rankings; they believe that revealing their ranking techniques would allow com- petitors to catch up, and would make the job of search engine spamming easier, resulting in poorer quality of results.
 
-**21.4 Synonyms, Homonyms, and Ontologies**
+##21.4 Synonyms, Homonyms, and Ontologies
 
 Consider the problem of locating documents about motorcycle maintenance, us- ing the query “motorcycle maintenance”. Suppose that the keywords for each document are the words in the title and the names of the authors. The document titled _Motorcycle Repair_ would not be retrieved, since the word “maintenance” does not occur in its title.
 
 We can solve that problem by making use of **synonyms**. Each word can have a set of synonyms defined, and the occurrence of a word can be replaced by the _or_ of all its synonyms (including the word itself). Thus, the query “motorcycle _and_ repair” can be replaced by “motorcycle _and_ (repair _or_ maintenance).” This query would find the desired document.  
-
-**926 Chapter 21 Information Retrieval**
 
 Keyword-based queries also suffer from the opposite problem, of **homonyms**, that is single words with multiple meanings. For instance, the word “object” has different meanings as a noun and as a verb. The word “table” may refer to a dinner table, or to a table in a relational database.
 
@@ -919,7 +809,7 @@ Concept-based querying has several advantages; for example, a query in one langu
 
 Querying based on concepts can be extended further by exploiting concept hierarchies. For example, suppose a person issues a query “flying animals”; a document containing information about “flying mammals” is certainly relevant, since a mammal is an animal. However, the two concepts are not the same, and just matching concepts would not allow the document to be returned as an answer. Concept-based querying systems can support retrieval of documents based on concept hierarchies.  
 
-**21.5 Indexing of Documents 927**
+##21.5 Indexing of Documents 
 
 **Ontologies** are hierarchical structures that reflect relationships between con- cepts. The most common relationship is the **is-a** relationship; for example, a leopard _is-a_ mammal, and a mammal _is-a_ animal. Other relationships, such as _part-of_ are also possible; for example, an airplane wing is _part-of_ an airplane.
 
@@ -931,11 +821,7 @@ It is also possible to build ontologies that link multiple languages. For ex- am
 
 The largest effort in using ontologies for concept-based queries is the **Se- mantic Web**. The Semantic Web is led by the World Wide Web Consortium and consists of a collection of tools, standards, and languages that permit data on the Web to be connected based on their semantics, or meaning. Instead of being a centralized repository, the Semantic Web is designed to permit the same kind of decentralized, distributed growth that has made the World Wide Web so success- ful. Key to this is the capability to integrate multiple, distributed ontologies. As a result, anyone with access to the Internet can add to the Semantic Web.
 
-**21.5 Indexing of Documents**
-
 An effective index structure is important for efficient processing of queries in an information-retrieval system. Documents that contain a specified keyword can be located efficiently by using an **inverted index** that maps each keyword _Ki_ to a list _Si_ of (identifiers of) the documents that contain _Ki_ . For example, if documents _d_1, _d_9 and _d_21 contain the term “Silberschatz”, the inverted list for the keyword Silberschatz would be “_d_1; _d_9; _d_21”. To support relevance ranking based on proximity of keywords, such an index may provide not just identifiers of  
-
-**928 Chapter 21 Information Retrieval**
 
 documents, but also a list of locations within the document where the keyword appears. For example, if “Silberschatz” appeared at position 21 in _d_1, positions 1 and 19 in _d_2, and positions 4_,_ 29 and 46 in _d_3, the inverted list with positions would be “_d_1_/_21; _d_9_/_1_,_ 19; _d_21_/_4_,_ 29_,_ 46”. The inverted lists may also include with each document the term frequency of the term.
 
@@ -951,11 +837,10 @@ If the popularity ranking is independent of the index term (as is the case for P
 
 However, sorting on popularity score is not fully effective in avoiding long inverted list scans, since it ignores the contribution of the TF–IDF scores. An alternative in such cases is to break up the inverted list for each term into two  
 
-**21.6 Measuring Retrieval Effectiveness 929**
+##21.6 Measuring Retrieval Effectiveness 
 
 parts. The first part contains documents that have a high TF–IDF score for that term (for example, documents where the term occurs in the document title, or in anchor text referencing the document). The second part contains all documents. Each part of the list can be sorted in order of (popularity, document-id). Given a query, merging the first parts of the list for each term is likely to give several answers with an overall high score. If sufficient high-scoring answers are not found using the first parts of the lists, the second parts of the lists are used to find all remaining answers. If a document scores high on TF–IDF, it is likely to be found when merging the first parts of the lists. See the bibliographical notes for related references.
 
-**21.6 Measuring Retrieval Effectiveness**
 
 Each keyword may be contained in a large number of documents; hence, a com- pact representation is critical to keep space usage of the index low. Thus, the sets of documents for a keyword are maintained in a compressed form. So that storage space is saved, the index is sometimes stored such that the retrieval is approximate; a few relevant documents may not be retrieved (called a **false drop** or **false negative**), or a few irrelevant documents may be retrieved (called a **false positive**). A good index structure will not have _any_ false drops, but may permit a few false positives; the system can filter them away later by looking at the key- words that they actually contain. In Web indexing, false positives are not desirable either, since the actual document may not be quickly accessible for filtering.
 
@@ -967,15 +852,13 @@ Precision and recall are also important measures for understanding how well a pa
 
 • False positives may occur because irrelevant documents get higher rankings than relevant documents. This too depends on how many documents are examined. One option is to measure precision as a function of number of documents fetched.  
 
-**930 Chapter 21 Information Retrieval**
-
 A better and more intuitive alternative for measuring precision is to measure it as a function of recall. With this combined measure, both precision and recall can be computed as a function of number of documents, if required.
 
 For instance, we can say that with a recall of 50 percent the precision was 75 percent, whereas at a recall of 75 percent the precision dropped to 60 percent. In general, we can draw a graph relating precision to recall. These measures can be computed for individual queries, then averaged out across a suite of queries in a query benchmark.
 
 Yet another problem with measuring precision and recall lies in how to de- fine which documents are really relevant and which are not. In fact, it requires understanding of natural language, and understanding of the intent of the query, to decide if a document is relevant or not. Researchers therefore have created collections of documents and queries, and have manually tagged documents as relevant or irrelevant to the queries. Different ranking systems can be run on these collections to measure their average precision and recall across multiple queries.
 
-**21.7 Crawling and Indexing the Web**
+##21.7 Crawling and Indexing the Web
 
 **Web crawlers** are programs that locate and gather information on the Web. They recursively follow hyperlinks present in known documents to find other docu- ments. Crawlers start from an initial set of URLs, which may be created manually. Each of the pages identified by these URLs are fetched from the Web. The Web crawler then locates all URL links in these pages, and adds them to the set of URLs to be crawled, if they have not already been fetched, or added to the to-be-crawled set. This process is again repeated by fetching all pages in the to-be-crawled set, and processing the links in these pages in the same fashion. By repeating the process, all pages that are reachable by any sequence of links from the initial set of URLs would be eventually fetched.
 
@@ -983,11 +866,7 @@ Since the number of documents on the Web is very large, it is not possible to cr
 
 See the references in the bibliography for a number of practical details in performing a Web crawl, such as infinite sequences of links created by dynam- ically generated pages (called a **spider trap**), prioritization of page fetches, and ensuring that Web sites are not flooded by a burst of requests from a crawler.
 
-Pages fetched during a crawl are handed over to a prestige computation and indexing system, which may be running on a different machine. The prestige  
-
-**21.8 Information Retrieval: Beyond Ranking of Pages 931**
-
-computation and indexing systems themselves run on multiple machines in par- allel. Pages can be discarded after they are used for prestige computation and added to the index; however, they are usually cached by the search engine, to give search engine users fast access to a cached copy of a page, even if the original Web site containing the page is not accessible.
+Pages fetched during a crawl are handed over to a prestige computation and indexing system, which may be running on a different machine. The prestige computation and indexing systems themselves run on multiple machines in par- allel. Pages can be discarded after they are used for prestige computation and added to the index; however, they are usually cached by the search engine, to give search engine users fast access to a cached copy of a page, even if the original Web site containing the page is not accessible.
 
 It is not a good idea to add pages to the same index that is being used for queries, since doing so would require concurrency control on the index, and would affect query and update performance. Instead, one copy of the index is used to answer queries while another copy is updated with newly crawled pages. At periodic intervals the copies switch over, with the old one being updated while the new copy is being used for queries.
 
@@ -997,17 +876,11 @@ Web crawlers depend on all relevant pages being reachable through hyper- links. 
 
 **Deep Web crawlers** extract some such information by guessing what terms would make sense to enter, or what menu options to choose, in such search inter- faces. By entering each possible term/option and executing the search interface, they are able to extract pages with data that they would not have been able to find otherwise. The pages extracted by a deep Web crawl may be indexed just like regular Web pages. The Google search engine, for example, includes results from deep Web crawls.
 
-**21.8 Information Retrieval: Beyond Ranking of Pages**
-
 Information-retrieval systems were originally designed to find textual documents related to a query, and later extended to finding pages on the Web that are related to a query. People use search engines for many different tasks, from simple tasks such as locating a Web site that they want to use, to a broader goal of finding information on a topic of interest. Web search engines have become extremely good at the task of locating Web sites that a user wants to visit. The task of providing information on a topic of interest is much harder, and we study some approaches in this section.
 
-There is also an increasing need for systems that try to understand documents (to a limited extent), and answer questions based on the (limited) understanding. One approach is to create structured information from unstructured documents  
+There is also an increasing need for systems that try to understand documents (to a limited extent), and answer questions based on the (limited) understanding. One approach is to create structured information from unstructured documents and to answer questions based on the structured information. Another approach applies natural language techniques to find documents related to a question (phrased in natural language) and return relevant segments of the documents as an answer to the question.
 
-**932 Chapter 21 Information Retrieval**
-
-and to answer questions based on the structured information. Another approach applies natural language techniques to find documents related to a question (phrased in natural language) and return relevant segments of the documents as an answer to the question.
-
-**21.8.1 Diversity of Query Results**
+###21.8.1 Diversity of Query Results
 
 Today, search engines do not just return a ranked list of Web pages relevant to a query. They also return image and video results relevant to a query. Further, there are a variety of sites providing dynamically changing content such as sports scores, or stock market tickers. To get current information from such sites, users would have to first click on the query result. Instead, search engines have created “gadgets,” which take data from a particular domain, such as sports updates, stock prices, or weather conditions, and format them in a nice graphical manner, to be displayed as results for a query. Search engines have to rank the set of gadgets available in terms of relevance to a query, and display the most relevant gadgets, along with Web pages, images, videos, and other types of results. Thus a query result has a diverse set of result types.
 
@@ -1015,13 +888,9 @@ Search terms are often ambiguous. For example, a query “eclipse” may be refe
 
 The results obtained from a Web page need to be summarized as a **snippet** in a query result. Traditionally, search engines provided a few words surrounding the query keywords as a snippet that helps indicate what the page contains. However, there are many domains where the snippet can be generated in a much more meaningful manner. For example, if a user queries about a restaurant, a search engine can generate a snippet containing the restaurant’s rating, a phone number, and a link to a map, in addition to providing a link to the restaurant’s home page. Such specialized snippets are often generated for results retrieved from a database, for example, a database of restaurants.
 
-**21.8.2 Information Extraction**
+###21.8.2 Information Extraction
 
-**Information-extraction** systems convert information from textual form to a more structured form. For example, a real-estate advertisement may describe attributes of a home in textual form, such as “two-bedroom three-bath house in Queens, $1 million”, from which an information extraction system may extract attributes such as number of bedrooms, number of bathrooms, cost and neighborhood. The original advertisement could have used various terms such as 2BR, or two BR,  
-
-**21.8 Information Retrieval: Beyond Ranking of Pages 933**
-
-or two bed, to denote two bedrooms. The extracted information can be used to structure the data in a standard way. Thus, a user could specify that he is interested in two-bedroom houses, and a search system would be able to return all relevant houses based on the structured data, regardless of the terms used in the advertisement.
+**Information-extraction** systems convert information from textual form to a more structured form. For example, a real-estate advertisement may describe attributes of a home in textual form, such as “two-bedroom three-bath house in Queens, $1 million”, from which an information extraction system may extract attributes such as number of bedrooms, number of bathrooms, cost and neighborhood. The original advertisement could have used various terms such as 2BR, or two BR,or two bed, to denote two bedrooms. The extracted information can be used to structure the data in a standard way. Thus, a user could specify that he is interested in two-bedroom houses, and a search system would be able to return all relevant houses based on the structured data, regardless of the terms used in the advertisement.
 
 An organization that maintains a database of company information may use an information-extraction system to extract information automatically from newspaper articles; the information extracted would relate to changes in attributes of interest, such as resignations, dismissals, or appointments of company officers.
 
@@ -1033,13 +902,9 @@ However, on the Web scale with millions of Web sites, manual creation of such pa
 
 Information extraction usually has errors in some fraction of the extracted information; typically this is because some page had information in a format that syntactically matched a pattern, but did not actually specify a value (such as the price). Information extraction using simple patterns, which separately match parts of a page, is relatively error prone. Machine-learning techniques can perform much more sophisticated analysis, based on interactions between patterns, to minimize errors in the information extracted, while maximizing the amount of information extracted. See the references in the bibliographical notes for more information.
 
-**21.8.3 Question Answering**
+###21.8.3 Question Answering
 
-Information retrieval systems focus on finding documents relevant to a given query. However, the answer to a query may lie in just one part of a document, or in small parts of several documents. **Question answering** systems attempt to provide direct answers to questions posed by users. For example, a question of the  
-
-**934 Chapter 21 Information Retrieval**
-
-form “Who killed Lincoln?” may best be answered by a line that says “Abraham Lincoln was shot by John Wilkes Booth in 1865.” Note that the answer does not actually contain the words “killed” or “who”, but the system infers that “who” can be answered by a name, and “killed” is related to “shot”.
+Information retrieval systems focus on finding documents relevant to a given query. However, the answer to a query may lie in just one part of a document, or in small parts of several documents. **Question answering** systems attempt to provide direct answers to questions posed by users. For example, a question of the form “Who killed Lincoln?” may best be answered by a line that says “Abraham Lincoln was shot by John Wilkes Booth in 1865.” Note that the answer does not actually contain the words “killed” or “who”, but the system infers that “who” can be answered by a name, and “killed” is related to “shot”.
 
 Question answering systems targeted at information on the Web typically generate one or more keyword queries from a submitted question, execute the keyword queries against Web search engines, and parse returned documents to find segments of the documents that answer the question. A number of linguistic techniques and heuristics are used to generate keyword queries, and to find relevant segments from the document.
 
@@ -1047,56 +912,21 @@ An issue in answering questions is that different documents may indicate differe
 
 Current-generation question answering systems are limited in power, since they do not really understand either the question or the documents used to answer the question. However, they are useful for a number of simple question answering tasks.
 
-**21.8.4 Querying Structured Data**
+###21.8.4 Querying Structured Data
 
 Structured data are primarily represented in either relational or XML form. Several systems have been built to support keyword querying on relational and XML data (see Chapter 23). A common theme between these systems lies in finding nodes (tuples or XML elements) containing the specified keywords, and finding connecting paths (or common ancestors, in the case of XML data) between them.
 
 For example, a query “Zhang Katz” on a university database may find the _name_ “Zhang” occurring in a _student_ tuple, and the _name_ “Katz” in an _instructor_ tuple, and a path through the _advisor_ relation connecting the two tuples. Other paths, such as student “Zhang” taking a course taught by “Katz” may also be found in response to this query. Such queries may be used for ad hoc browsing and querying of data, when the user does not know the exact schema and does not wish to take the effort to write an SQL query defining what she is searching for. Indeed it is unreasonable to expect lay users to write queries in a structured query language, whereas keyword querying is quite natural.
 
-Since queries are not fully defined, they may have many different types of answers, which must be ranked. A number of techniques have been proposed to rank answers in such a setting, based on the lengths of connecting paths, and on techniques for assigning directions and weights to edges. Techniques have also been proposed for assigning popularity ranks to tuples and XML elements, based  
-
-**21.9 Directories and Categories 935**
-
-on links such as foreign key and IDREF links. See the bibliographical notes for more information on keyword searching of relational and XML data.
-
-**21.9 Directories and Categories**
+Since queries are not fully defined, they may have many different types of answers, which must be ranked. A number of techniques have been proposed to rank answers in such a setting, based on the lengths of connecting paths, and on techniques for assigning directions and weights to edges. Techniques have also been proposed for assigning popularity ranks to tuples and XML elements, based on links such as foreign key and IDREF links. See the bibliographical notes for more information on keyword searching of relational and XML data.
 
 A typical library user may use a catalog to locate a book for which she is looking. When she retrieves the book from the shelf, however, she is likely to _browse_ through other books that are located nearby. Libraries organize books in such a way that related books are kept close together. Hence, a book that is physically near the desired book may be of interest as well, making it worthwhile for users to browse through such books.
 
 To keep related books close together, libraries use a **classification hierar- chy**. Books on science are classified together. Within this set of books, there is a finer classification, with computer-science books organized together, mathematics books organized together, and so on. Since there is a relation between mathemat- ics and computer science, relevant sets of books are stored close to each other physically. At yet another level in the classification hierarchy, computer-science books are broken down into subareas, such as operating systems, languages, and algorithms. Figure 21.1 illustrates a classification hierarchy that may be used by a library. Because books can be kept at only one place, each book in a library is classified into exactly one spot in the classification hierarchy.
 
 In an information-retrieval system, there is no need to store related documents close together. However, such systems need to _organize documents logically_ so as to permit browsing. Thus, such a system could use a classification hierarchy similar
-
-books
-
-algorithms
-
-graph algorithms
-
-math
-
-science fictionengineering
-
-computer science
-
-**Figure 21.1** A classification hierarchy for a library system.  
-
-**936 Chapter 21 Information Retrieval**
-
-books
-
-algorithms
-
-graph algorithms
-
-math
-
-science fictionengineering
-
-computer science
-
-**Figure 21.2** A classification DAG for a library information-retrieval system.
-
+![Alt text](928.png)
+![Alt text](929.png)
 to one that libraries use, and, when it displays a particular document, it can also display a brief description of documents that are close in the hierarchy.
 
 In an information-retrieval system, there is no need to keep a document in a single spot in the hierarchy. A document that talks of mathematics for computer scientists could be classified under mathematics as well as under computer sci- ence. All that is stored at each spot is an identifier of the document (that is, a pointer to the document), and it is easy to fetch the contents of the document by using the identifier.
@@ -1121,7 +951,7 @@ The second problem can also be tackled manually by librarians, or Web site maint
 
 Wikipedia, the online encyclopedia, addresses the classification problem in the reverse direction. Each page in Wikipedia has a list of **categories** to which it belongs. For example, as of 2009, the Wikipedia page on giraffes had several categories including “Mammals of Africa”. In turn, the “Mammals of Africa” category itself belongs to the category “Mammals by geography”, which in turn belongs to the category “Mammals”, which in turn has a category “Vertebrates”, and so on. The category structure is useful to browse other instances of the same category, for example, to find other mammals of Africa, or other mammals. Conversely, a query that looks for mammals can use the category information to infer that a giraffe is a mammal. The Wikipedia category structure is not a tree, but is almost a DAG; it is not actually a DAG since it has a few instances of loops, which probably reflect categorization errors.
 
-**21.10 Summary**
+##21.10 Summary
 
 • Information-retrieval systems are used to store and query textual data such as documents. They use a simpler data model than do database systems, but provide more powerful querying capabilities within the restricted model.
 
@@ -1134,8 +964,6 @@ Wikipedia, the online encyclopedia, addresses the classification problem in the 
 ◦ Inverse document frequency.
 
 ◦ Popularity ranking.  
-
-**938 Chapter 21 Information Retrieval**
 
 • Similarity of documents is used to retrieve documents similar to an example document. The cosine metric is used to define similarity, and is based on the vector space model.
 
@@ -1179,7 +1007,7 @@ Wikipedia, the online encyclopedia, addresses the classification problem in the 
 
 ◦ Popularity/prestige  
 
-**Practice Exercises 939**
+**Practice Exercises 
 
 ◦ Transfer of prestige
 
@@ -1201,10 +1029,7 @@ Wikipedia, the online encyclopedia, addresses the classification problem in the 
 
 **21.4** Suggest how a document containing a word (such as “leopard”) can be indexed such that it is efficiently retrieved by queries using a more gen- eral concept (such as “carnivore” or “mammal”). You can assume that the concept hierarchy is not very deep, so each concept has only a few generalizations (a concept can, however, have a large number of special- izations). You can also assume that you are provided with a function that returns the concept for each word in a document. Also suggest how a query using a specialized concept can retrieve documents using a more general concept.
 
-**21.5** Suppose inverted lists are maintained in blocks, with each block noting the largest popularity rank and TF–IDF scores of documents in the remaining  
-
-**940 Chapter 21 Information Retrieval**
-
+**21.5** Suppose inverted lists are maintained in blocks, with each block noting the largest popularity rank and TF–IDF scores of documents in the remaining 
 blocks in the list. Suggest how merging of inverted lists can stop early if the user wants only the top _K_ answers.
 
 **Exercises**
@@ -1229,7 +1054,7 @@ b. Give a formula for computing the relevance of a page to a query containing mu
 
 a. A bibliographic database that has links from articles to authors of the articles and links from each article to every article that it references.  
 
-**Bibliographical Notes 941**
+##Bibliographical Notes 
 
 b. A sales database that has links from each sales record to the items that were sold.
 
@@ -1249,11 +1074,7 @@ Brin and Page \[1998\] describes the anatomy of the Google search engine, includ
 
 Indexing of documents is covered in detail by Witten et al. \[1999\]. Jones and Willet \[1997\] is a collection of articles on information retrieval. Salton \[1989\] is an early textbook on information-retrieval systems. A number of practical issues in ranking and indexing of Web pages, as done in an early version of the Google search engine, are discussed in Brin and Page \[1998\]. Unfortunately, there are no publicly available details of how exactly ranking is done currently by any of the leading search engines.
 
-The Citeseer system (citeseer.ist.psu.edu) maintains a very large database of re- search articles, with citation links between the publications, and uses citations to  
-
-**942 Chapter 21 Information Retrieval**
-
-rank publications. It includes a technique for adjusting the citation ranking based on the age of a publication, to compensate for the fact that citations to a publi- cation increase as time passes; without the adjustment, older documents tend to get a higher ranking than they truly deserve. Google Scholar (scholar.google.com) provides a similar searchable database of research articles incorporating citations between articles. It is worth noting that these systems use information extraction techniques to infer the title and list of authors of an article, as well as the citations at the end of the article. They then create citation links between articles based on (approximate) matching of the article title and author list with the citation text.
+The Citeseer system (citeseer.ist.psu.edu) maintains a very large database of re- search articles, with citation links between the publications, and uses citations to rank publications. It includes a technique for adjusting the citation ranking based on the age of a publication, to compensate for the fact that citations to a publi- cation increase as time passes; without the adjustment, older documents tend to get a higher ranking than they truly deserve. Google Scholar (scholar.google.com) provides a similar searchable database of research articles incorporating citations between articles. It is worth noting that these systems use information extraction techniques to infer the title and list of authors of an article, as well as the citations at the end of the article. They then create citation links between articles based on (approximate) matching of the article title and author list with the citation text.
 
 Information extraction and question answering have had a fairly long history in the artificial intelligence community. Jackson and Moulinier \[2002\] provides textbook coverage of natural language processing techniques with an empha- sis on information extraction. Soderland \[1999\] describes information extraction using the WHISK system, while Appelt and Israel \[1999\] provides a tutorial on information extraction.
 
