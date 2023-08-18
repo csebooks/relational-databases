@@ -3,7 +3,7 @@ title: 'PART SIX: DATA WAREHOUSING, DATA MINING, AND INFORMATION RETRIEVAL'
 weight: 11
 ---
 
-
+# DATA WAREHOUSING, DATA MINING, AND INFORMATION RETRIEVAL
 
 Database queries are often designed to extract specific information, such as the balance of an account or the sum of a customer’s account balances. However, queries designed to help formulate a corporate strategy usually requires access to large amounts of data originating at multiple sources.
 
