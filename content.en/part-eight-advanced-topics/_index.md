@@ -111,8 +111,6 @@ Not all SQL implementations support the **merge** statement currently; see the r
 
 The performance of most systems (at least before they are tuned) is usually limited primarily by the performance of one or a few components, called **bottlenecks**. For instance, a program may spend 80 percent of its time in a small loop deep in the code, and the remaining 20 percent of the time on the rest of the code; the small loop then is a bottleneck. Improving the performance of a component that is not a bottleneck does little to improve the overall speed of the system; in the example, improving the speed of the rest of the code cannot lead to more than a
 
-1A better action here would have been to insert these records into an error relation, but that cannot be done with the **merge** statement.  
-
 ![Alt text](fBottlenecks.jpeg)
 
 20 percent improvement overall, whereas improving the speed of the bottleneck loop could result in an improvement of nearly 80 percent overall, in the best case.
@@ -575,8 +573,6 @@ b. What factors may result in interference between the transactions of different
 
 **24.5** List some benefits and drawbacks of an anticipatory standard compared to a reactionary standard.
 
-## Exercises
-
 **24.6** Find out all performance information your favorite database system pro- vides. Look for at least the following: what queries are currently executing or executed recently, what resources each of them consumed (CPU and I/O), what fraction of page requests resulted in buffer misses (for each query, if available), and what locks have a high degree of contention. You may also be able to get information about CPU and I/O utilization from the operating system.
 
 **24.7** a. What are the three broad levels at which a database system can be tuned to improve performance?
@@ -599,17 +595,21 @@ b. Give two examples of how tuning can be done for each of the levels.
 
 ## Bibliographical Notes
 
-The classic text on queueing theory is Kleinrock \[1975\].An early proposal for a database-system benchmark (the Wisconsin bench mark) was made by Bitton et al. \[1983\]. The TPC-A, -B, and -C benchmarks are described in Gray \[1991\]. An online version of all the TPC benchmark descrip- tions, as well as benchmark results, is available on the World Wide Web at the URL www.tpc.org; the site also contains up-to-date information about new benchmark proposals. The OO1 benchmark for OODBs is described in Cattell and Skeen \[1992\]; the OO7 benchmark is described in Carey et al. \[1993\].
+The classic text on queueing theory is Kleinrock [1975].
 
-Shasha and Bonnet \[2002\] provides detailed coverage of database tuning. O’Neil and O’Neil \[2000\] provides a very good textbook coverage of performance measurement and tuning. The 5-minute and 1-minute rules are described in Gray and Graefe \[1997\], and more recently extended to consider combinations of main memory, flash, and disk, in Graefe \[2008\].
+  An early proposal for a database-system benchmark (the Wisconsin benchmark) was made by Bitton et al. [1983]. The TPC-A, -B, and -C benchmarks are described in Gray [1991]. An online version of all the TPC benchmark descriptions, as well as benchmark results, is available on the World Wide Web at the URLwww.tpc.org; the site also contains up-to-date information about new benchmark proposals. The OO1 benchmark for OODBs is described in Cattell and Skeen [1992];
+the OO7 benchmark is described in Carey et al. [1993].
 
-Index selection and materialized view selection are addressed by Ross et al. \[1996\], Chaudhuri and Narasayya \[1997\], Agrawal et al. \[2000\], and Mistry et al. \[2001\]. Zilio et al. \[2004\], Dageville et al. \[2004\], and Agrawal et al. \[2004\] describe tuning support in IBM DB2, Oracle and Microsoft SQL Server.
+Shasha and Bonnet [2002] provides detailed coverage of database tuning.
+O’Neil and O’Neil [2000] provides a very good textbook coverage of performance measurement and tuning. The 5-minute and 1-minute rules are described in Gray and Graefe [1997], and more recently extended to consider combinations of main
+memory, flash, and disk, in Graefe [2008].
 
-Information about ODBC, OLE-DB, ADO, and ADO.NET can be found on the Web site www.microsoft.com/data and in a number of books on the subject that can be found through www.amazon.com. _ACM Sigmod Record_, which is published quarterly, has a regular section on standards in databases.
+Index selection and materialized view selection are addressed by Ross et al.[1996], Chaudhuri and Narasayya [1997], Agrawal et al. [2000], and Mistry et al.[2001]. Zilio et al. [2004], Dageville et al. [2004], and Agrawal et al. [2004] describe tuning support in IBM DB2, Oracle and Microsoft SQL Server.
 
-A wealth of information on XML-based standards and tools is available online on the Web site www.w3c.org. Information about RosettaNet can be found on the Web at www.rosettanet.org.
+Information about ODBC, OLE-DB, ADO, and ADO.NET can be found on the Web site www.microsoft.com/data and in a number of books on the subject that can be found through www.amazon.com. ACM Sigmod Record, which is published quarterly, has a regular section on standards in databases.
 
-Business process re-engineering is covered by Cook \[1996\]. Umar \[1997\] cov- ers re-engineering and issues in dealing with legacy systems.
+A wealth of information on XML-based standards and tools is available online on the Web site www.w3c.org. Information about RosettaNet can be found on the Web at www.rosettanet.org.Business process re-engineering is covered by Cook [1996]. Umar [1997] covers re-engineering and issues in dealing with legacy systems.
+
 
 # Chapter 25 
 # Spatial and Temporal Data and Mobility
@@ -660,7 +660,7 @@ The SQL standard defines the types **date**, **time**, and **timestamp** as we s
 
 Since different places in the world have different local times, there is often a need for specifying the time zone along with the time. The **Universal Coordinated Time** (**UTC**) is a standard reference point for specifying time, with local times defined as offsets from UTC. (The standard abbreviation is UTC, rather than UCT, since it is an abbreviation of “Universal Coordinated Time” written in French as _universel temps coordonné.)_ SQL also supports two types, **time with time zone**, and **timestamp with time zone**, which specify the time as a local time plus the offset of the local time from UTC. For instance, the time could be expressed in terms of U.S. Eastern Standard Time, with an offset of −6:00, since U.S. Eastern Standard time is 6 hours behind UTC.
 
-SQL supports a type called **interval**, which allows us to refer to a period of time such as “1 day” or “2 days and 5 hours,” without specifying a particular time when this period starts. This notion differs from the notion of interval we used previously, which refers to an interval of time with specific starting and ending times.1
+SQL supports a type called **interval**, which allows us to refer to a period of time such as “1 day” or “2 days and 5 hours,” without specifying a particular time when this period starts. This notion differs from the notion of interval we used previously, which refers to an interval of time with specific starting and ending times.^1^
 
 ### 25.2.2 Temporal Query Languages
 
@@ -670,9 +670,7 @@ A **temporal selection** is a selection that involves the time attributes; a **t
 
 The predicates _precedes_, _overlaps_, and _contains_ can be applied on intervals; their meanings should be clear. The _intersect_ operation can be applied on two intervals, to give a single (possibly empty) interval. However, the union of two intervals may or may not be a single interval.
 
-Functional dependencies must be used with care in a temporal relation, as we saw in Section 8.9. Although the instructor _ID_ may functionally determine the salary at any given point in time, obviously the salary can change over time. A **temporal functional dependency** _X_
-
-→ _Y_ holds on a relation schema _R_ if, for all legal instances _r_ of _R_, all snapshots of _r_ satisfy the functional dependency _X_ → _Y_.
+Functional dependencies must be used with care in a temporal relation, as we saw in Section 8.9. Although the instructor _ID_ may functionally determine the salary at any given point in time, obviously the salary can change over time. A **temporal functional dependency** _X_ → _Y_ holds on a relation schema _R_ if, for all legal instances _r_ of _R_, all snapshots of _r_ satisfy the functional dependency _X_ → _Y_.
 
 Several proposals have been made for extending SQL to improve its support of temporal data, but at least until SQL:2008, SQL has not provided any special support for temporal data beyond the time-related data types and operations.
 
@@ -1140,15 +1138,11 @@ spatial and nonspatial data.
 
 Revesz [2002] provides textbook coverage of the area of constraint databases; temporal intervals and spatial regions can be thought of as special cases of constraints.
 
-Samet [1995a] describes research issues in multimedia databases. Indexing of
-multimedia data is discussed in Faloutsos and Lin [1995].
+Samet [1995a] describes research issues in multimedia databases. Indexing of multimedia data is discussed in Faloutsos and Lin [1995].
 
-Dashti et al. [2003] provides a textbook description of streaming media server design, including extensive coverage of data organization on disk subsystems.
-Video servers are discussed in Anderson et al. [1992], Rangan et al. [1992], Ozden et al. [1994], Freedman and DeWitt [1995], and Ozden et al. [1996b]. Fault tolerance
-is discussed in Berson et al. [1995] and Ozden et al. [1996a].
+Dashti et al. [2003] provides a textbook description of streaming media server design, including extensive coverage of data organization on disk subsystems.Video servers are discussed in Anderson et al. [1992], Rangan et al. [1992], Ozden et al. [1994], Freedman and DeWitt [1995], and Ozden et al. [1996b]. Fault tolerance is discussed in Berson et al. [1995] and Ozden et al. [1996a].
 
-Information management in systems that include mobile computers is studied in Alonso and Korth [1993] and Imielinski and Badrinath [1994]. Imielinski and
-Korth [1996] presents an introduction to mobile computing and a collection of research papers on the subject.
+Information management in systems that include mobile computers is studied in Alonso and Korth [1993] and Imielinski and Badrinath [1994]. Imielinski and Korth [1996] presents an introduction to mobile computing and a collection of research papers on the subject.
 
 The version-vector scheme for detecting inconsistency in distributed file systems is described by Popek et al. [1981] and Parker et al. [1983]. 
 
@@ -1326,10 +1320,7 @@ E-commerce refers to the process of carrying out various activities related to c
 
 - The sale process, which includes negotiations on price and quality of service, and other contractual matters.
 
-- The marketplace: When there are multiple sellers and buyers for a product, a marketplace, such as a stock exchange, helps in negotiating the price to be paid for the product. Auctions are used when there is a single seller and multiple buyers, and reverse auctions are used when there is a single buyer and multiple sellers.  
-
-**26.3 E-Commerce 1103**
-
+- The marketplace: When there are multiple sellers and buyers for a product, a marketplace, such as a stock exchange, helps in negotiating the price to be paid for the product. Auctions are used when there is a single seller and multiple buyers, and reverse auctions are used when there is a single buyer and multiple sellers. 
 - Payment for the sale.
 
 - Activities related to delivery of the product or service. Some products and services can be delivered over the Internet; for others the Internet is used only for providing shipping information and for tracking shipments of products.
@@ -1416,9 +1407,7 @@ The process of committing a transaction _T_ requires these records to be written
 
 - The _<_T **commit**_\>_ log record.
 
-These output operations frequently require the output of blocks that are only partially filled. To ensure that nearly full blocks are output, we use the **group- commit** technique. Instead of attempting to commit _T_ when _T_ completes, the system waits until several transactions have completed, or a certain period of time has passed since a transaction completed execution. It then commits the group of transactions that are waiting, together. Blocks written to the log on stable storage would contain records of several transactions. By careful choice of group size and maximum waiting time, the system can ensure that blocks are full when they are written to stable storage without making transactions wait excessively. This technique results, on average, in fewer output operations per committed transaction.  
-
-**1108 Chapter 26 Advanced Transaction Processing**
+These output operations frequently require the output of blocks that are only partially filled. To ensure that nearly full blocks are output, we use the **group- commit** technique. Instead of attempting to commit _T_ when _T_ completes, the system waits until several transactions have completed, or a certain period of time has passed since a transaction completed execution. It then commits the group of transactions that are waiting, together. Blocks written to the log on stable storage would contain records of several transactions. By careful choice of group size and maximum waiting time, the system can ensure that blocks are full when they are written to stable storage without making transactions wait excessively. This technique results, on average, in fewer output operations per committed transaction. 
 
 Although group commit reduces the overhead imposed by logging, it results in a slight delay in commit of transactions that perform updates. The delay can be made quite small (say, 10 milliseconds), which is acceptable for many applications. These delays can be eliminated if disks or disk controllers support nonvolatile RAM buffers for write operations. Transactions can commit as soon as the write is performed on the nonvolatile RAM buffer. In this case, there is no need for group commit.
 
@@ -1503,11 +1492,7 @@ The bibliographical notes reference other techniques for ensuring consistency wi
 
 A long-duration transaction can be viewed as a collection of related subtasks or subtransactions. By structuring a transaction as a set of subtransactions, we are able to enhance parallelism, since it may be possible to run several subtransactions in parallel. Furthermore, it is possible to deal with failure of a subtransaction (due to abort, system crash, and so on) without having to roll back the entire long-duration transaction.
 
-A nested or multilevel transaction _T_ consists of a set _T_ \= {t~1~,t~2~, _. . ._ , _t~n~_} of subtransactions and a partial order _P_ on _T_. A subtransaction _ti_ in _T_ may abort without forcing _T_ to abort. Instead, _T_ may either restart _ti_ or simply choose not to run _t~i~_ . If _t~i~_ commits, this action does not make _ti_ permanent (unlike the situation in Chapter 16). Instead, _ti commits to T_, and may still abort (or require compensation —see Section 26.6.4) if _T_ aborts. An execution of _T_ must not violate the partial  
-
-**26.6 Long-Duration Transactions 1113**
-
-order _P_. That is, if an edge _t~i~_ → _t~j~_ appears in the precedence graph, then _t~j~_ → _t~i~_ must not be in the transitive closure of _P_.
+A nested or multilevel transaction _T_ consists of a set _T_ \= {t~1~,t~2~, _. . ._ , _t~n~_} of subtransactions and a partial order _P_ on _T_. A subtransaction _ti_ in _T_ may abort without forcing _T_ to abort. Instead, _T_ may either restart _ti_ or simply choose not to run _t~i~_ . If _t~i~_ commits, this action does not make _ti_ permanent (unlike the situation in Chapter 16). Instead, _ti commits to T_, and may still abort (or require compensation —see Section 26.6.4) if _T_ aborts. An execution of _T_ must not violate the partial  order _P_. That is, if an edge _t~i~_ → _t~j~_ appears in the precedence graph, then _t~j~_ → _t~i~_ must not be in the transitive closure of _P_.
 
 Nesting may be several levels deep, representing a subdivision of a transac- tion into subtasks, subsubtasks, and so on. At the lowest level of nesting, we have the standard database operations **read** and **write** that we have used previously.
 
@@ -1743,10 +1728,8 @@ Fischer [2006] is a handbook on workflow systems, which is published in associat
 
 Loeb [1998] provides a detailed description of secure electronic transactions.
 
-Garcia-Molina and Salem [1992] provides an overview of main-memory
-databases. Jagadish et al. [1993] describes a recovery algorithm designed for mainmemory databases. A storage manager for main-memory databases is describedin Jagadish et al. [1994].
+Garcia-Molina and Salem [1992] provides an overview of main-memory databases. Jagadish et al. [1993] describes a recovery algorithm designed for mainmemory databases. A storage manager for main-memory databases is described in Jagadish et al. [1994].
 
 Real-time databases are discussed by Lam and Kuo [2001]. Concurrency control and scheduling in real-time databases are discussed by Haritsa et al. [1990],Hong et al. [1993], and Pang et al. [1995]. Ozsoyoglu and Snodgrass [1995] is a survey of research in real-time and temporal databases.
 
-Nested and multilevel transactions are presented by Moss [1985], Lynch and Merritt [1986], Moss [1987], Haerder and Rothermel [1987], Rothermel and Mohan [1989], Weikum et al. [1990], Korth and Speegle [1990], Weikum [1991], and Korth and Speegle [1994], Theoretical aspects of multilevel transactions are presented
-in Lynch et al. [1988]. The concept of Saga was introduced in Garcia-Molina and Salem [1987]
+Nested and multilevel transactions are presented by Moss [1985], Lynch and Merritt [1986], Moss [1987], Haerder and Rothermel [1987], Rothermel and Mohan [1989], Weikum et al. [1990], Korth and Speegle [1990], Weikum [1991], and Korth and Speegle [1994], Theoretical aspects of multilevel transactions are presented in Lynch et al. [1988]. The concept of Saga was introduced in Garcia-Molina and Salem [1987]
