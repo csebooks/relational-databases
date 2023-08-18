@@ -267,7 +267,7 @@ PG_FUNCTION_INFO_V1(complex out);
      Complex *complex = (Complex *) pg getarg pointer(0); 
      char *result;
      result = (char *) palloc(100);
-      snprintf(result, 100, "(%g,%g)",           complex−\>x, complex−\>y);
+      snprintf(result, 100,"(%g,%g)",     complex−>x, complex−>y);
        pg return_cstring(result);
        }
 
@@ -279,9 +279,12 @@ Thus, defining a new aggregate is as simple as defining these two functions. For
 
 **27.3 SQL Variations and Extensions 1135**
 
-**create aggregate** _sum_ ( _sfunc_ \= _complex add_, _basetype_ \= _complex_, _stype_ \= _complex_, _initcond_ \= ’(0,0)’
-
-);
+**create aggregate** sum (
+     sfunc = complex_add,
+      basetype = complex,
+       stype = complex,
+        initcond= ’(0,0)’
+        );
 
 Note the use of function overloading: PostgreSQL will call the appropriate _sum_ aggregate function, on the basis of the actual type of its argument during invo- cation. The _basetype_ is the argument type and _stype_ is the state value type. In this case, a final function is unnecessary, since the return value is the state value itself (that is, the running sum in both cases).
 
@@ -373,151 +376,66 @@ A tuple is visible for a transaction _T_ if the following two conditions hold:
 
 **2.** Updates to the tuple (if any) were executed by a transaction that is either
 
-• aborted, _or_
+• aborted, or
 
-• started running after _T_ took its snapshot, _or_
+• started running after T took its snapshot, or
 
-• was active when _T_ took its snapshot.
+• was active when T took its snapshot.
 
-To be precise, a tuple is also visible to _T_ if it was created by _T_ and not subsequently updated by _T_ . We omit the details of this special case for simplicity.
+To be precise, a tuple is also visible to T if it was created by T and not subsequently updated by T . We omit the details of this special case for simplicity.
 
 The goal of the above conditions is to ensure that each transaction sees a consistent view of the data. PostgreSQL maintains the following state information to check these conditions efficiently:
 
-• A _transaction ID_, which at the same time serves as a timestamp, is assigned to every transaction at transaction start time. PostgreSQL uses a logical counter (as described in Section 15.4.1) for assigning transaction IDs.
+• A transaction ID, which at the same time serves as a timestamp, is assigned to every transaction at transaction start time. PostgreSQL uses a logical counter (as described in Section 15.4.1) for assigning transaction IDs.
 
 • A log file called _pg clog_ contains the current status of each transaction. The status can be either in progress, committed, or aborted.
 
-• Each tuple in a table has a header with three fields: _xmin_, which contains the transaction ID of the transaction that created the tuple and which is therefore also called the _creation-transaction ID_; _xmax_, which contains the transaction ID of the replacing/deleting transaction (or _null_ if not deleted/replaced) and which is also referred to as the _expire-transaction ID_; and a forward link to new versions of the same logical row, if there are any.
+• Each tuple in a table has a header with three fields: xmin, which contains the transaction ID of the transaction that created the tuple and which is therefore also called the creation-transaction ID; xmax, which contains the transaction ID of the replacing/deleting transaction (or null if not deleted/replaced) and which is also referred to as the expire-transaction ID; and a forward link to new versions of the same logical row, if there are any.
 
-• A _SnapshotData_ data structure is created either at transaction start time or at query start time, depending on the isolation level (described in more detail below). Its main purpose is to decide whether a tuple is visible to the current command. The _SnapshotData_ stores information about the state of transactions at the time it is created, which includes a list of active transactions and _xmax_, a value equal to 1 + the highest ID of any transaction that has started so far.  
+• A SnapshotData data structure is created either at transaction start time or at query start time, depending on the isolation level (described in more detail below). Its main purpose is to decide whether a tuple is visible to the current command. The SnapshotData stores information about the state of transactions at the time it is created, which includes a list of active transactions and xmax, a value equal to 1 + the highest ID of any transaction that has started so far.  
 
 **1140 Chapter 27 PostgreSQL**
 
-**Database table** _department(dept\_name, building, budget)_forward xmin xmax
+![alt The PostgreSQL data structures used for MVCC.](postrge.png)
 
-... ...
-
-...
-
-...
-
-100
-
-102
-
-106
-
-...
-
-...
-
-...
-
-100
-
-102
-
-104 ...
-
-... 106
-
-...
-
-...
-
-...
-
-10
-
-10
-
-00 ...
-
-... 00
-
-...
-
-...
-
-...
-
-102
-
-106
-
-_x_
-
-Transaction 104 **select** _budget_ **from** _department_ **where** _dept\_name_ = ‘Physics’ 00 In progress
-
-01 Aborted 10 Committed
-
-Watson
-
-Watson
-
-Watson
-
-70000
-
-64000
-
-68000
-
-.....
-
-.....
-
-Physics
-
-Physics
-
-Physics
-
-.....
-
-pg\_clog file
-
-Status flagsXID
 
 **Figure 27.6** The PostgreSQL data structures used for MVCC.
 
 The value _xmax_ serves as a “cutoff” for transactions that may be considered visible.
 
-Figure 27.6 illustrates some of this state information through a simple example involving a database with only one table, the _department_ table from Figure 27.7. The _department_ table has three columns, the name of the department, the building where the department is located, and the budget of the department. Figure 27.6 shows a fragment of the _department_ table containing only the (versions of) the row corresponding to the Physics department. The tuple headers indicate that the row was originally created by transaction 100, and later updated by transaction 102 and transaction 106. Figure 27.6 also shows a fragment of the corresponding _pg clog_ file. On the basis of the _pg clog_ file, transactions 100 and 102 are committed,
+Figure 27.6 illustrates some of this state information through a simple example involving a database with only one table, the department table from Figure 27.7. The department table has three columns, the name of the department, the building where the department is located, and the budget of the department. Figure 27.6 shows a fragment of the department table containing only the (versions of) the row corresponding to the Physics department. The tuple headers indicate that the row was originally created by transaction 100, and later updated by transaction 102 and transaction 106. Figure 27.6 also shows a fragment of the corresponding _pg clog file. On the basis of the pg clog file, transactions 100 and 102 are committed,
 
 while transactions 104 and 106 are in progress. Given the above state information, the two conditions that need to be satisfied
 
 for a tuple to be visible can be rewritten as follows:
 
-_dept name building budget_
+![alt The department relation.](the.png)
 
-Biology Watson 90000 Comp. Sci. Taylor 100000 Elec. Eng. Taylor 85000 Finance Painter 120000 History Painter 50000 Music Packard 80000 Physics Watson 70000
-
-**Figure 27.7** The _department_ relation.  
+**Figure 27.7** The department relation.  
 
 **27.4 Transaction Management in PostgreSQL 1141**
 
-**1\.** The creation-transaction ID in the tuple header
+**1.** The creation-transaction ID in the tuple header
 
-a. is a committed transaction according to the _pg clog_ file, _and_
+a. is a committed transaction according to the pg clog file, and
 
-b. is less than the cutoff transaction ID _xmax_ recorded by _SnapshotData_, _and_
+b. is less than the cutoff transaction ID xmax recorded by SnapshotData,and
 
-c. is not one of the active transactions stored in _SnapshotData_.
+c. is not one of the active transactions stored in SnapshotData.
 
-**2\.** The expire-transaction ID, if it exists,
+**2.** The expire-transaction ID, if it exists,
 
-a. is an aborted transaction according to the _pg clog_ file, _or_
+a. is an aborted transaction according to the pg clog file, or
 
-b. is greater than or equal to the cutoff transaction ID _xmax_ recorded by _SnapshotData_, _or_
+b. is greater than or equal to the cutoff transaction ID xmax recorded by SnapshotData, or
 
-c. is one of the active transactions stored in _SnapshotData_.
+c. is one of the active transactions stored in SnapshotData.
 
-Consider the example database in Figure 27.6 and assume that the _Snapshot- Data_ used by transaction 104 simply uses 103 as the cutoff transaction ID _xmax_ and does not show any earlier transactions to be active. In this case, the only version of the row corresponding to the Physics department that is visible to transaction 104 is the second version in the table, created by transaction 102. The first version, created by transaction 100, is not visible, since it violates condition 2: The expire- transaction ID of this tuple is 102, which corresponds to a transaction that is not aborted and that has a transaction ID less than or equal to 103. The third version of the Physics tuple is not visible, since it was created by transaction 106, which has a transaction ID larger than transaction 103, implying that this version had not been committed at the time _SnapshotData_ was created. Moreover, transaction 106 is still in progress, which violates another one of the conditions. The second version of the row meets all the conditions for tuple visibility.
+Consider the example database in Figure 27.6 and assume that the Snapshot- Data used by transaction 104 simply uses 103 as the cutoff transaction ID xmax and does not show any earlier transactions to be active. In this case, the only version of the row corresponding to the Physics department that is visible to transaction 104 is the second version in the table, created by transaction 102. The first version, created by transaction 100, is not visible, since it violates condition 2: The expire- transaction ID of this tuple is 102, which corresponds to a transaction that is not aborted and that has a transaction ID less than or equal to 103. The third version of the Physics tuple is not visible, since it was created by transaction 106, which has a transaction ID larger than transaction 103, implying that this version had not been committed at the time SnapshotData was created. Moreover, transaction 106 is still in progress, which violates another one of the conditions. The second version of the row meets all the conditions for tuple visibility.
 
 The details of how PostgreSQL MVCC interacts with the execution of SQL statements depends on whether the statement is an **insert**, **select**, **update**, or **delete** statement. The simplest case is an **insert** statement, which may simply create a new tuple based on the data in the statement, initialize the tuple header (the creation ID), and insert the new tuple into the table. Unlike two-phase locking, this does not require any interaction with the concurrency-control protocol unless the insertion needs to be checked for integrity conditions, such as uniqueness or foreign key constraints.
 
-When the system executes a **select**, **update**, or **delete** statement the interaction with the MVCC protocol depends on the isolation level specified by the application. If the isolation level is read committed, the processing of a new statement begins with creating a new _SnapshotData_ data structure (independent of whether the statement starts a new transaction or is part of an existing transaction). Next, the system identifies _target tuples_, that is, the tuples that are visible with respect to the _SnapshotData_ and that match the search criteria of the statement. In the case of a **select** statement, the set of target tuples make up the result of the query.
+When the system executes a **select**, **update**, or **delete** statement the interaction with the MVCC protocol depends on the isolation level specified by the application. If the isolation level is read committed, the processing of a new statement begins with creating a new _SnapshotData_ data structure (independent of whether the statement starts a new transaction or is part of an existing transaction). Next, the system identifies target tuples, that is, the tuples that are visible with respect to the SnapshotData and that match the search criteria of the statement. In the case of a **select** statement, the set of target tuples make up the result of the query.
 
 In the case of an **update** or **delete** statement in read committed mode, an extra step is necessary after identifying the target tuples, before the actual update or  
 
@@ -539,7 +457,7 @@ It is up to the application to handle an error message like the above appro- pri
 
 ble only for **update** and **delete** statements. It is still the case that **select** statements never conflict with any other transactions.
 
-**27.4.1.4 Implications of Using MVCC**
+### 27.4.1.4 Implications of Using MVCC
 
 Using the PostgreSQL MVCC scheme has implications in three different areas: (1) extra burden is placed on the storage system, since it needs to maintain different versions of tuples; (2) developing concurrent applications takes some extra care, since PostgreSQL MVCC can lead to subtle, but important, differences in how concurrent transactions behave, compared to systems where standard two-phase locking is used; (3) PostgreSQL performance depends on the characteristics of the workload running on it. The implications of PostgreSQL MVCC are described in more detail below.
 
@@ -555,11 +473,12 @@ PostgreSQL’s approach to concurrency control performs best for workloads conta
 
 phase locking may be more efficient for some update-intensive workloads, but this depends on many factors, such as the length of transactions and the frequency of deadlocks.
 
-**27.4.1.5 DDL Concurrency Control**
+### 27.4.1.5 DDL Concurrency Control
 
 The MVCC mechanisms described in the previous section do not protect trans- actions against operations that affect entire tables, for example, transactions that drop a table or change the schema of a table. Toward this end, PostgreSQL pro- vides explicit locks that DDL commands are forced to acquire before starting their execution. These locks are always table based (rather than row based) and are acquired and released in accordance with the strict two-phase locking protocol.
 
 Figure 27.8 lists all types of locks offered by PostgreSQL, which locks they conflict with, and some commands that use them (the **create index concurrently**
+![alt Table-level lock modes.](lock.png)
 
 **Figure 27.8** Table-level lock modes.  
 
@@ -573,11 +492,11 @@ Locks are recorded in a lock table that is implemented as a shared-memory hash t
 
 Deadlock detection in PostgreSQL is based on time-outs. By default, deadlock detection is triggered if a transaction has been waiting for a lock for more than 1 second. The deadlock-detection algorithm constructs a wait-for graph based on the information in the lock table and searches this graph for circular dependencies. If it finds any, meaning a deadlock was detected, the transaction that triggered the deadlock detection aborts and returns an error to the user. If no cycle is detected, the transaction continues waiting on the lock. Unlike some commercial systems, PostgreSQL does not tune the lock time-out parameter dynamically, but it allows the administrator to tune it manually. Ideally, this parameter should be chosen on the order of a transaction lifetime, in order to optimize the trade-off between the time it takes to detect a deadlock and the work wasted for running the deadlock detection algorithm when there is no deadlock.
 
-**27.4.1.6 Locking and Indices**
+### 27.4.1.6 Locking and Indices
 
 All current types of indices in PostgreSQL allow for concurrent access by multi- ple transactions. This is typically enabled by page-level locks, so that different transactions may access the index in parallel if they do not request conflicting locks on a page. These locks are usually held for a short time to avoid deadlock, with the exception of hash indices, which lock pages for longer periods and may participate in deadlock.
 
-**27.4.2 Recovery**
+## 27.4.2 Recovery
 
 Historically, PostgreSQL did not use write-ahead logging (WAL) for recovery, and therefore was not able to guarantee consistency in the case of crash. A crash could  
 
@@ -585,11 +504,11 @@ Historically, PostgreSQL did not use write-ahead logging (WAL) for recovery, and
 
 potentially result in inconsistent index structures or, worse, totally corrupted table contents, because of partially written data pages. As a result, starting with version 7.1, PostgreSQL employs WAL-based recovery. The approach is similar to standard recovery techniques such as ARIES (Section 16.8), but recovery in PostgreSQL is simplified in some ways because of the MVCC protocol.
 
-First, under PostgreSQL, recovery doesn’t have to undo the effects of aborted transactions: an aborting transaction makes an entry in the _pg clog_ file, recording the fact that it is aborting. Consequently, all versions of rows it leaves behind will never be visible to any other transactions. The only case where this approach could potentially lead to problems is when a transaction aborts because of a crash of the corresponding PostgreSQL process and the PostgreSQL process doesn’t have a chance to create the _pg clog_ entry before the crash. PostgreSQL handles this as follows: Before checking the status of another transaction in the _pg clog_ file, it checks whether the transaction is running on any of the PostgreSQL processes. If no PostgreSQL process is currently running the transaction and the _pg clog_ file shows the transaction as still running, it is safe to assume that the transaction crashed and the transaction’s _pg clog_ entry is updated to “aborted”.
+First, under PostgreSQL, recovery doesn’t have to undo the effects of aborted transactions: an aborting transaction makes an entry in the pg clog file, recording the fact that it is aborting. Consequently, all versions of rows it leaves behind will never be visible to any other transactions. The only case where this approach could potentially lead to problems is when a transaction aborts because of a crash of the corresponding PostgreSQL process and the PostgreSQL process doesn’t have a chance to create the pg clog entry before the crash. PostgreSQL handles this as follows: Before checking the status of another transaction in the pg clog file, it checks whether the transaction is running on any of the PostgreSQL processes. If no PostgreSQL process is currently running the transaction and the pg clog file shows the transaction as still running, it is safe to assume that the transaction crashed and the transaction’s pg clog entry is updated to “aborted”.
 
-Second, recovery is simplified by the fact that PostgreSQL MVCC already keeps track of some of the information required by WAL logging. More precisely, there is no need for logging the start, commit, and abort of transactions, since MVCC logs the status of every transaction in the _pg clog_.
+Second, recovery is simplified by the fact that PostgreSQL MVCC already keeps track of some of the information required by WAL logging. More precisely, there is no need for logging the start, commit, and abort of transactions, since MVCC logs the status of every transaction in the pg clog.
 
-**27.5 Storage and Indexing**
+# 27.5 Storage and Indexing
 
 PostgreSQL’s approach to data layout and storage is aimed at the goals of (1) a simple and clean implementation and (2) ease of administration. As a step toward these goals, PostgreSQL relies on “cooked” file systems, instead of handling the physical layout of data on raw disk partitions by itself. PostgreSQL maintains a list of directories in the file hierarchy to use for storage, which are conventionally referred to as **tablespaces**. Each PostgreSQL installation is initialized with a default tablespace, and additional tablespaces may be added at any time. When creating a table, index, or entire database, the user may specify any existing tablespace in which to store the related files. It is particularly useful to create multiple tablespaces if they reside on different physical devices, so that the faster devices may be dedicated to data that are in higher demand. Moreover, data that are stored on separate disks may be accessed in parallel more efficiently.
 
@@ -597,25 +516,14 @@ The design of the PostgreSQL storage system potentially leads to some per- forma
 
 **27.5 Storage and Indexing 1147**
 
-page header data linp1 linp2 linp3 linp4
-
-... linpn
-
-pd\_lower
-
-pd\_upper
-
-“special space”tuple1tuple2
-
-tuple3...tuplen
-
+![alt  Slotted-page format for PostgreSQL tables.](slotted.png)
 **Figure 27.9** Slotted-page format for PostgreSQL tables.
 
 the ability of PostgreSQL to store large tuples efficiently, while large blocks are wasteful when a small region of a file is accessed.
 
 On the other hand, modern enterprises increasingly use external storage sys- tems, such as network-attached storage and storage-area networks, instead of disks attached to servers. The philosophy here is that storage is a service that is easily administered and tuned for performance separately. One approach used by these systems is RAID, which offers both parallelism and redundant storage as explained in Section 10.3. PostgreSQL may directly leverage these technologies be- cause of its reliance on cooked file systems. Thus, the feeling of many PostgreSQL developers is that, for a vast majority of applications, and indeed PostgreSQL’s audience, the performance limitations are minimal and justified by the ease of administration and management, as well as simplicity of implementation.
 
-**27.5.1 Tables**
+## 27.5.1 Tables
 
 The primary unit of storage in PostgreSQL is a table. In PostgreSQL, tables are stored in _heap files._ These files use a form of the standard _slotted-page_ format described in Section 10.5. The PostgreSQL format is shown in Figure 27.9. In each page, a header is followed by an array of “line pointers.” A line pointer holds the offset (relative to the start of the page) and length of a specific tuple in the page. The actual tuples are stored in reverse order of line pointers from the end of the page.
 
@@ -629,11 +537,11 @@ page. The indirection of accessing tuples through the line pointer array permits
 
 The length of a tuple is normally limited by the length of a data page. This makes it difficult to store very long tuples. When PostgreSQL encounters such a large tuple, it tries to “_toast_” individual large attributes. In some cases, toasting an attribute may be accomplished by compressing the value. If this does not shrink the tuple enough to fit in the page (often the case), the data in the toasted attribute is replaced with a reference to a copy that is stored outside the page.
 
-**27.5.2 Indices**
+## 27.5.2 Indices
 
 A PostgreSQL index is a data structure that provides a dynamic mapping from search predicates to sequences of tuple IDs from a particular table. The returned tuples are intended to match the search predicate, although in some cases the predicate must be rechecked in the heap file. PostgreSQL supports several different index types, including those that are based on user-extensible access methods. Although an access method may use a different page format, all the indices available in PostgreSQL use the same slotted-page format described above in Section 27.5.1.
 
-**27.5.2.1 Index Types**
+### 27.5.2.1 Index Types
 
 PostgreSQL supports the following types of indices:
 
@@ -653,7 +561,7 @@ It is interesting to note that the original PostgreSQL implementation of R-trees
 
 To evaluate a search, GIN efficiently identifies index keys that overlap the search key, and computes a bitmap indicating which searched-for elements are members of the index key. This is accomplished using support functions that extract members from a set and compare individual members. Another support function decides if the search predicate is satisfied based on the bitmap and the original predicate. If the search predicate cannot be resolved without the full indexed attribute, the decision function must report a match and recheck the predicate in the heap file.
 
-**27.5.2.2 Other Index Variations**
+### 27.5.2.2 Other Index Variations
 
 For some of the index types described above, PostgreSQL supports more complex variations such as:
 
@@ -661,7 +569,7 @@ For some of the index types described above, PostgreSQL supports more complex va
 
 • **Unique indices.** Unique and primary-key constraints can be enforced by using unique indices in PostgreSQL. Only B-tree indices may be defined as being unique.
 
-• **Indices on expressions.** In PostgreSQL, it is possible to create indices on arbi- trary scalar expressions of columns, and not just specific columns, of a table. This is especially useful when the expressions in question are “expensive” —say, involving complicated user-defined computation. An example is to support case-insensitive comparisons by defining an index on the expression _lower_(_column_) and using the predicate _lower_(_column_) = ’value’ in queries. One disadvantage is that the maintenance costs of indices on expressions is high.  
+• **Indices on expressions.** In PostgreSQL, it is possible to create indices on arbi- trary scalar expressions of columns, and not just specific columns, of a table. This is especially useful when the expressions in question are “expensive” —say, involving complicated user-defined computation. An example is to support case-insensitive comparisons by defining an index on the expression lower(column) and using the predicate lower(column) = ’value’ in queries. One disadvantage is that the maintenance costs of indices on expressions is high.  
 
 **1150 Chapter 27 PostgreSQL**
 
@@ -669,13 +577,13 @@ For some of the index types described above, PostgreSQL supports more complex va
 
 • **Partial indices.** These are indices built over a subset of a table defined by a predicate. The index contains only entries for tuples that satisfy the predicate. Partial indices are suited for cases where a column might contain a large number of occurrences of a very small number of values. In such cases, the common values are not worth indexing, since index scans are not beneficial for queries that require a large subset of the base table. A partial index that excludes the common values is small and incurs less I/O. The partial indices are less expensive to maintain, as a large fraction of inserts do not participate in the index.
 
-**27.5.2.3 Index Construction**
+### 27.5.2.3 Index Construction
 
 An index may be added to the database using the **create index** command. For example, the following DDL statement creates a B-tree index on instructor salaries.
 
-**create index** _inst sal idx_ **on** _instructor_ (_salary_);
+**create index** inst_sal_idx **on** instructor (salary);
 
-This statement is executed by scanning the _instructor_ relation to find row versions that might be visible to a future transaction, then sorting their index attributes and building the index structure. During this process, the building transaction holds a lock on the _instructor_ relation that prevents concurrent **insert**, **delete**, and **update** statements. Once the process is finished, the index is ready to use and the table lock is released.
+This statement is executed by scanning the instructor relation to find row versions that might be visible to a future transaction, then sorting their index attributes and building the index structure. During this process, the building transaction holds a lock on the _instructor_ relation that prevents concurrent **insert**, **delete**, and **update** statements. Once the process is finished, the index is ready to use and the table lock is released.
 
 The lock acquired by the **create index** command may present a major in- convenience for some applications where it is difficult to suspend updates while the index is built. For these cases, PostgreSQL provides the **create index concur- rently** variant, which allows concurrent updates during index construction. This is achieved by a more complex construction algorithm that scans the base table twice. The first table scan builds an initial version of the index, in a way similar to normal index construction described above. This index may be missing tuples if the table was concurrently updated; however, the index is well formed, so it is flagged as being ready for insertions. Finally, the algorithm scans the table a second time and inserts all tuples it finds that still need to be indexed. This scan may also miss concurrently updated tuples, but the algorithm synchronizes with other transactions to guarantee that tuples that are updated during the second  
 
@@ -683,11 +591,11 @@ The lock acquired by the **create index** command may present a major in- conven
 
 scan will be added to the index by the updating transaction. Hence, the index is ready to use after the second table scan. Since this two-pass approach can be expensive, the plain **create index** command is preferred if it is easy to suspend table updates temporarily.
 
-**27.6 Query Processing and Optimization**
+# 27.6 Query Processing and Optimization
 
 When PostgreSQL receives a query, it is first parsed into an internal representation, which goes through a series of transformations, resulting in a query plan that is used by the **executor** to process the query.
 
-**27.6.1 Query Rewrite**
+## 27.6.1 Query Rewrite
 
 The first stage of a query’s transformation is **rewrite** and it is this stage that is responsible for the PostgreSQL **rules** system. As explained in Section 27.3, in PostgreSQL, users can create **rules** that are fired on different events such as **update**, **delete**, **insert**, and **select** statements. A view is implemented by the system by converting a view definition into a **select** rule. When a query involving a **select** statement on the view is received, the **select** rule for the view is fired, and the query is rewritten using the definition of the view.
 
@@ -697,7 +605,7 @@ The rewrite phase first deals with all **update**, **delete**, and **insert** st
 
 There exist no default rules in PostgreSQL—only those defined explicitly by users and implicitly by the definition of views.
 
-**27.6.2 Query Planning and Optimization**
+## 27.6.2 Query Planning and Optimization
 
 Once the query has been rewritten, it is subject to the planning and optimization phase. Here, each query block is treated in isolation and a plan is generated for it. This planning begins bottom-up from the rewritten query’s innermost subquery, proceeding to its outermost query block.
 
@@ -713,11 +621,11 @@ The actual process of optimization is based on one of the following two forms:
 
 Since the planner operates in a bottom-up fashion on query blocks, it is able to perform certain transformations on the query plan as it is being built. One example is the common subquery-to-join transformation that is present in many commercial systems (usually implemented in the rewrite phase). When PostgreSQL encounters a noncorrelated subquery (such as one caused by a query on a view), it is generally possible to “pull up” the planned subquery and merge it into the upper-level query block. However, transformations that push duplicate elimination into lower-level query blocks are generally not possible in PostgreSQL.
 
-The query-optimization phase results in a query plan that is a tree of relational operators. Each operator represents a specific operation on one or more sets of tuples. The operators can be unary (for example, sort, aggregation), binary (for example, nested-loop join), or _n_\-ary (for example, set union).
+The query-optimization phase results in a query plan that is a tree of relational operators. Each operator represents a specific operation on one or more sets of tuples. The operators can be unary (for example, sort, aggregation), binary (for example, nested-loop join), or n-ary (for example, set union).
 
 Crucial to the cost model is an accurate estimate of the total number of tuples that will be processed at each operator in the plan. This is inferred by the optimizer on the basis of statistics that are maintained on each relation in the system. These indicate the total number of tuples for each relation and specific information on each column of a relation, such as the column cardinality, a list of most common values in the table and the number of occurrences, and a histogram that divides the column’s values into groups of equal population (that is, an equi-depth histogram, described in Section 13.3.1). In addition, PostgreSQL also maintains a statistical correlation between the physical and logical row orderings of a column’s values —this indicates the cost of an index scan to retrieve tuples that pass predicates on the column. The DBA must ensure that these statistics are current by running the **analyze** command periodically.
 
-**27.6.3 Query Executor**
+## 27.6.3 Query Executor
 
 The executor module is responsible for processing a query plan produced by the optimizer. The executor follows the **iterator** model with a set of four functions implemented for each operator (open, next, rescan, and close). Iterators are also discussed as part of demand-driven pipelining in Section 12.7.2.1. PostgreSQL iterators have an extra function, rescan, which is used to reset a subplan (say for an inner loop of a join) with parameters such as index key ranges.  
 
@@ -725,7 +633,7 @@ The executor module is responsible for processing a query plan produced by the o
 
 Some of the important operators of the executor can be categorized as follows:
 
-**1\. Access methods.** The actual access methods that are used to retrieve data from on-disk objects in PostgreSQL are sequential scans of heap files, index scans, and bitmap index scans.
+**1. Access methods.** The actual access methods that are used to retrieve data from on-disk objects in PostgreSQL are sequential scans of heap files, index scans, and bitmap index scans.
 
 • **Sequential scans.** The tuples of a relation are scanned sequentially from the first to last blocks of the file. Each tuple is returned to the caller only if it is “visible” according to the transaction isolation rules in Section 27.4.1.3.
 
@@ -733,13 +641,13 @@ Some of the important operators of the executor can be categorized as follows:
 
 • **Bitmap index scans.** A bitmap index scan reduces the danger of exces- sive random page fetches in index scans. This is achieved by processing tuples in two phases. The first phase reads all index entries and stores the heap tuple IDs in a bitmap, and the second phase fetches the match- ing heap tuples in sequential order. This guarantees that each heap page is accessed only once, and increases the chance of sequential page fetches. Moreover, bitmaps from multiple indexes can be merged and intersected to evaluate complex Boolean predicates before accessing the heap.
 
-**2\. Join methods.** PostgreSQL supports three join methods: sorted merge joins, nested-loop joins (including index-nested loop variants for the inner), and a hybrid hash join (Section 12.5).
+**2. Join methods.** PostgreSQL supports three join methods: sorted merge joins, nested-loop joins (including index-nested loop variants for the inner), and a hybrid hash join (Section 12.5).
 
-**3\. Sort.** External sorting is implemented in PostgreSQL by algorithms explained in Section 12.4. The input is divided into sorted runs that are then merged in a polyphase merge. The initial runs are formed using replacement selection, using a priority tree instead of a data structure that fixes the number of in- memory records. This is because PostgreSQL may deal with tuples that vary considerably in size and tries to ensure full utilization of the configured sort memory space.
+**3. Sort.** External sorting is implemented in PostgreSQL by algorithms explained in Section 12.4. The input is divided into sorted runs that are then merged in a polyphase merge. The initial runs are formed using replacement selection, using a priority tree instead of a data structure that fixes the number of in- memory records. This is because PostgreSQL may deal with tuples that vary considerably in size and tries to ensure full utilization of the configured sort memory space.
 
-**4\. Aggregation.** Grouped aggregation in PostgreSQL can be either sort-based or hash-based. When the estimated number of distinct groups is very large the former is used and otherwise the hash-based approach is preferred.
+**4. Aggregation.** Grouped aggregation in PostgreSQL can be either sort-based or hash-based. When the estimated number of distinct groups is very large the former is used and otherwise the hash-based approach is preferred.
 
-**27.6.4 Triggers and Constraints**
+## 27.6.4 Triggers and Constraints
 
 In PostgreSQL (unlike some commercial systems) active-database features such as triggers and constraints are not implemented in the rewrite phase. Instead they are implemented as part of the query executor. When the triggers and constraints  
 
@@ -747,51 +655,14 @@ In PostgreSQL (unlike some commercial systems) active-database features such as 
 
 are registered by the user, the details are associated with the catalog informa- tion for each appropriate relation and index. The executor processes an **update**, **delete**, and **insert** statement by repeatedly generating tuple changes for a relation. For each row modification, the executor explicitly identifies, fires, and enforces candidate triggers and constraints, before or after the change as required.
 
-**27.7 System Architecture**
+# 27.7 System Architecture
 
 The PostgreSQL system architecture follows the process-per-transaction model. A running PostgreSQL site is managed by a central coordinating process, called the **postmaster.** The postmaster process is responsible for initializing and shutting down the server and also for handling connection requests from new clients. The postmaster assigns each new connecting client to a back-end server process that is responsible for executing the queries on behalf of the client and for returning the results to the client. This architecture is depicted in Figure 27.10.
 
 Client applications can connect to the PostgreSQL server and submit queries through one of the many database application programmer interfaces supported by PostgreSQL (libpq, JDBC, ODBC, Perl DBD) that are provided as client-side libraries. An example client application is the command-line psql program, in- cluded in the standard PostgreSQL distribution. The postmaster is responsible for handling the initial client connections. For this, it constantly listens for new connections on a known port. After performing initialization steps such as user authentication, the postmaster will spawn a new back-end server process to han- dle the new client. After this initial connection, the client interacts only with the back-end server process, submitting queries and receiving query results. This is the essence of the process-per-connection model adopted by PostgreSQL.
 
 The back-end server process is responsible for executing the queries submit- ted by the client by performing the necessary query-execution steps, including parsing, optimization, and execution. Each back-end server process can handle
-
-library interface client
-
-postmaster daemon process
-
-PostgreSQL server
-
-(back end)SQL queries and results read/
-
-write
-
-shared tables
-
-shared disk
-
-buffers
-
-disk storage
-
-client processes
-
-client application
-
-server processes
-
-create disk buffers
-
-kernel
-
-shared memory unix system
-
-initial connection
-
-request and
-
-authenticationlibrary API through
-
-communication
+![alt The PostgreSQL system architecture.](sql.png)
 
 **Figure 27.10** The PostgreSQL system architecture.  
 
@@ -805,13 +676,13 @@ The use of shared memory as a communication medium suggests that a PostgreSQL se
 
 **Bibliographical Notes**
 
-There is extensive online documentation of PostgreSQL at www.postgresql.org. This Web site is the authoritative source for information on new releases of PostgreSQL, which occur on a frequent basis. Until PostgreSQL version 8, the only way to run PostgreSQL under Microsoft Windows was by using Cygwin. Cygwin is a Linux- like environment that allows rebuilding of Linux applications from source to run under Windows. Details are at www.cygwin.com. Books on PostgreSQL include Douglas and Douglas \[2003\] and Stinson \[2002\]. Rules as used in PostgreSQL are presented in Stonebraker et al. \[1990\]. The GiST structure is described in Hellerstein et al. \[1995\].
+There is extensive online documentation of PostgreSQL at www.postgresql.org. This Web site is the authoritative source for information on new releases of PostgreSQL, which occur on a frequent basis. Until PostgreSQL version 8, the only way to run PostgreSQL under Microsoft Windows was by using Cygwin. Cygwin is a Linux- like environment that allows rebuilding of Linux applications from source to run under Windows. Details are at www.cygwin.com. Books on PostgreSQL include Douglas and Douglas [2003] and Stinson [2002]. Rules as used in PostgreSQL are presented in Stonebraker et al. [1990]. The GiST structure is described in Hellerstein et al. [1995].
 
 Many tools and extensions for PostgreSQL are documented by the pgFoundry at www.pgfoundry.org. These include the pgtcl library and the pgAccess adminis- tration tool mentioned in this chapter. The pgAdmin tool is described on the Web at www.pgadmin.org. The database-design tools, TORA and Data Architect, are de- scribed at tora.sourceforge.net and www.thekompany.com/products/dataarchitect, respec- tively. The report-generation tools, GNU Report Generator and GNU Enterprise, are described at www.gnu.org/software/grg and www.gnuenterprise.org, respectively. The open-source Mondrian OLAP server is described at mondrian.pentaho.org.
 
 An open-source alternative to PostgreSQL is MySQL, which is available for noncommercial use under the GNU General Public License. MySQL may be em- bedded in commercial software that does not have freely distributed source code, but this requires a special license to be purchased. Comparisons between the most recent versions of the two systems are readily available on the Web.  
 
-_This page intentionally left blank_  
+This page intentionally left blank  
 
 **_C H A P T E R_28 Oracle**
 
