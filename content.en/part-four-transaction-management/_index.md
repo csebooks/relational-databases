@@ -1937,7 +1937,7 @@ We refer to the above scheme as **optimistic concurrency control without read va
 
 The above scheme has been widely used by application developers to handle transactions that involve user interaction. An attractive feature of the scheme is that it can be implemented easily on top of a database system. The validation and update steps performed as part of commit processing are then executed as a single transaction in the database, using the concurrency-control scheme of the database to ensure atomicity for commit processing. The above scheme is also used by the Hibernate object-relational mapping system (Section 9.4.2), and other object- relational mapping systems, where it is referred to as optimistic concurrency control (even though reads are not validated by default). Transactions that involve user interaction are called **conversations** in Hibernate to differentiate them from regular transactions validation using version numbers is very useful for such transactions. Object-relational mapping systems also cache database tuples in the form of objects in memory, and execute transactions on the cached objects; updates on the objects are converted into updates on the database when the transaction commits. Data may remain in cache for a long time, and if transactions update such cached data, there is a risk of lost updates. Hibernate and other object-relational mapping systems therefore perform the version number checks transparently as part of commit processing. (Hibernate allows programmers to bypass the cache and execute transactions directly on the database, if serializability is desired.)
 
-### 15.10 Concurrency in Index Structures
+### Concurrency in Index Structures
 
 It is possible to treat access to index structures like any other database struc- ture, and to apply the concurrency-control techniques discussed earlier. However, since indices are accessed frequently, they would become a point of great lock contention, leading to a low degree of concurrency. Luckily, indices do not have to be treated like other database structures. It is perfectly acceptable for a trans- action to perform a lookup on an index twice, and to find that the structure of the index has changed in between, as long as the index lookup returns the correct set  
 
@@ -2029,7 +2029,7 @@ then try to access the deleted node. The lookup would then have to restart from 
 
 Instead of locking index leaf nodes in a two-phase manner, some index concurrency-control schemes use **key-value locking** on individual key values, allowing other key values to be inserted or deleted from the same leaf. Key-value locking thus provides increased concurrency. Using key-value locking naı̈vely, however, would allow the phantom phenomenon to occur; to prevent the phan- tom phenomenon, the **next-key locking** technique is used. In this technique, every index lookup must lock not only the keys found within the range (or the single key, in case of a point lookup) but also the next-key value—that is, the key value just greater than the last key value that was within the range. Also, every insert must lock not only the value that is inserted, but also the next-key value. Thus, if a transaction attempts to insert a value that was within the range of the index lookup of another transaction, the two transactions would conflict on the key value next to the inserted key value. Similarly, deletes must also lock the next-key value to the value being deleted, to ensure that conflicts with subsequent range lookups of other queries are detected.
 
-**15.11 Summary**
+### Summary
 
 • When several transactions execute concurrently in the database, the consis- tency of data may no longer be preserved. It is necessary for the system to control the interaction among the concurrent transactions, and this control is achieved through one of a variety of mechanisms called _concurrency-control_ schemes.
 
@@ -2041,7 +2041,6 @@ Instead of locking index leaf nodes in a two-phase manner, some index concurrenc
 
 • The strict two-phase locking protocol permits release of exclusive locks only at the end of transaction, in order to ensure recoverability and cascadelessness  
 
-**15.11 Summary 709**
 
 of the resulting schedules. The rigorous two-phase locking protocol releases all locks only at the end of the transaction.
 
@@ -2059,7 +2058,6 @@ of the resulting schedules. The rigorous two-phase locking protocol releases all
 
 • A validation scheme is an appropriate concurrency-control method in cases where a majority of transactions are read-only transactions, and thus the rate of conflicts among these transactions is low. A unique fixed timestamp is associated with each transaction in the system. The serializability order is determined by the timestamp of the transaction. A transaction in this scheme is never delayed. It must, however, pass a validation test to complete. If it does not pass the validation test, the system rolls it back to its initial state.  
 
-**710 Chapter 15 Concurrency Control**
 
 • A multiversion concurrency-control scheme is based on the creation of a new version of a data item for each transaction that writes that item. When a read operation is issued, the system selects one of the versions to be read. The concurrency-control scheme ensures that the version to be read is selected in a manner that ensures serializability, by using timestamps. A read operation always succeeds.
 
@@ -2079,7 +2077,6 @@ of the resulting schedules. The rigorous two-phase locking protocol releases all
 
 • Special concurrency-control techniques can be developed for special data structures. Often, special techniques are applied in B+-trees to allow greater concurrency. These techniques allow nonserializable access to the B+-tree, but they ensure that the B+-tree structure is correct, and ensure that accesses to the database itself are serializable.  
 
-**Review Terms 711**
 
 **Review Terms**
 
@@ -2189,7 +2186,6 @@ of the resulting schedules. The rigorous two-phase locking protocol releases all
 
 ◦ Read phase  
 
-**712 Chapter 15 Concurrency Control**
 
 ◦ Validation phase
 
@@ -2279,7 +2275,6 @@ Show that the protocol ensures serializability and deadlock freedom.
 
 **15.9** Locking is not done explicitly in persistent programming languages. Rather, objects (or the corresponding pages) must be locked when the objects are accessed. Most modern operating systems allow the user to set access protections (no access, read, write) on pages, and memory ac- cess that violate the access protections result in a protection violation (see the Unix mprotect command, for example). Describe how the access- protection mechanism can be used for page-level locking in a persistent programming language.  
 
-**714 Chapter 15 Concurrency Control**
 
 S X I
 
@@ -2313,7 +2308,6 @@ b. Show that the inclusion of **increment** mode locks allows for in- creased co
 
 • Two-phase locking with multiple-granularity locking.  
 
-**Practice Exercises 715**
 
 • The tree protocol.
 
@@ -2339,7 +2333,6 @@ a. A straightforward implementation uses a start timestamp and a commit timestam
 
 b. Explain how the validation step can be implemented as part of com- mit processing for the first-committer-wins scheme, using a mod- ification of the above scheme, where instead of using update sets, each data item has a write timestamp associated with it. Again, you  
 
-**716 Chapter 15 Concurrency Control**
 
 may assume that validation and other commit processing steps are executed serially.
 
@@ -2377,7 +2370,6 @@ Show that the forest protocol does _not_ ensure serializability.
 
 **15.26** Although SIX mode is useful in multiple-granularity locking, an exclusive and intention-shared (XIS) mode is of no use. Why is it useless?  
 
-**Exercises 717**
 
 **15.27** The multiple-granularity protocol rules specify that a transaction _Ti_ can lock a node _Q_ in S or IS mode only if _Ti_ currently has the parent of _Q_ locked in either IX or IS mode. Given that SIX and S locks are stronger than IX or IS locks, why does the protocol not allow locking a node in S or IS mode if the parent is locked in either SIX or S mode?
 
@@ -2401,9 +2393,8 @@ Show that the forest protocol does _not_ ensure serializability.
 
 **15.37** Consider the following locking protocol: All items are numbered, and once an item is unlocked, only higher-numbered items may be locked. Locks may be released at any time. Only X-locks are used. Show by an example that this protocol does not guarantee serializability.  
 
-**718 Chapter 15 Concurrency Control**
 
-**Bibliographical Notes**
+## Bibliographical Notes
 
 Gray and Reuter \[1993\] provides detailed textbook coverage of transaction- processing concepts, including concurrency-control concepts and implementa- tion details. Bernstein and Newcomer \[1997\] provides textbook coverage of vari- ous aspects of transaction processing including concurrency control.
 
@@ -2421,17 +2412,16 @@ Degree-two consistency was introduced in Gray et al. \[1975\]. The levels of con
 
 It should be noted that on PostgreSQL (as of version 8.1.4) and Oracle (as of version 10g), setting the isolation level to serializable results in the use of snapshot isolation, which does not guarantee serializability. Fekete et al. \[2005\] describes how to ensure serializable executions under snapshot isolation, by rewriting certain transactions to introduce conflicts; these conflicts ensure that the transactions cannot run concurrently under snapshot isolation; Jorwekar et al. \[2007\] describes an approach, that given a set of (parametrized) transactions running under snapshot isolation, can check if the transactions are vulnerability to nonserializability,  
 
-**Bibliographical Notes 719**
 
 Concurrency in B+-trees was studied by Bayer and Schkolnick \[1977\] and Johnson and Shasha \[1993\]. The techniques presented in Section 15.10 are based on Kung and Lehman \[1980\] and Lehman and Yao \[1981\]. The technique of key- value locking used in ARIES provides for very high concurrency on B+-tree access and is described in Mohan \[1990a\] and Mohan and Narang \[1992\]. Ellis \[1987\] presents a concurrency-control technique for linear hashing.  
 
   
 
-**_C H A P T E R_16 Recovery System**
+## CHAPTER 16 Recovery System
 
 A computer system, like any other device, is subject to failure from a variety of causes: disk crash, power outage, software error, a fire in the machine room, even sabotage. In any failure, information may be lost. Therefore, the database system must take actions in advance to ensure that the atomicity and durability properties of transactions, introduced in Chapter 14, are preserved. An integral part of a database system is a **recovery scheme** that can restore the database to the consistent state that existed before the failure. The recovery scheme must also provide **high availability**; that is, it must minimize the time for which the database is not usable after a failure.
 
-**16.1 Failure Classification**
+### 16.1 Failure Classification
 
 There are various types of failure that may occur in a system, each of which needs to be dealt with in a different manner. In this chapter, we shall consider only the following types of failure:
 
@@ -2457,7 +2447,7 @@ To determine how the system should recover from failures, we need to iden- tify 
 
 **2\.** Actions taken after a failure to recover the database contents to a state that ensures database consistency, transaction atomicity, and durability.
 
-**16.2 Storage**
+### Storage**
 
 As we saw in Chapter 10, the various data items in the database may be stored and accessed in a number of different storage media. In Section 14.3, we saw that storage media can be distinguished by their relative speed, capacity, and resilience to failure. We identified three categories of storage:
 
@@ -2469,11 +2459,10 @@ As we saw in Chapter 10, the various data items in the database may be stored an
 
 Stable storage or, more accurately, an approximation thereof, plays a critical role in recovery algorithms.
 
-**16.2.1 Stable-Storage Implementation**
+####  Stable-Storage Implementation
 
 To implement stable storage, we need to replicate the needed information in several nonvolatile storage media (usually disk) with independent failure modes, and to update the information in a controlled manner to ensure that failure during data transfer does not damage the needed information.  
 
-**16.2 Storage 723**
 
 Recall (from Chapter 10) that RAID systems guarantee that the failure of a single disk (even during data transfer) will not result in loss of data. The simplest and fastest form of RAID is the mirrored disk, which keeps two copies of each block, on separate disks. Other forms of RAID offer lower costs, but at the expense of lower performance.
 
@@ -2497,7 +2486,6 @@ We require that, if a **data-transfer failure** occurs, the system detects it an
 
 If the system fails while blocks are being written, it is possible that the two copies of a block are inconsistent with each other. During recovery, for each block, the system would need to examine two copies of the blocks. If both are the same and no detectable error exists, then no further actions are necessary. (Recall that errors in a disk block, such as a partial write to the block, are detected by storing a checksum with each block.) If the system detects an error in one block, then it  
 
-**724 Chapter 16 Recovery System**
 
 replaces its content with the content of the other block. If both blocks contain no detectable error, but they differ in content, then the system replaces the content of the first block with the value of the second. This recovery procedure ensures that a write to stable storage either succeeds completely (that is, updates all copies) or results in no change.
 
@@ -2507,7 +2495,7 @@ The protocols for writing out a block to a remote site are similar to the protoc
 
 We can extend this procedure easily to allow the use of an arbitrarily large number of copies of each block of stable storage. Although a large number of copies reduces the probability of a failure to even lower than two copies do, it is usually reasonable to simulate stable storage with only two copies.
 
-**16.2.2 Data Access**
+#### Data Access
 
 As we saw in Chapter 10, the database system resides permanently on nonvolatile storage (usually disks) and only parts of the database are in memory at any time.1 The database is partitioned into fixed-length storage units called **blocks**. Blocks are the units of data transfer to and from disk, and may contain several data items. We shall assume that no data item spans two or more blocks. This assumption is realistic for most data-processing applications, such as a bank or a university.
 
@@ -2525,7 +2513,6 @@ data items accessed and updated by _Ti_ are kept. The system creates this work a
 
 1There is a special category of database system, called _main-memory database systems_, where the entire database can be loaded into memory at once. We consider such systems in Section 26.4.  
 
-**16.2 Storage 725**
 
 _A_
 
@@ -2559,11 +2546,10 @@ A buffer block is eventually written out to the disk either because the buffer m
 
 When a transaction needs to access a data item _X_ for the first time, it must execute read(_X_). The system then performs all updates to _X_ on _xi_ . At any point during its execution a transaction may execute write(_X_) to reflect the change to _X_ in the database itself; write(_X_) must certainly be done after the final write to _X_.  
 
-**726 Chapter 16 Recovery System**
 
 The output(_BX_) operation for the buffer block _BX_ on which _X_ resides does not need to take effect immediately after write(_X_) is executed, since the block _BX_ may contain other data items that are still being accessed. Thus, the actual output may take place later. Notice that, if the system crashes after the write(_X_) operation was executed but before output(_BX_) was executed, the new value of _X_ is never written to disk and, thus, is lost. As we shall see shortly, the database system executes extra actions to ensure that updates performed by committed transactions are not lost even if there is a system crash.
 
-**16.3 Recovery and Atomicity**
+### 16.3 Recovery and Atomicity
 
 Consider again our simplified banking system and a transaction _Ti_ that transfers $50 from account _A_ to account _B_, with initial values of _A_ and _B_ being $1000 and $2000, respectively. Suppose that a system crash has occurred during the execution of _Ti_ , after output(_BA_) has taken place, but before output(_BB_) was executed, where _BA_ and _BB_ denote the buffer blocks on which _A_ and _B_ reside. Since the memory contents were lost, we do not know the fate of the transaction.
 
@@ -2573,13 +2559,12 @@ Our goal is to perform either all or no database modifications made by _Ti_ . Ho
 
 To achieve our goal of atomicity, we must first output to stable storage infor- mation describing the modifications, without modifying the database itself. As we shall see, this information can help us ensure that all modifications performed by committed transactions are reflected in the database (perhaps during the course of recovery actions after a crash). This information can also help us ensure that no modifications made by an aborted transaction persist in the database.
 
-**16.3.1 Log Records**
+#### Log Records
 
 The most widely used structure for recording database modifications is the **log**. The log is a sequence of **log records**, recording all the update activities in the database.
 
 There are several types of log records. An **update log record** describes a single database write. It has these fields:  
 
-**16.3 Recovery and Atomicity 727**
 
 **SHADOW COPIES AND SHADOW PAGING**
 
@@ -2617,7 +2602,7 @@ for that write be created and added to the log, before the database is modified.
 
 For log records to be useful for recovery from system and disk failures, the log must reside in stable storage. For now, we assume that every log record is written to the end of the log on stable storage as soon as it is created. In Section 16.5, we shall see when it is safe to relax this requirement so as to reduce the overhead imposed by logging. Observe that the log contains a complete record of all database activity. As a result, the volume of data stored in the log may become unreasonably large. In Section 16.3.6, we shall show when it is safe to erase log information.
 
-**16.3.2 Database Modification**
+#### Database Modification
 
 As we noted earlier, a transaction creates a log record prior to modifying the database. The log records allow the system to undo changes made by a transaction in the event that the transaction must be aborted; they allow the system also to redo changes made by a transaction if the transaction has committed but the system crashed before those changes could be stored in the database on disk. In order for us to understand the role of these log records in recovery, we need to consider the steps a transaction takes in modifying a data item:
 
@@ -2627,7 +2612,6 @@ As we noted earlier, a transaction creates a log record prior to modifying the d
 
 **3\.** The database system executes the output operation that writes the data block to disk.  
 
-**16.3 Recovery and Atomicity 729**
 
 We say a transaction _modifies the database_ if it performs an update on a disk buffer, or on the disk itself; updates to the private part of main memory do not count as database modifications. If a transaction does not modify the database until it has committed, it is said to use the **deferred-modification** technique. If database modifications occur while the transaction is still active, the transaction is said to use the **immediate-modification** technique. Deferred modification has the overhead that transactions need to make local copies of all updated data items; further, if a transaction reads a data item that it has updated, it must read the value from its local copy.
 
@@ -2645,7 +2629,7 @@ Because all database modifications must be preceded by the creation of a log rec
 
 • **Redo** using a log record sets the data item specified in the log record to the new value.
 
-**16.3.3 Concurrency Control and Recovery**
+#### Concurrency Control and Recovery
 
 If the concurrency control scheme allows a data item _X_ that has been modified by a transaction _T_1 to be further modified by another transaction _T_2 before _T_1 commits, then undoing the effects of _T_1 by restoring the old value of _X_ (before _T_1 updated _X_) would also undo the effects of _T_2\. To avoid such situations, recovery algorithms usually require that if a data item has been modified by a transaction, no other transaction can modify the data item until the first transaction commits or aborts.
 
@@ -2659,13 +2643,13 @@ We discuss later, in Section 16.7, how the above requirement can be relaxed in c
 
 When either snapshot-isolation or validation is used for concurrency control, database updates of a transaction are (conceptually) deferred until the transac- tion is partially committed; the deferred-modification technique is a natural fit with these concurrency control schemes. However, it is worth noting that some implementations of snapshot isolation use immediate modification, but provide a logical snapshot on demand: when a transaction needs to read an item that a concurrent transaction has updated, a copy of the (already updated) item is made, and updates made by concurrent transactions are rolled back on the copy of the item. Similarly, immediate modification of the database is a natural fit with two-phase locking, but deferred modification can also be used with two-phase locking.
 
-**16.3.4 Transaction Commit**
+#### Transaction Commit
 
 We say that a transaction has **committed** when its commit log record, which is the last log record of the transaction, has been output to stable storage; at that point all earlier log records have already been output to stable storage. Thus, there is enough information in the log to ensure that even if there is a system crash, the updates of the transaction can be redone. If a system crash occurs before a log record _< Ti_ commit_\>_ is output to stable storage, transaction _Ti_ will be rolled back. Thus, the output of the block containing the commit log record is the single atomic action that results in a transaction getting committed.2
 
 With most log-based recovery techniques, including the ones we describe in this chapter, blocks containing the data items modified by a transaction do not have to be output to stable storage when the transaction commits, but can be output some time later. We discuss this issue further in Section 16.5.2.
 
-**16.3.5 Using the Log to Redo and Undo Transactions**
+#### Using the Log to Redo and Undo Transactions
 
 We now provide an overview of how the log can be used to recover from a system crash, and to roll back transactions during normal operation. However, we postpone details of the procedures for failure recovery and rollback to Section 16.4.
 
@@ -2673,7 +2657,6 @@ Consider our simplified banking system. Let _T_0 be a transaction that transfers
 
 2The output of a block can be made atomic by techniques for dealing with data-transfer failure, as described earlier in Section 16.2.1.  
 
-**16.3 Recovery and Atomicity 731**
 
 <_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050> <_T_0 commit> <_T_1 start> <_T_1 , _C_, 700, 600> <_T_1 commit>
 
@@ -2733,7 +2716,6 @@ After a system crash has occurred, the system consults the log to determine whic
 
 • Transaction _Ti_ needs to be redone if the log contains the record _<Ti_ start_\>_ and either the record _<Ti_ commit_\>_ or the record _<Ti_ abort_\>_. It may seem strange to redo _Ti_ if the record _<Ti_ abort_\>_ is in the log. To see why this works, note  
 
-**16.3 Recovery and Atomicity 733**
 
 <_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050>
 
@@ -2769,7 +2751,7 @@ _<T_1 commit_\>_
 
 has been written to stable storage (Figure 16.4c). When the system comes back up, both _T_0 and _T_1 need to be redone, since the records _<T_0 start_\>_ and _<T_0 commit_\>_ appear in the log, as do the records _<T_1 start_\>_ and _<T_1 commit_\>_. After the system performs the recovery procedures redo(_T_0) and redo(_T_1), the values in accounts _A_, _B_, and _C_ are $950, $2050, and $600, respectively.
 
-**16.3.6 Checkpoints**
+#### Checkpoints
 
 When a system crash occurs, we must consult the log to determine those trans- actions that need to be redone and those that need to be undone. In principle, we need to search the entire log to determine this information. There are two major difficulties with this approach:
 
@@ -2795,7 +2777,6 @@ The presence of a _<_checkpoint _L>_ record in the log allows the system to stre
 
 After a system crash has occurred, the system examines the log to find the last _<_checkpoint _L>_ record (this can be done by searching the log backward, from the end of the log, until the first _<_checkpoint _L>_ record is found).  
 
-**16.4 Recovery Algorithm 735**
 
 The redo or undo operations need to be applied only to transactions in _L_, and to all transactions that started execution after the _<_checkpoint _L>_ record was written to the log. Let us denote this set of transactions as _T_ .
 
@@ -2811,15 +2792,14 @@ Consider the set of transactions _L_ in a checkpoint log record. For each trans-
 
 The requirement that transactions must not perform any updates to buffer blocks or to the log during checkpointing can be bothersome, since transaction processing has to halt while a checkpoint is in progress. A **fuzzy checkpoint** is a checkpoint where transactions are allowed to perform updates even while buffer blocks are being written out. Section 16.5.4 describes fuzzy-checkpointing schemes. Later in Section 16.8 we describe a checkpoint scheme that is not only fuzzy, but does not even require all modified buffer blocks to be output to disk at the time of the checkpoint.
 
-**16.4 Recovery Algorithm**
+### Recovery Algorithm
 
 Until now, in discussing recovery, we have identified transactions that need to be redone and those that need to be undone, but we have not given a precise algorithm for performing these actions. We are now ready to present the full recovery algorithm using log records for recovery from transaction failure and a combination of the most recent checkpoint and log records to recover from a system crash.  
 
-**736 Chapter 16 Recovery System**
 
 The recovery algorithm described in this section requires that a data item that has been updated by an uncommitted transaction cannot be modified by any other transaction, until the first transaction has either committed or aborted. Recall that this restriction was discussed earlier, in Section 16.3.3.
 
-**16.4.1 Transaction Rollback**
+#### Transaction Rollback
 
 First consider transaction rollback during normal operation (that is, not during recovery from a system crash). Rollback of a transaction _Ti_ is performed as follows:
 
@@ -2833,7 +2813,7 @@ b. A special redo-only log record _<Ti, Xj , V_1_\>_ is written to the log, wher
 
 Observe that every update action performed by the transaction or on behalf of the transaction, including actions taken to restore data items to their old value, have now been recorded in the log. In Section 16.4.2 we shall see why this is a good idea.
 
-**16.4.2 Recovery After a System Crash**
+#### Recovery After a System Crash
 
 Recovery actions, when the database system is restarted after a crash, take place in two phases:
 
@@ -2843,7 +2823,7 @@ The specific steps taken while scanning the log are as follows:
 
 a. The list of transactions to be rolled back, undo-list, is initially set to the list _L_ in the _<_checkpoint _L>_ log record.  
 
-**16.4 Recovery Algorithm 737**
+
 
 b. Whenever a normal log record of the form _<Ti , Xj , V_1_, V_2_\>_, or a redo-only log record of the form _<Ti , Xj , V_2_\>_ is encountered, the operation is redone; that is, the value _V_2 is written to data item _Xj_ .
 
@@ -2869,23 +2849,21 @@ Figure 16.5 shows an example of actions logged during normal operation, and acti
 
 When recovering from a crash, in the redo phase, the system performs a redo of all operations after the last checkpoint record. In this phase, the list undo-list initially contains _T_0 and _T_1; _T_1 is removed first when its commit log record is found, while _T_2 is added when its start log record is found. Transaction _T_0 is  
 
-**738 Chapter 16 Recovery System**
 
 **Figure 16.5** Example of logged actions, and actions during recovery.
 
 removed from undo-list when its abort log record is found, leaving only _T_2 in undo-list. The undo phase scans the log backwards from the end, and when it finds a log record of _T_2 updating _A_, the old value of _A_ is restored, and a redo-only log record written to the log. When the start record for _T_2 is found, an abort record is added for _T_2\. Since undo-list contains no more transactions, the undo phase terminates, completing recovery.
 
-**16.5 Buffer Management**
+### Buffer Management
 
 In this section, we consider several subtle details that are essential to the imple- mentation of a crash-recovery scheme that ensures data consistency and imposes a minimal amount of overhead on interactions with the database.
 
-**16.5.1 Log-Record Buffering**
+#### Log-Record Buffering
 
 So far, we have assumed that every log record is output to stable storage at the time it is created. This assumption imposes a high overhead on system execution for several reasons: Typically, output to stable storage is in units of blocks. In most cases, a log record is much smaller than a block. Thus, the output of each log record translates to a much larger output at the physical level. Furthermore, as we saw in Section 16.2.1, the output of a block to stable storage may involve several output operations at the physical level.
 
 The cost of outputting a block to stable storage is sufficiently high that it is desirable to output multiple log records at once. To do so, we write log records to a log buffer in main memory, where they stay temporarily until they are output to stable storage. Multiple log records can be gathered in the log buffer and output  
 
-**16.5 Buffer Management 739**
 
 to stable storage in a single output operation. The order of log records in the stable storage must be exactly the same as the order in which they were written to the log buffer.
 
@@ -2903,7 +2881,7 @@ The three rules state situations in which certain log records _must_ have been o
 
 Writing the buffered log to disk is sometimes referred to as a **log force**.
 
-**16.5.2 Database Buffering**
+####  Database Buffering
 
 In Section 16.2.2, we described the use of a two-level storage hierarchy. The system stores the database in nonvolatile storage (disk), and brings blocks of data into main memory as needed. Since main memory is typically much smaller than the entire database, it may be necessary to overwrite a block _B_1 in main memory when another block _B_2 needs to be brought into memory. If _B_1 has been modified, _B_1 must be output prior to the input of _B_2\. As discussed in Section 10.8.1 in Chapter 10, this storage hierarchy is similar to the standard operating-system concept of _virtual memory_.
 
@@ -2933,7 +2911,6 @@ When a block _B_1 is to be output to disk, all log records pertaining to data in
 
 ◦ Obtain an exclusive lock on the block, to ensure that no transaction is performing a write on the block.  
 
-**16.5 Buffer Management 741**
 
 ◦ Output log records to stable storage until all log records pertaining to block _B_1 have been output.
 
@@ -2947,7 +2924,7 @@ Locks on buffer blocks can also be used to ensure that buffer blocks are not upd
 
 Database systems usually have a process that continually cycles through the buffer blocks, outputting modified buffer blocks back to disk. The above locking protocol must of course be followed when the blocks are output. As a result of continuous output of modified blocks, the number of **dirty blocks** in the buffer, that is, blocks that have been modified in the buffer but have not been subsequently output, is minimized. Thus, the number of blocks that have to be output during a checkpoint is minimized; further, when a block needs to be evicted from the buffer it is likely that there will be a non-dirty block available for eviction, allowing the input to proceed immediately instead of waiting for an output to complete.
 
-**16.5.3 Operating System Role in Buffer Management**
+#### Operating System Role in Buffer Management
 
 We can manage the database buffer by using one of two approaches:
 
@@ -2957,7 +2934,6 @@ This approach has the drawback of limiting flexibility in the use of main memory
 
 **2\.** The database system implements its buffer within the virtual memory pro- vided by the operating system. Since the operating system knows about the memory requirements of all processes in the system, ideally it should be in charge of deciding what buffer blocks must be force-output to disk, and when. But, to ensure the write-ahead logging requirements in Section 16.5.1, the operating system should not write out the database buffer pages itself,  
 
-**742 Chapter 16 Recovery System**
 
 but instead should request the database system to force-output the buffer blocks. The database system in turn would force-output the buffer blocks to the database, after writing relevant log records to stable storage.
 
@@ -2969,7 +2945,7 @@ This approach may result in extra output of data to disk. If a block _Bx_ is out
 
 Although both approaches suffer from some drawbacks, one or the other must be chosen unless the operating system is designed to support the requirements of database logging.
 
-**16.5.4 Fuzzy Checkpointing**
+#### Fuzzy Checkpointing
 
 The checkpointing technique described in Section 16.3.6 requires that all updates to the database be temporarily suspended while the checkpoint is in progress. If the number of pages in the buffer is large, a checkpoint may take a long time to finish, which can result in an unacceptable interruption in processing of transactions.
 
@@ -2977,11 +2953,10 @@ To avoid such interruptions, the checkpointing technique can be modified to perm
 
 Since pages are output to disk only after the checkpoint record has been written, it is possible that the system could crash before all pages are written. Thus, a checkpoint on disk may be incomplete. One way to deal with incomplete checkpoints is this: The location in the log of the checkpoint record of the last completed checkpoint is stored in a fixed position, last-checkpoint, on disk. The system does not update this information when it writes the checkpoint record. Instead, before it writes the checkpoint record, it creates a list of all modified buffer blocks. The last-checkpoint information is updated only after all buffer blocks in the list of modified buffer blocks have been output to disk.  
 
-**16.6 Failure with Loss of Nonvolatile Storage 743**
 
 Even with fuzzy checkpointing, a buffer block must not be updated while it is being output to disk, although other buffer blocks may be updated concur- rently. The write-ahead log protocol must be followed so that (undo) log records pertaining to a block are on stable storage before the block is output.
 
-**16.6 Failure with Loss of Nonvolatile Storage**
+### Failure with Loss of Nonvolatile Storage
 
 Until now, we have considered only the case where a failure results in the loss of information residing in volatile storage while the content of the nonvolatile storage remains intact. Although failures in which the content of nonvolatile storage is lost are rare, we nevertheless need to be prepared to deal with this type of failure. In this section, we discuss only disk storage. Our discussions apply as well to other nonvolatile storage types.
 
@@ -3013,13 +2988,13 @@ re-create the database. Such dumps are useful when migrating data to a different
 
 The simple dump procedure described here is costly for the following two reasons. First, the entire database must be copied to stable storage, resulting in considerable data transfer. Second, since transaction processing is halted during the dump procedure, CPU cycles are wasted. **Fuzzy dump** schemes have been developed that allow transactions to be active while the dump is in progress. They are similar to fuzzy-checkpointing schemes; see the bibliographical notes for more details.
 
-**16.7 Early Lock Release and Logical Undo Operations**
+### Early Lock Release and Logical Undo Operations
 
 Any index used in processing a transaction, such as a B+-tree, can be treated as normal data, but to increase concurrency, we can use the B+-tree concurrency- control algorithm described in Section 15.10 to allow locks to be released early, in a non-two-phase manner. As a result of early lock release, it is possible that a value in a B+-tree node is updated by one transaction _T_1, which inserts an entry (_V_1_, R_1), and subsequently by another transaction _T_2, which inserts an entry (_V_2_, R_2) in the same node, moving the entry (_V_1_, R_1) even before _T_1 completes execution.4 At this point, we cannot undo transaction _T_1 by replacing the contents of the node with the old value prior to _T_1 performing its insert, since that would also undo the insert performed by _T_2; transaction _T_2 may still commit (or may have already committed). In this example, the only way to undo the effect of insertion of (_V_1_, R_1) is to execute a corresponding delete operation.
 
 In the rest of this section, we see how to extend the recovery algorithm of Section 16.4 to support early lock release.
 
-**16.7.1 Logical Operations**
+#### Logical Operations
 
 The insertion and deletion operations are examples of a class of operations that require logical undo operations since they release locks early; we call such opera- tions **logical operations**. Such early lock release is important not only for indices, but also for operations on other system data structures that are accessed and updated very frequently; examples include data structures that track the blocks containing records of a relation, the free space in a block, and the free blocks in a database. If locks were not released early after performing operations on such data structures, transactions would tend to run serially, affecting system performance.
 
@@ -3027,7 +3002,6 @@ The theory of conflict serializability has been extended to operations, based on
 
 4Recall that an entry consists of a key value and a record identifier, or a key value and a record in the case of the leaf level of a B+-tree file organization.  
 
-**16.7 Early Lock Release and Logical Undo Operations 745**
 
 operations on a B+-tree do not conflict if they insert different key values, even if they both update overlapping areas of the same index page. However, insert and delete operations conflict with other insert and delete operations, as well as with read operations, if they use the same key value. See the bibliographical notes for references to more information on this topic.
 
@@ -3035,7 +3009,7 @@ Operations acquire _lower-level locks_ while they execute, but release them when
 
 Once the lower-level lock is released, the operation cannot be undone by using the old values of updated data items, and must instead be undone by executing a compensating operation; such an operation is called a **logical undo operation**. It is important that the lower-level locks acquired during an operation are sufficient to perform a subsequent logical undo of the operation, for reasons explained later in Section 16.7.4.
 
-**16.7.2 Logical Undo Log Records**
+#### Logical Undo Log Records
 
 To allow logical undo of operations, before an operation is performed to modify an index, the transaction creates a log record _<Ti , Oj ,_ operation-begin_\>_, where _Oj_ is a unique identifier for the operation instance.5 While the system is executing the operation, it creates update log records in the normal fashion for all updates performed by the operation. Thus, the usual old-value and new-value information is written out as usual for each update performed by the operation; the old-value information is required in case the transaction needs to be rolled back before the operation completes. When the operation finishes, it writes an operation-end log record of the form _<Ti , Oj ,_ operation-end, _U>_, where the _U_ denotes undo information.
 
@@ -3051,7 +3025,7 @@ of an operation and not other operations, depending on what buffer blocks had be
 
 An operation is said to be **idempotent** if executing it several times in a row gives the same result as executing it once. Operations such as inserting an entry into a B+-tree may not be idempotent, and the recovery algorithm must therefore make sure that an operation that has already been performed is not performed again. On the other hand, a physical log record is idempotent, since the corre- sponding data item would have the same value regardless of whether the logged update is executed one or multiple times.
 
-**16.7.3 Transaction Rollback With Logical Undo**
+#### Transaction Rollback With Logical Undo
 
 When rolling back a transaction _Ti_ , the log is scanned backwards, and log records corresponding to _Ti_ are processed as follows:
 
@@ -3067,7 +3041,6 @@ b. As the backward scan of the log continues, the system skips all log records o
 
 Observe that the system logs physical undo information for the updates performed during rollback, instead of using a redo-only compensation log records. This is because a crash may occur while a logical undo is in progress,  
 
-**16.7 Early Lock Release and Logical Undo Operations 747**
 
 and on recovery the system has to complete the logical undo; to do so, restart recovery will undo the partial effects of the earlier undo, using the physical undo information, and then perform the logical undo again.
 
@@ -3087,7 +3060,6 @@ Figure 16.6 shows an example of a log generated by two transactions, which add o
 
 The annotations on the figure indicate that before an operation completes, rollback can perform physical undo; after the operation completes and releases lower-level locks, the undo must be performed by subtracting or adding a value, instead of restoring the old value. In the example in the figure, _T_0 rolls back operation _O_1 by adding 100 to _C_ ; on the other hand, for data item _B_, which was not subject to early lock release, undo is performed physically. Observe that _T_1,  
 
-**748 Chapter 16 Recovery System**
 
 **Figure 16.6** Transaction rollback with logical undo operations.
 
@@ -3097,23 +3069,19 @@ Figure 16.7 shows an example of recovery from a crash, with logical undo logging
 
 The next log record encountered is the operation-end record of _O_4; logical undo is performed for this operation by adding 300 to _C_ , which is logged physi- cally, and an operation-abort log record is added for _O_4\. The physical log records that were part of _O_4 are skipped until the operation-begin log record for _O_4 is encountered. In this example, there are no other intervening log records, but in general log records from other transactions may be found before we reach the operation-begin log record; such log records should of course not be skipped (unless they are part of a completed operation for the corresponding transaction and the algorithm skips those records). After the operation-begin log record is  
 
-**16.7 Early Lock Release and Logical Undo Operations 749**
-
-was
 
 **Figure 16.7** Failure recovery actions with logical undo operations
 
 found for _O_4, a physical log record is found for _T_1, which is rolled back physically. Finally the start log record for _T_1 is found; this results in _< T_1 abort_\>_ being added to the log, and _T_1 being deleted from undo-list. At this point undo-list is empty, and the undo phase is complete.
 
-**16.7.4 Concurrency Issues in Logical Undo**
+#### Concurrency Issues in Logical Undo
 
 As mentioned earlier, it is important that the lower-level locks acquired during an operation are sufficient to perform a subsequent logical undo of the oper- ation; otherwise concurrent operations that execute during normal processing may cause problems in the undo-phase. For example, suppose the logical undo of operation _O_1 of transaction _T_1 can conflict at the data item level with a concurrent operation _O_2 of transaction _T_2, and _O_1 completes while _O_2 does not. Assume also that neither transaction had committed when the system crashed. The physical update log records of _O_2 may appear before and after the operation-end record for _O_1, and during recovery updates done during the logical undo of _O_1 may get fully or partially overwritten by old values during the physical undo of _O_2\. This problem cannot occur if _O_1 had obtained all the lower-level locks required for the logical undo of _O_1, since then there cannot be such a concurrent _O_2.  
 
-**750 Chapter 16 Recovery System**
 
 If both the original operation and its logical undo operation access a single page (such operations are called physiological operations, and are discussed in Section 16.8), the locking requirement above is met easily. Otherwise the details of the specific operation need to be considered when deciding on what lower-level locks need to be obtained. For example, update operations on a B+-tree could obtain a short-term lock on the root, to ensure that operations execute serially. See the bibliographical notes for references on B+-tree concurrency control and recovery exploiting logical undo logging. See the bibliographical notes also for references to an alternative approach, called multi-level recovery, which relaxes this locking requirement.
 
-**16.8 ARIES\*\***
+### ARIES
 
 The state of the art in recovery methods is best illustrated by the ARIES recovery method. The recovery technique that we described in Section 16.4, along with the logical undo logging techniques described in Section 16.7, is modeled after ARIES, but has been simplified significantly to bring out key concepts and make it easier to understand. In contrast, ARIES uses a number of techniques to reduce the time taken for recovery, and to reduce the overhead of checkpointing. In particular, ARIES is able to avoid redoing many logged operations that have already been applied and to reduce the amount of information logged. The price paid is greater complexity; the benefits are worth the price.
 
@@ -3129,13 +3097,12 @@ For instance, the deletion of a record from a page may result in many other reco
 
 **4\.** Uses a fuzzy-checkpointing scheme that records only information about dirty pages and associated information and does not even require writing  
 
-**16.8 ARIES\*\* 751**
 
 of dirty pages to disk. It flushes dirty pages in the background, continuously, instead of writing them during checkpoints.
 
 In the rest of this section, we provide an overview of ARIES. The bibliographical notes list references that provide a complete description of ARIES.
 
-**16.8.1 Data Structures**
+#### Data Structures
 
 Each log record in ARIES has a log sequence number (LSN) that uniquely identifies the record. The number is conceptually just a logical identifier whose value is greater for log records that occur later in the log. In practice, the LSN is generated in such a way that it can also be used to locate the log record on disk. Typically, ARIES splits a log into multiple log files, each of which has a file number. When a log file grows to some limit, ARIES appends further log records to a new log file; the new log file has a file number that is higher by 1 than the previous log file. The LSN then consists of a file number and an offset within the file.
 
@@ -3147,7 +3114,6 @@ Pages should not be flushed to disk while an update is in progress, since physio
 
 Each log record also contains the LSN of the previous log record of the same transaction. This value, stored in the PrevLSN field, permits log records of a trans- action to be fetched backward, without reading the whole log. There are special redo-only log records generated during transaction rollback, called **compensa- tion log records** (**CLR**s) in ARIES. These serve the same purpose as the redo-only log records in our earlier recovery scheme. In addition CLRs serve the role of the operation-abort log records in our scheme. The CLRs have an extra field, called the UndoNextLSN, that records the LSN of the log that needs to be undone next, when the transaction is being rolled back. This field serves the same purpose as the operation identifier in the operation-abort log record in our earlier recovery scheme, which helps to skip over log records that have already been rolled back.  
 
-**752 Chapter 16 Recovery System**
 
 **Figure 16.8** Data structures used in ARIES.
 
@@ -3157,11 +3123,10 @@ A **checkpoint log record** contains the DirtyPageTable and a list of active tra
 
 Figure 16.8 illustrates some of the data structures used in ARIES. The log records shown in the figure are prefixed by their LSN; these may not be explicitly stored, but inferred from the position in the log, in an actual implementation. The data item identifier in a log record is shown in two parts, for example 4894.1; the first identifies the page, and the second part identifies a record within the page (we assume a slotted page record organization within a page). Note that the log is shown with newest records on top, since older log records, which are on disk, are shown lower in the figure.  
 
-**16.8 ARIES\*\* 753**
 
 Each page (whether in the buffer or on disk) has an associated PageLSN field. You can verify that the LSN for the last log record that updated page 4894 is 7567. By comparing PageLSNs for the pages in the buffer with the PageLSNs for the corresponding pages in stable storage, you can observe that the DirtyPageTable contains entries for all pages in the buffer that have been modified since they were fetched from stable storage. The RecLSN entry in the DirtyPageTable reflects the LSN at the end of the log when the page was added to DirtyPageTable, and would be greater than or equal to the PageLSN for that page on stable storage.
 
-**16.8.2 Recovery Algorithm**
+#### Recovery Algorithm
 
 ARIES recovers from a system crash in three passes.
 
@@ -3171,7 +3136,7 @@ ARIES recovers from a system crash in three passes.
 
 • **Undo pass**: This pass rolls back all transactions that were incomplete at the time of crash.
 
-**16.8.2.1 Analysis Pass**
+##### Analysis Pass
 
 The analysis pass finds the last complete checkpoint log record, and reads in the DirtyPageTable from this record. It then sets RedoLSN to the minimum of the RecLSNs of the pages in the DirtyPageTable. If there are no dirty pages, it sets RedoLSN to the LSN of the checkpoint log record. The redo pass starts its scan of the log from RedoLSN. All the log records earlier than this point have already been applied to the database pages on disk. The analysis pass initially sets the list of transactions to be undone, undo-list, to the list of transactions in the checkpoint log record. The analysis pass also reads from the checkpoint log record the LSNs of the last log record for each transaction in undo-list.
 
@@ -3179,9 +3144,8 @@ The analysis pass continues scanning forward from the checkpoint. Whenever it fi
 
 The analysis pass also updates DirtyPageTable whenever it finds a log record for an update on a page. If the page is not in DirtyPageTable, the analysis pass adds it to DirtyPageTable, and sets the RecLSN of the page to the LSN of the log record.  
 
-**754 Chapter 16 Recovery System**
 
-**16.8.2.2 Redo Pass**
+##### Redo Pass
 
 The redo pass repeats history by replaying every action that is not already reflected in the page on disk. The redo pass scans the log forward from RedoLSN. Whenever it finds an update log record, it takes this action:
 
@@ -3191,7 +3155,7 @@ The redo pass repeats history by replaying every action that is not already refl
 
 Note that if either of the tests is negative, then the effects of the log record have already appeared on the page; otherwise the effects of the log record are not reflected on the page. Since ARIES allows non-idempotent physiological log records, a log record should not be redone if its effect is already reflected on the page. If the first test is negative, it is not even necessary to fetch the page from disk to check its PageLSN.
 
-**16.8.2.3 Undo Pass and Transaction Rollback**
+##### Undo Pass and Transaction Rollback
 
 The undo pass is relatively straightforward. It performs a single backward scan of the log, undoing all transactions in undo-list. The undo pass examines only log records of transactions in undo-list; the last LSN recorded during the analysis pass is used to find the last log record for each transaction in undo-list.
 
@@ -3201,7 +3165,6 @@ If a CLR is found, its UndoNextLSN value indicates the LSN of the next log recor
 
 Figure 16.9 illustrates the recovery actions performed by ARIES, on an example log. We assume that the last completed checkpoint pointer on disk points to the checkpoint log record with LSN 7568. The PrevLSN values in the log records are shown using arrows in the figure, while the UndoNextLSN value is shown using a dashed arrow for the one compensation log record, with LSN 7565, in the figure. The analysis pass would start from LSN 7568, and when it is complete, RedoLSN would be 7564. Thus, the redo pass must start at the log record with LSN 7564. Note that this LSN is less than the LSN of the checkpoint log record, since the ARIES checkpointing algorithm does not flush modified pages to stable storage. The DirtyPageTable at the end of analysis would include pages 4894, 7200 from  
 
-**16.8 ARIES\*\* 755**
 
 **Figure 16.9** Recovery actions in ARIES.
 
@@ -3209,7 +3172,7 @@ the checkpoint log record, and 2390 which is updated by the log record with LSN 
 
 The redo pass for the above example starts from LSN 7564 and performs redo of log records whose pages appear in DirtyPageTable. The undo pass needs to undo only transaction _T_145, and hence starts from its LastLSN value 7567, and continues backwards until the record _< T_145 start_\>_ is found at LSN 7563.
 
-**16.8.3 Other Features**
+#### Other Features
 
 Among other key features that ARIES provides are:
 
@@ -3231,13 +3194,12 @@ Programmers can also use savepoints to undo a transaction partially, and then co
 
 In summary, the ARIES algorithm is a state-of-the-art recovery algorithm, incorporating a variety of optimizations designed to improve concurrency, reduce logging overhead, and reduce recovery time.
 
-**16.9 Remote Backup Systems**
+### Remote Backup Systems
 
 Traditional transaction-processing systems are centralized or client–server sys- tems. Such systems are vulnerable to environmental disasters such as fire, flood- ing, or earthquakes. Increasingly, there is a need for transaction-processing sys- tems that can function in spite of system failures or environmental disasters. Such systems must provide **high availability**; that is, the time for which the system is unusable must be extremely small.
 
 We can achieve high availability by performing transaction processing at one site, called the **primary site**, and having a **remote backup** site where all the data from the primary site are replicated. The remote backup site is sometimes also called the **secondary site**. The remote site must be kept synchronized with the primary site, as updates are performed at the primary. We achieve synchronization by sending all log records from primary site to the remote backup site. The remote backup site must be physically separated from the primary—for example, we can locate it in a different state—so that a disaster at the primary does not damage  
 
-**16.9 Remote Backup Systems 757**
 
 log records
 
@@ -3281,13 +3243,12 @@ This scheme provides better availability than does two-very-safe, while avoiding
 
 Several commercial shared-disk systems provide a level of fault tolerance that is intermediate between centralized and remote backup systems. In these commer- cial systems, the failure of a CPU does not result in system failure. Instead, other CPUs take over, and they carry out recovery. Recovery actions include rollback  
 
-**16.10 Summary 759**
 
 of transactions running on the failed CPU, and recovery of locks held by those transactions. Since data are on a shared disk, there is no need for transfer of log records. However, we should safeguard the data from disk failure by using, for example, a RAID disk organization.
 
 An alternative way of achieving high availability is to use a distributed database, with data replicated at more than one site. Transactions are then re- quired to update all replicas of any data item that they update. We study dis- tributed databases, including replication, in Chapter 19.
 
-**16.10 Summary**
+### Summary
 
 • A computer system, like any other mechanical or electrical device, is sub- ject to failure. There are a variety of causes of such failure, including disk crash, power failure, and software errors. In each of these cases, information concerning the database system is lost.
 
@@ -3305,7 +3266,6 @@ An alternative way of achieving high availability is to use a distributed databa
 
 • Log records contain old values and new values for all updated data items. The new values are used in case the updates need to be redone after a system crash. The old values are used to roll back the updates of the transaction if  
 
-**760 Chapter 16 Recovery System**
 
 the transaction aborts during normal operation, as well as to roll back the updates of the transaction in case the system crashed before the transaction committed.
 
@@ -3327,7 +3287,6 @@ the transaction aborts during normal operation, as well as to roll back the upda
 
 • Modern recovery techniques support high-concurrency locking techniques, such as those used for B+-tree concurrency control. These techniques allow early release of lower-level locks obtained by operations such as inserts or deletes, which allows other such operations to be performed by other trans- actions. After lower-level locks are released, physical undo is not possible, and instead logical undo, such as a deletion to undo an insertion, is required. Transactions retain higher-level locks that ensure that concurrent transac-  
 
-**Review Terms 761**
 
 tions cannot perform actions that could make logical undo of an operation impossible.
 
@@ -3337,7 +3296,7 @@ tions cannot perform actions that could make logical undo of an operation imposs
 
 • Remote backup systems provide a high degree of availability, allowing trans- action processing to continue even if the primary site is destroyed by a fire, flood, or earthquake. Data and log records from a primary site are continu- ally backed up to a remote backup site. If the primary site fails, the remote backup site takes over transaction processing, after executing certain recovery actions.
 
-**Review Terms**
+### Review Terms**
 
 • Recovery scheme • Failure classification
 
@@ -3367,7 +3326,6 @@ tions cannot perform actions that could make logical undo of an operation imposs
 
 • Disk buffer • Force-output • Log-based recovery • Log • Log records • Update log record • Deferred modification • Immediate modification • Uncommitted modifications • Checkpoints • Recovery algorithm  
 
-**762 Chapter 16 Recovery System**
 
 • Restart recovery • Transaction rollback • Physical undo • Physical logging • Transaction rollback • Checkpoints • Restart recovery • Redo phase • Undo phase • Repeating history • Buffer management • Log-record buffering • Write-ahead logging (WAL) • Log force • Database buffering • Latches • Operating system and buffer
 
@@ -3407,7 +3365,7 @@ management • Fuzzy checkpointing • Early lock release • Logical operations
 
 ◦ Two-safe
 
-**Practice Exercises**
+### Practice Exercises
 
 **16.1** Explain why log records for transactions on the undo-list must be pro- cessed in reverse order, whereas redo is performed in a forward direction.
 
@@ -3419,7 +3377,6 @@ management • Fuzzy checkpointing • Early lock release • Logical operations
 
 • The time it takes to recover from a media (disk) failure?  
 
-**Practice Exercises 763**
 
 **16.3** Some database systems allow the administrator to choose between two forms of logging: _normal logging_, used to recover from system crashes, and _archival logging_, used to recover from media (disk) failure. When can a log record be deleted, in each of these cases, using the recovery algorithm of Section 16.4?
 
@@ -3445,7 +3402,6 @@ b. Even with the above optimization, logging is much cheaper than a shadow-copy 
 
 **16.8** Disk space allocated to a file as a result of a transaction should not be released even if the transaction is rolled back. Explain why, and explain how ARIES ensures that such actions are not rolled back.  
 
-**764 Chapter 16 Recovery System**
 
 **16.9** Suppose a transaction deletes a record, and the free space generated thus is allocated to a record inserted by another transaction, even before the first transaction commits.
 
@@ -3467,7 +3423,7 @@ Suggest a modification to the recovery algorithm of Section 16.4 to implement po
 
 c. Later nonerroneous transactions can be re-executed logically, if the updates are available in the form of SQL but cannot be re-executed using their log records. Why?
 
-**Exercises**
+### Exercises
 
 **16.12** Explain the difference between the three storage types—volatile, non- volatile, and stable—in terms of I/O cost.
 
@@ -3477,7 +3433,6 @@ a. Explain why it cannot be.
 
 b. Explain how database systems deal with this problem.  
 
-**Exercises 765**
 
 **16.14** Explain how the database may become inconsistent if some log records pertaining to a block are not output to stable storage before the block is output to disk.
 
@@ -3515,13 +3470,12 @@ b. Transaction commit must be accomplished quickly, even at the cost of loss of 
 
 c. A high degree of availability and durability is required, but a longer running time for the transaction commit protocol is acceptable.  
 
-**766 Chapter 16 Recovery System**
 
 **16.25** The Oracle database system uses undo log records to provide a snapshot view of the database, under snapshot-isolation. The snapshot view seen by transaction _Ti_ reflects updates of all transactions that had committed when _Ti_ started, and the updates of _Ti_ ; updates of all other transactions are not visible to _Ti_ .
 
 Describe a scheme for buffer handling whereby transactions are given a snapshot view of pages in the buffer. Include details of how to use the log to generate the snapshot view. You can assume that operations as well as their undo actions affect only one page.
 
-**Bibliographical Notes**
+### Bibliographical Notes
 
 Gray and Reuter \[1993\] is an excellent textbook source of information about recovery, including interesting implementation and historical details. Bernstein and Goodman \[1981\] is an early textbook source of information on concurrency control and recovery.
 
