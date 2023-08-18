@@ -73,7 +73,12 @@ It is important to know if a change to a data item appears only in main memory o
 
 Let _Ti_ be a transaction that transfers $50 from account _A_ to account _B_. This transaction can be defined as:
 
-_Ti_ : read(_A_); _A_ := _A_ − 50; write(_A_); read(_B_); _B_ := _B_ \+ 50; write(_B_).  
+   Ti : read(_A_);
+        A_ := _A_ − 50;
+        write(_A_); 
+        read(_B_);
+        B_ := _B_ \+ 50;
+        write(_B_). 
 
 
 Let us now consider each of the ACID properties. (For ease of presentation, we consider them in an order different from the order A-C-I-D.)
@@ -153,7 +158,7 @@ The state diagram corresponding to a transaction appears in Figure 14.1. We say 
 
 
 
-
+![](1.png)
 **Figure 14.1** State diagram of a transaction.
 
 Similarly, we say that a transaction has aborted only if it has entered the aborted state. A transaction is said to have **terminated** if it has either committed or aborted.
@@ -253,34 +258,7 @@ Suppose the current values of accounts _A_ and _B_ are $1000 and $2000, respec- 
 **Figure 14.2** Schedule 1—a serial schedule in which _T_1 is followed by _T_2.
 
 Similarly, if the transactions are executed one at a time in the order _T_2 followed by _T_1, then the corresponding execution sequence is that of Figure 14.3. Again, as expected, the sum _A_ \+ _B_ is preserved, and the final values of accounts _A_ and _B_ are $850 and $2150, respectively.
-|T1       | T2           |
-|---------|--------------|
-|         | read(_A_) 
-|         | temp_ := _A_ ∗ 0.1
-|         |  _A_ := _A_ − _temp_
-|         |   write(_A_)
-|         |  read(_B_)
-|         |B_ := _B_ \+ _temp_
-|         |  write(_B_)
-|         | commit
-|read(_A_)     |              |
-| _A_ := _A_ − 50        |              |
-|         |              |
-|         |              |
-|         |              |
-|         |              |
-|         |              |
-|         |              |
-|         |              | 
-|         |              | 
-|         |              |
-|         |              |
-|         |              |
-|         |              |
-
-
-
- write(_A_) read(_B_) _B_ := _B_ \+ 50 write(_B_) commit
+![](3.png)
 
 **Figure 14.3** Schedule 2—a serial schedule in which _T_2 is followed by _T_1.  
 
@@ -302,33 +280,15 @@ If control of concurrent execution is left entirely to the operating system, man
 1The number of possible schedules for a set of _n_ transactions is very large. There are _n_! different serial schedules. Considering all the possible ways that steps of transactions might be interleaved, the total number of possible schedules is much larger than _n_!.  
 
 
-T1 T2
-
-read(_A_) _A_ := _A_ − 50 write(_A_)
-
-read(_A_) _temp_ := _A_ ∗ 0.1 _A_ := _A_ − _temp_ write(_A_)
-
-read(_B_) _B_ := _B_ \+ 50 write(_B_) commit
-
-read(_B_) _B_ := _B_ \+ _temp_ write(_B_) commit
+![](4.png)
 
 **Figure 14.4** Schedule 3—a concurrent schedule equivalent to schedule 1.
 
 We can ensure consistency of the database under concurrent execution by making sure that any schedule that is executed has the same effect as a schedule that could have occurred without any concurrent execution. That is, the schedule should, in some sense, be equivalent to a serial schedule. Such schedules are called **serializable** schedules.
+![](5.png)
 
-T1 T2
-
-read(_A_) _A_ := _A_ − 50
-
-read(_A_) _temp_ := _A_ ∗ 0.1 _A_ := _A_ − _temp_ write(_A_) read(_B_)
-
-write(_A_) read(_B_) _B_ := _B_ \+ 50 write(_B_) commit
-
-_B_ := _B_ \+ _temp_ write(_B_) commit
 
 **Figure 14.5** Schedule 4—a concurrent schedule resulting in an inconsistent state.  
-
-**14.6 Serializability 641**
 
 ###  Serializability
 
@@ -342,28 +302,12 @@ Let us consider a schedule _S_ in which there are two consecutive instructions, 
 
 **2\.** _I_ \= read(_Q_), _J_ \= write(_Q_). If _I_ comes before _J_ , then _Ti_ does not read the value of _Q_ that is written by _Tj_ in instruction _J_ . If _J_ comes before _I_ , then _Ti_ reads the value of _Q_ that is written by _Tj_ . Thus, the order of _I_ and _J_ matters.
 
-T1 T2
-
-read(_A_) write(_A_)
-
-read(_A_) write(_A_)
-
-read(_B_) write(_B_)
-
-read(_B_) write(_B_)
+![](6.png)
 
 **Figure 14.6** Schedule 3—showing only the read and write instructions.  
 
 
-T1 T2
-
-read(_A_) write(_A_)
-
-read(_A_) read(_B_)
-
-write(_A_) write(_B_)
-
-read(_B_) write(_B_)
+![](7.png)
 
 **Figure 14.7** Schedule 5—schedule 3 after swapping of a pair of instructions.
 
@@ -376,21 +320,11 @@ Thus, only in the case where both _I_ and _J_ are read instructions does the rel
 We say that _I_ and _J_ **conflict** if they are operations by different transactions on the same data item, and at least one of these instructions is a write operation.
 
 To illustrate the concept of conflicting instructions, we consider schedule 3in Figure 14.6. The write(_A_) instruction of T1 conflicts with the read(_A_) instruction of T2\. However, the write(_A_) instruction of T2 does not conflict with the read(_B_) instruction of T1, because the two instructions access different data items.
-
-T1 T2
-
-read(_A_) write(_A_) read(_B_) write(_B_)
-
-read(_A_) write(_A_) read(_B_) write(_B_)
+![](8.png)
 
 **Figure 14.8** Schedule 6—a serial schedule that is equivalent to schedule 3.  
 
-
-T3 T4
-
-read(_Q_) write(_Q_)
-
-write(_Q_)
+![](9.png)
 
 **Figure 14.9** Schedule 7.
 
@@ -418,10 +352,7 @@ Finally, consider schedule 7 of Figure 14.9; it consists of only the significant
 
 2We use the term _conflict equivalent_ to distinguish the way we have just defined equivalence from other definitions that we shall discuss later on in this section.  
 
-
-(a) (b)
-
-T1 T2 T2 T1
+![](10.png)
 
 **Figure 14.10** Precedence graph for (a) schedule 1 and (b) schedule 2.
 
@@ -442,39 +373,10 @@ The precedence graph for schedule 4 appears in Figure 14.11. It contains the edg
 If the precedence graph for _S_ has a cycle, then schedule _S_ is not conflict serial- izable. If the graph contains no cycles, then the schedule _S_ is conflict serializable.
 
 A **serializability order** of the transactions can be obtained by finding a linear order consistent with the partial order of the precedence graph. This process is called **topological sorting**. There are, in general, several possible linear orders that
+![](11.png)
 
-T1 T2
-
-**Figure 14.11** Precedence graph for schedule 4.  
-
-
-(b) (c)
-
-(a)
-
-_Tm_
-
-_Tk_
-
-_Tk_
-
-_Tk_
-
-_Tj_
-
-_Ti_
-
-_Tm_
-
-_Tj_
-
-_Ti_
-
-_Tm_
-
-_Ti_
-
-_Tj_
+**Figure 14.11** Precedence graph for schedule   
+![](12.png)
 
 **Figure 14.12** Illustration of topological sorting.
 
@@ -486,16 +388,7 @@ Returning to our previous examples, note that the precedence graphs for schedule
 
 It is possible to have two schedules that produce the same outcome, but that are not conflict equivalent. For example, consider transaction T5, which transfers $10 from account _B_ to account _A_. Let schedule 8 be as defined in Figure 14.13. We claim that schedule 8 is not conflict equivalent to the serial schedule _<T_1,T5_\>_, since, in schedule 8, the write(_B_) instruction of T5 conflicts with the read(_B_) in- struction of T1\. This creates an edge T5 → T1 in the precedence graph. Similarly, we see that the write(_A_) instruction of T1 conflicts with the read instruction of T5  
 
-
-T1 T5
-
-read(_A_) _A_ := _A_ − 50 write(_A_)
-
-read(_B_) _B_ := _B_ − 10 write(_B_)
-
-read(_B_) _B_ := _B_ \+ 50 write(_B_)
-
-read(_A_) _A_ := _A_ \+ 10 write(_A_)
+![](13.png)
 
 **Figure 14.13** Schedule 8.
 
@@ -512,14 +405,7 @@ So far, we have studied schedules while assuming implicitly that there are no tr
 3Testing for view serializability has been proven to be NP-complete, which means that it is virtually certain that no efficient test for view serializability exists.  
 
 
-
-T6 T7
-
-read(_A_) write(_A_)
-
-read(_A_) commit
-
-read(_B_)
+![](14.png)
 
 **Figure 14.14** Schedule 9, a nonrecoverable schedule.
 
@@ -537,14 +423,7 @@ Schedule 9 is an example of a _nonrecoverable_ schedule. A **recoverable schedul
 
 Even if a schedule is recoverable, to recover correctly from the failure of a trans- action _Ti_ , we may have to roll back several transactions. Such situations occur if transactions have read data written by _Ti_ . As an illustration, consider the partial schedule of Figure 14.15. Transaction T8 writes a value of _A_ that is read by transac- tion T9\. Transaction T9 writes a value of _A_ that is read by transaction T10\. Suppose that, at this point, T8 fails. T8 must be rolled back. Since T9 is dependent on T8, T9 must be rolled back. Since T10 is dependent on T9, T10 must be rolled back. This  
 
-
-T8 T9 T10
-
-read(_A_) read(_B_) write(_A_)
-
-read(_A_) write(_A_)
-
-read(_A_) abort
+![](15.png)
 
 **Figure 14.15** Schedule 10.
 
@@ -783,15 +662,7 @@ b. Explain how the issues of atomicity and durability are relevant to the creati
 **14.8** The **lost update** anomaly is said to occur if a transaction _Tj_ reads a data item, then another transaction _Tk_ writes the data item (possibly based on a previous read), after which _Tj_ writes the data item. The update performed by _Tk_ has been lost, since the update done by _Tj_ ignored the value written by _Tk_ .  
 
 
-_T1_
-
-_T4_
-
-_T5_
-
-_T3_
-
-_T2_
+  ![](16.png)
 
 **Figure 14.16** Precedence graph for Practice Exercise 14.6.
 
@@ -883,12 +754,7 @@ There are various modes in which a data item may be locked. In this section, we 
 
 **2\. Exclusive**. If a transaction _Ti_ has obtained an **exclusive-mode lock** (denoted by X) on item _Q_, then _Ti_ can both read and write _Q_.
 
-
-S X
-
-S true false
-
-X false false
+![](1.1.png)
 
 **Figure 15.1** Lock-compatibility matrix comp.
 
@@ -906,8 +772,7 @@ Transaction _Ti_ may unlock a data item that it had locked at some earlier point
 
 As an illustration, consider again the banking example that we introduced in Chapter 14. Let _A_ and _B_ be two accounts that are accessed by transactions T1  
 
-
-T1: lock-X(_B_); read(_B_); _B_ := _B_ − 50; write(_B_); unlock(_B_); lock-X(_A_); read(_A_); _A_ := _A_ \+ 50; write(_A_); unlock(_A_).
+![](1.2.png)
 
 **Figure 15.2** Transaction T1.
 
@@ -917,39 +782,22 @@ Suppose that the values of accounts _A_ and _B_ are $100 and $200, respectively.
 
 The schedule shows the actions executed by the transactions, as well as the points at which the concurrency-control manager grants the locks. The transac- tion making a lock request cannot execute its next action until the concurrency- control manager grants the lock. Hence, the lock must be granted in the interval of time between the lock-request operation and the following action of the trans- action. Exactly when within this interval the lock is granted is not important; we can safely assume that the lock is granted just before the following action of the transaction. We shall therefore drop the column depicting the actions of the concurrency-control manager from all schedules depicted in the rest of the chapter. We let you infer when locks are granted.
 
-T2: lock-S(_A_); read(_A_); unlock(_A_); lock-S(_B_); read(_B_); unlock(_B_); display(_A_ \+ _B_).
-
+![](1.3.png)
 **Figure 15.3** Transaction T2.  
 
+![](1.4.png)
 
-T1 T2 concurreny-control manager
-
-lock-X(_B_) grant-X(_B, T_1)
-
-read(_B_) _B_ := _B_ − 50 write(_B_ ) unlock(_B_ )
-
-lock-S(_A_) grant-S(_A, T_2)
-
-read(_A_) unlock(_A_) lock-S(_B_)
-
-grant-S(_B, T_2) read(_B_ ) unlock(_B_ ) display(_A + B_)
-
-lock-X(_A_) grant-X(_A, T_1)
-
-read(_A_) _A_ := _A_ − 50 write(_A_) unlock(_A_)
 
 **Figure 15.4** Schedule 1.
 
 Suppose now that unlocking is delayed to the end of the transaction. Trans- action T3 corresponds to T1 with unlocking delayed (Figure 15.5). Transaction T4 corresponds to T2 with unlocking delayed (Figure 15.6).
 
 You should verify that the sequence of reads and writes in schedule 1, which lead to an incorrect total of $250 being displayed, is no longer possible with T3
-
-T3: lock-X(_B_); read(_B_); _B_ := _B_ − 50; write(_B_); lock-X(_A_); read(_A_); _A_ := _A_ \+ 50; write(_A_); unlock(_B_); unlock(_A_).
-
+![](1.5.png)
 **Figure 15.5** Transaction T3 (transaction T1 with unlocking delayed).  
 
 
-T4: lock-S(_A_); read(_A_); lock-S(_B_); read(_B_); display(_A_ \+ _B_); unlock(_A_); unlock(_B_).
+![](1.6.png)
 
 **Figure 15.6** Transaction T4 (transaction T2 with unlocking delayed).
 
@@ -959,13 +807,7 @@ Unfortunately, locking can lead to an undesirable situation. Consider the partia
 
 If we do not use locking, or if we unlock data items too soon after reading or writing them, we may get inconsistent states. On the other hand, if we do not unlock a data item before requesting a lock on another data item, deadlocks may occur. There are ways to avoid deadlock in some situations, as we shall see in Section 15.1.5. However, in general, deadlocks are a necessary evil associated with locking, if we want to avoid inconsistent states. Deadlocks are definitely
 
-T3 T4
-
-lock-X(_B_) read(_B_) _B_ := _B_ − 50 write(_B_)
-
-lock-S(_A_) read(_A_) lock-S(_B_)
-
-lock-X(_A_)
+![](1.7.png)
 
 **Figure 15.7** Schedule 2.  
 
@@ -1014,13 +856,7 @@ Cascading rollbacks can be avoided by a modification of two-phase locking called
 Another variant of two-phase locking is the **rigorous two-phase locking protocol**, which requires that all locks be held until the transaction commits.  
 
 
-T5 T6 T7
-
-lock-X(_A_) read(_A_) lock-S(_B_) read(_B_) write(_A_) unlock(_A_)
-
-lock-X(_A_) read(_A_) write(_A_) unlock(_A_)
-
-lock-S(_A_) read(_A_)
+![](1.8.png)
 
 **Figure 15.8** Partial schedule under two-phase locking.
 
@@ -1036,18 +872,7 @@ If we employ the two-phase locking protocol, then T8 must lock _a_1 in exclusive
 
 This observation leads us to a refinement of the basic two-phase locking protocol, in which **lock conversions** are allowed. We shall provide a mechanism for upgrading a shared lock to an exclusive lock, and downgrading an exclusive lock to a shared lock. We denote conversion from shared to exclusive modes by **upgrade**, and from exclusive to shared by **downgrade**. Lock conversion cannot be allowed arbitrarily. Rather, upgrading can take place in only the growing phase, whereas downgrading can take place in only the shrinking phase.  
 
-
-T8 T9
-
-lock-S(_a_1) lock-S(_a_1)
-
-lock-S(_a_2) lock-S(_a_2)
-
-lock-S(_a_3) lock-S(_a_4)
-
-unlock(_a_1) unlock(_a_2)
-
-lock-S(_an_) upgrade(_a_1)
+![](1.9.png)
 
 **Figure 15.9** Incomplete schedule with a lock conversion.
 
@@ -1090,26 +915,7 @@ It always grants a lock request on a data item that is not currently locked. But
 
 • If a transaction aborts, the lock manager deletes any waiting request made by the transaction. Once the database system has taken appropriate actions to undo the transaction (see Section 16.3), it releases all locks held by the aborted transaction.  
 
-
-granted
-
-waiting
-
-T8
-
-144
-
-T1 T23
-
-14
-
-T23
-
-17 123
-
-T23 T1 T8 T2
-
-1912
+![](1.10.png)
 
 **Figure 15.10** Lock table.
 
@@ -1140,21 +946,7 @@ All schedules that are legal under the tree protocol are conflict serializable. 
 
 following four transactions follow the tree protocol on this graph. We show only the lock and unlock instructions:
 
-_A_
-
-_CB_
-
-_F_
-
-_E_
-
-_IH_
-
-_J_
-
-_D_
-
-_G_
+![](1.11.png)
 
 **Figure 15.11** Tree-structured database graph.  
 
@@ -1169,21 +961,7 @@ Observe that the schedule of Figure 15.12 is conflict serializable. It can be sh
 
 The tree protocol in Figure 15.12 does not ensure recoverability and cas- cadelessness. To ensure recoverability and cascadelessness, the protocol can be modified to not permit release of exclusive locks until the end of the transaction. Holding exclusive locks until the end of the transaction reduces concurrency. Here is an alternative that improves concurrency, but ensures only recoverabil- ity: For each data item with an uncommitted write, we record which transaction performed the last write to the data item. Whenever a transaction _Ti_ performs a read of an uncommitted data item, we record a **commit dependency** of _Ti_ on the
 
-T10 T11 T12 T13
-
-lock-X(_B_) lock-X(_D_) lock-X(_H_) unlock(_D_)
-
-lock-X(_E_) lock-X(_D_) unlock(_B_) unlock(_E_)
-
-lock-X(_B_) lock-X(_E_)
-
-unlock(_H_) lock-X(_G_) unlock(_D_)
-
-lock-X(_D_) lock-X(_H_) unlock(_D_) unlock(_H_)
-
-unlock(_E_) unlock(_B_)
-
-unlock(_G_)
+![](1.12.png)
 
 **Figure 15.12** Serializable schedule under the tree protocol.  
 
@@ -1249,12 +1027,7 @@ In this section, we elaborate on these issues.
 
 Deadlocks can be described precisely in terms of a directed graph called a **wait- for graph**. This graph consists of a pair _G_ \= (_V_, _E_), where _V_ is a set of vertices and _E_ is a set of edges. The set of vertices consists of all the transactions in the system. Each element in the set _E_ of edges is an ordered pair _Ti_ → _Tj_ . If _Ti_ → _Tj_ is in _E_,  
 
-
-T18 T20
-
-T17
-
-T19
+![](1.13.png)
 
 **Figure 15.13** Wait-for graph with no cycle.
 
@@ -1288,12 +1061,7 @@ algorithm? The answer depends on two factors:
 
 If deadlocks occur frequently, then the detection algorithm should be in- voked more frequently. Data items allocated to deadlocked transactions will be  
 
-
-T18 T20
-
-T17
-
-T19
+![](1.14.png)
 
 **Figure 15.14** Wait-for graph with a cycle.
 
@@ -1317,8 +1085,6 @@ d. How many transactions will be involved in the rollback.
 
 The simplest solution is a **total rollback**: Abort the transaction and then restart it. However, it is more effective to roll back the transaction only as far as necessary to break the deadlock. Such **partial rollback** requires the system to maintain additional information about the state of all the running transactions. Specifically, the sequence of lock requests/grants and updates performed by the transaction needs to be recorded. The deadlock detection mechanism should decide which locks the selected transaction needs to release in order to break the deadlock. The selected transaction must be rolled back to the point where it obtained the first of these locks, undoing all actions it took after that point. The recovery mechanism must be capable  
 
-**15.3 Multiple Granularity 679**
-
 of performing such partial rollbacks. Furthermore, the transactions must be capable of resuming execution after a partial rollback. See the bibliographical notes for relevant references.
 
 **3\. Starvation**. In a system where the selection of victims is based primarily on cost factors, it may happen that the same transaction is always picked as a victim. As a result, this transaction never completes its designated task, thus there is **starvation**. We must ensure that a transaction can be picked as a victim only a (small) finite number of times. The most common solution is to include the number of rollbacks in the cost factor.
@@ -1336,19 +1102,7 @@ As an illustration, consider the tree of Figure 15.15, which consists of four le
 Each node in the tree can be locked individually. As we did in the two- phase locking protocol, we shall use **shared** and **exclusive** lock modes. When a transaction locks a node, in either shared or exclusive mode, the transaction also has implicitly locked all the descendants of that node in the same lock mode. For example, if transaction _Ti_ gets an **explicit lock** on file _Fc_ of Figure 15.15, in exclusive mode, then it has an **implicit lock** in exclusive mode on all the records belonging to that file. It does not need to lock the individual records of _Fc_ explicitly.  
 
 
-ra1 ra2
-
-ran rb1
-
-rbk rc1
-
-rcm
-
-Fa Fb Fc
-
-A1 A2
-
-DB
+![](1.15.png)
 
 **Figure 15.15** Granularity hierarchy.
 
@@ -1358,18 +1112,7 @@ Suppose now that transaction _Tk_ wishes to lock the entire database. To do so, 
 
 There is an intention mode associated with shared mode, and there is one with exclusive mode. If a node is locked in **intention-shared (IS) mode**, explicit locking is being done at a lower level of the tree, but with only shared-mode locks. Similarly, if a node is locked in **intention-exclusive (IX) mode**, then explicit locking is being done at a lower level, with exclusive-mode or shared-mode locks. Finally, if a node is locked in **shared and intention-exclusive (SIX) mode**, the subtree rooted by that node is locked explicitly in shared mode, and that explicit locking is being done at a lower level with exclusive-mode locks. The compatibility function for these lock modes is in Figure 15.16.  
 
-
-IS IX S SIX X
-
-IS true true true true false
-
-IX true true false false false
-
-S true false true false false
-
-SIX true false false false false
-
-X false false false false false
+![](1.16.png)
 
 **Figure 15.16** Compatibility matrix.
 
@@ -1458,11 +1201,19 @@ If a transaction _Ti_ is rolled back by the concurrency-control scheme as result
 To illustrate this protocol, we consider transactions T25 and T26\. Transaction T25 displays the contents of accounts _A_ and _B_:  
 
 
-T25: read(_B_); read(_A_); display(_A_ \+ _B_).
+T25: read(_B_);
+ read(_A_);
+  display(_A_ \+ _B_).
 
 Transaction T26 transfers $50 from account _B_ to account _A_, and then displays the contents of both:
 
-T26: read(_B_); _B_ := _B_ − 50; write(_B_); read(_A_); _A_ := _A_ \+ 50; write(_A_); display(_A_ \+ _B_).
+T26: read(_B_);
+ _B_ := _B_ − 50;
+  write(_B_); 
+  read(_A_); 
+  _A_ := _A_ \+ 50; 
+  write(_A_); 
+  display(_A_ \+ _B_).
 
 In presenting schedules under the timestamp protocol, we shall assume that a transaction is assigned a timestamp immediately before its first instruction. Thus, in schedule 3 of Figure 15.17, TS(_T_25) _<_ TS(_T_26), and the schedule is possible under the timestamp protocol.
 
@@ -1472,13 +1223,7 @@ The timestamp-ordering protocol ensures conflict serializability. This is be- ca
 
 The protocol ensures freedom from deadlock, since no transaction ever waits. However, there is a possibility of starvation of long transactions if a sequence of conflicting short transactions causes repeated restarting of the long transaction. If a transaction is suffering from repeated restarts, conflicting transactions need to be temporarily blocked to enable the transaction to finish.
 
-_T_25 _T_26
-
-read(_B_) read(_B_) _B_ := _B_ − 50 write(_B_)
-
-read(_A_) read(_A_)
-
-display(_A + B_) _A_ := _A_ \+ 50 write(_A_) display(_A + B_)
+![](1.17.png)
 
 **Figure 15.17** Schedule 3.  
 
@@ -1501,11 +1246,7 @@ TS(_T_28) that attempts a read(_Q_) will be rolled back, since TS(_Ti_) _<_ W-ti
 
 This observation leads to a modified version of the timestamp-ordering proto- col in which obsolete write operations can be ignored under certain circumstances. The protocol rules for read operations remain unchanged. The protocol rules for write operations, however, are slightly different from the timestamp-ordering protocol of Section 15.4.2.
 
-_T_27 _T_28
-
-read(_Q_) write(_Q_)
-
-write(_Q_)
+![](1.18.png)
 
 **Figure 15.18** Schedule 4.  
 
@@ -1547,13 +1288,7 @@ The concept of view equivalence leads to the concept of view serializability. We
 
 As an illustration, suppose that we augment schedule 4 with transaction _T_29, and obtain the following view serializable (schedule 5):
 
-_T27 T28 T29_
-
-read (_Q_)
-
-write (_Q_) write (_Q_)
-
-write (_Q_)
+![](1.18.1-validation.png.png)
 
 Indeed, schedule 5 is view equivalent to the serial schedule _<T_27_, T_28_, T_29_\>_, since the one read(_Q_) instruction reads the initial value of _Q_ in both schedules and _T_29 performs the final write of _Q_ in both schedules.
 
@@ -1586,14 +1321,7 @@ The **validation test** for transaction _Ti_ requires that, for all transactions
 
 **2\.** The set of data items written by _Tk_ does not intersect with the set of data items read by _Ti_ , and _Tk_ completes its write phase before _Ti_ starts its validation phase (Start(_Ti_ ) _<_ Finish(_Tk_) _<_ Validation(_Ti_ )). This condition ensures that the writes of _Tk_ and _Ti_ do not overlap. Since the writes of _Tk_ do not affect the read of _Ti_ , and since _Ti_ cannot affect the read of _Tk_ , the serializability order is indeed maintained.  
 
-
-_T_25 _T_26
-
-read(_B_) read(_B_) _B_ := _B_ − 50 read(_A_) _A_ := _A_ \+ 50
-
-read(_A_) < validate> display(_A + B_)
-
-< validate> write(_B_) write(_A_)
+![](1.19.png)
 
 **Figure 15.19** Schedule 6, a schedule produced by using validation.
 
@@ -1882,14 +1610,7 @@ In contrast to the situation in two-phase locking, S-locks may be released at an
 
 3The term _predicate locking_ was used for a version of the protocol that used shared and exclusive locks on predicates, and was thus more complicated. The version we present here, with only shared locks on predicates, is also referred to as **precision locking**.  
 
-
-_T_32 _T_33
-
-lock-S(_Q_) read(_Q_) unlock(_Q_)
-
-lock-X(_Q_) read(_Q_) write(_Q_) unlock(_Q_)
-
-lock-S(_Q_) read(_Q_) unlock(_Q_)
+![](1.20.png)
 
 **Figure 15.20** Nonserializable schedule with degree-two consistency.
 
@@ -1987,16 +1708,7 @@ As an illustration, consider the B-link tree in Figure 15.21. Assume that there 
 
 **2\.** Look up “Comp. Sci.”  
 
-
-History
-
-Elec. Eng.
-
-Biology Comp. Sci. Elec. Eng. Finance History
-
-Music
-
-Music Physics
+![](1.21.png)
 
 **Figure 15.21** B-link tree for _department_ file with _n_ \= 3.
 
@@ -2008,19 +1720,7 @@ The insertion operation now unlocks the leaf node and relocks its parent, this t
 
 Lookup and insertion operations cannot lead to deadlock. Coalescing of nodes during deletion can cause inconsistencies, since a lookup may have read a pointer to a deleted node from its parent, before the parent node was updated, and may
 
-History
-
-Elec. Eng.
-
-Biology .celEyrtsimehC Eng. FinanceComp. Sci.
-
-Music
-
-Music Physics
-
-Comp. Sci.
-
-History
+![](1.22.png)
 
 **Figure 15.22** Insertion of “Chemistry” into the B-link tree of Figure 15.21.  
 
@@ -2243,8 +1943,6 @@ Add lock and unlock instructions to transactions _T_31 and _T_32, so that they o
 
 **15.3** What benefit does rigorous two-phase locking provide? How does it com- pare with other forms of two-phase locking?  
 
-**Practice Exercises 713**
-
 **15.4** Consider a database organized in the form of a rooted tree. Suppose that we insert a dummy vertex between each pair of vertices. Show that, if we follow the tree protocol on the new tree, we get better concurrency than if we follow the tree protocol on the original tree.
 
 **15.5** Show by example that there are schedules possible under the tree protocol that are not possible under the two-phase locking protocol, and vice versa.
@@ -2276,13 +1974,7 @@ Show that the protocol ensures serializability and deadlock freedom.
 **15.9** Locking is not done explicitly in persistent programming languages. Rather, objects (or the corresponding pages) must be locked when the objects are accessed. Most modern operating systems allow the user to set access protections (no access, read, write) on pages, and memory ac- cess that violate the access protections result in a protection violation (see the Unix mprotect command, for example). Describe how the access- protection mechanism can be used for page-level locking in a persistent programming language.  
 
 
-S X I
-
-S true false false
-
-X false false false
-
-I false false true
+![](1.23.png)
 
 **Figure 15.23** Lock-compatibility matrix.
 
@@ -2421,7 +2113,7 @@ Concurrency in B+-trees was studied by Bayer and Schkolnick \[1977\] and Johnson
 
 A computer system, like any other device, is subject to failure from a variety of causes: disk crash, power outage, software error, a fire in the machine room, even sabotage. In any failure, information may be lost. Therefore, the database system must take actions in advance to ensure that the atomicity and durability properties of transactions, introduced in Chapter 14, are preserved. An integral part of a database system is a **recovery scheme** that can restore the database to the consistent state that existed before the failure. The recovery scheme must also provide **high availability**; that is, it must minimize the time for which the database is not usable after a failure.
 
-### 16.1 Failure Classification
+###  Failure Classification
 
 There are various types of failure that may occur in a system, each of which needs to be dealt with in a different manner. In this chapter, we shall consider only the following types of failure:
 
@@ -2433,10 +2125,6 @@ There are various types of failure that may occur in a system, each of which nee
 
 • **System crash**. There is a hardware malfunction, or a bug in the database software or the operating system, that causes the loss of the content of volatile storage, and brings transaction processing to a halt. The content of nonvolatile storage remains intact, and is not corrupted.
 
-**721**  
-
-**722 Chapter 16 Recovery System**
-
 The assumption that hardware errors and bugs in the software bring the system to a halt, but do not corrupt the nonvolatile storage contents, is known as the **fail-stop assumption**. Well-designed systems have numerous internal checks, at the hardware and the software level, that bring the system to a halt when there is an error. Hence, the fail-stop assumption is a reasonable one.
 
 • **Disk failure**. A disk block loses its content as a result of either a head crash or failure during a data-transfer operation. Copies of the data on other disks, or archival backups on tertiary media, such as DVD or tapes, are used to recover from the failure.
@@ -2447,7 +2135,7 @@ To determine how the system should recover from failures, we need to iden- tify 
 
 **2\.** Actions taken after a failure to recover the database contents to a state that ensures database consistency, transaction atomicity, and durability.
 
-### Storage**
+### Storage
 
 As we saw in Chapter 10, the various data items in the database may be stored and accessed in a number of different storage media. In Section 14.3, we saw that storage media can be distinguished by their relative speed, capacity, and resilience to failure. We identified three categories of storage:
 
@@ -2513,16 +2201,7 @@ data items accessed and updated by _Ti_ are kept. The system creates this work a
 
 1There is a special category of database system, called _main-memory database systems_, where the entire database can be loaded into memory at once. We consider such systems in Section 26.4.  
 
-
-_A_
-
-_B_
-
-input(_A_)
-
-output(_B_) _B_
-
-main memory disk
+![](2.1.png)
 
 **Figure 16.1** Block storage operations.
 
@@ -2549,7 +2228,7 @@ When a transaction needs to access a data item _X_ for the first time, it must e
 
 The output(_BX_) operation for the buffer block _BX_ on which _X_ resides does not need to take effect immediately after write(_X_) is executed, since the block _BX_ may contain other data items that are still being accessed. Thus, the actual output may take place later. Notice that, if the system crashes after the write(_X_) operation was executed but before output(_BX_) was executed, the new value of _X_ is never written to disk and, thus, is lost. As we shall see shortly, the database system executes extra actions to ensure that updates performed by committed transactions are not lost even if there is a system crash.
 
-### 16.3 Recovery and Atomicity
+### Recovery and Atomicity
 
 Consider again our simplified banking system and a transaction _Ti_ that transfers $50 from account _A_ to account _B_, with initial values of _A_ and _B_ being $1000 and $2000, respectively. Suppose that a system crash has occurred during the execution of _Ti_ , after output(_BA_) has taken place, but before output(_BB_) was executed, where _BA_ and _BB_ denote the buffer blocks on which _A_ and _B_ reside. Since the memory contents were lost, we do not know the fate of the transaction.
 
@@ -2633,11 +2312,7 @@ Because all database modifications must be preceded by the creation of a log rec
 
 If the concurrency control scheme allows a data item _X_ that has been modified by a transaction _T_1 to be further modified by another transaction _T_2 before _T_1 commits, then undoing the effects of _T_1 by restoring the old value of _X_ (before _T_1 updated _X_) would also undo the effects of _T_2\. To avoid such situations, recovery algorithms usually require that if a data item has been modified by a transaction, no other transaction can modify the data item until the first transaction commits or aborts.
 
-This requirement can be ensured by acquiring an exclusive lock on any up- dated data item and holding the lock until the transaction commits; in other words, by using strict two-phase locking. Snapshot-isolation and validation-  
-
-**730 Chapter 16 Recovery System**
-
-based concurrency-control techniques also acquire exclusive locks on data items at the time of validation, before modifying the data items, and hold the locks until the transaction is committed; as a result the above requirement is satisfied even by these concurrency control protocols.
+This requirement can be ensured by acquiring an exclusive lock on any up- dated data item and holding the lock until the transaction commits; in other words, by using strict two-phase locking. Snapshot-isolation and validation-      based concurrency-control techniques also acquire exclusive locks on data items at the time of validation, before modifying the data items, and hold the locks until the transaction is committed; as a result the above requirement is satisfied even by these concurrency control protocols.
 
 We discuss later, in Section 16.7, how the above requirement can be relaxed in certain cases.
 
@@ -2658,15 +2333,15 @@ Consider our simplified banking system. Let _T_0 be a transaction that transfers
 2The output of a block can be made atomic by techniques for dealing with data-transfer failure, as described earlier in Section 16.2.1.  
 
 
-<_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050> <_T_0 commit> <_T_1 start> <_T_1 , _C_, 700, 600> <_T_1 commit>
+
+![](2.2.png)
 
 **Figure 16.2** Portion of the system log corresponding to _T_0 and _T_1.
 
-_T_0: read(_A_); _A_ := _A_ − 50; write(_A_); read(_B_); _B_ := _B_ \+ 50; write(_B_).
-
+![](2.2.1.png)
 Let _T_1 be a transaction that withdraws $100 from account _C_:
 
-_T_1: read(_C_); _C_ := _C_ − 100; write(_C_).
+![](2.2.2.png)
 
 The portion of the log containing the relevant information concerning these two transactions appears in Figure 16.2.
 
@@ -2680,19 +2355,10 @@ The order in which updates are carried out by redo is important; when recovering
 
 3Notice that this order could not be obtained using the deferred-modification technique, because the database is modified by _T_0 before it commits, and likewise for _T_1.  
 
-**732 Chapter 16 Recovery System**
 
 **Log Database**
 
-_A_ \= 950 _B_ \= 2050
-
-_C_ \= 600
-
-<_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050>
-
-<_T_0 commit> <_T_1 start> <_T_1 , _C_, 700, 600>
-
-<_T_1 commit>
+![](2.3.png)
 
 **Figure 16.3** State of system log and database corresponding to _T_0 and _T_1.
 
@@ -2717,14 +2383,7 @@ After a system crash has occurred, the system consults the log to determine whic
 • Transaction _Ti_ needs to be redone if the log contains the record _<Ti_ start_\>_ and either the record _<Ti_ commit_\>_ or the record _<Ti_ abort_\>_. It may seem strange to redo _Ti_ if the record _<Ti_ abort_\>_ is in the log. To see why this works, note  
 
 
-<_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050>
-
-<_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050> <_T_0 commit> <_T_1 start> <_T_1 , _C_, 700, 600>
-
-<_T_0 start> <_T_0 , _A_, 1000, 950> <_T_0 , _B_, 2000, 2050> <_T_0 commit> <_T_1 start> <_T_1 , _C_, 700, 600> <_T_1 commit>
-
-(a) (b) (c)
-
+![](2.4.png)
 **Figure 16.4** The same log, shown at three different times.
 
 that if _<Ti_ abort_\>_ is in the log, so are the redo-only records written by the undo operation. Thus, the end result will be to undo _Ti_ ’s modifications in this case. This slight redundancy simplifies the recovery algorithm and enables faster overall recovery time.
@@ -2746,8 +2405,6 @@ of transaction _T_1 has been written to stable storage (Figure 16.4b). When the 
 Finally, let us assume that the crash occurs just after the log record:
 
 _<T_1 commit_\>_  
-
-**734 Chapter 16 Recovery System**
 
 has been written to stable storage (Figure 16.4c). When the system comes back up, both _T_0 and _T_1 need to be redone, since the records _<T_0 start_\>_ and _<T_0 commit_\>_ appear in the log, as do the records _<T_1 start_\>_ and _<T_1 commit_\>_. After the system performs the recovery procedures redo(_T_0) and redo(_T_1), the values in accounts _A_, _B_, and _C_ are $950, $2050, and $600, respectively.
 
@@ -2849,7 +2506,7 @@ Figure 16.5 shows an example of actions logged during normal operation, and acti
 
 When recovering from a crash, in the redo phase, the system performs a redo of all operations after the last checkpoint record. In this phase, the list undo-list initially contains _T_0 and _T_1; _T_1 is removed first when its commit log record is found, while _T_2 is added when its start log record is found. Transaction _T_0 is  
 
-
+![](2.5.png)
 **Figure 16.5** Example of logged actions, and actions during recovery.
 
 removed from undo-list when its abort log record is found, leaving only _T_2 in undo-list. The undo phase scans the log backwards from the end, and when it finds a log record of _T_2 updating _A_, the old value of _A_ is restored, and a redo-only log record written to the log. When the start record for _T_2 is found, an abort record is added for _T_2\. Since undo-list contains no more transactions, the undo phase terminates, completing recovery.
@@ -2886,8 +2543,6 @@ Writing the buffered log to disk is sometimes referred to as a **log force**.
 In Section 16.2.2, we described the use of a two-level storage hierarchy. The system stores the database in nonvolatile storage (disk), and brings blocks of data into main memory as needed. Since main memory is typically much smaller than the entire database, it may be necessary to overwrite a block _B_1 in main memory when another block _B_2 needs to be brought into memory. If _B_1 has been modified, _B_1 must be output prior to the input of _B_2\. As discussed in Section 10.8.1 in Chapter 10, this storage hierarchy is similar to the standard operating-system concept of _virtual memory_.
 
 One might expect that transactions would force-output all modified blocks to disk when they commit. Such a policy is called the **force** policy. The alternative, the **no-force** policy, allows a transaction to commit even if it has modified some blocks that have not yet been written back to disk. All the recovery algorithms described in this chapter work correctly even with the no-force policy. The no-  
-
-**740 Chapter 16 Recovery System**
 
 force policy allows faster commit of transactions; moreover it allows multiple updates to accumulate on a block before it is output to stable storage, which can reduce the number of output operations greatly for frequently updated blocks. As a result, the standard approach taken by most systems is the no-force policy.
 
@@ -2980,11 +2635,7 @@ In case of a partial failure of nonvolatile storage, such as the failure of a si
 
 A dump of the database contents is also referred to as an **archival dump**, since we can archive the dumps and use them later to examine old states of the database. Dumps of a database and checkpointing of buffers are similar.
 
-Most database systems also support an **SQL dump**, which writes out SQL DDL statements and SQL insert statements to a file, which can then be reexecuted to  
-
-**744 Chapter 16 Recovery System**
-
-re-create the database. Such dumps are useful when migrating data to a different instance of the database, or to a different version of the database software, since the physical locations and layout may be different in the other database instance or database software version.
+Most database systems also support an **SQL dump**, which writes out SQL DDL statements and SQL insert statements to a file, which can then be reexecuted to re-create the database. Such dumps are useful when migrating data to a different instance of the database, or to a different version of the database software, since the physical locations and layout may be different in the other database instance or database software version.
 
 The simple dump procedure described here is costly for the following two reasons. First, the entire database must be copied to stable storage, resulting in considerable data transfer. Second, since transaction processing is halted during the dump procedure, CPU cycles are wasted. **Fuzzy dump** schemes have been developed that allow transactions to be active while the dump is in progress. They are similar to fuzzy-checkpointing schemes; see the bibliographical notes for more details.
 
@@ -3018,8 +2669,6 @@ For example, if the operation inserted an entry in a B+-tree, the undo infor- ma
 Note that in the above scheme, logical logging is used only for undo, not for redo; redo operations are performed exclusively using physical log record. This is because the state of the database after a system failure may reflect some updates
 
 5The position in the log of the operation-begin log record can be used as the unique identifier.  
-
-**746 Chapter 16 Recovery System**
 
 of an operation and not other operations, depending on what buffer blocks had been written to disk before the failure. Data structures such as B+-trees would not be in a consistent state, and neither logical redo nor logical undo operations can be performed on an inconsistent data structure. To perform logical redo or undo, the database state on disk must be **operation consistent**, that is, it should not have partial effects of any operation. However, as we shall see, the physical redo processing in the redo phase of the recovery scheme, along with undo processing using physical log records ensures that the parts of the database accessed by a logical undo operation are in an operation consistent state, before the logical undo operation is performed.
 
@@ -3060,7 +2709,7 @@ Figure 16.6 shows an example of a log generated by two transactions, which add o
 
 The annotations on the figure indicate that before an operation completes, rollback can perform physical undo; after the operation completes and releases lower-level locks, the undo must be performed by subtracting or adding a value, instead of restoring the old value. In the example in the figure, _T_0 rolls back operation _O_1 by adding 100 to _C_ ; on the other hand, for data item _B_, which was not subject to early lock release, undo is performed physically. Observe that _T_1,  
 
-
+![](2.6.png)
 **Figure 16.6** Transaction rollback with logical undo operations.
 
 which had performed an update on _C_ commits, and its update _O_2, which added 200 to _C_ and was performed before the undo of _O_1, has persisted even though _O_1 has been undone.
@@ -3069,7 +2718,7 @@ Figure 16.7 shows an example of recovery from a crash, with logical undo logging
 
 The next log record encountered is the operation-end record of _O_4; logical undo is performed for this operation by adding 300 to _C_ , which is logged physi- cally, and an operation-abort log record is added for _O_4\. The physical log records that were part of _O_4 are skipped until the operation-begin log record for _O_4 is encountered. In this example, there are no other intervening log records, but in general log records from other transactions may be found before we reach the operation-begin log record; such log records should of course not be skipped (unless they are part of a completed operation for the corresponding transaction and the algorithm skips those records). After the operation-begin log record is  
 
-
+![](2.7.png)
 **Figure 16.7** Failure recovery actions with logical undo operations
 
 found for _O_4, a physical log record is found for _T_1, which is rolled back physically. Finally the start log record for _T_1 is found; this results in _< T_1 abort_\>_ being added to the log, and _T_1 being deleted from undo-list. At this point undo-list is empty, and the undo phase is complete.
@@ -3114,7 +2763,7 @@ Pages should not be flushed to disk while an update is in progress, since physio
 
 Each log record also contains the LSN of the previous log record of the same transaction. This value, stored in the PrevLSN field, permits log records of a trans- action to be fetched backward, without reading the whole log. There are special redo-only log records generated during transaction rollback, called **compensa- tion log records** (**CLR**s) in ARIES. These serve the same purpose as the redo-only log records in our earlier recovery scheme. In addition CLRs serve the role of the operation-abort log records in our scheme. The CLRs have an extra field, called the UndoNextLSN, that records the LSN of the log that needs to be undone next, when the transaction is being rolled back. This field serves the same purpose as the operation identifier in the operation-abort log record in our earlier recovery scheme, which helps to skip over log records that have already been rolled back.  
 
-
+![](2.8.png)
 **Figure 16.8** Data structures used in ARIES.
 
 The **DirtyPageTable** contains a list of pages that have been updated in the database buffer. For each page, it stores the PageLSN and a field called the RecLSN, which helps identify log records that have been applied already to the version of the page on disk. When a page is inserted into the DirtyPageTable (when it is first modified in the buffer pool), the value of RecLSN is set to the current end of log. Whenever the page is flushed to disk, the page is removed from the DirtyPageTable.
@@ -3165,7 +2814,7 @@ If a CLR is found, its UndoNextLSN value indicates the LSN of the next log recor
 
 Figure 16.9 illustrates the recovery actions performed by ARIES, on an example log. We assume that the last completed checkpoint pointer on disk points to the checkpoint log record with LSN 7568. The PrevLSN values in the log records are shown using arrows in the figure, while the UndoNextLSN value is shown using a dashed arrow for the one compensation log record, with LSN 7565, in the figure. The analysis pass would start from LSN 7568, and when it is complete, RedoLSN would be 7564. Thus, the redo pass must start at the log record with LSN 7564. Note that this LSN is less than the LSN of the checkpoint log record, since the ARIES checkpointing algorithm does not flush modified pages to stable storage. The DirtyPageTable at the end of analysis would include pages 4894, 7200 from  
 
-
+![](2.9.png)
 **Figure 16.9** Recovery actions in ARIES.
 
 the checkpoint log record, and 2390 which is updated by the log record with LSN 7570. At the end of the analysis pass, the list of transactions to be undone consists of only _T_145 in this example.
@@ -3177,9 +2826,6 @@ The redo pass for the above example starts from LSN 7564 and performs redo of lo
 Among other key features that ARIES provides are:
 
 • **Nested top actions**: ARIES allows the logging of operations that should not be undone even if a transaction gets rolled back; for example, if a transaction allocates a page to a relation, even if the transaction is rolled back the page allocation should not be undone since other transactions may have stored records in the page. Such operations that should not be undone are called nested top actions. Such operations can be modeled as operations whose undo action does nothing. In ARIES, such operations are implemented by creating a  
-
-**756 Chapter 16 Recovery System**
-
 dummy CLR whose UndoNextLSN is set such that transaction rollback skips the log records generated by the operation.
 
 • **Recovery independence**: Some pages can be recovered independently from others, so that they can be used even while other pages are being recovered. If some pages of a disk fail, they can be recovered without stopping transaction processing on other pages.
@@ -3200,11 +2846,7 @@ Traditional transaction-processing systems are centralized or client–server sy
 
 We can achieve high availability by performing transaction processing at one site, called the **primary site**, and having a **remote backup** site where all the data from the primary site are replicated. The remote backup site is sometimes also called the **secondary site**. The remote site must be kept synchronized with the primary site, as updates are performed at the primary. We achieve synchronization by sending all log records from primary site to the remote backup site. The remote backup site must be physically separated from the primary—for example, we can locate it in a different state—so that a disaster at the primary does not damage  
 
-
-log records
-
-backupnetworkprimary
-
+![](2.10.png)
 **Figure 16.10** Architecture of remote backup system.
 
 the remote backup site. Figure 16.10 shows the architecture of a remote backup system.
@@ -3220,8 +2862,6 @@ Several issues must be addressed in designing a remote backup system:
 • **Transfer of control**. When the primary fails, the backup site takes over pro- cessing and becomes the new primary. When the original primary site re- covers, it can either play the role of remote backup, or take over the role of primary site again. In either case, the old primary must receive a log of updates carried out by the backup site while the old primary was down.
 
 The simplest way of transferring control is for the old primary to receive redo logs from the old backup site, and to catch up with the updates by applying them locally. The old primary can then act as a remote backup site. If control must be transferred back, the old backup site can pretend to have failed, resulting in the old primary taking over.  
-
-**758 Chapter 16 Recovery System**
 
 • **Time to recover**. If the log at the remote backup grows large, recovery will take a long time. The remote backup site can periodically process the redo log records that it has received and can perform a checkpoint, so that earlier parts of the log can be deleted. The delay before the remote backup takes over can be significantly reduced as a result.
 
@@ -3285,10 +2925,7 @@ the transaction aborts during normal operation, as well as to roll back the upda
 
 ◦ Before a block of data in main memory is output to the database (in nonvolatile storage), all log records pertaining to data in that block must have been output to stable storage.
 
-• Modern recovery techniques support high-concurrency locking techniques, such as those used for B+-tree concurrency control. These techniques allow early release of lower-level locks obtained by operations such as inserts or deletes, which allows other such operations to be performed by other trans- actions. After lower-level locks are released, physical undo is not possible, and instead logical undo, such as a deletion to undo an insertion, is required. Transactions retain higher-level locks that ensure that concurrent transac-  
-
-
-tions cannot perform actions that could make logical undo of an operation impossible.
+• Modern recovery techniques support high-concurrency locking techniques, such as those used for B+-tree concurrency control. These techniques allow early release of lower-level locks obtained by operations such as inserts or deletes, which allows other such operations to be performed by other trans- actions. After lower-level locks are released, physical undo is not possible, and instead logical undo, such as a deletion to undo an insertion, is required. Transactions retain higher-level locks that ensure that concurrent transactions cannot perform actions that could make logical undo of an operation impossible.
 
 • To recover from failures that result in the loss of nonvolatile storage, we must dump the entire contents of the database onto stable storage periodically— say, once per day. If a failure occurs that results in the loss of physical database blocks, we use the most recent dump in restoring the database to a previous consistent state. Once this restoration has been accomplished, we use the log to bring the database system to the most recent consistent state.
 
@@ -3296,7 +2933,7 @@ tions cannot perform actions that could make logical undo of an operation imposs
 
 • Remote backup systems provide a high degree of availability, allowing trans- action processing to continue even if the primary site is destroyed by a fire, flood, or earthquake. Data and log records from a primary site are continu- ally backed up to a remote backup site. If the primary site fails, the remote backup site takes over transaction processing, after executing certain recovery actions.
 
-### Review Terms**
+### Review Terms
 
 • Recovery scheme • Failure classification
 
