@@ -2343,19 +2343,19 @@ The majority protocol can be extended by using version numbers to permit transac
 
 **19.2** To build a highly available distributed system, you must know what kinds of failures can occur.
 
-a. List possible types of failure in a distributed system.
+1. List possible types of failure in a distributed system.
 
-b. Which items in your list from part a are also applicable to a central- ized system?
+2. Which items in your list from part a are also applicable to a central- ized system?
 
 **19.3** Consider a failure that occurs during 2PC for a transaction. For each pos- sible failure that you listed in Practice Exercise 19.2a, explain how 2PC ensures transaction atomicity despite the failure.
 
 **19.4** Consider a distributed system with two sites, _A_ and _B_. Can site _A_ distin- guish among the following?
 
-• _B_ goes down.
+- _B_ goes down.
 
-• The link between _A_ and _B_ goes down.
+- The link between _A_ and _B_ goes down.
 
-• _B_ is extremely overloaded and response time is 100 times longer than normal.
+- _B_ is extremely overloaded and response time is 100 times longer than normal.
 
 What implications does your answer have for recovery in distributed systems?  
 
@@ -2367,19 +2367,19 @@ What implications does your answer have for recovery in distributed systems?
 
 **19.8** Give an example where lazy replication can lead to an inconsistent database state even when updates get an exclusive lock on the primary (master) copy.
 
-**19.9** Consider the following deadlock-detection algorithm. When transaction _Ti_ , at site _S_1, requests a resource from _Tj_ , at site _S_3, a request message with timestamp _n_ is sent. The edge (_Ti , Tj , n_) is inserted in the local wait-for graph of _S_1\. The edge (_Ti , Tj , n_) is inserted in the local wait-for graph of _S_3 only if _Tj_ has received the request message and cannot immediately grant the requested resource. A request from _Ti_ to _Tj_ in the same site is handled in the usual manner; no timestamps are associated with the edge (_Ti , Tj_ ). A central coordinator invokes the detection algorithm by sending an initiating message to each site in the system.
+**19.9** Consider the following deadlock-detection algorithm. When transaction _T_~i~ , at site _S_~1~, requests a resource from _T_~j~ , at site _S_~3~, a request message with timestamp _n_ is sent. The edge (_T~i~ , T~j~ , n_) is inserted in the local wait-for graph of _S_~1~\. The edge (_T~i~ , T~j~ , n_) is inserted in the local wait-for graph of _S_~3~ only if _T~j~_ has received the request message and cannot immediately grant the requested resource. A request from _T~i~_ to _T~j~_ in the same site is handled in the usual manner; no timestamps are associated with the edge (_T~i~ , T~j~_ ). A central coordinator invokes the detection algorithm by sending an initiating message to each site in the system.
 
 On receiving this message, a site sends its local wait-for graph to the coordinator. Note that such a graph contains all the local information that the site has about the state of the real graph. The wait-for graph reflects an instantaneous state of the site, but it is not synchronized with respect to any other site.
 
 When the controller has received a reply from each site, it constructs a graph as follows:
 
-• The graph contains a vertex for every transaction in the system.
+- The graph contains a vertex for every transaction in the system.
 
-• The graph has an edge (_Ti , Tj_ ) if and only if:
+- The graph has an edge (_T~i~ , T~j~_ ) if and only if:
 
-◦ There is an edge (_Ti , Tj_ ) in one of the wait-for graphs.
+>- There is an edge (_T~i~ , T~j~_ ) in one of the wait-for graphs.
 
-◦ An edge (_Ti , Tj , n_) (for some _n_) appears in more than one wait-for graph.
+>- An edge (_T~i~ , T~j~ , n_) (for some _n_) appears in more than one wait-for graph.
 
 Show that, if there is a cycle in the constructed graph, then the system is in a deadlock state, and that, if there is no cycle in the constructed graph, then the system was not in a deadlock state when the execution of the algorithm began.
 
@@ -2387,17 +2387,15 @@ Show that, if there is a cycle in the constructed graph, then the system is in a
 
 _employee_ (_name, address, salary, plant number_)  
 
-**Practice Exercises 881**
-
 Assume that each fragment has two replicas: one stored at the New York site and one stored locally at the plant site. Describe a good processing strategy for the following queries entered at the San Jose site.
 
-a. Find all employees at the Boca plant.
+1. Find all employees at the Boca plant.
 
-b. Find the average salary of all employees.
+2. Find the average salary of all employees.
 
-c. Find the highest-paid employee at each of the following sites: Toronto, Edmonton, Vancouver, Montreal.
+3. Find the highest-paid employee at each of the following sites: Toronto, Edmonton, Vancouver, Montreal.
 
-d. Find the lowest-paid employee in the company.
+4. Find the lowest-paid employee in the company.
 
 **19.11** Compute _r_  _s_ for the relations of Figure 19.9.
 
@@ -2407,27 +2405,17 @@ d. Find the lowest-paid employee in the company.
 
 **19.14** Consider a multidatabase system in which it is guaranteed that at most one global transaction is active at any time, and every local site ensures local serializability.
 
-a. Suggest ways in which the multidatabase system can ensure that there is at most one active global transaction at any time.
+1. Suggest ways in which the multidatabase system can ensure that there is at most one active global transaction at any time.
 
-b. Show by example that it is possible for a nonserializable global schedule to result despite the assumptions.
+2. Show by example that it is possible for a nonserializable global schedule to result despite the assumptions.
 
 **19.15** Consider a multidatabase system in which every local site ensures local serializability, and all global transactions are read only.
 
-a. Show by example that nonserializable executions may result in such a system.
+1. Show by example that nonserializable executions may result in such a system.
 
-b. Show how you could use a ticket scheme to ensure global serializ- ability.
+2. Show how you could use a ticket scheme to ensure global serializ- ability.
 
-_r_
-
-_A B C_
-
-_s_
-
-_C D E_ 1 2 3 3 4 5 4 5 6 3 6 8 1 2 4 2 3 2 5 3 2 1 4 1 8 9 7 1 2 3
-
-**Figure 19.9** Relations for Practice Exercise 19.11.  
-
-**882 Chapter 19 Distributed Databases**
+![Alt text](figure-19.9.png)
 
 **Exercises**
 
@@ -2441,9 +2429,9 @@ _C D E_ 1 2 3 3 4 5 4 5 6 3 6 8 1 2 4 2 3 2 5 3 2 1 4 1 8 9 7 1 2 3
 
 **19.20** If we apply a distributed version of the multiple-granularity protocol of Chapter 15 to a distributed database, the site responsible for the root of the DAG may become a bottleneck. Suppose we modify that protocol as follows:
 
-• Only intention-mode locks are allowed on the root.
+- Only intention-mode locks are allowed on the root.
 
-• All transactions are given all possible intention-mode locks on the root automatically.
+- All transactions are given all possible intention-mode locks on the root automatically.
 
 Show that these modifications alleviate this problem without allowing any nonserializable schedules.
 
@@ -2453,29 +2441,28 @@ Show that these modifications alleviate this problem without allowing any nonser
 
 **19.23** Consider the relations:
 
-_employee_ (_name, address, salary, plant number_) _machine_ (_machine number, type, plant number_)
+_employee_ (_name, address, salary, plant_number_)
+ _machine_ (_machine_number, type, plant_number_)
 
 Assume that the _employee_ relation is fragmented horizontally by _plant number_, and that each fragment is stored locally at its corresponding
 
 plant site. Assume that the _machine_ relation is stored in its entirety at the Armonk site. Describe a good strategy for processing each of the following queries.
 
-a. Find all employees at the plant that contains machine number 1130.
+1. Find all employees at the plant that contains machine number 1130.
 
-b. Find all employees at plants that contain machines whose type is “milling machine.”
+2. Find all employees at plants that contain machines whose type is “milling machine.”
 
-c. Find all machines at the Almaden plant.
+3. Find all machines at the Almaden plant.
 
-d. Find employee  machine.  
-
-**Bibliographical Notes 883**
+4. Find employee  machine.  
 
 **19.24** For each of the strategies of Exercise 19.23, state how your choice of a strategy depends on:
 
-a. The site at which the query was entered.
+1. The site at which the query was entered.
 
-b. The site at which the result is desired.
+2. The site at which the result is desired.
 
-**19.25** Is the expression _ri_  _r j_ necessarily equal to _r j_  _ri_ ? Under what conditions does _ri_  _r j_ \= _r j_  _ri_ hold?
+**19.25** Is the expression _r~i~_  _r ~j~_ necessarily equal to _r ~j~_  _r~i~_ ? Under what conditions does _r~i~_  _r ~j~_ \= _r ~j~_  _r~i~_ hold?
 
 **19.26** If a cloud data-storage service is used to store two relations _r_ and _s_ and we need to join _r_ and _s_, why might it be useful to maintain the join as a materialized view? In your answer, be sure to distinguish among various meanings of “useful”: overall throughput, efficient use of space, and response time to user queries.
 
@@ -2485,28 +2472,26 @@ b. The site at which the result is desired.
 
 **Bibliographical Notes**
 
-Textbook discussions of distributed databases are offered by Ozsu and Valduriez \[1999\]. Breitbart et al. \[1999b\] presents an overview of distributed databases.
+Textbook discussions of distributed databases are offered by Ozsu and Valduriez [1999\]. Breitbart et al. [1999b\] presents an overview of distributed databases.
 
-The implementation of the transaction concept in a distributed database is presented by Gray \[1981\] and Traiger et al. \[1982\]. The 2PC protocol was developed by Lampson and Sturgis \[1976\]. The three-phase commit protocol is from Skeen \[1981\]. Mohan and Lindsay \[1983\] discusses two modified versions of 2PC, called _presume commit_ and _presume abort_, that reduce the overhead of 2PC by defining default assumptions regarding the fate of transactions.
+The implementation of the transaction concept in a distributed database is presented by Gray [1981\] and Traiger et al. [1982\]. The 2PC protocol was developed by Lampson and Sturgis [1976\]. The three-phase commit protocol is from Skeen [1981\]. Mohan and Lindsay [1983\] discusses two modified versions of 2PC, called _presume commit_ and _presume abort_, that reduce the overhead of 2PC by defining default assumptions regarding the fate of transactions.
 
-The bully algorithm in Section 19.6.5 is from Garcia-Molina \[1982\]. Distributed clock synchronization is discussed in Lamport \[1978\]. Distributed concurrency control is covered by Bernstein and Goodman \[1981\].
+The bully algorithm in Section 19.6.5 is from Garcia-Molina [1982\]. Distributed clock synchronization is discussed in Lamport [1978\]. Distributed concurrency control is covered by Bernstein and Goodman [1981\].
 
-The transaction manager of R\* is described in Mohan et al. \[1986\]. Valida- tion techniques for distributed concurrency-control schemes are described by Schlageter \[1981\] and Bassiouni \[1988\].
+The transaction manager of R* is described in Mohan et al. [1986\]. Valida- tion techniques for distributed concurrency-control schemes are described by Schlageter [1981\] and Bassiouni [1988\].
 
-The problem of concurrent updates to replicated data was revisited in the context of data warehouses by Gray et al. \[1996\]. Anderson et al. \[1998\] dis- cusses issues concerning lazy replication and consistency. Breitbart et al. \[1999a\] describes lazy update protocols for handling replication.
+The problem of concurrent updates to replicated data was revisited in the context of data warehouses by Gray et al. [1996\]. Anderson et al. [1998\] dis- cusses issues concerning lazy replication and consistency. Breitbart et al. [1999a\] describes lazy update protocols for handling replication.
 
-The user manuals of various database systems provide details of how they handle replication and consistency. Huang and Garcia-Molina \[2001\] addresses exactly-once semantics in a replicated messaging system.
+The user manuals of various database systems provide details of how they handle replication and consistency. Huang and Garcia-Molina [2001\] addresses exactly-once semantics in a replicated messaging system.
 
-Knapp \[1987\] surveys the distributed deadlock-detection literature. Practice Exercise 19.9 is from Stuart et al. \[1984\].  
+Knapp [1987\] surveys the distributed deadlock-detection literature. Practice Exercise 19.9 is from Stuart et al. [1984\].  
 
-**884 Chapter 19 Distributed Databases**
+Distributed query processing is discussed in Epstein et al. [1978\] and Hevner and Yao [1979\]. Daniels et al. [1982\] discusses the approach to distributed query processing taken by R*.
 
-Distributed query processing is discussed in Epstein et al. \[1978\] and Hevner and Yao \[1979\]. Daniels et al. \[1982\] discusses the approach to distributed query processing taken by R\*.
+Dynamic query optimization in multidatabases is addressed by Ozcan et al. [1997\]. Adali et al. [1996\] and Papakonstantinou et al. [1996\] describe query- optimization issues in mediator systems.
 
-Dynamic query optimization in multidatabases is addressed by Ozcan et al. \[1997\]. Adali et al. \[1996\] and Papakonstantinou et al. \[1996\] describe query- optimization issues in mediator systems.
+Transaction processing in multidatabase systems is discussed in Mehrotra et al. [2001\]. The ticket scheme is presented in Georgakopoulos et al. [1994\]. 2LSR is introduced in Mehrotra et al. [1991\].
 
-Transaction processing in multidatabase systems is discussed in Mehrotra et al. \[2001\]. The ticket scheme is presented in Georgakopoulos et al. \[1994\]. 2LSR is introduced in Mehrotra et al. \[1991\].
+A collection of papers on data management on cloud systems is in Ooi and S. Parthasarathy [2009\]. The implementation of Google’s Bigtable is described in Chang et al. [2008\], while Cooper et al. [2008\] describe Yahoo!’s PNUTS system. Experience in building a database using Amazon’s S3 cloud-based storage is described in Brantner et al. [2008\]. An approach to making transactions work correctly in cloud systems is discussed in Lomet et al. [2009\]. The CAP theorem was conjectured by Brewer [2000\], and was formalized and proved by Gilbert and Lynch [2002\].
 
-A collection of papers on data management on cloud systems is in Ooi and S. Parthasarathy \[2009\]. The implementation of Google’s Bigtable is described in Chang et al. \[2008\], while Cooper et al. \[2008\] describe Yahoo!’s PNUTS system. Experience in building a database using Amazon’s S3 cloud-based storage is described in Brantner et al. \[2008\]. An approach to making transactions work correctly in cloud systems is discussed in Lomet et al. \[2009\]. The CAP theorem was conjectured by Brewer \[2000\], and was formalized and proved by Gilbert and Lynch \[2002\].
-
-Howes et al. \[1999\] provides textbook coverage of LDAP.
+Howes et al. [1999\] provides textbook coverage of LDAP.
