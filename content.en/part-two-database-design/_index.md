@@ -2151,9 +2151,9 @@ There are also several database-independent data modeling tools that sup- port E
 
 **Bibliographical Notes**
 
-The E-R data model was introduced by Chen \[1976\]. A logical design methodology for relational databases using the extended E-R model is presented by Teorey et al. \[1986\]. The Integration Definition for Information Modeling (IDEF1X) standard NIST \[1993\] released by the United States National Institute of Standards and Technology (NIST) defined standards for E-R diagrams. However, a variety of E-R notations are in use today.
+The E-R data model was introduced by Chen [1976]. A logical design methodology for relational databases using the extended E-R model is presented by Teorey et al. [1986]. The Integration Definition for Information Modeling (IDEF1X) standard NIST [1993] released by the United States National Institute of Standards and Technology (NIST) defined standards for E-R diagrams. However, a variety of E-R notations are in use today.
 
-Thalheim \[2000\] provides a detailed textbook coverage of research in E-R modeling. Basic textbook discussions are offered by Batini et al. \[1992\] and Elmasri and Navathe \[2006\]. Davis et al. \[1983\] provides a collection of papers on the E-R model.
+Thalheim [2000] provides a detailed textbook coverage of research in E-R modeling. Basic textbook discussions are offered by Batini et al. [1992] and Elmasri and Navathe [2006]. Davis et al. [1983] provides a collection of papers on the E-R model.
 
 As of 2009, the current UML version was 2.2, with UML version 2.3 near final adoption. See www.uml.org for more information on UML standards and tools.  
 
@@ -2353,7 +2353,7 @@ An instance of a relation that satisfies all such real-world constraints is call
 
 Some of the most commonly used types of real-world constraints can be represented formally as keys (superkeys, candidate keys and primary keys), or as functional dependencies, which we define below.
 
-In Section 2.3, we defined the notion of a _superkey_ as a set of one or more attributes that, taken collectively, allows us to identify uniquely a tuple in the relation. We restate that definition here as follows: Let _r_ (_R_) be a relation schema. A subset _K_ of _R_ is a **superkey** of _r_ (_R_) if, in any legal instance of _r_ (_R_), for all pairs _t_1 and _t_2 of tuples in the instance of _r_ if _t_1 = _t_2, then _t_1\[_K_ \] = _t_2\[_K_ \]. That is, no two tuples in any legal instance of relation _r_ (_R_) may have the same value on
+In Section 2.3, we defined the notion of a _superkey_ as a set of one or more attributes that, taken collectively, allows us to identify uniquely a tuple in the relation. We restate that definition here as follows: Let _r_ (_R_) be a relation schema. A subset _K_ of _R_ is a **superkey** of _r_ (_R_) if, in any legal instance of _r_ (_R_), for all pairs _t_1 and _t_2 of tuples in the instance of _r_ if _t_1 = _t_2, then _t_1[_K_ ] = _t_2[_K_ ]. That is, no two tuples in any legal instance of relation _r_ (_R_) may have the same value on
 
 1An instructor or a student can be associated with more than one department, for example as an adjunct faculty, or as a minor department. Our simplified university schema models only the primary department associated with each instructor or student. A real university schema would capture secondary associations in other relations.  
 
@@ -2363,11 +2363,11 @@ attribute set _K_. Clearly, if no two tuples in _r_ have the same value on _K_ ,
 
 Whereas a superkey is a set of attributes that uniquely identifies an entire tuple, a functional dependency allows us to express constraints that uniquely identify the values of certain attributes. Consider a relation schema _r_ (_R_), and let  ⊆ _R_ and  ⊆ _R_.
 
-• Given an instance of _r_ (_R_), we say that the instance **satisfies** the **functional dependency**  →  if for all pairs of tuples _t_1 and _t_2 in the instance such that _t_1\[\] = _t_2\[\], it is also the case that _t_1\[\] = _t_2\[\].
+• Given an instance of _r_ (_R_), we say that the instance **satisfies** the **functional dependency**  →  if for all pairs of tuples _t_1 and _t_2 in the instance such that _t_1[] = _t_2[], it is also the case that _t_1[] = _t_2[].
 
 • We say that the functional dependency  →  **holds** on schema _r_ (_R_) if, in every legal instance of _r_ (_R_) it satisfies the functional dependency.
 
-Using the functional-dependency notation, we say that _K is a superkey of r_ (_R_) if the functional dependency _K_ → _R_ holds on _r_ (_R_). In other words, _K_ is a superkey if, for every legal instance of _r_ (_R_), for every pair of tuples _t_1 and _t_2 from the instance, whenever _t_1\[_K_ \] = _t_2\[_K_ \]_,_ it is also the case that _t_1\[_R_\] = _t_2\[_R_\] (that is, _t_1 = _t_2).2
+Using the functional-dependency notation, we say that _K is a superkey of r_ (_R_) if the functional dependency _K_ → _R_ holds on _r_ (_R_). In other words, _K_ is a superkey if, for every legal instance of _r_ (_R_), for every pair of tuples _t_1 and _t_2 from the instance, whenever _t_1[_K_ ] = _t_2[_K_ ]_,_ it is also the case that _t_1[_R_] = _t_2[_R_] (that is, _t_1 = _t_2).2
 
 Functional dependencies allow us to express constraints that we cannot ex- press with superkeys. In Section 8.1.2, we considered the schema:
 
@@ -2387,7 +2387,7 @@ We shall use functional dependencies in two ways:
 
 Let us consider the instance of relation _r_ of Figure 8.4, to see which functional dependencies are satisfied. Observe that _A_ → _C_ is satisfied. There are two tuples
 
-2Note that we assume here that relations are sets. SQL deals with multisets, and a **primary key** declaration in SQL for a set of attributes _K_ requires not only that _t_1 = _t_2 if _t_1\[_K_ \] = _t_2\[_K_ \], but also that there be no duplicate tuples. SQL also requires that attributes in the set _K_ cannot be assigned a _null_ value.  
+2Note that we assume here that relations are sets. SQL deals with multisets, and a **primary key** declaration in SQL for a set of attributes _K_ requires not only that _t_1 = _t_2 if _t_1[_K_ ] = _t_2[_K_ ], but also that there be no duplicate tuples. SQL also requires that attributes in the set _K_ cannot be assigned a _null_ value.  
 
 **332 Chapter 8 Relational Database Design**
 
@@ -2397,9 +2397,9 @@ _a_1 _b_1 _c_1 _d_1 _a_1 _b_2 _c_1 _d_2 _a_2 _b_2 _c_2 _d_2 _a_2 _b_3 _c_2 _d_3 
 
 **Figure 8.4** Sample instance of relation _r_.
 
-that have an _A_ value of _a_1\. These tuples have the same _C_ value—namely, _c_1\. Similarly, the two tuples with an _A_ value of _a_2 have the same _C_ value, _c_2\. There are no other pairs of distinct tuples that have the same _A_ value. The functional dependency _C_ → _A_ is not satisfied, however. To see that it is not, consider the tuples _t_1 = (_a_2_, b_3_, c_2_, d_3) and _t_2 = (_a_3_, b_3_, c_2_, d_4). These two tuples have the same _C_ values, _c_2, but they have different _A_ values, _a_2 and _a_3, respectively. Thus, we have found a pair of tuples _t_1 and _t_2 such that _t_1\[_C_\] = _t_2\[_C_\], but _t_1\[_A_\] = _t_2\[_A_\].
+that have an _A_ value of _a_1\. These tuples have the same _C_ value—namely, _c_1\. Similarly, the two tuples with an _A_ value of _a_2 have the same _C_ value, _c_2\. There are no other pairs of distinct tuples that have the same _A_ value. The functional dependency _C_ → _A_ is not satisfied, however. To see that it is not, consider the tuples _t_1 = (_a_2_, b_3_, c_2_, d_3) and _t_2 = (_a_3_, b_3_, c_2_, d_4). These two tuples have the same _C_ values, _c_2, but they have different _A_ values, _a_2 and _a_3, respectively. Thus, we have found a pair of tuples _t_1 and _t_2 such that _t_1[_C_] = _t_2[_C_], but _t_1[_A_] = _t_2[_A_].
 
-Some functional dependencies are said to be **trivial** because they are satis- fied by all relations. For example, _A_ → _A_ is satisfied by all relations involving attribute _A_. Reading the definition of functional dependency literally, we see that, for all tuples _t_1 and _t_2 such that _t_1\[_A_\] = _t_2\[_A_\], it is the case that _t_1\[_A_\] = _t_2\[_A_\]. Similarly, _AB_ → _A_ is satisfied by all relations involving attribute _A_. In general, a functional dependency of the form  →  is **trivial** if  ⊆ .
+Some functional dependencies are said to be **trivial** because they are satis- fied by all relations. For example, _A_ → _A_ is satisfied by all relations involving attribute _A_. Reading the definition of functional dependency literally, we see that, for all tuples _t_1 and _t_2 such that _t_1[_A_] = _t_2[_A_], it is the case that _t_1[_A_] = _t_2[_A_]. Similarly, _AB_ → _A_ is satisfied by all relations involving attribute _A_. In general, a functional dependency of the form  →  is **trivial** if  ⊆ .
 
 It is important to realize that an instance of a relation may satisfy some func- tional dependencies that are not required to hold on the relation’s schema. In the instance of the _classroom_ relation of Figure 8.5, we see that _room number_ → _capacity_ is satisfied. However, we believe that, in the real world, two classrooms in differ- ent buildings can have the same room number but with different room capacity. Thus, it is possible, at some time, to have an instance of the _classroom_ relation in which _room number_ → _capacity_ is not satisfied. So, we would not include _room number_ → _capacity_ in the set of functional dependencies that hold on the schema
 
@@ -2591,19 +2591,19 @@ _A_ → _H_
 
 is logically implied. That is, we can show that, whenever a relation satisfies our given set of functional dependencies, _A_ → _H_ must also be satisfied by that relation. Suppose that _t_1 and _t_2 are tuples such that:
 
-_t_1\[_A_\] = _t_2\[_A_\]
+_t_1[_A_] = _t_2[_A_]
 
 Since we are given that _A_ → _B_, it follows from the definition of functional depen- dency that:
 
-_t_1\[_B_\] = _t_2\[_B_\]  
+_t_1[_B_] = _t_2[_B_]  
 
 **8.4 Functional-Dependency Theory 339**
 
 Then, since we are given that _B_ → _H_, it follows from the definition of functional dependency that:
 
-_t_1\[_H_\] = _t_2\[_H_\]
+_t_1[_H_] = _t_2[_H_]
 
-Therefore, we have shown that, whenever _t_1 and _t_2 are tuples such that _t_1\[_A_\] = _t_2\[_A_\], it must be that _t_1\[_H_\] = _t_2\[_H_\]. But that is exactly the definition of _A_ → _H_.
+Therefore, we have shown that, whenever _t_1 and _t_2 are tuples such that _t_1[_A_] = _t_2[_A_], it must be that _t_1[_H_] = _t_2[_H_]. But that is exactly the definition of _A_ → _H_.
 
 Let _F_ be a set of functional dependencies. The **closure** of _F_, denoted by _F_ +, is the set of all functional dependencies logically implied by _F_. Given _F_, we can compute _F_ \+ directly from the formal definition of functional dependency. If _F_ were large, this process would be lengthy and difficult. Such a computation of _F_ \+ requires arguments of the type just used to show that _A_ → _H_ is in the closure of our example set of dependencies.
 
@@ -3127,9 +3127,9 @@ Let _r_ (_R_) be a relation schema and let  ⊆ _R_ and  ⊆ _R_. The **multiv
 
  →→ 
 
-holds on _R_ if, in any legal instance of relation _r_ (_R_), for all pairs of tuples _t_1 and _t_2 in _r_ such that _t_1\[\] = _t_2\[\], there exist tuples _t_3 and _t_4 in _r_ such that
+holds on _R_ if, in any legal instance of relation _r_ (_R_), for all pairs of tuples _t_1 and _t_2 in _r_ such that _t_1[] = _t_2[], there exist tuples _t_3 and _t_4 in _r_ such that
 
-_t_1\[\] = _t_2\[\] = _t_3\[\] = _t_4\[\] _t_3\[\] = _t_1\[\] _t_3\[_R_ − \] = _t_2\[_R_ − \] _t_4\[\] = _t_2\[\] _t_4\[_R_ − \] = _t_1\[_R_ − \]  
+_t_1[] = _t_2[] = _t_3[] = _t_4[] _t_3[] = _t_1[] _t_3[_R_ − ] = _t_2[_R_ − ] _t_4[] = _t_2[] _t_4[_R_ − ] = _t_1[_R_ − ]  
 
 **8.6 Decomposition Using Multivalued Dependencies 357**
 
@@ -3517,7 +3517,7 @@ of attributes on the left side of the _i_th _FD_ that are not yet known to be in
 
 **for** _i_ := 1 to |_F_ | **do begin**
 
-let  →  denote the _i_th _FD_; _fdcount_ \[_i_\] := ||;
+let  →  denote the _i_th _FD_; _fdcount_ [_i_] := ||;
 
 **end** /\* _appears_ is an array with one entry for each attribute. The
 
@@ -3525,9 +3525,9 @@ entry for attribute _A_ is a list of integers. Each integer _i_ on the list indi
 
 **for each** attribute _A_ **do begin**
 
-_appears_ \[_A_\] := _NI L_ ; **for** _i_ := 1 to |_F_ | **do**
+_appears_ [_A_] := _NI L_ ; **for** _i_ := 1 to |_F_ | **do**
 
-**begin** let  →  denote the _i_th _FD_; **if** _A_ ∈  **then** add _i_ to _appears_ \[_A_\];
+**begin** let  →  denote the _i_th _FD_; **if** _A_ ∈  **then** add _i_ to _appears_ [_A_];
 
 **end end**
 
@@ -3537,9 +3537,9 @@ _appears_ \[_A_\] := _NI L_ ; **for** _i_ := 1 to |_F_ | **do**
 
 **begin if** _A_ ∈ _result_ **then**
 
-**begin** _result_ := _result_ ∪ {_A_}; **for each** element _i_ of _appears_\[_A_\] **do**
+**begin** _result_ := _result_ ∪ {_A_}; **for each** element _i_ of _appears_[_A_] **do**
 
-**begin** _fdcount_ \[_i_\] := _fdcount_ \[_i_\] − 1; **if** _fdcount_ \[_i_\] := 0 **then**
+**begin** _fdcount_ [_i_] := _fdcount_ [_i_] − 1; **if** _fdcount_ [_i_] := 0 **then**
 
 **begin** let  →  denote the _i_th _FD_; **addin** ( );
 
@@ -3625,15 +3625,15 @@ f. Can you get the same BCNF decomposition of _r_ as above, using the canonical 
 
 **Bibliographical Notes**
 
-The first discussion of relational database design theory appeared in an early pa- per by Codd \[1970\]. In that paper, Codd also introduced functional dependencies and first, second, and third normal forms.
+The first discussion of relational database design theory appeared in an early pa- per by Codd [1970]. In that paper, Codd also introduced functional dependencies and first, second, and third normal forms.
 
-Armstrong’s axioms were introduced in Armstrong \[1974\]. Significant devel- opment of relational database theory occurred in the late 1970s. These results are collected in several texts on database theory including Maier \[1983\], Atzeni and Antonellis \[1993\], and Abiteboul et al. \[1995\].
+Armstrong’s axioms were introduced in Armstrong [1974]. Significant devel- opment of relational database theory occurred in the late 1970s. These results are collected in several texts on database theory including Maier [1983], Atzeni and Antonellis [1993], and Abiteboul et al. [1995].
 
-BCNF was introduced in Codd \[1972\]. Biskup et al. \[1979\] give the algorithm we used to find a lossless dependency-preserving decomposition into 3NF. Fun- damental results on the lossless decomposition property appear in Aho et al. \[1979a\].
+BCNF was introduced in Codd [1972]. Biskup et al. [1979] give the algorithm we used to find a lossless dependency-preserving decomposition into 3NF. Fun- damental results on the lossless decomposition property appear in Aho et al. [1979a].
 
-Beeri et al. \[1977\] gives a set of axioms for multivalued dependencies, and proves that the authors’ axioms are sound and complete. The notions of 4NF, PJNF, and DKNF are from Fagin \[1977\], Fagin \[1979\], and Fagin \[1981\], respectively. See the bibliographical notes of Appendix C for further references to literature on normalization.
+Beeri et al. [1977] gives a set of axioms for multivalued dependencies, and proves that the authors’ axioms are sound and complete. The notions of 4NF, PJNF, and DKNF are from Fagin [1977], Fagin [1979], and Fagin [1981], respectively. See the bibliographical notes of Appendix C for further references to literature on normalization.
 
-Jensen et al. \[1994\] presents a glossary of temporal-database concepts. A survey of extensions to E-R modeling to handle temporal data is presented by Gregersen and Jensen \[1999\]. Tansel et al. \[1993\] covers temporal database theory, design, and implementation. Jensen et al. \[1996\] describes extensions of depen- dency theory to temporal data.  
+Jensen et al. [1994] presents a glossary of temporal-database concepts. A survey of extensions to E-R modeling to handle temporal data is presented by Gregersen and Jensen [1999]. Tansel et al. [1993] covers temporal database theory, design, and implementation. Jensen et al. [1996] describes extensions of depen- dency theory to temporal data.  
 
 **_C H A P T E R_9 Application Design and Development**
 
@@ -3999,7 +3999,7 @@ _<_html_\> <_head_\> <_title_\>_ Hello _<_/title_\> <_/head_\>_
 
 _<_body_\>_
 
-_<_?php if (!isset($ REQUEST\[’name’\])) _{_ echo ’Hello World’; _}_ else _{_ echo ’Hello, ’ . $ REQUEST\[’name’\]; _}_
+_<_?php if (!isset($ REQUEST[’name’])) _{_ echo ’Hello World’; _}_ else _{_ echo ’Hello, ’ . $ REQUEST[’name’]; _}_
 
 ?_\>_
 
@@ -4849,4 +4849,4 @@ The Yahoo! User Interface (YUI) JavaScript library (developer.yahoo.com/yui) is 
 
 Information about servlets, including tutorials, standard specifications, and soft- ware, is available on java.sun.com/products/servlet. Information about JSP is available at java.sun.com/products/jsp. Information on JSP tag libraries can also be found at this URL. Information about the .NET framework and about Web application de- velopment using ASP.NET can be found at msdn.microsoft.com.
 
-Atreya et al. \[2002\] provide textbook coverage of digital signatures, including X.509 digital certificates and public-key infrastructure.
+Atreya et al. [2002] provide textbook coverage of digital signatures, including X.509 digital certificates and public-key infrastructure.
