@@ -352,7 +352,7 @@ We can of course create separate tables to represent the overlapping special- iz
 
 **956 Chapter 22 Object-Based Databases**
 
-attribute of Person and other attributes specific to Student and Teacher, respectively. The people table would contain information about all persons, including students and teachers. We would then have to add appropriate referential-integrity con- straints to ensure that students and teachers are also represented in the people table.
+attribute of Person and other attributes specific to Student and Teacher, respectively. The people table would contain information about all persons, including students and teachers. We would then have to add appropriate referential-integrity constraints to ensure that students and teachers are also represented in the people table.
 
 In other words, we can create our own improved implementation of the subtable mechanism using existing features of SQL, with some extra effort in defining the table, as well as some extra effort at query time to specify joins to access required attributes.
 
@@ -452,7 +452,7 @@ The **with ordinality** clause generates an extra attribute which records the po
 
 ### 22.5.3 Nesting and Unnesting
 
-The transformation of a nested relation into a form with fewer (or no) relation- valued attributes is called **unnesting**. The books relation has two attributes, author array and keyword set, that are collections, and two attributes, title and publisher,
+The transformation of a nested relation into a form with fewer (or no) relationvalued attributes is called **unnesting**. The books relation has two attributes, author array and keyword set, that are collections, and two attributes, title and publisher,
 
 that are not. Suppose that we want to convert the relation into a single flat relation, with no nested relations or structured types as attributes. We can use the following query to carry out the task:  
 
@@ -541,7 +541,7 @@ An alternative to system-generated identifiers is to allow users to generate ide
 
 **create table** people **of** Person **ref is** person id **user generated**;
 
-When inserting a tuple in people, we must then provide a value for the iden- tifier:
+When inserting a tuple in people, we must then provide a value for the identifier:
 
 **insert into** people (person id, name, address) **values** (’01284567’, ’John’, ’23 Coyote Run’);
 
@@ -647,7 +647,7 @@ ever, the database system has the burden of following chains of references to de
 
 ### 22.8.2 Object Identity and Pointers
 
-In an object-oriented programming language that has not been extended to han- dle persistence, when an object is created, the system returns a transient object identifier. Transient object identifiers are valid only when the program that cre- ated them is executing; after that program terminates, the objects are deleted, and the identifier is meaningless. When a persistent object is created, it is assigned a persistent object identifier.
+In an object-oriented programming language that has not been extended to handle persistence, when an object is created, the system returns a transient object identifier. Transient object identifiers are valid only when the program that cre- ated them is executing; after that program terminates, the objects are deleted, and the identifier is meaningless. When a persistent object is created, it is assigned a persistent object identifier.
 
 The notion of object identity has an interesting relationship to pointers in programming languages. A simple way to achieve built-in identity is through pointers to physical locations in storage. In particular, in many object-oriented languages such as C++, a transient object identifier is actually an in-memory pointer.
 
@@ -693,7 +693,7 @@ The following aspects need to be addressed when adding persistence support to C+
 
 The ObjectStore database system uses a different approach to persistent pointers. It uses normal pointer types to store persistent pointers. This poses two problems: (1) in-memory pointer sizes may be only 4 bytes, which is too small to use with databases larger than 4 gigabytes, and (2) when an object is moved on disk, in-memory pointers to its old physical location are meaningless. ObjectStore uses a technique called “hardware swizzling” to address both problems; it prefetches objects from the database into memory, and replaces persistent pointers with in-memory pointers, and when data are stored back on disk, in-memory pointers are replaced by persistent pointers. When on disk, the value stored in the in-memory pointer field is not the actual persistent pointer; instead, the value is looked up in a table that contains the full persistent pointer value.
 
-- **Creation of persistent objects**: The C++ new operator is used to create per- sistent objects by defining an “overloaded” version of the operator that takes extra arguments specifying that it should be created in the database. Thus in- stead of new T(), one would call new (db) T() to create a persistent object, where db identifies the database.
+- **Creation of persistent objects**: The C++ new operator is used to create per- sistent objects by defining an “overloaded” version of the operator that takes extra arguments specifying that it should be created in the database. Thus instead of new T(), one would call new (db) T() to create a persistent object, where db identifies the database.
 
 - **Class extents**: Class extents are created and maintained automatically for each class. The ODMG C++ standard requires the name of the class to be passed as an additional parameter to the new operation. This also allows multiple extents to be maintained for a class, by passing different names.
 
@@ -711,11 +711,11 @@ However, one resultant problem is that it is difficult to detect when an object 
 
 Other systems, such as ObjectStore, use memory-protection support provided by the operating system/hardware to detect writes to a block of memory and mark the block as a dirty block that should be written later to disk.
 
-- **Query language**: Iterators provide support for simple selection queries. To support more complex queries, persistent C++ systems define a query lan- guage.
+- **Query language**: Iterators provide support for simple selection queries. To support more complex queries, persistent C++ systems define a query language.
 
 A large number of object-oriented database systems based on C++ were de- veloped in the late 1980s and early 1990s. However, the market for such databases turned out to be much smaller than anticipated, since most application require- ments are more than met by using SQL through interfaces such as ODBC or JDBC. As a result, most of the object-oriented database systems developed in that pe- riod do not exist any longer. In the 1990s, the Object Data Management Group (ODMG) defined standards for adding persistence to C++ and Java. However, the group wound up its activities around 2002. ObjectStore and Versant are among the original object-oriented database systems that are still in existence.
 
-Although object-oriented database systems did not find the commercial suc- cess that they had hoped for, the motivation for adding persistence to program- ming language remains. There are several applications with high performance requirements that run on object-oriented database systems; using SQL would impose too high a performance overhead for many such systems. With object- relational database systems now providing support for complex data types, in- cluding references, it is easier to store programming language objects in an SQL  
+Although object-oriented database systems did not find the commercial suc- cess that they had hoped for, the motivation for adding persistence to program- ming language remains. There are several applications with high performance requirements that run on object-oriented database systems; using SQL would impose too high a performance overhead for many such systems. With object- relational database systems now providing support for complex data types, including references, it is easier to store programming language objects in an SQL  
 
 
 
@@ -767,7 +767,7 @@ An object, or a set of objects, can be retrieved based on a selection condition 
 
 Object-relational mapping systems in general, and in particular the widely used Hibernate system which provides an object-relational mapping to Java, are described in more detail in Section 9.4.2.
 
-The primary goal of object-relational mapping systems is to ease the job of programmers who build applications, by providing them an object-model, while retaining the benefits of using a robust relational database underneath. As an added benefit, when operating on objects cached in memory, object-relational systems can provide significant performance gains over direct access to the un- derlying database.
+The primary goal of object-relational mapping systems is to ease the job of programmers who build applications, by providing them an object-model, while retaining the benefits of using a robust relational database underneath. As an added benefit, when operating on objects cached in memory, object-relational systems can provide significant performance gains over direct access to the underlying database.
 
 Object-relational mapping systems also provide query languages that allow programmers to write queries directly on the object model; such queries are translated into SQL queries on the underlying relational database, and result objects created from the SQL query results.
 
@@ -791,7 +791,7 @@ We can summarize the strengths of the various kinds of database systems in this 
 
 - **Relational systems**: Simple data types, powerful query languages, high pro- tection.
 
-- **Persistent programming language–based OODBs**: Complex data types, in- tegration with programming language, high performance.
+- **Persistent programming language–based OODBs**: Complex data types, integration with programming language, high performance.
 
 - **Object-relational systems**: Complex data types, powerful query languages, high protection.
 
@@ -962,7 +962,7 @@ Information about ObjectStore and Versant, including download of trial ver- sion
 
 Several object-oriented extensions to SQL have been proposed. POSTGRES (Stone- braker and Rowe [1986] and Stonebraker [1986]) was an early implementation of an object-relational system. Other early object-relational systems include the SQL extensions of O2 (Bancilhon et al. [1989]) and UniSQL (UniSQL [1991]). SQL:1999 was the product of an extensive (and long-delayed) standardization effort, which originally started off as adding object-oriented features to SQL and ended up adding many more features, such as procedural constructs, which we saw earlier. Support for multiset types was added as part of SQL:2003.
 
-Melton [2002] concentrates on the object-relational features of SQL:1999. Eisen- berg et al. [2004] provides an overview of SQL:2003, including its support for multisets.
+Melton [2002] concentrates on the object-relational features of SQL:1999. Eisenberg et al. [2004] provides an overview of SQL:2003, including its support for multisets.
 
 A number of object-oriented database systems were developed in the late 1980s and early 1990s. Among the notable commercial ones were ObjectStore (Lamb et al. [1991]), O2 (Lecluse et al. [1988]), and Versant. The object database standard ODMG is described in detail in Cattell [2000]. JDO is described by Roos [2002], Tyagi et al. [2003], and Jordan and Russell [2003].  
 *************************************************************
@@ -1332,7 +1332,7 @@ _. . ._
 
 
 
-Note that in a document construction context, the distinction between subele- ment and attribute is important—an attribute is implicitly text that does not appear in the printed or displayed document. However, in database and data exchange applications of XML, this distinction is less relevant, and the choice of representing data as an attribute or a subelement is frequently arbitrary. In gen- eral, it is advisable to use attributes only to represent identifiers, and to store all other data as subelements.
+Note that in a document construction context, the distinction between subele- ment and attribute is important—an attribute is implicitly text that does not appear in the printed or displayed document. However, in database and data exchange applications of XML, this distinction is less relevant, and the choice of representing data as an attribute or a subelement is frequently arbitrary. In general, it is advisable to use attributes only to represent identifiers, and to store all other data as subelements.
 
 One final syntactic note is that an element of the form <element></element> that contains no subelements or text can be abbreviated as <element/>; abbrevi- ated elements may, however, contain attributes.
 
@@ -1487,7 +1487,7 @@ Document type definitions are strongly connected to the document formatting heri
 
 - Individual text elements and attributes cannot be typed further. For instance, the element balance cannot be constrained to be a positive number. The lack of such constraints is problematic for data processing and exchange applications, which must then contain code to verify the types of elements and attributes.
 
-- It is difficult to use the DTD mechanism to specify unordered sets of subele- ments. Order is seldom important for data exchange (unlike document lay- out, where it is crucial). While the combination of alternation (the | operation) and the ∗ or the + operation as in Figure 23.9 permits the specification of un- ordered collections of tags, it is much more difficult to specify that each tag may only appear once.
+- It is difficult to use the DTD mechanism to specify unordered sets of subele- ments. Order is seldom important for data exchange (unlike document lay- out, where it is crucial). While the combination of alternation (the | operation) and the ∗ or the + operation as in Figure 23.9 permits the specification of unordered collections of tags, it is much more difficult to specify that each tag may only appear once.
 
 - There is a lack of typing in IDs and IDREFSs. Thus, there is no way to specify the type of element to which an IDREF or IDREFS attribute should refer. As a result, the DTD in Figure 23.10 does not prevent the “dept name” attribute of a course element from referring to other courses, even though this makes no sense.
 
@@ -1720,7 +1720,7 @@ returns the course identifiers of those courses. We can test the existence of a 
 
 ison operation; for instance, if we removed just “>\= 4” from the above, the expression would return course identifiers of all courses that have a credits subelement, regardless of its value.
 
-- XPath provides several functions that can be used as part of predicates, in- cluding testing the position of the current node in the sibling order and the aggregate function count(), which counts the number of nodes matched by the expression to which it is applied. For example, on the XML representation in Figure 23.6, the path expression:
+- XPath provides several functions that can be used as part of predicates, including testing the position of the current node in the sibling order and the aggregate function count(), which counts the number of nodes matched by the expression to which it is applied. For example, on the XML representation in Figure 23.6, the path expression:
 
 /university-2/instructor[count(/teaches/course)> 2]
 
@@ -1985,7 +1985,7 @@ There are several alternatives for storing XML data in nonrelational data-storag
 
 in Chapter 1, of using file systems as the basis for database applications. In particular, it lacks data isolation, atomicity, concurrent access, and security. However, the wide availability of XML tools that work on file data makes it relatively easy to access and query XML data stored in files. Thus, this storage format may be sufficient for some applications.
 
-- **Create an XML database.** XML databases are databases that use XML as their basic data model. Early XML databases implemented the Document Object Model on a C++-based object-oriented database. This allows much of the object-oriented database infrastructure to be reused, while providing a stan- dard XML interface. The addition of XQuery or other XML query languages provides declarative querying. Other implementations have built the entire XML storage and querying infrastructure on top of a storage manager that provides transactional support.
+- **Create an XML database.** XML databases are databases that use XML as their basic data model. Early XML databases implemented the Document Object Model on a C++-based object-oriented database. This allows much of the object-oriented database infrastructure to be reused, while providing a standard XML interface. The addition of XQuery or other XML query languages provides declarative querying. Other implementations have built the entire XML storage and querying infrastructure on top of a storage manager that provides transactional support.
 
 Although several databases designed specifically to store XML data have been built, building a full-featured database system from ground up is a very complex task. Such a database must support not only XML data storage and querying but also other database features such as transactions, security, support for data access from clients, and a variety of administration facilities. It makes sense to instead use an existing database system to provide these facilities and implement XML data storage and querying either on top of the relational abstraction, or as a layer parallel to the relational abstraction. We study these approaches in Section 23.6.2.
 
@@ -2009,7 +2009,7 @@ A partial solution to this problem is to store different types of elements in di
 
 Some database systems, such as Oracle, support **function indices**, which can help avoid replication of attributes between the XML string and relation attributes. Unlike normal indices, which are on attribute values, function indices can be built on the result of applying user-defined functions on tuples. For instance, a function index can be built on a user-defined function that returns the value of the dept name subelement of the XML string in a tuple. The index can then be used in the same way as an index on a dept name attribute.
 
-The above approaches have the drawback that a large part of the XML in- formation is stored within strings. It is possible to store all the information in relations in one of several ways that we examine next.
+The above approaches have the drawback that a large part of the XML information is stored within strings. It is possible to store all the information in relations in one of several ways that we examine next.
 
 #### 23.6.2.2 Tree Representation
 
@@ -2135,11 +2135,11 @@ SQL/XML adds several operators and aggregate operations to SQL to allow the cons
 
 The above query creates an XML element for each course, with the course identifier and department name represented as attributes, and title and credits as subelements. The result would look like the course elements shown in Fig- ure 23.11, but without the instructor attribute. The **xmlattributes** operator creates the XML attribute name using the SQL attribute name, which can be changed using an **as** clause as shown.
 
-The **xmlforest** operator simplifies the construction of XML structures. Its syn- tax and behavior are similar to those of **xmlattributes**, except that it creates a forest (collection) of subelements, instead of a list of attributes. It takes multi- ple arguments, creating an element for each argument, with the attribute’s SQL name used as the XML element name. The **xmlconcat** operator can be used to concatenate elements created by subexpressions into a forest.
+The **xmlforest** operator simplifies the construction of XML structures. Its syntax and behavior are similar to those of **xmlattributes**, except that it creates a forest (collection) of subelements, instead of a list of attributes. It takes multi- ple arguments, creating an element for each argument, with the attribute’s SQL name used as the XML element name. The **xmlconcat** operator can be used to concatenate elements created by subexpressions into a forest.
 
 When the SQL value used to construct an attribute is null, the attribute is omitted. Null values are omitted when the body of an element is constructed.
 
-SQL/XML also provides an aggregate function **xmlagg** that creates a forest (collection) of XML elements from the collection of values on which it is applied. The following query creates an element for each department with a course, con- taining as subelements all the courses in that department. Since the query has a clause **group by** dept name, the aggregate function is applied on all courses in each department, creating a sequence of course id elements.
+SQL/XML also provides an aggregate function **xmlagg** that creates a forest (collection) of XML elements from the collection of values on which it is applied. The following query creates an element for each department with a course, containing as subelements all the courses in that department. Since the query has a clause **group by** dept name, the aggregate function is applied on all courses in each department, creating a sequence of course id elements.
 
 **select xmlelement** (**name** “department”, dept name, **xmlagg** (**xmlforest**(course id)
 
@@ -2155,7 +2155,7 @@ We now outline several applications of XML for storing and communicating (ex- ch
 
 ### 23.7.1 Storing Data with Complex Structure
 
-Many applications need to store data that are structured, but are not easily mod- eled as relations. Consider, for example, user preferences that must be stored by an application such as a browser. There are usually a large number of fields, such as home page, security settings, language settings, and display settings, that must be recorded. Some of the fields are multivalued, for example, a list of trusted sites, or maybe ordered lists, for example, a list of bookmarks. Applications tradition- ally used some type of textual representation to store such data. Today, a majority of such applications prefer to store such configuration information in XML format. The ad hoc textual representations used earlier require effort to design and effort to create parsers that can read the file and convert the data into a form that a program can use. The XML representation avoids both these steps.
+Many applications need to store data that are structured, but are not easily mod- eled as relations. Consider, for example, user preferences that must be stored by an application such as a browser. There are usually a large number of fields, such as home page, security settings, language settings, and display settings, that must be recorded. Some of the fields are multivalued, for example, a list of trusted sites, or maybe ordered lists, for example, a list of bookmarks. Applications traditionally used some type of textual representation to store such data. Today, a majority of such applications prefer to store such configuration information in XML format. The ad hoc textual representations used earlier require effort to design and effort to create parsers that can read the file and convert the data into a form that a program can use. The XML representation avoids both these steps.
 
 XML-based representations are now widely used for storing documents, spre- adsheet data and other data that are part of office application packages. The Open Document Format (ODF), supported by the Open Office software suite as well as other office suites, and the Office Open XML (OOXML) format, supported by the Microsoft Office suite, are document representation standards based on XML. They are the two most widely used formats for editable document representation.
 
@@ -2181,7 +2181,7 @@ Using normalized relational schemas to model such complex data require- ments wo
 
 Applications often require data from outside of the organization, or from another department in the same organization that uses a different database. In many such situations, the outside organization or department is not willing to allow direct access to its database using SQL, but is willing to provide limited forms of information through predefined interfaces.
 
-When the information is to be used directly by a human, organizations pro- vide Web-based forms, where users can input values and get back desired in- formation in HTML form. However, there are many applications where such in- formation needs to be accessed by software programs, rather than by end users. Providing the results of a query in XML form is a clear requirement. In addition, it makes sense to specify the input values to the query also in XML format.
+When the information is to be used directly by a human, organizations pro- vide Web-based forms, where users can input values and get back desired information in HTML form. However, there are many applications where such information needs to be accessed by software programs, rather than by end users. Providing the results of a query in XML form is a clear requirement. In addition, it makes sense to specify the input values to the query also in XML format.
 
 In effect, the provider of the information defines procedures whose input and output are both in XML format. The HTTP protocol is used to communicate the input and output information, since it is widely used and can go through firewalls that institutions use to keep out unwanted traffic from the Internet.
 
@@ -2231,7 +2231,7 @@ creating complex types and specifying integrity constraints, including key const
 
 - XML data can be represented as tree structures, with nodes corresponding to elements and attributes. Nesting of elements is reflected by the parent-child structure of the tree representation.
 
-- Path expressions can be used to traverse the XML tree structure and locate data. XPath is a standard language for path expressions, and allows required elements to be specified by a file-system-like path, and additionally allows selections and other features. XPath also forms part of other XML query lan- guages.
+- Path expressions can be used to traverse the XML tree structure and locate data. XPath is a standard language for path expressions, and allows required elements to be specified by a file-system-like path, and additionally allows selections and other features. XPath also forms part of other XML query languages.
 
 - The XQuery language is the standard language for querying XML data. It has a structure not unlike SQL, with **for**, **let**, **where**, **order by**, and **return** clauses. However, it supports many extensions to deal with the tree nature of XML and to allow for the transformation of XML documents into other documents with a significantly different structure. XPath path expressions form a part of XQuery. XQuery supports nested queries and user-defined functions.
 
