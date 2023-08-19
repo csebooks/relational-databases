@@ -18,7 +18,7 @@ Because information is so important in most organizations, computer scien- tists
 
 Databases are widely used. Here are some representative applications:
 
-• _Enterprise Information_
+•Enterprise Information_
 
 ◦ _Sales_: For customer, product, and purchase information.
 
@@ -28,9 +28,7 @@ Databases are widely used. Here are some representative applications:
 
 ◦ _Manufacturing_: For management of the supply chain and for tracking pro- duction of items in factories, inventories of items in warehouses and stores, and orders for items.
 
-**1**  
-
-**2 Chapter 1 Introduction**
+  2   **Chapter 1**  Introduction
 
 ◦ _Online retailers_: For sales data noted above plus online order tracking, generation of recommendation lists, and maintenance of online product evaluations.
 
@@ -50,11 +48,11 @@ Databases are widely used. Here are some representative applications:
 
 As the list illustrates, databases form an essential part of every enterprise today, storing not only types of information that are common to most enterprises, but also information that is specific to the category of the enterprise.
 
-Over the course of the last four decades of the twentieth century, use of databases grew in all enterprises. In the early days, very few people interacted di- rectly with database systems, although without realizing it, they interacted with databases indirectly—through printed reports such as credit card statements, or through agents such as bank tellers and airline reservation agents. Then auto- mated teller machines came along and let users interact directly with databases. Phone interfaces to computers (interactive voice-response systems) also allowed users to deal directly with databases—a caller could dial a number, and press phone keys to enter information or to select alternative options, to find flight arrival/departure times, for example, or to register for courses in a university.
+Over the course of the last four decades of the twentieth century, use of databases grew in all enterprises. In the early days, very few people interacted di- rectly with database systems, although without realizing it, they interacted with databases indirectly—through printed reports such as credit card statements, or through agents such as bank tellers and airline reservation agents. Then auto- mated teller machines came along and let users interact directly with databases. Phone interfaces to computers (interactive voice-response systems) also allowed users to deal directly with databases—a caller could dial a number, and press phone keys to enter information or to select alternative options, to find flight  arrival/departure times, for example, or to register for courses in a university.
 
 The Internet revolution of the late 1990s sharply increased direct user access to databases. Organizations converted many of their phone interfaces to databases into Web interfaces, and made a variety of services and information available online. For instance, when you access an online bookstore and browse a book or music collection, you are accessing data stored in a database. When you enter an order online, your order is stored in a database. When you access a bank Web site and retrieve your bank balance and transaction information, the information is retrieved from the bank’s database system. When you access a Web site, informa-  
 
-# 1.2 Purpose of Database Systems
+**1.2 Purpose of Database Systems**
 
 tion about you may be retrieved from a database to select which advertisements you should see. Furthermore, data about your Web accesses may be stored in a database.
 
@@ -140,7 +138,7 @@ view level
 
 ![Alt  The three levels of data abstraction.](three.png)
 
-![The three levels of data abstraction.](Figure 1-1.png)
+**Figure 1.1** The three levels of data abstraction.
 
 languages support the notion of a structured type. For example, we may describe a record as follows:1
 
@@ -281,9 +279,8 @@ _dept name building budget_
 Comp. Sci. Taylor 100000 Biology Watson 90000 Elec. Eng. Taylor 85000 Music Packard 80000 Finance Painter 120000 History Painter 50000 Physics Watson 70000
 
 (b) The _department_ table
-![Alt A sample relational database.](sample.png)
-
-![A sample relational database.](Figure 1-2.png)
+![alt A sample relational database](sample.png)
+**Figure 1.2** A sample relational database.
 
 associated with the Physics department. In Chapter 8, we shall study how to distinguish good schema designs from bad schema designs.
 
@@ -400,9 +397,8 @@ _instructor ID name salary_
 _department dept\_name building budget_
 
 _member_
-
-
-![A sample E-R diagram.](Figure-1-3.png)
+![alt  A sample E-R diagram](Figure-1-3.png)
+**Figure 1.3** A sample E-R diagram.
 
 • Entity sets are represented by a rectangular box with the entity set name in the header and the attributes listed below it.
 
@@ -424,13 +420,9 @@ To understand the need for normalization, let us look at what can go wrong in a 
 
 • Inability to represent certain information  
 
-**1.6 Database Design 19**
-
-_ID name salary dept name building budget_
-
-22222 Einstein 95000 Physics Watson 70000 12121 Wu 90000 Finance Painter 120000 32343 El Said 60000 History Painter 50000 45565 Katz 75000 Comp. Sci. Taylor 100000 98345 Kim 80000 Elec. Eng. Taylor 85000 76766 Crick 72000 Biology Watson 90000 10101 Srinivasan 65000 Comp. Sci. Taylor 100000 58583 Califieri 62000 History Painter 50000 83821 Brandt 92000 Comp. Sci. Taylor 100000 15151 Mozart 40000 Music Packard 80000 33456 Gold 87000 Physics Watson 70000 76543 Singh 80000 Finance Painter 120000
-
-![The _faculty_ table.](Figure 1-4.png)
+**1.6 Database Design**          19
+![alt The _faculty_ table](Figure%201.4.png)
+**Figure 1.4** The _faculty_ table.
 
 We shall discuss these problems with the help of a modified database design for our university example.
 
@@ -528,91 +520,17 @@ In Chapter 17 we cover the general structure of modern computer systems. Chapter
 
 Most users of a database system today are not present at the site of the database system, but connect to it through a network. We can therefore differen- tiate between **client** machines, on which remote database users work, and **server** machines, on which the database system runs.  
 
-**24 Chapter 1 Introduction**
+**24  Chapter 1** **Introduction**
 
 Database applications are usually partitioned into two or three parts, as in Figure 1.6. In a **two-tier architecture**, the application resides at the client machine, where it invokes database system functionality at the server machine through
 
-naive users (tellers, agents,
-
-web users)
-
-query processor
-
-storage manager
-
-disk storage indices
-
-statistical datadata
-
-data dictionary
-
-application programmers
-
-application interfaces
-
-application program
-
-object code
-
-compiler and linker
-
-buffer manager file manager authorization and integrity
-
-manager
-
-transaction manager
-
-DML compiler and organizer
-
-query evaluation engine
-
-DML queries DDL interpreter
-
-application programs
-
-query tools
-
-administration tools
-
-sophisticated users
-
-(analysts)
-
-database administrators
-
-use write use use
-
-![System structure.  ](Figure 1-5.png)
+![alt System structure](Figure%201.5.png)
+**Figure 1.5** System structure.  
 
 **1.10 Data Mining and Information Retrieval 25**
 
-user
-
-application
-
-database system
-
-network
-
-(a) Two-tier architecture
-
-client
-
-server
-
-user
-
-application client
-
-database system
-
-network
-
-application server
-
-(b) Three-tier architecture
-
-![Two-tier and three-tier architectures.](Figure 1-6.png)
+![alt Two-tier and three-tier architectures ](Figure%201.6.png)
+**Figure 1.6** Two-tier and three-tier architectures.
 
 query language statements. Application program interface standards like ODBC and JDBC are used for interaction between the client and the server.
 
