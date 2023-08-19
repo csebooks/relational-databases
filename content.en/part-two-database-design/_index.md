@@ -9,7 +9,7 @@ weight: 7
 
 **DATABASE DESIGN** Database systems are designed to manage large bodies of information. These large bodies of information do not exist in isolation. They are part of the operation of some enterprise whose end product may be information from the database or may be some device or service for which the database plays only a supporting role.
 
-The first two chapters of this part focus on the design of database schemas. The entity-relationship (E-R) model described in Chapter 7 is a high-level data model. Instead of representing all data in tables, it distinguishes between basic objects, called entities, and relationships among these objects. It is often used as a first step in database-schema design.
+The first two chapters of this part focus on the design of database schemas. The entity-relationship (E-R) model described in Chapter 7 is a high-level data model. Instead of representing all data in tables, it distinguishes between basic objects, called _entities_, and _relationships_ among these objects. It is often used as a first step in database-schema design.
 
 Relational database design—the design of the relational schema— was cov- ered informally in earlier chapters. There are, however, principles that can be used to distinguish good database designs from bad ones. These are formal- ized by means of several “normal forms” that offer different trade-offs between the possibility of inconsistencies and the efficiency of certain queries. Chapter 8 describes the formal design of relational schemas.
 
@@ -49,23 +49,23 @@ The designer reviews the schema to confirm that all data requirements are indeed
 
 • The process of moving from an abstract data model to the implementation of the database proceeds in two final design phases.
 
-    ◦ In the **logical-design phase**, the designer maps the high-level conceptual schema onto the implementation data model of the database system that  
+◦ In the **logical-design phase**, the designer maps the high-level conceptual schema onto the implementation data model of the database system that  
 
 **7.1 Overview of the Design Process 261**
 
 will be used. The implementation data model is typically the relational data model, and this step typically consists of mapping the conceptual schema defined using the entity-relationship model into a relation schema.
 
-    ◦ Finally, the designer uses the resulting system-specific database schema in the subsequent **physical-design phase**, in which the physical features of the database are specified. These features include the form of file or- ganization and choice of index structures, discussed in Chapters 10 and 11.
+◦ Finally, the designer uses the resulting system-specific database schema in the subsequent **physical-design phase**, in which the physical features of the database are specified. These features include the form of file or- ganization and choice of index structures, discussed in Chapters 10 and 11.
 
 The physical schema of a database can be changed relatively easily after an application has been built. However, changes to the logical schema are usually harder to carry out, since they may affect a number of queries and updates scat- tered across application code. It is therefore important to carry out the database design phase with care, before building the rest of the database application.
 
 **7.1.2 Design Alternatives**
 
-A major part of the database design process is deciding how to represent in the design the various types of “things” such as people, places, products, and the like. We use the term entity to refer to any such distinctly identifiable item. In a university database, examples of entities would include instructors, students, departments, courses, and course offerings.1 The various entities are related to each other in a variety of ways, all of which need to be captured in the database design. For example, a student takes a course offering, while an instructor teaches a course offering; teaches and takes are examples of relationships between entities.
+A major part of the database design process is deciding how to represent in the design the various types of “things” such as people, places, products, and the like. We use the term _entity_ to refer to any such distinctly identifiable item. In a university database, examples of entities would include instructors, students, departments, courses, and course offerings.1 The various entities are related to each other in a variety of ways, all of which need to be captured in the database design. For example, a student takes a course offering, while an instructor teaches a course offering; teaches and takes are examples of relationships between entities.
 
 In designing a database schema, we must ensure that we avoid two major pitfalls:
 
-**1. Redundancy:** A bad design may repeat information. For example, if we store the course identifier and title of a course with each course offering, the title would be stored redundantly (that is, multiple times, unnecessarily) with each course offering. It would suffice to store only the course identifier with each course offering, and to associate the title with the course identifier only once, in a course entity.
+**1\. Redundancy:** A bad design may repeat information. For example, if we store the course identifier and title of a course with each course offering, the title would be stored redundantly (that is, multiple times, unnecessarily) with each course offering. It would suffice to store only the course identifier with each course offering, and to associate the title with the course identifier only once, in a course entity.
 
 Redundancy can also occur in a relational schema. In the university example we have used so far, we have a relation with section information and a separate relation with course information. Suppose that instead we have a single relation where we repeat all of the course information (course id, title, dept name, credits) once for each section (offering) of the course.
 
@@ -79,7 +79,7 @@ is that the copies of a piece of information can become inconsistent if the
 
 information is updated without taking precautions to update all copies of the information. For example, different offerings of a course may have the same course identifier, but may have different titles. It would then become unclear what the correct title of the course is. Ideally, information should appear in exactly one place.
 
-**2. Incompleteness:** A bad design may make certain aspects of the enterprise difficult or impossible to model. For example, suppose that, as in case (1) above, we only had entities corresponding to course offering, without hav- ing an entity corresponding to courses. Equivalently, in terms of relations, suppose we have a single relation where we repeat all of the course infor- mation once for each section that the course is offered. It would then be impossible to represent information about a new course, unless that course is offered. We might try to make do with the problematic design by stor- ing null values for the section information. Such a work-around is not only unattractive, but may be prevented by primary-key constraints.
+**2\. Incompleteness:** A bad design may make certain aspects of the enterprise difficult or impossible to model. For example, suppose that, as in case (1) above, we only had entities corresponding to course offering, without hav- ing an entity corresponding to courses. Equivalently, in terms of relations, suppose we have a single relation where we repeat all of the course infor- mation once for each section that the course is offered. It would then be impossible to represent information about a new course, unless that course is offered. We might try to make do with the problematic design by stor- ing null values for the section information. Such a work-around is not only unattractive, but may be prevented by primary-key constraints.
 
 Avoiding bad designs is not enough. There may be a large number of good designs from which we must choose. As a simple example, consider a customer who buys a product. Is the sale of this product a relationship between the customer and the product? Alternatively, is the sale itself an entity that is related both to the customer and to the product? This choice, though simple, may make an important difference in what aspects of the enterprise can be modeled well. Considering the need to make choices such as this for the large number of entities and relationships in a real-world enterprise, it is not hard to see that database design can be a challenging problem. Indeed we shall see that it requires a combination of both science and “good taste.”
 
@@ -97,29 +97,29 @@ An **entity** is a “thing” or “object” in the real world that is disting
 
 value uniquely identifies that person. Thus, the value 677-89-9011 for _person id_ would uniquely identify one particular person in the university. Similarly, courses can be thought of as entities, and _course id_ uniquely identifies a course entity in the university. An entity may be concrete, such as a person or a book, or it may be abstract, such as a course, a course offering, or a flight reservation.
 
-An **entity set** is a set of entities of the same type that share the same properties, or attributes. The set of all people who are instructors at a given university, for example, can be defined as the entity set instructor. Similarly, the entity set student might represent the set of all students in the university.
+An **entity set** is a set of entities of the same type that share the same properties, or attributes. The set of all people who are instructors at a given university, for example, can be defined as the entity set _instructor_. Similarly, the entity set _student_ might represent the set of all students in the university.
 
-In the process of modeling, we often use the term _entity set_ in the abstract, without referring to a particular set of individual entities. We use the term **ex- tension** of the entity set to refer to the actual collection of entities belonging to the entity set. Thus, the set of actual instructors in the university forms the exten- sion of the entity set instructor. The above distinction is similar to the difference between a relation and a relation instance, which we saw in Chapter 2.
+In the process of modeling, we often use the term _entity set_ in the abstract, without referring to a particular set of individual entities. We use the term **ex- tension** of the entity set to refer to the actual collection of entities belonging to the entity set. Thus, the set of actual instructors in the university forms the exten- sion of the entity set _instructor_. The above distinction is similar to the difference between a relation and a relation instance, which we saw in Chapter 2.
 
-Entity sets do not need to be disjoint. For example, it is possible to define the entity set of all people in a university (person). A person entity may be an instructor entity, a student entity, both, or neither.
+Entity sets do not need to be disjoint. For example, it is possible to define the entity set of all people in a university (_person_). A _person_ entity may be an _instructor_ entity, a _student_ entity, both, or neither.
 
-An entity is represented by a set of **attributes**. Attributes are descriptive properties possessed by each member of an entity set. The designation of an attribute for an entity set expresses that the database stores similar information concerning each entity in the entity set; however, each entity may have its own value for each attribute. Possible attributes of the instructor entity set are ID, name, _dept name_, and salary. In real life, there would be further attributes, such as street number, apartment number, state, postal code, and country, but we omit them to keep our examples simple. Possible attributes of the course entity set are _course id_, title, _dept name_, and credits.
+An entity is represented by a set of **attributes**. Attributes are descriptive properties possessed by each member of an entity set. The designation of an attribute for an entity set expresses that the database stores similar information concerning each entity in the entity set; however, each entity may have its own value for each attribute. Possible attributes of the _instructor_ entity set are _ID_, _name_, _dept name_, and _salary_. In real life, there would be further attributes, such as street number, apartment number, state, postal code, and country, but we omit them to keep our examples simple. Possible attributes of the _course_ entity set are _course id_, _title_, _dept name_, and _credits_.
 
-Each entity has a **value** for each of its attributes. For instance, a particular instructor entity may have the value 12121 for ID, the value Wu for name, the value Finance for _dept name_, and the value 90000 for salary.
+Each entity has a **value** for each of its attributes. For instance, a particular _instructor_ entity may have the value 12121 for _ID_, the value Wu for _name_, the value Finance for _dept name_, and the value 90000 for _salary_.
 
-The ID attribute is used to identify instructors uniquely, since there may be more than one instructor with the same name. In the United States, many enterprises find it convenient to use the _social-security_ number of a person2 as an attribute whose value uniquely identifies the person. In general the enterprise would have to create and assign a unique identifier for each instructor.
+The _ID_ attribute is used to identify instructors uniquely, since there may be more than one instructor with the same name. In the United States, many enterprises find it convenient to use the _social-security_ number of a person2 as an attribute whose value uniquely identifies the person. In general the enterprise would have to create and assign a unique identifier for each instructor.
 
-A database thus includes a collection of entity sets, each of which contains any number of entities of the same type. Figure 7.1 shows part of a university database that consists of two entity sets: instructor and student. To keep the figure simple, only some of the attributes of the two entity sets are shown.
+A database thus includes a collection of entity sets, each of which contains any number of entities of the same type. Figure 7.1 shows part of a university database that consists of two entity sets: _instructor_ and _student_. To keep the figure simple, only some of the attributes of the two entity sets are shown.
 
-A database for a university may include a number of other entity sets. For example, in addition to keeping track of instructors and students, the university also has information about courses, which are represented by the entity set course
+A database for a university may include a number of other entity sets. For example, in addition to keeping track of instructors and students, the university also has information about courses, which are represented by the entity set _course_
 
 2In the United States, the government assigns to each person in the country a unique number, called a social-security number, to identify that person uniquely. Each person is supposed to have only one social-security number, and no two people are supposed to have the same social-security number.  
 
 **264 Chapter 7 Database Design and the E-R Model**
 
-instructor
+_instructor_
 
-student
+_student_
 
 22222 Einstein
 
@@ -167,33 +167,33 @@ Brown
 
 44553
 
-**Figure 7.1** Entity sets instructor and student.
+**Figure 7.1** Entity sets _instructor_ and _student_.
 
-with attributes _course id_, title, _dept name_ and credits. In a real setting, a university database may keep dozens of entity sets.
+with attributes _course id_, _title_, _dept name_ and _credits_. In a real setting, a university database may keep dozens of entity sets.
 
 **7.2.2 Relationship Sets**
 
-A **relationship** is an association among several entities. For example, we can define a relationship advisor that associates instructor Katz with student Shankar. This relationship specifies that Katz is an advisor to student Shankar.
+A **relationship** is an association among several entities. For example, we can define a relationship _advisor_ that associates instructor Katz with student Shankar. This relationship specifies that Katz is an advisor to student Shankar.
 
-A **relationship set** is a set of relationships of the same type. Formally, it is a mathematical relation on n ≥ 2 (possibly nondistinct) entity sets. If E1_, E_2_, . . . , En_ are entity sets, then a relationship set R is a subset of
+A **relationship set** is a set of relationships of the same type. Formally, it is a mathematical relation on _n_ ≥ 2 (possibly nondistinct) entity sets. If _E_1_, E_2_, . . . , En_ are entity sets, then a relationship set _R_ is a subset of
 
-_{_(e1_, e_2_, . . . , en_) | e1 ∈ E1_, e_2 ∈ E2_, . . . , en_ ∈ _En}_
+_{_(_e_1_, e_2_, . . . , en_) | _e_1 ∈ _E_1_, e_2 ∈ _E_2_, . . . , en_ ∈ _En}_
 
-where (e1_, e_2_, . . . , en_) is a relationship. Consider the two entity sets instructor and student in Figure 7.1. We define
+where (_e_1_, e_2_, . . . , en_) is a relationship. Consider the two entity sets _instructor_ and _student_ in Figure 7.1. We define
 
-the relationship set advisor to denote the association between instructors and students. Figure 7.2 depicts this association.
+the relationship set _advisor_ to denote the association between instructors and students. Figure 7.2 depicts this association.
 
-As another example, consider the two entity sets student and section. We can define the relationship set takes to denote the association between a student and the course sections in which that student is enrolled.
+As another example, consider the two entity sets _student_ and _section_. We can define the relationship set _takes_ to denote the association between a student and the course sections in which that student is enrolled.
 
-The association between entity sets is referred to as participation; that is, the entity sets E1_, E_2_, . . . , En_ **participate** in relationship set R. A **relationship in- stance** in an E-R schema represents an association between the named entities in the real-world enterprise that is being modeled. As an illustration, the individual instructor entity Katz, who has instructor ID 45565, and the student entity Shankar, who has student ID 12345, participate in a relationship instance of advisor. This re- lationship instance represents that in the university, the instructor Katz is advising student Shankar.
+The association between entity sets is referred to as participation; that is, the entity sets _E_1_, E_2_, . . . , En_ **participate** in relationship set _R_. A **relationship in- stance** in an E-R schema represents an association between the named entities in the real-world enterprise that is being modeled. As an illustration, the individual _instructor_ entity Katz, who has instructor _ID_ 45565, and the _student_ entity Shankar, who has student _ID_ 12345, participate in a relationship instance of _advisor_. This re- lationship instance represents that in the university, the instructor Katz is advising student Shankar.
 
 The function that an entity plays in a relationship is called that entity’s **role**. Since entity sets participating in a relationship set are generally distinct, roles  
 
 **7.2 The Entity-Relationship Model 265**
 
-instructor
+_instructor_
 
-student
+_student_
 
 76766 Crick
 
@@ -235,15 +235,15 @@ Aoi Chavez
 
 Peltier
 
-**Figure 7.2** Relationship set advisor.
+**Figure 7.2** Relationship set _advisor_.
 
-are implicit and are not usually specified. However, they are useful when the meaning of a relationship needs clarification. Such is the case when the entity sets of a relationship set are not distinct; that is, the same entity set participates in a relationship set more than once, in different roles. In this type of relationship set, sometimes called a **recursive** relationship set, explicit role names are necessary to specify how an entity participates in a relationship instance. For example, consider the entity set course that records information about all the courses offered in the university. To depict the situation where one course (C2) is a prerequisite for another course (C1) we have relationship set prereq that is modeled by ordered pairs of course entities. The first course of a pair takes the role of course C1, whereas the second takes the role of prerequisite course C2. In this way, all relationships of prereq are characterized by (C1, C2) pairs; (C2, C1) pairs are excluded.
+are implicit and are not usually specified. However, they are useful when the meaning of a relationship needs clarification. Such is the case when the entity sets of a relationship set are not distinct; that is, the same entity set participates in a relationship set more than once, in different roles. In this type of relationship set, sometimes called a **recursive** relationship set, explicit role names are necessary to specify how an entity participates in a relationship instance. For example, consider the entity set _course_ that records information about all the courses offered in the university. To depict the situation where one course (C2) is a prerequisite for another course (C1) we have relationship set _prereq_ that is modeled by ordered pairs of _course_ entities. The first course of a pair takes the role of course C1, whereas the second takes the role of prerequisite course C2. In this way, all relationships of _prereq_ are characterized by (C1, C2) pairs; (C2, C1) pairs are excluded.
 
-A relationship may also have attributes called **descriptive attributes**. Con- sider a relationship set advisor with entity sets instructor and student. We could associate the attribute date with that relationship to specify the date when an instructor became the advisor of a student. The advisor relationship among the entities corresponding to instructor Katz and student Shankar has the value “10 June 2007” for attribute date, which means that Katz became Shankar’s advisor on 10 June 2007.
+A relationship may also have attributes called **descriptive attributes**. Con- sider a relationship set _advisor_ with entity sets _instructor_ and _student_. We could associate the attribute _date_ with that relationship to specify the date when an instructor became the advisor of a student. The _advisor_ relationship among the entities corresponding to instructor Katz and student Shankar has the value “10 June 2007” for attribute _date_, which means that Katz became Shankar’s advisor on 10 June 2007.
 
-Figure 7.3 shows the relationship set advisor with a descriptive attribute date. Please note that Katz advises two students with two different advising dates.
+Figure 7.3 shows the relationship set _advisor_ with a descriptive attribute _date_. Please note that Katz advises two students with two different advising dates.
 
-As a more realistic example of descriptive attributes for relationships, consider the entity sets student and section, which participate in a relationship set takes. We may wish to store a descriptive attribute grade with the relationship to record the grade that a student got in the class. We may also store a descriptive attribute _for credit_ to record whether a student has taken the course for credit, or is auditing
+As a more realistic example of descriptive attributes for relationships, consider the entity sets _student_ and _section_, which participate in a relationship set _takes_. We may wish to store a descriptive attribute _grade_ with the relationship to record the grade that a student got in the class. We may also store a descriptive attribute _for credit_ to record whether a student has taken the course for credit, or is auditing
 
 (or sitting in on) the course. A relationship instance in a given relationship set must be uniquely identi-
 
@@ -251,9 +251,9 @@ fiable from its participating entities, without using the descriptive attributes
 
 **266 Chapter 7 Database Design and the E-R Model**
 
-instructor
+_instructor_
 
-student
+_student_
 
 76766 Crick
 
@@ -319,15 +319,15 @@ Peltier
 
 23121
 
-**Figure 7.3** date as attribute of the advisor relationship set.
+**Figure 7.3** _date_ as attribute of the _advisor_ relationship set.
 
-became an advisor of a particular student. The single-valued attribute date can store a single date only. We cannot represent multiple dates by multiple relation- ship instances between the same instructor and a student, since the relationship instances would not be uniquely identifiable using only the participating entities. The right way to handle this case is to create a multivalued attribute date, which can store all the dates.
+became an advisor of a particular student. The single-valued attribute _date_ can store a single _date_ only. We cannot represent multiple dates by multiple relation- ship instances between the same instructor and a student, since the relationship instances would not be uniquely identifiable using only the participating entities. The right way to handle this case is to create a multivalued attribute _date_, which can store all the dates.
 
-It is possible to have more than one relationship set involving the same entity sets. In our example, the instructor and student entity sets participate in the relationship set advisor. Additionally, suppose each student must have another instructor who serves as a department advisor (undergraduate or graduate). Then the instructor and student entity sets may participate in another relationship set, _dept advisor_.
+It is possible to have more than one relationship set involving the same entity sets. In our example, the _instructor_ and _student_ entity sets participate in the relationship set _advisor_. Additionally, suppose each student must have another instructor who serves as a department advisor (undergraduate or graduate). Then the _instructor_ and _student_ entity sets may participate in another relationship set, _dept advisor_.
 
-The relationship sets advisor and _dept advisor_ provide examples of a **binary** relationship set—that is, one that involves two entity sets. Most of the relationship sets in a database system are binary. Occasionally, however, relationship sets involve more than two entity sets.
+The relationship sets _advisor_ and _dept advisor_ provide examples of a **binary** relationship set—that is, one that involves two entity sets. Most of the relationship sets in a database system are binary. Occasionally, however, relationship sets involve more than two entity sets.
 
-As an example, suppose that we have an entity set project that represents all the research projects carried out in the university. Consider the entity sets instructor, student, and project. Each project can have multiple associated students and multiple associated instructors. Furthermore, each student working on a project must have an associated instructor who guides the student on the project. For now, we ignore the first two relationships, between project and instructor, and between project and student. Instead, we focus on the information about which instructor is guiding which student on a particular project. To represent this information, we relate the three entity sets through the relationship set _proj guide_, which indicates that a particular student is guided by a particular instructor on a particular project.
+As an example, suppose that we have an entity set _project_ that represents all the research projects carried out in the university. Consider the entity sets _instructor_, _student_, and _project_. Each project can have multiple associated students and multiple associated instructors. Furthermore, each student working on a project must have an associated instructor who guides the student on the project. For now, we ignore the first two relationships, between project and instructor, and between project and student. Instead, we focus on the information about which instructor is guiding which student on a particular project. To represent this information, we relate the three entity sets through the relationship set _proj guide_, which indicates that a particular student is guided by a particular instructor on a particular project.
 
 Note that a student could have different instructors as guides for different projects, which cannot be captured by a binary relationship between students and instructors.  
 
@@ -337,17 +337,17 @@ The number of entity sets that participate in a relationship set is the **degree
 
 **7.2.3 Attributes**
 
-For each attribute, there is a set of permitted values, called the **domain**, or **value set**, of that attribute. The domain of attribute _course id_ might be the set of all text strings of a certain length. Similarly, the domain of attribute semester might be strings from the set _{_Fall, Winter, Spring, Summer_}_.
+For each attribute, there is a set of permitted values, called the **domain**, or **value set**, of that attribute. The domain of attribute _course id_ might be the set of all text strings of a certain length. Similarly, the domain of attribute _semester_ might be strings from the set _{_Fall, Winter, Spring, Summer_}_.
 
-Formally, an attribute of an entity set is a function that maps from the entity set into a domain. Since an entity set may have several attributes, each entity can be described by a set of (attribute, data value) pairs, one pair for each attribute of the entity set. For example, a particular instructor entity may be described by the set _{_(ID, 76766), (name, Crick), (_dept name_, Biology), (salary, 72000)_}_, meaning that the entity describes a person named Crick whose instructor ID is 76766, who is a member of the Biology department with salary of $72,000. We can see, at this point, an integration of the abstract schema with the actual enterprise being modeled. The attribute values describing an entity constitute a significant portion of the data stored in the database.
+Formally, an attribute of an entity set is a function that maps from the entity set into a domain. Since an entity set may have several attributes, each entity can be described by a set of (attribute, data value) pairs, one pair for each attribute of the entity set. For example, a particular _instructor_ entity may be described by the set _{_(_ID_, 76766), (_name_, Crick), (_dept name_, Biology), (_salary_, 72000)_}_, meaning that the entity describes a person named Crick whose instructor _ID_ is 76766, who is a member of the Biology department with salary of $72,000. We can see, at this point, an integration of the abstract schema with the actual enterprise being modeled. The attribute values describing an entity constitute a significant portion of the data stored in the database.
 
 An attribute, as used in the E-R model, can be characterized by the following attribute types.
 
-• **Simple** and **composite** attributes. In our examples thus far, the attributes have been simple; that is, they have not been divided into subparts. **Composite** attributes, on the other hand, can be divided into subparts (that is, other attributes). For example, an attribute name could be structured as a composite attribute consisting of _first name_, _middle initial_, and _last name_. Using composite attributes in a design schema is a good choice if a user will wish to refer to an entire attribute on some occasions, and to only a component of the attribute on other occasions. Suppose we were to to add an address to the student entity-set. The address can be defined as the composite attribute address with the attributes street, city, state, and _zip code_.3 Composite attributes help us to group together related attributes, making the modeling cleaner.
+• **Simple** and **composite** attributes. In our examples thus far, the attributes have been simple; that is, they have not been divided into subparts. **Composite** attributes, on the other hand, can be divided into subparts (that is, other attributes). For example, an attribute _name_ could be structured as a composite attribute consisting of _first name_, _middle initial_, and _last name_. Using composite attributes in a design schema is a good choice if a user will wish to refer to an entire attribute on some occasions, and to only a component of the attribute on other occasions. Suppose we were to to add an address to the _student_ entity-set. The address can be defined as the composite attribute _address_ with the attributes _street_, _city_, _state_, and _zip code_.3 Composite attributes help us to group together related attributes, making the modeling cleaner.
 
-Note also that a composite attribute may appear as a hierarchy. In the com- posite attribute address, its component attribute street can be further divided into _street number_, _street name_, and _apartment number_. Figure 7.4 depicts these examples of composite attributes for the instructor entity set.
+Note also that a composite attribute may appear as a hierarchy. In the com- posite attribute _address_, its component attribute _street_ can be further divided into _street number_, _street name_, and _apartment number_. Figure 7.4 depicts these examples of composite attributes for the _instructor_ entity set.
 
-• **Single-valued** and **multivalued** attributes. The attributes in our examples all have a single value for a particular entity. For instance, the _student ID_ attribute for a specific student entity refers to only one student ID. Such attributes are said to be **single valued**. There may be instances where an attribute has a set of values for a specific entity. Suppose we add to the instructor entity set
+• **Single-valued** and **multivalued** attributes. The attributes in our examples all have a single value for a particular entity. For instance, the _student ID_ attribute for a specific student entity refers to only one student _ID_. Such attributes are said to be **single valued**. There may be instances where an attribute has a set of values for a specific entity. Suppose we add to the _instructor_ entity set
 
 3We assume the address format used in the United States, which includes a numeric postal code called a zip code.  
 
@@ -355,27 +355,27 @@ Note also that a composite attribute may appear as a hierarchy. In the com- posi
 
 _name address_
 
-_first\_name middle\_initial last\_name street city state postal\code
+_first\_name middle\_initial last\_name street city state postal\_code_
 
-_street\_number street\_name apartment\number
+_street\_number street\_name apartment\_number_
 
 composite attributes
 
 component attributes
 
-**Figure 7.4** Composite attributes instructor name and address.
+**Figure 7.4** Composite attributes instructor _name_ and _address_.
 
-a _phone number_ attribute. An instructor may have zero, one, or several phone numbers, and different instructors may have different numbers of phones. This type of attribute is said to be **multivalued**. As another example, we could add to the instructor entity set an attribute _dependent name_ listing all the dependents. This attribute would be multivalued, since any particular instructor may have zero, one, or more dependents. To denote that an attribute is multivalued, we enclose it in braces, for example {_phone number_} or {_dependent name_}.
+a _phone number_ attribute. An _instructor_ may have zero, one, or several phone numbers, and different instructors may have different numbers of phones. This type of attribute is said to be **multivalued**. As another example, we could add to the _instructor_ entity set an attribute _dependent name_ listing all the dependents. This attribute would be multivalued, since any particular instructor may have zero, one, or more dependents. To denote that an attribute is multivalued, we enclose it in braces, for example {_phone number_} or {_dependent name_}.
 
-Where appropriate, upper and lower bounds may be placed on the number of values in a multivalued attribute. For example, a university may limit the number of phone numbers recorded for a single instructor to two. Placing bounds in this case expresses that the _phone number_ attribute of the instructor entity set may have between zero and two values.
+Where appropriate, upper and lower bounds may be placed on the number of values in a multivalued attribute. For example, a university may limit the number of phone numbers recorded for a single instructor to two. Placing bounds in this case expresses that the _phone number_ attribute of the _instructor_ entity set may have between zero and two values.
 
-• **Derived** attribute. The value for this type of attribute can be derived from the values of other related attributes or entities. For instance, let us say that the instructor entity set has an attribute _students advised_, which represents how many students an instructor advises. We can derive the value for this attribute by counting the number of student entities associated with that instructor.
+• **Derived** attribute. The value for this type of attribute can be derived from the values of other related attributes or entities. For instance, let us say that the _instructor_ entity set has an attribute _students advised_, which represents how many students an instructor advises. We can derive the value for this attribute by counting the number of _student_ entities associated with that instructor.
 
-As another example, suppose that the instructor entity set has an attribute age that indicates the instructor’s age. If the instructor entity set also has an attribute _date of birth_, we can calculate age from _date of birth_ and the current date. Thus, age is a derived attribute. In this case, _date of birth_ may be referred to as a base attribute, or a stored attribute. The value of a derived attribute is not stored but is computed when required.
+As another example, suppose that the _instructor_ entity set has an attribute _age_ that indicates the instructor’s age. If the _instructor_ entity set also has an attribute _date of birth_, we can calculate _age_ from _date of birth_ and the current date. Thus, _age_ is a derived attribute. In this case, _date of birth_ may be referred to as a _base_ attribute, or a _stored_ attribute. The value of a derived attribute is not stored but is computed when required.
 
-An attribute takes a **null** value when an entity does not have a value for it. The null value may indicate “not applicable”—that is, that the value does not exist for the entity. For example, one may have no middle name. Null can also designate that an attribute value is unknown. An unknown value may be either missing (the value does exist, but we do not have that information) or _not known_ (we do not know whether or not the value actually exists).
+An attribute takes a **null** value when an entity does not have a value for it. The _null_ value may indicate “not applicable”—that is, that the value does not exist for the entity. For example, one may have no middle name. _Null_ can also designate that an attribute value is unknown. An unknown value may be either _missing_ (the value does exist, but we do not have that information) or _not known_ (we do not know whether or not the value actually exists).
 
-For instance, if the name value for a particular instructor is null, we assume that the value is missing, since every instructor must have a name. A null value for the _apartment number_ attribute could mean that the address does not include  
+For instance, if the _name_ value for a particular instructor is _null_, we assume that the value is missing, since every instructor must have a name. A null value for the _apartment number_ attribute could mean that the address does not include  
 
 **7.3 Constraints 269**
 
@@ -391,11 +391,11 @@ An E-R enterprise schema may define certain constraints to which the contents of
 
 Mapping cardinalities are most useful in describing binary relationship sets, although they can contribute to the description of relationship sets that involve more than two entity sets. In this section, we shall concentrate on only binary relationship sets.
 
-For a binary relationship set R between entity sets A and B, the mapping cardinality must be one of the following:
+For a binary relationship set _R_ between entity sets _A_ and _B_, the mapping cardinality must be one of the following:
 
-• **One-to-one**. An entity in A is associated with _at most_ one entity in B, and an entity in B is associated with _at most_ one entity in A. (See Figure 7.5a.)
+• **One-to-one**. An entity in _A_ is associated with _at most_ one entity in _B_, and an entity in _B_ is associated with _at most_ one entity in _A_. (See Figure 7.5a.)
 
-• **One-to-many**. An entity in A is associated with any number (zero or more) of entities in B. An entity in B, however, can be associated with _at most_ one entity in A. (See Figure 7.5b.)
+• **One-to-many**. An entity in _A_ is associated with any number (zero or more) of entities in _B_. An entity in _B_, however, can be associated with _at most_ one entity in _A_. (See Figure 7.5b.)
 
 (b)(a)
 
@@ -475,19 +475,19 @@ _b4_
 
 **Figure 7.6** Mapping cardinalities. (a) Many-to-one. (b) Many-to-many.
 
-• **Many-to-one**. An entity in A is associated with _at most_ one entity in B. An entity in B, however, can be associated with any number (zero or more) of entities in A. (See Figure 7.6a.)
+• **Many-to-one**. An entity in _A_ is associated with _at most_ one entity in _B_. An entity in _B_, however, can be associated with any number (zero or more) of entities in _A_. (See Figure 7.6a.)
 
-• **Many-to-many**. An entity in A is associated with any number (zero or more) of entities in B, and an entity in B is associated with any number (zero or more) of entities in A. (See Figure 7.6b.)
+• **Many-to-many**. An entity in _A_ is associated with any number (zero or more) of entities in _B_, and an entity in _B_ is associated with any number (zero or more) of entities in _A_. (See Figure 7.6b.)
 
 The appropriate mapping cardinality for a particular relationship set obviously depends on the real-world situation that the relationship set is modeling.
 
-As an illustration, consider the advisor relationship set. If, in a particular university, a student can be advised by only one instructor, and an instructor can advise several students, then the relationship set from instructor to student is one-to-many. If a student can be advised by several instructors (as in the case of students advised jointly), the relationship set is many-to-many.
+As an illustration, consider the _advisor_ relationship set. If, in a particular university, a student can be advised by only one instructor, and an instructor can advise several students, then the relationship set from _instructor_ to _student_ is one-to-many. If a student can be advised by several instructors (as in the case of students advised jointly), the relationship set is many-to-many.
 
 **7.3.2 Participation Constraints**
 
-The participation of an entity set E in a relationship set R is said to be **total** if every entity in E participates in at least one relationship in R. If only some entities in E participate in relationships in R, the participation of entity set E in relationship R is said to be **partial**. In Figure 7.5a, the participation of B in the relationship set is total while the participation of A in the relationship set is partial. In Figure 7.5b, the participation of both A and B in the relationship set are total.
+The participation of an entity set _E_ in a relationship set _R_ is said to be **total** if every entity in _E_ participates in at least one relationship in _R_. If only some entities in _E_ participate in relationships in _R_, the participation of entity set _E_ in relationship _R_ is said to be **partial**. In Figure 7.5a, the participation of _B_ in the relationship set is total while the participation of _A_ in the relationship set is partial. In Figure 7.5b, the participation of both _A_ and _B_ in the relationship set are total.
 
-For example, we expect every student entity to be related to at least one instructor through the advisor relationship. Therefore the participation of student in the relationship set advisor is total. In contrast, an instructor need not advise any students. Hence, it is possible that only some of the instructor entities are related to the student entity set through the advisor relationship, and the participation of instructor in the advisor relationship set is therefore partial.  
+For example, we expect every _student_ entity to be related to at least one instructor through the _advisor_ relationship. Therefore the participation of _student_ in the relationship set _advisor_ is total. In contrast, an _instructor_ need not advise any students. Hence, it is possible that only some of the _instructor_ entities are related to the _student_ entity set through the _advisor_ relationship, and the participation of _instructor_ in the _advisor_ relationship set is therefore partial.  
 
 **7.3 Constraints 271**
 
@@ -497,95 +497,95 @@ We must have a way to specify how entities within a given entity set are distin-
 
 Therefore, the values of the attribute values of an entity must be such that they can _uniquely identify_ the entity. In other words, no two entities in an entity set are allowed to have exactly the same value for all attributes.
 
-The notion of a key for a relation schema, as defined in Section 2.3, applies directly to entity sets. That is, a key for an entity is a set of attributes that suffice to distinguish entities from each other. The concepts of superkey, candidate key, and primary key are applicable to entity sets just as they are applicable to relation schemas.
+The notion of a _key_ for a relation schema, as defined in Section 2.3, applies directly to entity sets. That is, a key for an entity is a set of attributes that suffice to distinguish entities from each other. The concepts of superkey, candidate key, and primary key are applicable to entity sets just as they are applicable to relation schemas.
 
 Keys also help to identify relationships uniquely, and thus distinguish rela- tionships from each other. Below, we define the corresponding notions of keys for relationships.
 
 The primary key of an entity set allows us to distinguish among the various entities of the set. We need a similar mechanism to distinguish among the various relationships of a relationship set.
 
-Let R be a relationship set involving entity sets E1_, E_2_, . . . , En_. Let _primary- key_(Ei ) denote the set of attributes that forms the primary key for entity set Ei . Assume for now that the attribute names of all primary keys are unique. The composition of the primary key for a relationship set depends on the set of attributes associated with the relationship set R.
+Let _R_ be a relationship set involving entity sets _E_1_, E_2_, . . . , En_. Let _primary- key_(_Ei_ ) denote the set of attributes that forms the primary key for entity set _Ei_ . Assume for now that the attribute names of all primary keys are unique. The composition of the primary key for a relationship set depends on the set of attributes associated with the relationship set _R_.
 
-If the relationship set R has no attributes associated with it, then the set of attributes
+If the relationship set _R_ has no attributes associated with it, then the set of attributes
 
-_primary-key_(E1) ∪ _primary-key_(E2) ∪ · · · ∪ _primary-key_(En)
+_primary-key_(_E_1) ∪ _primary-key_(_E_2) ∪ · · · ∪ _primary-key_(_En_)
 
-describes an individual relationship in set R. If the relationship set R has attributes a1_, a_2_, . . . , am_ associated with it, then
+describes an individual relationship in set _R_. If the relationship set _R_ has attributes _a_1_, a_2_, . . . , am_ associated with it, then
 
 the set of attributes
 
-_primary-key_(E1) ∪ _primary-key_(E2) ∪ · · · ∪ _primary-key_(En) ∪ {a1_, a_2_, . . . , am_}
+_primary-key_(_E_1) ∪ _primary-key_(_E_2) ∪ · · · ∪ _primary-key_(_En_) ∪ {_a_1_, a_2_, . . . , am_}
 
-describes an individual relationship in set R. In both of the above cases, the set of attributes
+describes an individual relationship in set _R_. In both of the above cases, the set of attributes
 
-_primary-key_(E1) ∪ _primary-key_(E2) ∪ · · · ∪ _primary-key_(En)
+_primary-key_(_E_1) ∪ _primary-key_(_E_2) ∪ · · · ∪ _primary-key_(_En_)
 
 forms a superkey for the relationship set. If the attribute names of primary keys are not unique across entity sets, the
 
-attributes are renamed to distinguish them; the name of the entity set combined with the name of the attribute would form a unique name. If an entity set par- ticipates more than once in a relationship set (as in the prereq relationship in  
+attributes are renamed to distinguish them; the name of the entity set combined with the name of the attribute would form a unique name. If an entity set par- ticipates more than once in a relationship set (as in the _prereq_ relationship in  
 
 **272 Chapter 7 Database Design and the E-R Model**
 
 Section 7.2.2), the role name is used instead of the name of the entity set, to form a unique attribute name.
 
-The structure of the primary key for the relationship set depends on the mapping cardinality of the relationship set. As an illustration, consider the entity sets instructor and student, and the relationship set advisor, with attribute date, in Section 7.2.2. Suppose that the relationship set is many-to-many. Then the primary key of advisor consists of the union of the primary keys of instructor and student. If the relationship is many-to-one from student to instructor—that is, each student can have have at most one advisor—then the primary key of advisor is simply the primary key of student. However, if an instructor can advise only one student— that is, if the advisor relationship is many-to-one from instructor to student—then the primary key of advisor is simply the primary key of instructor. For one-to-one relationships either candidate key can be used as the primary key.
+The structure of the primary key for the relationship set depends on the mapping cardinality of the relationship set. As an illustration, consider the entity sets _instructor_ and _student_, and the relationship set _advisor_, with attribute _date_, in Section 7.2.2. Suppose that the relationship set is many-to-many. Then the primary key of _advisor_ consists of the union of the primary keys of _instructor_ and _student_. If the relationship is many-to-one from _student_ to _instructor_—that is, each student can have have at most one advisor—then the primary key of _advisor_ is simply the primary key of _student_. However, if an instructor can advise only one student— that is, if the _advisor_ relationship is many-to-one from _instructor_ to _student_—then the primary key of _advisor_ is simply the primary key of _instructor_. For one-to-one relationships either candidate key can be used as the primary key.
 
 For nonbinary relationships, if no cardinality constraints are present then the superkey formed as described earlier in this section is the only candidate key, and it is chosen as the primary key. The choice of the primary key is more complicated if cardinality constraints are present. Since we have not discussed how to specify cardinality constraints on nonbinary relations, we do not discuss this issue further in this chapter. We consider the issue in more detail later, in Sections 7.5.5 and 8.4.
 
 **7.4 Removing Redundant Attributes in Entity Sets**
 
-When we design a database using the E-R model, we usually start by identifying those entity sets that should be included. For example, in the university organiza- tion we have discussed thus far, we decided to include such entity sets as student, instructor, etc. Once the entity sets are decided upon, we must choose the appro- priate attributes. These attributes are supposed to represent the various values we want to capture in the database. In the university organization, we decided that for the instructor entity set, we will include the attributes ID, name, _dept name_, and salary. We could have added the attributes: _phone number_, _office number_, _home page_, etc. The choice of what attributes to include is up to the designer, who has
+When we design a database using the E-R model, we usually start by identifying those entity sets that should be included. For example, in the university organiza- tion we have discussed thus far, we decided to include such entity sets as _student_, _instructor_, etc. Once the entity sets are decided upon, we must choose the appro- priate attributes. These attributes are supposed to represent the various values we want to capture in the database. In the university organization, we decided that for the _instructor_ entity set, we will include the attributes _ID_, _name_, _dept name_, and _salary_. We could have added the attributes: _phone number_, _office number_, _home page_, etc. The choice of what attributes to include is up to the designer, who has
 
 a good understanding of the structure of the enterprise. Once the entities and their corresponding attributes are chosen, the relation-
 
-ship sets among the various entities are formed. These relationship sets may result in a situation where attributes in the various entity sets are redundant and need to be removed from the original entity sets. To illustrate, consider the entity sets instructor and department:
+ship sets among the various entities are formed. These relationship sets may result in a situation where attributes in the various entity sets are redundant and need to be removed from the original entity sets. To illustrate, consider the entity sets _instructor_ and _department_:
 
-• The entity set instructor includes the attributes ID, name, _dept name_, and salary, with ID forming the primary key.
+• The entity set _instructor_ includes the attributes _ID_, _name_, _dept name_, and _salary_, with _ID_ forming the primary key.
 
-• The entity set department includes the attributes _dept name_, building, and _bud- get_, with _dept name_ forming the primary key.
+• The entity set _department_ includes the attributes _dept name_, _building_, and _bud- get_, with _dept name_ forming the primary key.
 
-We model the fact that each instructor has an associated department using a relationship set _inst dept_ relating instructor and department.  
+We model the fact that each instructor has an associated department using a relationship set _inst dept_ relating _instructor_ and _department_.  
 
 **7.4 Removing Redundant Attributes in Entity Sets 273**
 
-The attribute _dept name_ appears in both entity sets. Since it is the primary key for the entity set department, it is redundant in the entity set instructor and needs to be removed.
+The attribute _dept name_ appears in both entity sets. Since it is the primary key for the entity set _department_, it is redundant in the entity set _instructor_ and needs to be removed.
 
-Removing the attribute _dept name_ from the instructor entity set may appear rather unintuitive, since the relation instructor that we used in the earlier chap- ters had an attribute _dept name_. As we shall see later, when we create a relational schema from the E-R diagram, the attribute _dept name_ in fact gets added to the relation instructor, but only if each instructor has at most one associated depart- ment. If an instructor has more than one associated department, the relationship between instructors and departments is recorded in a separate relation _inst dept_.
+Removing the attribute _dept name_ from the _instructor_ entity set may appear rather unintuitive, since the relation _instructor_ that we used in the earlier chap- ters had an attribute _dept name_. As we shall see later, when we create a relational schema from the E-R diagram, the attribute _dept name_ in fact gets added to the relation _instructor_, but only if each instructor has at most one associated depart- ment. If an instructor has more than one associated department, the relationship between instructors and departments is recorded in a separate relation _inst dept_.
 
-Treating the connection between instructors and departments uniformly as a relationship, rather than as an attribute of instructor, makes the logical relationship explicit, and helps avoid a premature assumption that each instructor is associated with only one department.
+Treating the connection between instructors and departments uniformly as a relationship, rather than as an attribute of _instructor_, makes the logical relationship explicit, and helps avoid a premature assumption that each instructor is associated with only one department.
 
-Similarly, the student entity set is related to the department entity set through the relationship set _student dept_ and thus there is no need for a _dept name_ attribute in student.
+Similarly, the _student_ entity set is related to the _department_ entity set through the relationship set _student dept_ and thus there is no need for a _dept name_ attribute in _student_.
 
-As another example, consider course offerings (sections) along with the time slots of the offerings. Each time slot is identified by a _time slot id_, and has associated with it a set of weekly meetings, each identified by a day of the week, start time, and end time. We decide to model the set of weekly meeting times as a multivalued composite attribute. Suppose we model entity sets section and _time slot_ as follows:
+As another example, consider course offerings (sections) along with the time slots of the offerings. Each time slot is identified by a _time slot id_, and has associated with it a set of weekly meetings, each identified by a day of the week, start time, and end time. We decide to model the set of weekly meeting times as a multivalued composite attribute. Suppose we model entity sets _section_ and _time slot_ as follows:
 
-• The entity set section includes the attributes _course id_, _sec id_, semester, year, building, _room number_, and _time slot id_, with (_course id_, _sec id_, year, semester) forming the primary key.
+• The entity set _section_ includes the attributes _course id_, _sec id_, _semester_, _year_, _building_, _room number_, and _time slot id_, with (_course id_, _sec id_, _year_, _semester_) forming the primary key.
 
 • The entity set _time slot_ includes the attributes _time slot id_, which is the primary key,4 and a multivalued composite attribute {(_day, start time, end time_)}.5
 
 These entities are related through the relationship set _sec time slot_. The attribute _time slot id_ appears in both entity sets. Since it is the primary
 
-key for the entity set _time slot_, it is redundant in the entity set section and needs to be removed.
+key for the entity set _time slot_, it is redundant in the entity set _section_ and needs to be removed.
 
-As a final example, suppose we have an entity set classroom, with attributes building, _room number_, and capacity, with building and _room number_ forming the primary key. Suppose also that we have a relationship set _sec class_ that relates section to classroom. Then the attributes _{building_, _room number}_ are redundant in the entity set section.
+As a final example, suppose we have an entity set _classroom_, with attributes _building_, _room number_, and _capacity_, with _building_ and _room number_ forming the primary key. Suppose also that we have a relationship set _sec class_ that relates _section_ to _classroom_. Then the attributes _{building_, _room number}_ are redundant in the entity set _section_.
 
 A good entity-relationship design does not contain redundant attributes. For our university example, we list the entity sets and their attributes below, with primary keys underlined:
 
-4We shall see later on that the primary key for the relation created from the entity set _time slot_ includes day and _start time_; however, day and _start time_ do not form part of the primary key of the entity set _time slot_. 5We could optionally give a name, such as meeting, for the composite attribute containing day, _start time_, and _end time_.  
+4We shall see later on that the primary key for the relation created from the entity set _time slot_ includes _day_ and _start time_; however, _day_ and _start time_ do not form part of the primary key of the entity set _time slot_. 5We could optionally give a name, such as _meeting_, for the composite attribute containing _day_, _start time_, and _end time_.  
 
 **274 Chapter 7 Database Design and the E-R Model**
 
-• **classroom**: with attributes (building, _room number_, capacity).
+• **classroom**: with attributes (_building_, _room number_, _capacity_).
 
-• **department**: with attributes (_dept name_, building, budget).
+• **department**: with attributes (_dept name_, _building_, _budget_).
 
-• **course**: with attributes (_course id_, title, credits).
+• **course**: with attributes (_course id_, _title_, _credits_).
 
-• **instructor**: with attributes (ID, name, salary).
+• **instructor**: with attributes (_ID_, _name_, _salary_).
 
-• **section:** with attributes (_course id_, _sec id_, semester, year).
+• **section:** with attributes (_course id_, _sec id_, _semester_, _year_).
 
-• **student**: with attributes (ID, name, _tot cred_).
+• **student**: with attributes (_ID_, _name_, _tot cred_).
 
-• **time slot**: with attributes (_time slot id_, {(day, _start time_, _end time_) }).
+• **time slot**: with attributes (_time slot id_, {(_day_, _start time_, _end time_) }).
 
 The relationship sets in our design are listed below:
 
@@ -595,7 +595,7 @@ The relationship sets in our design are listed below:
 
 • **teaches**: relating instructors with sections.
 
-• **takes**: relating students with sections, with a descriptive attribute grade.
+• **takes**: relating students with sections, with a descriptive attribute _grade_.
 
 • **course dept**: relating courses with departments.
 
@@ -621,15 +621,15 @@ An E-R diagram consists of the following major components:
 
 **7.5 Entity-Relationship Diagrams 275**
 
-instructor
+_instructor_
 
 _ID name salary_
 
-student
+_student_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
-advisor
+_advisor_
 
 **Figure 7.7** E-R diagram corresponding to instructors and students.
 
@@ -647,19 +647,19 @@ advisor
 
 • **Double diamonds** represent identifying relationship sets linked to weak entity sets (we discuss identifying relationship sets and weak entity sets later, in Section 7.5.6).
 
-Consider the E-R diagram in Figure 7.7, which consists of two entity sets, _in- structor_ and student related through a binary relationship set advisor. The attributes associated with instructor are ID, name, and salary. The attributes associated with student are ID, name, and _tot cred_. In Figure 7.7, attributes of an entity set that are members of the primary key are underlined.
+Consider the E-R diagram in Figure 7.7, which consists of two entity sets, _in- structor_ and _student_ related through a binary relationship set _advisor_. The attributes associated with _instructor_ are _ID_, _name_, and _salary_. The attributes associated with _student_ are _ID_, _name_, and _tot cred_. In Figure 7.7, attributes of an entity set that are members of the primary key are underlined.
 
-If a relationship set has some attributes associated with it, then we enclose the attributes in a rectangle and link the rectangle with a dashed line to the diamond representing that relationship set. For example, in Figure 7.8, we have the date descriptive attribute attached to the relationship set advisor to specify the date on which an instructor became the advisor.
+If a relationship set has some attributes associated with it, then we enclose the attributes in a rectangle and link the rectangle with a dashed line to the diamond representing that relationship set. For example, in Figure 7.8, we have the _date_ descriptive attribute attached to the relationship set _advisor_ to specify the date on which an instructor became the advisor.
 
 _ID name salary_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
-date
+_date_
 
 _instructor student_
 
-advisor
+_advisor_
 
 **Figure 7.8** E-R diagram with an attribute attached to a relationship set.  
 
@@ -671,11 +671,11 @@ _instructor ID name salary_
 
 _instructor ID name salary_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
-_student ID name tot\cred
+_student ID name tot\_cred_
 
-_student ID name tot\cred
+_student ID name tot\_cred_
 
 (a)
 
@@ -683,55 +683,55 @@ _student ID name tot\cred
 
 (c)
 
-advisor
+_advisor_
 
-advisor
+_advisor_
 
-advisor
+_advisor_
 
 **Figure 7.9** Relationships. (a) One-to-one. (b) One-to-many. (c) Many-to-many.
 
 **7.5.2 Mapping Cardinality**
 
-The relationship set advisor, between the instructor and student entity sets may be one-to-one, one-to-many, many-to-one, or many-to-many. To distinguish among these types, we draw either a directed line (→) or an undirected line (—) between the relationship set and the entity set in question, as follows:
+The relationship set _advisor_, between the _instructor_ and _student_ entity sets may be one-to-one, one-to-many, many-to-one, or many-to-many. To distinguish among these types, we draw either a directed line (→) or an undirected line (—) between the relationship set and the entity set in question, as follows:
 
-• **One-to-one:** We draw a directed line from the relationship set advisor to both entity sets instructor and student (see Figure 7.9a). This indicates that an instructor may advise at most one student, and a student may have at most one advisor.
+• **One-to-one:** We draw a directed line from the relationship set _advisor_ to both entity sets _instructor_ and _student_ (see Figure 7.9a). This indicates that an instructor may advise at most one student, and a student may have at most one advisor.
 
-• **One-to-many:** We draw a directed line from the relationship set advisor to the entity set instructor and an undirected line to the entity set student (see Figure 7.9b). This indicates that an instructor may advise many students, but a student may have at most one advisor.
+• **One-to-many:** We draw a directed line from the relationship set _advisor_ to the entity set _instructor_ and an undirected line to the entity set _student_ (see Figure 7.9b). This indicates that an instructor may advise many students, but a student may have at most one advisor.
 
-• **Many-to-one:** We draw an undirected line from the relationship set advisor to the entity set instructor and a directed line to the entity set student. This indicates that an instructor may advise at most one student, but a student may have many advisors.
+• **Many-to-one:** We draw an undirected line from the relationship set _advisor_ to the entity set _instructor_ and a directed line to the entity set _student_. This indicates that an instructor may advise at most one student, but a student may have many advisors.
 
-• **Many-to-many:** We draw an undirected line from the relationship set advisor to both entity sets instructor and student (see Figure 7.9c). This indicates that  
+• **Many-to-many:** We draw an undirected line from the relationship set _advisor_ to both entity sets _instructor_ and _student_ (see Figure 7.9c). This indicates that  
 
 **7.5 Entity-Relationship Diagrams 277**
 
 an instructor may advise many students, and a student may have many advisors.
 
-E-R diagrams also provide a way to indicate more complex constraints on the number of times each entity participates in relationships in a relationship set. A line may have an associated minimum and maximum cardinality, shown in the form _l..h_, where l is the minimum and h the maximum cardinality. A minimum value of 1 indicates total participation of the entity set in the relationship set; that is, each entity in the entity set occurs in at least one relationship in that relationship set. A maximum value of 1 indicates that the entity participates in at most one relationship, while a maximum value ∗ indicates no limit.
+E-R diagrams also provide a way to indicate more complex constraints on the number of times each entity participates in relationships in a relationship set. A line may have an associated minimum and maximum cardinality, shown in the form _l..h_, where _l_ is the minimum and _h_ the maximum cardinality. A minimum value of 1 indicates total participation of the entity set in the relationship set; that is, each entity in the entity set occurs in at least one relationship in that relationship set. A maximum value of 1 indicates that the entity participates in at most one relationship, while a maximum value ∗ indicates no limit.
 
-For example, consider Figure 7.10. The line between advisor and student has a cardinality constraint of 1_.._1, meaning the minimum and the maximum cardinal- ity are both 1. That is, each student must have exactly one advisor. The limit 0_.._∗ on the line between advisor and instructor indicates that an instructor can have zero or more students. Thus, the relationship advisor is one-to-many from _instruc- tor_ to student, and further the participation of student in advisor is total, implying that a student must have an advisor.
+For example, consider Figure 7.10. The line between _advisor_ and _student_ has a cardinality constraint of 1_.._1, meaning the minimum and the maximum cardinal- ity are both 1. That is, each student must have exactly one advisor. The limit 0_.._∗ on the line between _advisor_ and _instructor_ indicates that an instructor can have zero or more students. Thus, the relationship _advisor_ is one-to-many from _instruc- tor_ to _student_, and further the participation of _student_ in _advisor_ is total, implying that a student must have an advisor.
 
-It is easy to misinterpret the 0_.._∗ on the left edge and think that the relationship advisor is many-to-one from instructor to student—this is exactly the reverse of the correct interpretation.
+It is easy to misinterpret the 0_.._∗ on the left edge and think that the relationship _advisor_ is many-to-one from _instructor_ to _student_—this is exactly the reverse of the correct interpretation.
 
 If both edges have a maximum value of 1, the relationship is one-to-one. If we had specified a cardinality limit of 1_.._∗ on the left edge, we would be saying that each instructor must advise at least one student.
 
-The E-R diagram in Figure 7.10 could alternatively have been drawn with a double line from student to advisor, and an arrow on the line from advisor to instructor, in place of the cardinality constraints shown. This alternative diagram would enforce exactly the same constraints as the constraints shown in the figure.
+The E-R diagram in Figure 7.10 could alternatively have been drawn with a double line from _student_ to _advisor_, and an arrow on the line from _advisor_ to _instructor_, in place of the cardinality constraints shown. This alternative diagram would enforce exactly the same constraints as the constraints shown in the figure.
 
 **7.5.3 Complex Attributes**
 
-Figure 7.11 shows how composite attributes can be represented in the E-R notation. Here, a composite attribute name, with component attributes _first name_, _middle initial_, and _last name_ replaces the simple attribute name of instructor. As another
+Figure 7.11 shows how composite attributes can be represented in the E-R notation. Here, a composite attribute _name_, with component attributes _first name_, _middle initial_, and _last name_ replaces the simple attribute _name_ of _instructor_. As another
 
-example, suppose we were to add an address to the instructor entity-set. The address can be defined as the composite attribute address with the attributes
+example, suppose we were to add an address to the _instructor_ entity-set. The address can be defined as the composite attribute _address_ with the attributes
 
-instructor
+_instructor_
 
 _ID name salary_
 
-student
+_student_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
-_advisor 1..10..*_
+_advisor 1..10..\*_
 
 **Figure 7.10** Cardinality limits on relationship sets.  
 
@@ -739,11 +739,11 @@ _advisor 1..10..*_
 
 _instructor ID name_
 
-_first\_name middle\_initial last\name
+_first\_name middle\_initial last\_name_
 
 _address street_
 
-_street\_number street\_name apt\number
+_street\_number street\_name apt\_number_
 
 _city state zip_
 
@@ -751,21 +751,21 @@ _{ phone\_number } date\_of\_birth age ( )_
 
 **Figure 7.11** E-R diagram with composite, multivalued, and derived attributes.
 
-street, city, state, and _zip code_. The attribute street is itself a composite attribute whose component attributes are _street number_, _street name_, and _apartment number_.
+_street_, _city_, _state_, and _zip code_. The attribute _street_ is itself a composite attribute whose component attributes are _street number_, _street name_, and _apartment number_.
 
-Figure 7.11 also illustrates a multivalued attribute _phone number_, denoted by “_{phone number}_”, and a derived attribute age, depicted by a “age ( )”.
+Figure 7.11 also illustrates a multivalued attribute _phone number_, denoted by “_{phone number}_”, and a derived attribute _age_, depicted by a “_age_ ( )”.
 
 **7.5.4 Roles**
 
-We indicate roles in E-R diagrams by labeling the lines that connect diamonds to rectangles. Figure 7.12 shows the role indicators _course id_ and _prereq id_ between the course entity set and the prereq relationship set.
+We indicate roles in E-R diagrams by labeling the lines that connect diamonds to rectangles. Figure 7.12 shows the role indicators _course id_ and _prereq id_ between the _course_ entity set and the _prereq_ relationship set.
 
 **7.5.5 Nonbinary Relationship Sets**
 
-Nonbinary relationship sets can be specified easily in an E-R diagram. Figure 7.13 consists of the three entity sets instructor, student, and project, related through the relationship set _proj guide_.
+Nonbinary relationship sets can be specified easily in an E-R diagram. Figure 7.13 consists of the three entity sets _instructor_, _student_, and _project_, related through the relationship set _proj guide_.
 
 _course course\_id title credits_
 
-_course\id
+_course\_id_
 
 _prereq\_id prereq_
 
@@ -773,41 +773,41 @@ _prereq\_id prereq_
 
 **7.5 Entity-Relationship Diagrams 279**
 
-instructor
+_instructor_
 
 _ID name salary_
 
-student
+_student_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
 _. . . project_
 
-_proj\guide
+_proj\_guide_
 
 **Figure 7.13** E-R diagram with a ternary relationship.
 
-We can specify some types of many-to-one relationships in the case of non- binary relationship sets. Suppose a student can have at most one instructor as a guide on a project. This constraint can be specified by an arrow pointing to instructor on the edge from _proj guide_.
+We can specify some types of many-to-one relationships in the case of non- binary relationship sets. Suppose a _student_ can have at most one instructor as a guide on a project. This constraint can be specified by an arrow pointing to _instructor_ on the edge from _proj guide_.
 
-We permit at most one arrow out of a relationship set, since an E-R diagram with two or more arrows out of a nonbinary relationship set can be interpreted in two ways. Suppose there is a relationship set R between entity sets A1_, A_2_, . . . , An_, and the only arrows are on the edges to entity sets Ai+1_, Ai_+2_, . . . , An_. Then, the two possible interpretations are:
+We permit at most one arrow out of a relationship set, since an E-R diagram with two or more arrows out of a nonbinary relationship set can be interpreted in two ways. Suppose there is a relationship set _R_ between entity sets _A_1_, A_2_, . . . , An_, and the only arrows are on the edges to entity sets _Ai_+1_, Ai_+2_, . . . , An_. Then, the two possible interpretations are:
 
-**1.** A particular combination of entities from A1_, A_2_, . . . , Ai_ can be associated with at most one combination of entities from Ai+1_, Ai_+2_, . . . , An_. Thus, the primary key for the relationship R can be constructed by the union of the primary keys of A1_, A_2_, . . . , Ai_ .
+**1\.** A particular combination of entities from _A_1_, A_2_, . . . , Ai_ can be associated with at most one combination of entities from _Ai_+1_, Ai_+2_, . . . , An_. Thus, the primary key for the relationship _R_ can be constructed by the union of the primary keys of _A_1_, A_2_, . . . , Ai_ .
 
-**2.** For each entity set Ak , _i < k_ ≤ n, each combination of the entities from the other entity sets can be associated with at most one entity from Ak . Each set {A1_, A_2_, . . . , Ak_−1_, Ak_+1_, . . . , An_}, for _i < k_ ≤ n, then forms a candidate key.
+**2\.** For each entity set _Ak_ , _i < k_ ≤ _n_, each combination of the entities from the other entity sets can be associated with at most one entity from _Ak_ . Each set {_A_1_, A_2_, . . . , Ak_−1_, Ak_+1_, . . . , An_}, for _i < k_ ≤ _n_, then forms a candidate key.
 
 Each of these interpretations has been used in different books and systems. To avoid confusion, we permit only one arrow out of a relationship set, in which case the two interpretations are equivalent. In Chapter 8 (Section 8.4), we study _functional dependencies_, which allow either of these interpretations to be specified in an unambiguous manner.
 
 **7.5.6 Weak Entity Sets**
 
-Consider a section entity, which is uniquely identified by a course identifier, semester, year, and section identifier. Clearly, section entities are related to course entities. Suppose we create a relationship set _sec course_ between entity sets section and course.
+Consider a _section_ entity, which is uniquely identified by a course identifier, semester, year, and section identifier. Clearly, section entities are related to course entities. Suppose we create a relationship set _sec course_ between entity sets _section_ and _course_.
 
-Now, observe that the information in _sec course_ is redundant, since section already has an attribute _course id_, which identifies the course with which the section is related. One option to deal with this redundancy is to get rid of the  
+Now, observe that the information in _sec course_ is redundant, since _section_ already has an attribute _course id_, which identifies the course with which the section is related. One option to deal with this redundancy is to get rid of the  
 
 **280 Chapter 7 Database Design and the E-R Model**
 
-relationship _sec course_; however, by doing so the relationship between section and course becomes implicit in an attribute, which is not desirable.
+relationship _sec course_; however, by doing so the relationship between _section_ and _course_ becomes implicit in an attribute, which is not desirable.
 
-An alternative way to deal with this redundancy is to not store the attribute _course id_ in the section entity and to only store the remaining attributes _sec id_, year, and semester.6 However, the entity set section then does not have enough attributes to identify a particular section entity uniquely; although each section entity is distinct, sections for different courses may share the same _sec id_, year, and semester. To deal with this problem, we treat the relationship _sec course_ as a special relationship that provides extra information, in this case the _course id_, required to identify section entities uniquely.
+An alternative way to deal with this redundancy is to not store the attribute _course id_ in the _section_ entity and to only store the remaining attributes _sec id_, _year_, and _semester_.6 However, the entity set _section_ then does not have enough attributes to identify a particular _section_ entity uniquely; although each _section_ entity is distinct, sections for different courses may share the same _sec id_, _year_, and _semester_. To deal with this problem, we treat the relationship _sec course_ as a special relationship that provides extra information, in this case the _course id_, required to identify _section_ entities uniquely.
 
 The notion of _weak entity set_ formalizes the above intuition. An entity set that does not have sufficient attributes to form a primary key is termed a **weak entity set**. An entity set that has a primary key is termed a **strong entity set**.
 
@@ -815,17 +815,17 @@ For a weak entity set to be meaningful, it must be associated with another entit
 
 The identifying relationship is many-to-one from the weak entity set to the identifying entity set, and the participation of the weak entity set in the rela- tionship is total. The identifying relationship set should not have any descriptive attributes, since any such attributes can instead be associated with the weak entity set.
 
-In our example, the identifying entity set for section is course, and the relation- ship _sec course_, which associates section entities with their corresponding course entities, is the identifying relationship.
+In our example, the identifying entity set for _section_ is _course_, and the relation- ship _sec course_, which associates _section_ entities with their corresponding _course_ entities, is the identifying relationship.
 
-Although a weak entity set does not have a primary key, we nevertheless need a means of distinguishing among all those entities in the weak entity set that depend on one particular strong entity. The **discriminator** of a weak entity set is a set of attributes that allows this distinction to be made. For example, the discriminator of the weak entity set section consists of the attributes _sec id_, year, and semester, since, for each course, this set of attributes uniquely identifies one single section for that course. The discriminator of a weak entity set is also called the _partial key_ of the entity set.
+Although a weak entity set does not have a primary key, we nevertheless need a means of distinguishing among all those entities in the weak entity set that depend on one particular strong entity. The **discriminator** of a weak entity set is a set of attributes that allows this distinction to be made. For example, the discriminator of the weak entity set _section_ consists of the attributes _sec id_, _year_, and _semester_, since, for each course, this set of attributes uniquely identifies one single section for that course. The discriminator of a weak entity set is also called the _partial key_ of the entity set.
 
-The primary key of a weak entity set is formed by the primary key of the identifying entity set, plus the weak entity set’s discriminator. In the case of the entity set section, its primary key is _{course id_, _sec id_, year, _semester}_, where _course id_ is the primary key of the identifying entity set, namely course, and _{sec id_, year,
+The primary key of a weak entity set is formed by the primary key of the identifying entity set, plus the weak entity set’s discriminator. In the case of the entity set _section_, its primary key is _{course id_, _sec id_, _year_, _semester}_, where _course id_ is the primary key of the identifying entity set, namely _course_, and _{sec id_, _year_,
 
-_semester}_ distinguishes section entities for the same course. Note that we could have chosen to make _sec id_ globally unique across all
+_semester}_ distinguishes _section_ entities for the same course. Note that we could have chosen to make _sec id_ globally unique across all
 
-courses offered in the university, in which case the section entity set would have
+courses offered in the university, in which case the _section_ entity set would have
 
-6Note that the relational schema we eventually create from the entity set section does have the attribute _course id_, for reasons that will become clear later, even though we have dropped the attribute _course id_ from the entity set section.  
+6Note that the relational schema we eventually create from the entity set _section_ does have the attribute _course id_, for reasons that will become clear later, even though we have dropped the attribute _course id_ from the entity set _section_.  
 
 **7.5 Entity-Relationship Diagrams 281**
 
@@ -833,11 +833,11 @@ _course course\_id title credits_
 
 _section sec\_id semester year_
 
-_sec\course
+_sec\_course_
 
 **Figure 7.14** E-R diagram with a weak entity set.
 
-had a primary key. However, conceptually, a section is still dependent on a course for its existence, which is made explicit by making it a weak entity set.
+had a primary key. However, conceptually, a _section_ is still dependent on a _course_ for its existence, which is made explicit by making it a weak entity set.
 
 In E-R diagrams, a weak entity set is depicted via a rectangle, like a strong entity set, but there are two main differences:
 
@@ -845,59 +845,59 @@ In E-R diagrams, a weak entity set is depicted via a rectangle, like a strong en
 
 • The relationship set connecting the weak entity set to the identifying strong entity set is depicted by a double diamond.
 
-In Figure 7.14, the weak entity set section depends on the strong entity set course via the relationship set _sec course_.
+In Figure 7.14, the weak entity set _section_ depends on the strong entity set _course_ via the relationship set _sec course_.
 
-The figure also illustrates the use of double lines to indicate _total participation_; the participation of the (weak) entity set section in the relationship _sec course_ is total, meaning that every section must be related via _sec course_ to some course. Finally, the arrow from _sec course_ to course indicates that each section is related to a single course.
+The figure also illustrates the use of double lines to indicate _total participation_; the participation of the (weak) entity set _section_ in the relationship _sec course_ is total, meaning that every section must be related via _sec course_ to some course. Finally, the arrow from _sec course_ to _course_ indicates that each section is related to a single course.
 
-A weak entity set can participate in relationships other than the identifying relationship. For instance, the section entity could participate in a relationship with the _time slot_ entity set, identifying the time when a particular class section meets. A weak entity set may participate as owner in an identifying relationship with another weak entity set. It is also possible to have a weak entity set with more than one identifying entity set. A particular weak entity would then be identified by a combination of entities, one from each identifying entity set. The primary key of the weak entity set would consist of the union of the primary keys of the identifying entity sets, plus the discriminator of the weak entity set.
+A weak entity set can participate in relationships other than the identifying relationship. For instance, the _section_ entity could participate in a relationship with the _time slot_ entity set, identifying the time when a particular class section meets. A weak entity set may participate as owner in an identifying relationship with another weak entity set. It is also possible to have a weak entity set with more than one identifying entity set. A particular weak entity would then be identified by a combination of entities, one from each identifying entity set. The primary key of the weak entity set would consist of the union of the primary keys of the identifying entity sets, plus the discriminator of the weak entity set.
 
-In some cases, the database designer may choose to express a weak entity set as a multivalued composite attribute of the owner entity set. In our example, this alternative would require that the entity set course have a multivalued, composite attribute section. A weak entity set may be more appropriately modeled as an attribute if it participates in only the identifying relationship, and if it has few attributes. Conversely, a weak entity set representation more aptly models a situation where the set participates in relationships other than the identifying relationship, and where the weak entity set has several attributes. It is clear that section violates the requirements for being modeled as a multivalued composite attribute, and is modeled more aptly as a weak entity set.  
+In some cases, the database designer may choose to express a weak entity set as a multivalued composite attribute of the owner entity set. In our example, this alternative would require that the entity set _course_ have a multivalued, composite attribute _section_. A weak entity set may be more appropriately modeled as an attribute if it participates in only the identifying relationship, and if it has few attributes. Conversely, a weak entity set representation more aptly models a situation where the set participates in relationships other than the identifying relationship, and where the weak entity set has several attributes. It is clear that _section_ violates the requirements for being modeled as a multivalued composite attribute, and is modeled more aptly as a weak entity set.  
 
 **282 Chapter 7 Database Design and the E-R Model**
 
 **7.5.7 E-R diagram for the University Enterprise**
 
-In Figure 7.15, we show an E-R diagram that corresponds to the university enter- prise that we have been using thus far in the text. This E-R diagram is equivalent to the textual description of the university E-R model that we saw in Section 7.4, but with several additional constraints, and section now being a weak entity.
+In Figure 7.15, we show an E-R diagram that corresponds to the university enter- prise that we have been using thus far in the text. This E-R diagram is equivalent to the textual description of the university E-R model that we saw in Section 7.4, but with several additional constraints, and _section_ now being a weak entity.
 
-In our university database, we have a constraint that each instructor must have exactly one associated department. As a result, there is a double line in Figure 7.15 between instructor and _inst dept_, indicating total participation of instructor in _inst dept_; that is, each instructor must be associated with a department. Further, there
+In our university database, we have a constraint that each instructor must have exactly one associated department. As a result, there is a double line in Figure 7.15 between _instructor_ and _inst dept_, indicating total participation of _instructor_ in _inst dept_; that is, each instructor must be associated with a department. Further, there
 
-is an arrow from _inst dept_ to department, indicating that each instructor can have at most one associated department.
+is an arrow from _inst dept_ to _department_, indicating that each instructor can have at most one associated department.
 
-_time\slotcourse
+_time\_slotcourse_
 
 _student ID name salary_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
 _course\_id title credits_
 
-_time\_slot\id { day
+_time\_slot\_id_ { _day_
 
-_start\_time end\time
+_start\_time end\_time_
 
-} _course\_id prereq\id
+} _course\_id prereq\_id_
 
-advisor
+_advisor_
 
 _teaches takes_
 
-_sec\_course sec\_time\slot
+_sec\_course sec\_time\_slot_
 
-grade
+_grade_
 
-prereq
+_prereq_
 
-_inst\_dept stud\dept
+_inst\_dept stud\_dept_
 
-instructor
+_instructor_
 
 _department dept\_name building budget_
 
 _section sec\_id semester year_
 
-_course\dept
+_course\_dept_
 
-_sec\class
+_sec\_class_
 
 _classroom building room\_number capacity_
 
@@ -905,9 +905,9 @@ _classroom building room\_number capacity_
 
 **7.6 Reduction to Relational Schemas 283**
 
-Similarly, entity sets course and student have double lines to relationship sets _course dept_ and _stud dept_ respectively, as also entity set section to relationship set _sec time slot_. The first two relationships, in turn, have an arrow pointing to the other relationship, department, while the third relationship has an arrow pointing to _time slot_.
+Similarly, entity sets _course_ and _student_ have double lines to relationship sets _course dept_ and _stud dept_ respectively, as also entity set _section_ to relationship set _sec time slot_. The first two relationships, in turn, have an arrow pointing to the other relationship, _department_, while the third relationship has an arrow pointing to _time slot_.
 
-Further, Figure 7.15 shows that the relationship set takes has a descriptive attribute grade, and that each student has at most one advisor. The figure also shows that section is now a weak entity set, with attributes _sec id_, semester, and year forming the discriminator; _sec course_ is the identifying relationship set relating weak entity set section to the strong entity set course.
+Further, Figure 7.15 shows that the relationship set _takes_ has a descriptive attribute _grade_, and that each student has at most one advisor. The figure also shows that _section_ is now a weak entity set, with attributes _sec id_, _semester_, and _year_ forming the discriminator; _sec course_ is the identifying relationship set relating weak entity set _section_ to the strong entity set _course_.
 
 In Section 7.6, we shall show how this E-R diagram can be used to derive the various relation schemas we use.
 
@@ -921,57 +921,57 @@ In this section, we describe how an E-R schema can be represented by relation sc
 
 **7.6.1 Representation of Strong Entity Sets with Simple Attributes**
 
-Let E be a strong entity set with only simple descriptive attributes a1_, a_2_, . . . , an_. We represent this entity by a schema called E with n distinct attributes. Each tuple in a relation on this schema corresponds to one entity of the entity set E.
+Let _E_ be a strong entity set with only simple descriptive attributes _a_1_, a_2_, . . . , an_. We represent this entity by a schema called _E_ with _n_ distinct attributes. Each tuple in a relation on this schema corresponds to one entity of the entity set _E_.
 
 For schemas derived from strong entity sets, the primary key of the entity set serves as the primary key of the resulting schema. This follows directly from the fact that each tuple corresponds to a specific entity in the entity set.
 
-As an illustration, consider the entity set student of the E-R diagram in Fig- ure 7.15. This entity set has three attributes: ID, name, _tot cred_. We represent this entity set by a schema called student with three attributes:
+As an illustration, consider the entity set _student_ of the E-R diagram in Fig- ure 7.15. This entity set has three attributes: _ID_, _name_, _tot cred_. We represent this entity set by a schema called _student_ with three attributes:
 
-student (ID, name, _tot cred_)
+_student_ (_ID_, _name_, _tot cred_)
 
-Note that since student ID is the primary key of the entity set, it is also the primary key of the relation schema.
+Note that since student _ID_ is the primary key of the entity set, it is also the primary key of the relation schema.
 
 Continuing with our example, for the E-R diagram in Figure 7.15, all the strong entity sets, except _time slot_, have only simple attributes. The schemas derived from these strong entity sets are:  
 
 **284 Chapter 7 Database Design and the E-R Model**
 
-classroom (building, _room number_, capacity) department (_dept name_, building, budget) course (_course id_, title, credits) instructor (ID, name, salary) student (ID, name, _tot cred_)
+_classroom_ (_building_, _room number_, _capacity_) _department_ (_dept name_, _building_, _budget_) _course_ (_course id_, _title_, _credits_) _instructor_ (_ID_, _name_, _salary_) _student_ (_ID_, _name_, _tot cred_)
 
-As you can see, both the instructor and student schemas are different from the schemas we have used in the previous chapters (they do not contain the attribute _dept name_). We shall revisit this issue shortly.
+As you can see, both the _instructor_ and _student_ schemas are different from the schemas we have used in the previous chapters (they do not contain the attribute _dept name_). We shall revisit this issue shortly.
 
 **7.6.2 Representation of Strong Entity Sets with Complex Attributes**
 
-When a strong entity set has nonsimple attributes, things are a bit more complex. We handle composite attributes by creating a separate attribute for each of the component attributes; we do not create a separate attribute for the composite attribute itself. To illustrate, consider the version of the instructor entity set de- picted in Figure 7.11. For the composite attribute name, the schema generated for instructor contains the attributes _first name_, _middle name_, and _last name_; there is no separate attribute or schema for name. Similarly, for the composite attribute address, the schema generated contains the attributes street, city, state, and _zip code_. Since street is a composite attribute it is replaced by _street number_, _street name_, and _apt number_. We revisit this matter in Section 8.2.
+When a strong entity set has nonsimple attributes, things are a bit more complex. We handle composite attributes by creating a separate attribute for each of the component attributes; we do not create a separate attribute for the composite attribute itself. To illustrate, consider the version of the _instructor_ entity set de- picted in Figure 7.11. For the composite attribute _name_, the schema generated for _instructor_ contains the attributes _first name_, _middle name_, and _last name_; there is no separate attribute or schema for _name_. Similarly, for the composite attribute _address_, the schema generated contains the attributes _street_, _city_, _state_, and _zip code_. Since _street_ is a composite attribute it is replaced by _street number_, _street name_, and _apt number_. We revisit this matter in Section 8.2.
 
 Multivalued attributes are treated differently from other attributes. We have seen that attributes in an E-R diagram generally map directly into attributes for the appropriate relation schemas. Multivalued attributes, however, are an exception; new relation schemas are created for these attributes, as we shall see shortly.
 
 Derived attributes are not explicitly represented in the relational data model. However, they can be represented as “methods” in other data models such as the object-relational data model, which is described later in Chapter 22.
 
-The relational schema derived from the version of entity set instructor with complex attributes, without including the multivalued attribute, is thus:
+The relational schema derived from the version of entity set _instructor_ with complex attributes, without including the multivalued attribute, is thus:
 
-instructor (ID, _first name_, _middle name_, _last name_, _street number_, _street name_, _apt number_, city, state, _zip code_, _date of birth_)
+_instructor_ (_ID_, _first name_, _middle name_, _last name_, _street number_, _street name_, _apt number_, _city_, _state_, _zip code_, _date of birth_)
 
-For a multivalued attribute M, we create a relation schema R with an attribute A that corresponds to M and attributes corresponding to the primary key of the entity set or relationship set of which M is an attribute.
+For a multivalued attribute _M_, we create a relation schema _R_ with an attribute _A_ that corresponds to _M_ and attributes corresponding to the primary key of the entity set or relationship set of which _M_ is an attribute.
 
-As an illustration, consider the E-R diagram in Figure 7.11 that depicts the entity set instructor, which includes the multivalued attribute _phone number_. The primary key of instructor is ID. For this multivalued attribute, we create a relation schema
+As an illustration, consider the E-R diagram in Figure 7.11 that depicts the entity set _instructor_, which includes the multivalued attribute _phone number_. The primary key of _instructor_ is _ID_. For this multivalued attribute, we create a relation schema
 
-_instructor phone_ (ID, _phone number_)  
+_instructor phone_ (_ID_, _phone number_)  
 
 **7.6 Reduction to Relational Schemas 285**
 
-Each phone number of an instructor is represented as a unique tuple in the relation on this schema. Thus, if we had an instructor with ID 22222, and phone numbers 555-1234 and 555-4321, the relation _instructor phone_ would have two tuples (22222, 555-1234) and (22222, 555-4321).
+Each phone number of an instructor is represented as a unique tuple in the relation on this schema. Thus, if we had an instructor with _ID_ 22222, and phone numbers 555-1234 and 555-4321, the relation _instructor phone_ would have two tuples (22222, 555-1234) and (22222, 555-4321).
 
 We create a primary key of the relation schema consisting of all attributes of the schema. In the above example, the primary key consists of both attributes of the relation _instructor phone_.
 
-In addition, we create a foreign-key constraint on the relation schema created from the multivalued attribute, with the attribute generated from the primary key of the entity set referencing the relation generated from the entity set. In the above example, the foreign-key constraint on the _instructor phone_ relation would be that attribute ID references the instructor relation.
+In addition, we create a foreign-key constraint on the relation schema created from the multivalued attribute, with the attribute generated from the primary key of the entity set referencing the relation generated from the entity set. In the above example, the foreign-key constraint on the _instructor phone_ relation would be that attribute _ID_ references the _instructor_ relation.
 
-In the case that an entity set consists of only two attributes — a single primary- key attribute B and a single multivalued attribute M — the relation schema for the entity set would contain only one attribute, namely the primary-key attribute B. We can drop this relation, while retaining the relation schema with the attribute B and attribute A that corresponds to M.
+In the case that an entity set consists of only two attributes — a single primary- key attribute _B_ and a single multivalued attribute _M_ — the relation schema for the entity set would contain only one attribute, namely the primary-key attribute _B_. We can drop this relation, while retaining the relation schema with the attribute _B_ and attribute _A_ that corresponds to _M_.
 
 To illustrate, consider the entity set _time slot_ depicted in Figure 7.15. Here, _time slot id_ is the primary key of the _time slot_ entity set and there is a single multivalued
 
 attribute that happens also to be composite. The entity set can be represented by just the following schema created from the multivalued composite attribute:
 
-_time slot_ (_time slot id_, day, _start time_, _end time_)
+_time slot_ (_time slot id_, _day_, _start time_, _end time_)
 
 Although not represented as a constraint on the E-R diagram, we know that there cannot be two meetings of a class that start at the same time of the same day-of- the-week but end at different times; based on this constraint, _end time_ has been omitted from the primary key of the _time slot_ schema.
 
@@ -981,25 +981,25 @@ the resultant database schema, although it has a drawback related to foreign key
 
 **7.6.3 Representation of Weak Entity Sets**
 
-Let A be a weak entity set with attributes a1_, a_2_, . . . , am_. Let B be the strong entity set on which A depends. Let the primary key of B consist of attributes b1_, b_2_, . . . , bn_. We represent the entity set A by a relation schema called A with one attribute for each member of the set:
+Let _A_ be a weak entity set with attributes _a_1_, a_2_, . . . , am_. Let _B_ be the strong entity set on which _A_ depends. Let the primary key of _B_ consist of attributes _b_1_, b_2_, . . . , bn_. We represent the entity set _A_ by a relation schema called _A_ with one attribute for each member of the set:
 
 _{a_1_, a_2_, . . . , am}_ ∪ _{b_1_, b_2_, . . . , bn}_
 
-For schemas derived from a weak entity set, the combination of the pri- mary key of the strong entity set and the discriminator of the weak entity set serves as the primary key of the schema. In addition to creating a primary key, we also create a foreign-key constraint on the relation A, specifying that the  
+For schemas derived from a weak entity set, the combination of the pri- mary key of the strong entity set and the discriminator of the weak entity set serves as the primary key of the schema. In addition to creating a primary key, we also create a foreign-key constraint on the relation _A_, specifying that the  
 
 **286 Chapter 7 Database Design and the E-R Model**
 
-attributes b1_, b_2_, . . . , bn_ reference the primary key of the relation B. The foreign- key constraint ensures that for each tuple representing a weak entity, there is a corresponding tuple representing the corresponding strong entity.
+attributes _b_1_, b_2_, . . . , bn_ reference the primary key of the relation _B_. The foreign- key constraint ensures that for each tuple representing a weak entity, there is a corresponding tuple representing the corresponding strong entity.
 
-As an illustration, consider the weak entity set section in the E-R diagram of Figure 7.15. This entity set has the attributes: _sec id_, semester, and year. The primary key of the course entity set, on which section depends, is _course id_. Thus, we represent section by a schema with the following attributes:
+As an illustration, consider the weak entity set _section_ in the E-R diagram of Figure 7.15. This entity set has the attributes: _sec id_, _semester_, and _year_. The primary key of the _course_ entity set, on which _section_ depends, is _course id_. Thus, we represent _section_ by a schema with the following attributes:
 
-section (_course id_, _sec id_, semester, year)
+_section_ (_course id_, _sec id_, _semester_, _year_)
 
-The primary key consists of the primary key of the entity set course, along with the discriminator of section, which is _sec id_, semester, and year. We also create a foreign-key constraint on the section schema, with the attribute _course id_ refer- encing the primary key of the course schema, and the integrity constraint “on delete cascade”.7 Because of the “on delete cascade” specification on the foreign key constraint, if a course entity is deleted, then so are all the associated section entities.
+The primary key consists of the primary key of the entity set _course_, along with the discriminator of _section_, which is _sec id_, _semester_, and _year_. We also create a foreign-key constraint on the _section_ schema, with the attribute _course id_ refer- encing the primary key of the _course_ schema, and the integrity constraint “on delete cascade”.7 Because of the “on delete cascade” specification on the foreign key constraint, if a _course_ entity is deleted, then so are all the associated _section_ entities.
 
 **7.6.4 Representation of Relationship Sets**
 
-Let R be a relationship set, let a1_, a_2_, . . . , am_ be the set of attributes formed by the union of the primary keys of each of the entity sets participating in R, and let the descriptive attributes (if any) of R be b1_, b_2_, . . . , bn_. We represent this relationship set by a relation schema called R with one attribute for each member of the set:
+Let _R_ be a relationship set, let _a_1_, a_2_, . . . , am_ be the set of attributes formed by the union of the primary keys of each of the entity sets participating in _R_, and let the descriptive attributes (if any) of _R_ be _b_1_, b_2_, . . . , bn_. We represent this relationship set by a relation schema called _R_ with one attribute for each member of the set:
 
 _{a_1_, a_2_, . . . , am}_ ∪ _{b_1_, b_2_, . . . , bn}_
 
@@ -1015,77 +1015,77 @@ We described earlier, in Section 7.3.3, how to choose a primary key for a binary
 
 **7.6 Reduction to Relational Schemas 287**
 
-• For an n\-ary relationship set without any arrows on its edges, the union of the primary key-attributes from the participating entity sets becomes the primary key.
+• For an _n_\-ary relationship set without any arrows on its edges, the union of the primary key-attributes from the participating entity sets becomes the primary key.
 
-• For an n\-ary relationship set with an arrow on one of its edges, the primary keys of the entity sets not on the “arrow” side of the relationship set serve as the primary key for the schema. Recall that we allowed only one arrow out of a relationship set.
+• For an _n_\-ary relationship set with an arrow on one of its edges, the primary keys of the entity sets not on the “arrow” side of the relationship set serve as the primary key for the schema. Recall that we allowed only one arrow out of a relationship set.
 
-We also create foreign-key constraints on the relation schema R as follows: For each entity set Ei related to relationship set R, we create a foreign-key con- straint from relation schema R, with the attributes of R that were derived from primary-key attributes of Ei referencing the primary key of the relation schema representing Ei .
+We also create foreign-key constraints on the relation schema _R_ as follows: For each entity set _Ei_ related to relationship set _R_, we create a foreign-key con- straint from relation schema _R_, with the attributes of _R_ that were derived from primary-key attributes of _Ei_ referencing the primary key of the relation schema representing _Ei_ .
 
-As an illustration, consider the relationship set advisor in the E-R diagram of Figure 7.15. This relationship set involves the following two entity sets:
+As an illustration, consider the relationship set _advisor_ in the E-R diagram of Figure 7.15. This relationship set involves the following two entity sets:
 
-• instructor with the primary key ID.
+• _instructor_ with the primary key _ID_.
 
-• student with the primary key ID.
+• _student_ with the primary key _ID_.
 
-Since the relationship set has no attributes, the advisor schema has two attributes, the primary keys of instructor and student. Since both attributes have the same name, we rename them _i ID_ and s ID. Since the advisor relationship set is many- to-one from student to instructor the primary key for the advisor relation schema is _s ID_.
+Since the relationship set has no attributes, the _advisor_ schema has two attributes, the primary keys of _instructor_ and _student_. Since both attributes have the same name, we rename them _i ID_ and s _ID_. Since the _advisor_ relationship set is many- to-one from _student_ to _instructor_ the primary key for the _advisor_ relation schema is _s ID_.
 
-We also create two foreign-key constraints on the advisor relation, with at- tribute _i ID_ referencing the primary key of instructor and attribute _s ID_ referencing the primary key of student.
+We also create two foreign-key constraints on the _advisor_ relation, with at- tribute _i ID_ referencing the primary key of _instructor_ and attribute _s ID_ referencing the primary key of _student_.
 
 Continuing with our example, for the E-R diagram in Figure 7.15, the schemas derived from a relationship set are depicted in Figure 7.16.
 
-Observe that for the case of the relationship set prereq, the role indicators associated with the relationship are used as attribute names, since both roles refer to the same relation course.
+Observe that for the case of the relationship set _prereq_, the role indicators associated with the relationship are used as attribute names, since both roles refer to the same relation _course_.
 
-Similar to the case of advisor, the primary key for each of the relations _sec course_, _sec time slot_, _sec class_, _inst dept_, _stud dept_ and _course dept_ consists of the primary key of only one of the two related entity sets, since each of the corresponding relationships is many-to-one.
+Similar to the case of _advisor_, the primary key for each of the relations _sec course_, _sec time slot_, _sec class_, _inst dept_, _stud dept_ and _course dept_ consists of the primary key of only one of the two related entity sets, since each of the corresponding relationships is many-to-one.
 
-Foreign keys are not shown in Figure 7.16, but for each of the relations in the figure there are two foreign-key constraints, referencing the two relations created from the two related entity sets. Thus, for example, _sec course_ has foreign keys referencing section and classroom, teaches has foreign keys referencing instructor and section, and takes has foreign keys referencing student and section.
+Foreign keys are not shown in Figure 7.16, but for each of the relations in the figure there are two foreign-key constraints, referencing the two relations created from the two related entity sets. Thus, for example, _sec course_ has foreign keys referencing _section_ and _classroom_, _teaches_ has foreign keys referencing _instructor_ and _section_, and _takes_ has foreign keys referencing _student_ and _section_.
 
-The optimization that allowed us to create only a single relation schema from the entity set _time slot_, which had a multivalued attribute, prevents the creation of a foreign key from the relation schema _sec time slot_ to the relation created from entity set _time slot_, since we dropped the relation created from the entity set time  
+The optimization that allowed us to create only a single relation schema from the entity set _time slot_, which had a multivalued attribute, prevents the creation of a foreign key from the relation schema _sec time slot_ to the relation created from entity set _time slot_, since we dropped the relation created from the entity set _time_  
 
 **288 Chapter 7 Database Design and the E-R Model**
 
-teaches (ID, _course id_, _sec id_, semester, year) takes (ID, _course id_, _sec id_, semester, year, grade) prereq (_course id_, _prereq id_) advisor (_s ID_, _i ID_) _sec course_ (_course id_, _sec id_, semester, year) _sec time slot_ (_course id_, _sec id_, semester, year, _time slot id_) _sec class_ (_course id_, _sec id_, semester, year, building, _room number_) _inst dept_ (ID, _dept name_) _stud dept_ (ID, _dept name_) _course dept_ (_course id_, _dept name_)
+_teaches_ (_ID_, _course id_, _sec id_, _semester_, _year_) _takes_ (_ID_, _course id_, _sec id_, _semester_, _year_, _grade_) _prereq_ (_course id_, _prereq id_) _advisor_ (_s ID_, _i ID_) _sec course_ (_course id_, _sec id_, _semester_, _year_) _sec time slot_ (_course id_, _sec id_, _semester_, _year_, _time slot id_) _sec class_ (_course id_, _sec id_, _semester_, _year_, _building_, _room number_) _inst dept_ (_ID_, _dept name_) _stud dept_ (_ID_, _dept name_) _course dept_ (_course id_, _dept name_)
 
 **Figure 7.16** Schemas derived from relationship sets in the E-R diagram in Figure 7.15.
 
-slot. We retained the relation created from the multivalued attribute, and named it _time slot_, but this relation may potentially have no tuples corresponding to a _time slot id_, or may have multiple tuples corresponding to a _time slot id_; thus, _time slot id_ in _sec time slot_ cannot reference this relation.
+_slot_. We retained the relation created from the multivalued attribute, and named it _time slot_, but this relation may potentially have no tuples corresponding to a _time slot id_, or may have multiple tuples corresponding to a _time slot id_; thus, _time slot id_ in _sec time slot_ cannot reference this relation.
 
 The astute reader may wonder why we have not seen the schemas _sec course_, _sec time slot_, _sec class_, _inst dept_, _stud dept_, and _course dept_ in the previous chapters. The reason is that the algorithm we have presented thus far results in some schemas that can be either eliminated or combined with other schemas. We ex- plore this issue next.
 
 **7.6.4.1 Redundancy of Schemas**
 
-A relationship set linking a weak entity set to the corresponding strong entity set is treated specially. As we noted in Section 7.5.6, these relationships are many-to- one and have no descriptive attributes. Furthermore, the primary key of a weak entity set includes the primary key of the strong entity set. In the E-R diagram of Figure 7.14, the weak entity set section is dependent on the strong entity set course via the relationship set _sec course_. The primary key of section is _{course id_, _sec id_, semester, _year}_ and the primary key of course is _course id_. Since _sec course_ has no descriptive attributes, the _sec course_ schema has attributes _course id_, _sec id_, semester, and year. The schema for the entity set section includes the attributes _course id_, _sec id_, semester, and year (among others). Every (_course id_, _sec id_, semester, year) combination in a _sec course_ relation would also be present in the relation on schema section, and vice versa. Thus, the _sec course_ schema is redundant.
+A relationship set linking a weak entity set to the corresponding strong entity set is treated specially. As we noted in Section 7.5.6, these relationships are many-to- one and have no descriptive attributes. Furthermore, the primary key of a weak entity set includes the primary key of the strong entity set. In the E-R diagram of Figure 7.14, the weak entity set _section_ is dependent on the strong entity set _course_ via the relationship set _sec course_. The primary key of _section_ is _{course id_, _sec id_, _semester_, _year}_ and the primary key of _course_ is _course id_. Since _sec course_ has no descriptive attributes, the _sec course_ schema has attributes _course id_, _sec id_, _semester_, and _year_. The schema for the entity set _section_ includes the attributes _course id_, _sec id_, _semester_, and _year_ (among others). Every (_course id_, _sec id_, _semester_, _year_) combination in a _sec course_ relation would also be present in the relation on schema _section_, and vice versa. Thus, the _sec course_ schema is redundant.
 
 In general, the schema for the relationship set linking a weak entity set to its corresponding strong entity set is redundant and does not need to be present in a relational database design based upon an E-R diagram.
 
 **7.6.4.2 Combination of Schemas**
 
-Consider a many-to-one relationship set AB from entity set A to entity set B. Using our relational-schema construction algorithm outlined previously, we get  
+Consider a many-to-one relationship set _AB_ from entity set _A_ to entity set _B_. Using our relational-schema construction algorithm outlined previously, we get  
 
 **7.6 Reduction to Relational Schemas 289**
 
-three schemas: A, B, and AB. Suppose further that the participation of A in the relationship is total; that is, every entity a in the entity set B must participate in the relationship AB. Then we can combine the schemas A and AB to form a single schema consisting of the union of attributes of both schemas. The primary key of the combined schema is the primary key of the entity set into whose schema the relationship set schema was merged.
+three schemas: _A_, _B_, and _AB_. Suppose further that the participation of _A_ in the relationship is total; that is, every entity _a_ in the entity set _B_ must participate in the relationship _AB_. Then we can combine the schemas _A_ and _AB_ to form a single schema consisting of the union of attributes of both schemas. The primary key of the combined schema is the primary key of the entity set into whose schema the relationship set schema was merged.
 
 To illustrate, let’s examine the various relations in the E-R diagram of Fig- ure 7.15 that satisfy the above criteria:
 
-• _inst dept_. The schemas instructor and department correspond to the entity sets A and B, respectively. Thus, the schema _inst dept_ can be combined with the instructor schema. The resulting instructor schema consists of the attributes _{ID_, name, _dept name_, _salary}_.
+• _inst dept_. The schemas _instructor_ and _department_ correspond to the entity sets _A_ and _B_, respectively. Thus, the schema _inst dept_ can be combined with the _instructor_ schema. The resulting _instructor_ schema consists of the attributes _{ID_, _name_, _dept name_, _salary}_.
 
-• _stud dept_. The schemas student and department correspond to the entity sets A and B, respectively. Thus, the schema _stud dept_ can be combined with the student schema. The resulting student schema consists of the attributes _{ID_, name, _dept name_, _tot cred}_.
+• _stud dept_. The schemas _student_ and _department_ correspond to the entity sets _A_ and _B_, respectively. Thus, the schema _stud dept_ can be combined with the _student_ schema. The resulting _student_ schema consists of the attributes _{ID_, _name_, _dept name_, _tot cred}_.
 
-• _course dept_. The schemas course and department correspond to the entity sets A and B, respectively. Thus, the schema _course dept_ can be combined with the course schema. The resulting course schema consists of the attributes _{course id_, title, _dept name_, _credits}_.
+• _course dept_. The schemas _course_ and _department_ correspond to the entity sets _A_ and _B_, respectively. Thus, the schema _course dept_ can be combined with the _course_ schema. The resulting _course_ schema consists of the attributes _{course id_, _title_, _dept name_, _credits}_.
 
-• _sec class_. The schemas section and classroom correspond to the entity sets A and B, respectively. Thus, the schema _sec class_ can be combined with the section schema. The resulting section schema consists of the attributes _{course id_, _sec id_, semester, year, building, _room number}_.
+• _sec class_. The schemas _section_ and _classroom_ correspond to the entity sets _A_ and _B_, respectively. Thus, the schema _sec class_ can be combined with the _section_ schema. The resulting _section_ schema consists of the attributes _{course id_, _sec id_, _semester_, _year_, _building_, _room number}_.
 
-• _sec time slot_. The schemas section and _time slot_ correspond to the entity sets A and B respectively, Thus, the schema _sec time slot_ can be combined with the section schema obtained in the previous step. The resulting section schema consists of the attributes _{course id_, _sec id_, semester, year, building, _room number_, _time slot id}_.
+• _sec time slot_. The schemas _section_ and _time slot_ correspond to the entity sets _A_ and _B_ respectively, Thus, the schema _sec time slot_ can be combined with the _section_ schema obtained in the previous step. The resulting _section_ schema consists of the attributes _{course id_, _sec id_, _semester_, _year_, _building_, _room number_, _time slot id}_.
 
 In the case of one-to-one relationships, the relation schema for the relationship set can be combined with the schemas for either of the entity sets.
 
 We can combine schemas even if the participation is partial by using null values. In the above example, if _inst dept_ were partial, then we would store null values for the _dept name_ attribute for those instructors who have no associated department.
 
-Finally, we consider the foreign-key constraints that would have appeared in the schema representing the relationship set. There would have been foreign-key constraints referencing each of the entity sets participating in the relationship set. We drop the constraint referencing the entity set into whose schema the relationship set schema is merged, and add the other foreign-key constraints to the combined schema. For example, _inst dept_ has a foreign key constraint of the attribute _dept name_ referencing the department relation. This foreign constraint is  
+Finally, we consider the foreign-key constraints that would have appeared in the schema representing the relationship set. There would have been foreign-key constraints referencing each of the entity sets participating in the relationship set. We drop the constraint referencing the entity set into whose schema the relationship set schema is merged, and add the other foreign-key constraints to the combined schema. For example, _inst dept_ has a foreign key constraint of the attribute _dept name_ referencing the _department_ relation. This foreign constraint is  
 
 **290 Chapter 7 Database Design and the E-R Model**
 
-added to the instructor relation when the schema for _inst dept_ is merged into instructor.
+added to the _instructor_ relation when the schema for _inst dept_ is merged into _instructor_.
 
 **7.7 Entity-Relationship Design Issues**
 
@@ -1093,59 +1093,59 @@ The notions of an entity set and a relationship set are not precise, and it is p
 
 **7.7.1 Use of Entity Sets versus Attributes**
 
-Consider the entity set instructor with the additional attribute _phone number_ (Fig- ure 7.17a.) It can easily be argued that a phone is an entity in its own right with attributes _phone number_ and location; the location may be the office or home where the phone is located, with mobile (cell) phones perhaps represented by the value “mobile.” If we take this point of view, we do not add the attribute _phone number_ to the instructor. Rather, we create:
+Consider the entity set _instructor_ with the additional attribute _phone number_ (Fig- ure 7.17a.) It can easily be argued that a phone is an entity in its own right with attributes _phone number_ and _location_; the location may be the office or home where the phone is located, with mobile (cell) phones perhaps represented by the value “mobile.” If we take this point of view, we do not add the attribute _phone number_ to the _instructor_. Rather, we create:
 
-• A phone entity set with attributes _phone number_ and location.
+• A _phone_ entity set with attributes _phone number_ and _location_.
 
 • A relationship set _inst phone_, denoting the association between instructors and the phones that they have.
 
 This alternative is shown in Figure 7.17b. What, then, is the main difference between these two definitions of an instruc-
 
-tor? Treating a phone as an attribute _phone number_ implies that instructors have precisely one phone number each. Treating a phone as an entity phone permits instructors to have several phone numbers (including zero) associated with them. However, we could instead easily define _phone number_ as a multivalued attribute to allow multiple phones per instructor.
+tor? Treating a phone as an attribute _phone number_ implies that instructors have precisely one phone number each. Treating a phone as an entity _phone_ permits instructors to have several phone numbers (including zero) associated with them. However, we could instead easily define _phone number_ as a multivalued attribute to allow multiple phones per instructor.
 
 The main difference then is that treating a phone as an entity better models a situation where one may want to keep extra information about a phone, such as its location, or its type (mobile, IP phone, or plain old phone), or all who share
 
-instructor
+_instructor_
 
 _ID name salary_
 
 _phone phone\_number location_
 
-instructor
+_instructor_
 
-_ID name salary phone\number
+_ID name salary phone\_number_
 
 (a) (b)
 
-_inst\phone
+_inst\_phone_
 
-**Figure 7.17** Alternatives for adding phone to the instructor entity set.  
+**Figure 7.17** Alternatives for adding _phone_ to the _instructor_ entity set.  
 
 **7.7 Entity-Relationship Design Issues 291**
 
 the phone. Thus, treating phone as an entity is more general than treating it as an attribute and is appropriate when the generality may be useful.
 
-In contrast, it would not be appropriate to treat the attribute name (of an instructor) as an entity; it is difficult to argue that name is an entity in its own right (in contrast to the phone). Thus, it is appropriate to have name as an attribute of the instructor entity set.
+In contrast, it would not be appropriate to treat the attribute _name_ (of an instructor) as an entity; it is difficult to argue that _name_ is an entity in its own right (in contrast to the phone). Thus, it is appropriate to have _name_ as an attribute of the _instructor_ entity set.
 
 Two natural questions thus arise: What constitutes an attribute, and what constitutes an entity set? Unfortunately, there are no simple answers. The distinc- tions mainly depend on the structure of the real-world enterprise being modeled, and on the semantics associated with the attribute in question.
 
-A common mistake is to use the primary key of an entity set as an attribute of another entity set, instead of using a relationship. For example, it is incorrect to model the ID of a student as an attribute of an instructor even if each instructor advises only one student. The relationship advisor is the correct way to represent the connection between students and instructors, since it makes their connection explicit, rather than implicit via an attribute.
+A common mistake is to use the primary key of an entity set as an attribute of another entity set, instead of using a relationship. For example, it is incorrect to model the _ID_ of a _student_ as an attribute of an _instructor_ even if each instructor advises only one student. The relationship _advisor_ is the correct way to represent the connection between students and instructors, since it makes their connection explicit, rather than implicit via an attribute.
 
-Another related mistake that people sometimes make is to designate the primary-key attributes of the related entity sets as attributes of the relationship set. For example, ID (the primary-key attributes of student) and ID (the primary key of instructor) should not appear as attributes of the relationship advisor. This should not be done since the primary-key attributes are already implicit in the relationship set.8
+Another related mistake that people sometimes make is to designate the primary-key attributes of the related entity sets as attributes of the relationship set. For example, _ID_ (the primary-key attributes of _student_) and _ID_ (the primary key of _instructor_) should not appear as attributes of the relationship _advisor_. This should not be done since the primary-key attributes are already implicit in the relationship set.8
 
 **7.7.2 Use of Entity Sets versus Relationship Sets**
 
-It is not always clear whether an object is best expressed by an entity set or a relationship set. In Figure 7.15, we used the takes relationship set to model the situation where a student takes a (section of a) course. An alternative is to imagine that there is a course-registration record for each course that each student takes. Then, we have an entity set to represent the course-registration record. Let us call that entity set registration. Each registration entity is related to exactly one student and to exactly one section, so we have two relationship sets, one to relate course- registration records to students and one to relate course-registration records to sections. In Figure 7.18, we show the entity sets section and student from Figure 7.15 with the takes relationship set replaced by one entity set and two relationship sets:
+It is not always clear whether an object is best expressed by an entity set or a relationship set. In Figure 7.15, we used the _takes_ relationship set to model the situation where a student takes a (section of a) course. An alternative is to imagine that there is a course-registration record for each course that each student takes. Then, we have an entity set to represent the course-registration record. Let us call that entity set _registration_. Each _registration_ entity is related to exactly one student and to exactly one section, so we have two relationship sets, one to relate course- registration records to students and one to relate course-registration records to sections. In Figure 7.18, we show the entity sets _section_ and _student_ from Figure 7.15 with the _takes_ relationship set replaced by one entity set and two relationship sets:
 
-• registration, the entity set representing course-registration records.
+• _registration_, the entity set representing course-registration records.
 
-• _section reg_, the relationship set relating registration and course.
+• _section reg_, the relationship set relating _registration_ and _course_.
 
-• _student reg_, the relationship set relating registration and student.
+• _student reg_, the relationship set relating _registration_ and _student_.
 
-Note that we use double lines to indicate total participation by registration entities.
+Note that we use double lines to indicate total participation by _registration_ entities.
 
-8When we create a relation schema from the E-R schema, the attributes may appear in a schema created from the advisor relationship set, as we shall see later; however, they should not appear in the advisor relationship set.  
+8When we create a relation schema from the E-R schema, the attributes may appear in a schema created from the _advisor_ relationship set, as we shall see later; however, they should not appear in the _advisor_ relationship set.  
 
 **292 Chapter 7 Database Design and the E-R Model**
 
@@ -1153,39 +1153,39 @@ _registration ... ... ..._
 
 _section sec\_id semester year_
 
-_student ID name tot\cred
+_student ID name tot\_cred_
 
-_section\_reg student\reg
+_section\_reg student\_reg_
 
-**Figure 7.18** Replacement of takes by registration and two relationship sets
+**Figure 7.18** Replacement of _takes_ by _registration_ and two relationship sets
 
-Both the approach of Figure 7.15 and that of Figure 7.18 accurately represent the university’s information, but the use of takes is more compact and probably preferable. However, if the registrar’s office associates other information with a course-registration record, it might be best to make it an entity in its own right.
+Both the approach of Figure 7.15 and that of Figure 7.18 accurately represent the university’s information, but the use of _takes_ is more compact and probably preferable. However, if the registrar’s office associates other information with a course-registration record, it might be best to make it an entity in its own right.
 
 One possible guideline in determining whether to use an entity set or a relationship set is to designate a relationship set to describe an action that occurs between entities. This approach can also be useful in deciding whether certain attributes may be more appropriately expressed as relationships.
 
-**7.7.3 Binary versus** n**\-ary Relationship Sets**
+**7.7.3 Binary versus** _n_**\-ary Relationship Sets**
 
-Relationships in databases are often binary. Some relationships that appear to be nonbinary could actually be better represented by several binary relationships. For instance, one could create a ternary relationship parent, relating a child to his/her mother and father. However, such a relationship could also be represented by two binary relationships, mother and father, relating a child to his/her mother and father separately. Using the two relationships mother and father provides us a record of a child’s mother, even if we are not aware of the father’s identity; a null value would be required if the ternary relationship parent is used. Using binary relationship sets is preferable in this case.
+Relationships in databases are often binary. Some relationships that appear to be nonbinary could actually be better represented by several binary relationships. For instance, one could create a ternary relationship _parent_, relating a child to his/her mother and father. However, such a relationship could also be represented by two binary relationships, _mother_ and _father_, relating a child to his/her mother and father separately. Using the two relationships _mother_ and _father_ provides us a record of a child’s mother, even if we are not aware of the father’s identity; a null value would be required if the ternary relationship _parent_ is used. Using binary relationship sets is preferable in this case.
 
-In fact, it is always possible to replace a nonbinary (n\-ary, for _n >_ 2) relation- ship set by a number of distinct binary relationship sets. For simplicity, consider the abstract ternary (n \= 3) relationship set R, relating entity sets A, B, and C . We replace the relationship set R by an entity set E , and create three relationship sets as shown in Figure 7.19:
+In fact, it is always possible to replace a nonbinary (_n_\-ary, for _n >_ 2) relation- ship set by a number of distinct binary relationship sets. For simplicity, consider the abstract ternary (_n_ \= 3) relationship set _R_, relating entity sets _A_, _B_, and _C_ . We replace the relationship set _R_ by an entity set _E_ , and create three relationship sets as shown in Figure 7.19:
 
-• RA, relating E and A.
+• _RA_, relating _E_ and _A_.
 
-• RB , relating E and B.
+• _RB_ , relating _E_ and _B_.
 
-• RC , relating E and C .  
+• _RC_ , relating _E_ and _C_ .  
 
 **7.7 Entity-Relationship Design Issues 293**
 
 _B R C_
 
-A
+_A_
 
 _CB E_
 
-A
+_A_
 
-RA
+_RA_
 
 _RB RC_
 
@@ -1193,29 +1193,29 @@ _RB RC_
 
 **Figure 7.19** Ternary relationship versus three binary relationships.
 
-If the relationship set R had any attributes, these are assigned to entity set E ; further, a special identifying attribute is created for E (since it must be possible to distinguish different entities in an entity set on the basis of their attribute values). For each relationship (_ai , bi , ci_ ) in the relationship set R, we create a new entity ei in the entity set E . Then, in each of the three new relationship sets, we insert a relationship as follows:
+If the relationship set _R_ had any attributes, these are assigned to entity set _E_ ; further, a special identifying attribute is created for _E_ (since it must be possible to distinguish different entities in an entity set on the basis of their attribute values). For each relationship (_ai , bi , ci_ ) in the relationship set _R_, we create a new entity _ei_ in the entity set _E_ . Then, in each of the three new relationship sets, we insert a relationship as follows:
 
-• (_ei , ai_ ) in RA.
+• (_ei , ai_ ) in _RA_.
 
-• (_ei , bi_ ) in RB .
+• (_ei , bi_ ) in _RB_ .
 
-• (_ei , ci_ ) in RC .
+• (_ei , ci_ ) in _RC_ .
 
-We can generalize this process in a straightforward manner to n\-ary relation- ship sets. Thus, conceptually, we can restrict the E-R model to include only binary relationship sets. However, this restriction is not always desirable.
+We can generalize this process in a straightforward manner to _n_\-ary relation- ship sets. Thus, conceptually, we can restrict the E-R model to include only binary relationship sets. However, this restriction is not always desirable.
 
 • An identifying attribute may have to be created for the entity set created to represent the relationship set. This attribute, along with the extra relationship sets required, increases the complexity of the design and (as we shall see in Section 7.6) overall storage requirements.
 
-• An n\-ary relationship set shows more clearly that several entities participate in a single relationship.
+• An _n_\-ary relationship set shows more clearly that several entities participate in a single relationship.
 
-• There may not be a way to translate constraints on the ternary relationship into constraints on the binary relationships. For example, consider a con- straint that says that R is many-to-one from _A, B_ to C ; that is, each pair of entities from A and B is associated with at most one C entity. This constraint cannot be expressed by using cardinality constraints on the relationship sets _RA, RB_ , and RC .
+• There may not be a way to translate constraints on the ternary relationship into constraints on the binary relationships. For example, consider a con- straint that says that _R_ is many-to-one from _A, B_ to _C_ ; that is, each pair of entities from _A_ and _B_ is associated with at most one _C_ entity. This constraint cannot be expressed by using cardinality constraints on the relationship sets _RA, RB_ , and _RC_ .
 
-Consider the relationship set _proj guide_ in Section 7.2.2, relating instructor, student, and project. We cannot directly split _proj guide_ into binary relationships between instructor and project and between instructor and student. If we did so,  
+Consider the relationship set _proj guide_ in Section 7.2.2, relating _instructor_, _student_, and _project_. We cannot directly split _proj guide_ into binary relationships between _instructor_ and _project_ and between _instructor_ and _student_. If we did so,  
 
 **294 Chapter 7 Database Design and the E-R Model**
 
-instructor
+_instructor_
 
-student
+_student_
 
 76766 Crick
 
@@ -1281,71 +1281,71 @@ May 2007
 
 May 2006
 
-**Figure 7.20** date as an attribute of the student entity set.
+**Figure 7.20** _date_ as an attribute of the _student_ entity set.
 
-we would be able to record that instructor Katz works on projects A and B with students Shankar and Zhang; however, we would not be able to record that Katz works on project A with student Shankar and works on project B with student Zhang, but does not work on project A with Zhang or on project B with Shankar.
+we would be able to record that instructor Katz works on projects _A_ and _B_ with students Shankar and Zhang; however, we would not be able to record that Katz works on project _A_ with student Shankar and works on project _B_ with student Zhang, but does not work on project _A_ with Zhang or on project _B_ with Shankar.
 
 The relationship set _proj guide_ can be split into binary relationships by creating a new entity set as described above. However, doing so would not be very natural.
 
 **7.7.4 Placement of Relationship Attributes**
 
-The cardinality ratio of a relationship can affect the placement of relationship attributes. Thus, attributes of one-to-one or one-to-many relationship sets can be associated with one of the participating entity sets, rather than with the relation- ship set. For instance, let us specify that advisor is a one-to-many relationship set such that one instructor may advise several students, but each student can be advised by only a single instructor. In this case, the attribute date, which specifies when the instructor became the advisor of a student, could be associated with the student entity set, as Figure 7.20 depicts. (To keep the figure simple, only some of the attributes of the two entity sets are shown.) Since each student entity participates in a relationship with at most one instance of instructor, making this attribute designation has the same meaning as would placing date with the advisor relationship set. Attributes of a one-to-many relationship set can be repositioned to only the entity set on the “many” side of the relationship. For one-to-one rela- tionship sets, on the other hand, the relationship attribute can be associated with either one of the participating entities.
+The cardinality ratio of a relationship can affect the placement of relationship attributes. Thus, attributes of one-to-one or one-to-many relationship sets can be associated with one of the participating entity sets, rather than with the relation- ship set. For instance, let us specify that _advisor_ is a one-to-many relationship set such that one instructor may advise several students, but each student can be advised by only a single instructor. In this case, the attribute _date_, which specifies when the instructor became the advisor of a student, could be associated with the _student_ entity set, as Figure 7.20 depicts. (To keep the figure simple, only some of the attributes of the two entity sets are shown.) Since each _student_ entity participates in a relationship with at most one instance of _instructor_, making this attribute designation has the same meaning as would placing _date_ with the _advisor_ relationship set. Attributes of a one-to-many relationship set can be repositioned to only the entity set on the “many” side of the relationship. For one-to-one rela- tionship sets, on the other hand, the relationship attribute can be associated with either one of the participating entities.
 
-The design decision of where to place descriptive attributes in such cases —as a relationship or entity attribute—should reflect the characteristics of the enterprise being modeled. The designer may choose to retain date as an attribute of advisor to express explicitly that the date refers to the advising relationship and not some other aspect of the student’s university status (for example, date of acceptance to the university).  
+The design decision of where to place descriptive attributes in such cases —as a relationship or entity attribute—should reflect the characteristics of the enterprise being modeled. The designer may choose to retain _date_ as an attribute of _advisor_ to express explicitly that the date refers to the advising relationship and not some other aspect of the student’s university status (for example, date of acceptance to the university).  
 
 **7.8 Extended E-R Features 295**
 
-The choice of attribute placement is more clear-cut for many-to-many rela- tionship sets. Returning to our example, let us specify the perhaps more realistic case that advisor is a many-to-many relationship set expressing that an instructor may advise one or more students, and that a student may be advised by one or more instructors. If we are to express the date on which a specific instructor became the advisor of a specific student, date must be an attribute of the advisor relationship set, rather than either one of the participating entities. If date were an attribute of student, for instance, we could not determine which instructor became the advisor on that particular date. When an attribute is determined by the com- bination of participating entity sets, rather than by either entity separately, that attribute must be associated with the many-to-many relationship set. Figure 7.3 depicts the placement of date as a relationship attribute; again, to keep the figure simple, only some of the attributes of the two entity sets are shown.
+The choice of attribute placement is more clear-cut for many-to-many rela- tionship sets. Returning to our example, let us specify the perhaps more realistic case that _advisor_ is a many-to-many relationship set expressing that an instructor may advise one or more students, and that a student may be advised by one or more instructors. If we are to express the date on which a specific instructor became the advisor of a specific student, _date_ must be an attribute of the _advisor_ relationship set, rather than either one of the participating entities. If _date_ were an attribute of _student_, for instance, we could not determine which instructor became the advisor on that particular date. When an attribute is determined by the com- bination of participating entity sets, rather than by either entity separately, that attribute must be associated with the many-to-many relationship set. Figure 7.3 depicts the placement of _date_ as a relationship attribute; again, to keep the figure simple, only some of the attributes of the two entity sets are shown.
 
 **7.8 Extended E-R Features**
 
 Although the basic E-R concepts can model most database features, some aspects of a database may be more aptly expressed by certain extensions to the basic E-R model. In this section, we discuss the extended E-R features of specializa- tion, generalization, higher- and lower-level entity sets, attribute inheritance, and aggregation.
 
-To help with the discussions, we shall use a slightly more elaborate database schema for the university. In particular, we shall model the various people within a university by defining an entity set person, with attributes ID, name, and address.
+To help with the discussions, we shall use a slightly more elaborate database schema for the university. In particular, we shall model the various people within a university by defining an entity set _person_, with attributes _ID_, _name_, and _address_.
 
 **7.8.1 Specialization**
 
 An entity set may include subgroupings of entities that are distinct in some way from other entities in the set. For instance, a subset of entities within an entity set may have attributes that are not shared by all the entities in the entity set. The E-R model provides a means for representing these distinctive entity groupings.
 
-As an example, the entity set person may be further classified as one of the following:
+As an example, the entity set _person_ may be further classified as one of the following:
 
-• employee.
+• _employee_.
 
-• student.
+• _student_.
 
-Each of these person types is described by a set of attributes that includes all the attributes of entity set person plus possibly additional attributes. For exam- ple, employee entities may be described further by the attribute salary, whereas student entities may be described further by the attribute _tot cred_. The process of designating subgroupings within an entity set is called **specialization**. The spe- cialization of person allows us to distinguish among person entities according to whether they correspond to employees or students: in general, a person could be an employee, a student, both, or neither.  
+Each of these person types is described by a set of attributes that includes all the attributes of entity set _person_ plus possibly additional attributes. For exam- ple, _employee_ entities may be described further by the attribute _salary_, whereas _student_ entities may be described further by the attribute _tot cred_. The process of designating subgroupings within an entity set is called **specialization**. The spe- cialization of _person_ allows us to distinguish among person entities according to whether they correspond to employees or students: in general, a person could be an employee, a student, both, or neither.  
 
 **296 Chapter 7 Database Design and the E-R Model**
 
-As another example, suppose the university divides students into two cate- gories: graduate and undergraduate. Graduate students have an office assigned to them. Undergraduate students are assigned to a residential college. Each of these student types is described by a set of attributes that includes all the attributes of the entity set student plus additional attributes.
+As another example, suppose the university divides students into two cate- gories: graduate and undergraduate. Graduate students have an office assigned to them. Undergraduate students are assigned to a residential college. Each of these student types is described by a set of attributes that includes all the attributes of the entity set _student_ plus additional attributes.
 
-The university could create two specializations of student, namely graduate and undergraduate. As we saw earlier, student entities are described by the attributes ID, name, address, and _tot cred_. The entity set graduate would have all the attributes of student and an additional attribute _office number_. The entity set undergraduate would have all the attributes of student, and an additional attribute _residential college_.
+The university could create two specializations of _student_, namely _graduate_ and _undergraduate_. As we saw earlier, student entities are described by the attributes _ID_, _name_, _address_, and _tot cred_. The entity set _graduate_ would have all the attributes of _student_ and an additional attribute _office number_. The entity set _undergraduate_ would have all the attributes of _student_, and an additional attribute _residential college_.
 
 We can apply specialization repeatedly to refine a design. For instance, uni- versity employees may be further classified as one of the following:
 
-• instructor.
+• _instructor_.
 
-• secretary.
+• _secretary_.
 
-Each of these employee types is described by a set of attributes that includes all the attributes of entity set employee plus additional attributes. For example, instructor entities may be described further by the attribute rank while secretary entities are described by the attribute _hours per week_. Further, secretary entities may participate in a relationship _secretary for_ between the secretary and employee entity sets, which identifies the employees who are assisted by a secretary.
+Each of these employee types is described by a set of attributes that includes all the attributes of entity set _employee_ plus additional attributes. For example, _instructor_ entities may be described further by the attribute _rank_ while _secretary_ entities are described by the attribute _hours per week_. Further, _secretary_ entities may participate in a relationship _secretary for_ between the _secretary_ and _employee_ entity sets, which identifies the employees who are assisted by a secretary.
 
 An entity set may be specialized by more than one distinguishing feature. In our example, the distinguishing feature among employee entities is the job the em- ployee performs. Another, coexistent, specialization could be based on whether the person is a temporary (limited term) employee or a permanent employee, re- sulting in the entity sets _temporary employee_ and _permanent employee_. When more than one specialization is formed on an entity set, a particular entity may belong to multiple specializations. For instance, a given employee may be a temporary employee who is a secretary.
 
 In terms of an E-R diagram, specialization is depicted by a hollow arrow-head pointing from the specialized entity to the other entity (see Figure 7.21). We refer to this relationship as the ISA relationship, which stands for “is a” and represents, for example, that an instructor “is a” employee.
 
-The way we depict specialization in an E-R diagram depends on whether an entity may belong to multiple specialized entity sets or if it must belong to at most one specialized entity set. The former case (multiple sets permitted) is called **overlapping specialization**, while the latter case (at most one permitted) is called **disjoint specialization**. For an overlapping specialization (as is the case for student and employee as specializations of person), two separate arrows are used. For a disjoint specialization (as is the case for instructor and secretary as specializations of employee), a single arrow is used. The specialization relationship may also be referred to as a **superclass-subclass** relationship. Higher- and lower-level entity  
+The way we depict specialization in an E-R diagram depends on whether an entity may belong to multiple specialized entity sets or if it must belong to at most one specialized entity set. The former case (multiple sets permitted) is called **overlapping specialization**, while the latter case (at most one permitted) is called **disjoint specialization**. For an overlapping specialization (as is the case for _student_ and _employee_ as specializations of _person_), two separate arrows are used. For a disjoint specialization (as is the case for _instructor_ and _secretary_ as specializations of _employee_), a single arrow is used. The specialization relationship may also be referred to as a **superclass-subclass** relationship. Higher- and lower-level entity  
 
 **7.8 Extended E-R Features 297**
 
 _person ID name address_
 
-student
+_student_
 
 _instructor rank_
 
-_secretary hours\_per\week
+_secretary hours\_per\_week_
 
-_employee salary tot\credits
+_employee salary tot\_credits_
 
 **Figure 7.21** Specialization and generalization.
 
@@ -1355,27 +1355,27 @@ sets are depicted as regular entity sets—that is, as rectangles containing the
 
 The refinement from an initial entity set into successive levels of entity subgroup- ings represents a **top-down** design process in which distinctions are made explicit. The design process may also proceed in a **bottom-up** manner, in which multiple entity sets are synthesized into a higher-level entity set on the basis of common features. The database designer may have first identified:
 
-• instructor entity set with attributes _instructor id_, _instructor name_, _instructor salary_, and rank.
+• _instructor_ entity set with attributes _instructor id_, _instructor name_, _instructor salary_, and _rank_.
 
-• secretary entity set with attributes _secretary id_, _secretary name_, _secretary salary_, and _hours per week_.
+• _secretary_ entity set with attributes _secretary id_, _secretary name_, _secretary salary_, and _hours per week_.
 
-There are similarities between the instructor entity set and the secretary entity set in the sense that they have several attributes that are conceptually the same across the two entity sets: namely, the identifier, name, and salary attributes. This commonality can be expressed by **generalization**, which is a containment relationship that exists between a _higher-level_ entity set and one or more _lower-level_ entity sets. In our example, employee is the higher-level entity set and instructor and secretary are lower-level entity sets. In this case, attributes that are conceptually the same had different names in the two lower-level entity sets. To create a generalization, the attributes must be given a common name and represented with the higher-level entity person. We can use the attribute names ID, name, address, as we saw in the example in Section 7.8.1.  
+There are similarities between the _instructor_ entity set and the _secretary_ entity set in the sense that they have several attributes that are conceptually the same across the two entity sets: namely, the identifier, name, and salary attributes. This commonality can be expressed by **generalization**, which is a containment relationship that exists between a _higher-level_ entity set and one or more _lower-level_ entity sets. In our example, _employee_ is the higher-level entity set and _instructor_ and _secretary_ are lower-level entity sets. In this case, attributes that are conceptually the same had different names in the two lower-level entity sets. To create a generalization, the attributes must be given a common name and represented with the higher-level entity _person_. We can use the attribute names _ID_, _name_, _address_, as we saw in the example in Section 7.8.1.  
 
 **298 Chapter 7 Database Design and the E-R Model**
 
-Higher- and lower-level entity sets also may be designated by the terms **superclass** and **subclass**, respectively. The person entity set is the superclass of the employee and student subclasses.
+Higher- and lower-level entity sets also may be designated by the terms **superclass** and **subclass**, respectively. The _person_ entity set is the superclass of the _employee_ and _student_ subclasses.
 
 For all practical purposes, generalization is a simple inversion of specializa- tion. We apply both processes, in combination, in the course of designing the E-R schema for an enterprise. In terms of the E-R diagram itself, we do not distinguish between specialization and generalization. New levels of entity representation are distinguished (specialization) or synthesized (generalization) as the design schema comes to express fully the database application and the user require- ments of the database. Differences in the two approaches may be characterized by their starting point and overall goal.
 
-Specialization stems from a single entity set; it emphasizes differences among entities within the set by creating distinct lower-level entity sets. These lower- level entity sets may have attributes, or may participate in relationships, that do not apply to all the entities in the higher-level entity set. Indeed, the reason a designer applies specialization is to represent such distinctive features. If student and employee have exactly the same attributes as person entities, and participate in exactly the same relationships as person entities, there would be no need to specialize the person entity set.
+Specialization stems from a single entity set; it emphasizes differences among entities within the set by creating distinct lower-level entity sets. These lower- level entity sets may have attributes, or may participate in relationships, that do not apply to all the entities in the higher-level entity set. Indeed, the reason a designer applies specialization is to represent such distinctive features. If _student_ and _employee_ have exactly the same attributes as _person_ entities, and participate in exactly the same relationships as _person_ entities, there would be no need to specialize the _person_ entity set.
 
 Generalization proceeds from the recognition that a number of entity sets share some common features (namely, they are described by the same attributes and participate in the same relationship sets). On the basis of their commonalities, generalization synthesizes these entity sets into a single, higher-level entity set. Generalization is used to emphasize the similarities among lower-level entity sets and to hide the differences; it also permits an economy of representation in that shared attributes are not repeated.
 
 **7.8.3 Attribute Inheritance**
 
-A crucial property of the higher- and lower-level entities created by specialization and generalization is **attribute inheritance**. The attributes of the higher-level entity sets are said to be **inherited** by the lower-level entity sets. For example, student and employee inherit the attributes of person. Thus, student is described by its ID, name, and address attributes, and additionally a _tot cred_ attribute; employee is described by its ID, name, and address attributes, and additionally a salary attribute. Attribute inheritance applies through all tiers of lower-level entity sets; thus, instructor and secretary, which are subclasses of employee, inherit the attributes ID, name, and address from person, in addition to inheriting salary from employee.
+A crucial property of the higher- and lower-level entities created by specialization and generalization is **attribute inheritance**. The attributes of the higher-level entity sets are said to be **inherited** by the lower-level entity sets. For example, _student_ and _employee_ inherit the attributes of _person_. Thus, _student_ is described by its _ID_, _name_, and _address_ attributes, and additionally a _tot cred_ attribute; _employee_ is described by its _ID_, _name_, and _address_ attributes, and additionally a _salary_ attribute. Attribute inheritance applies through all tiers of lower-level entity sets; thus, _instructor_ and _secretary_, which are subclasses of _employee_, inherit the attributes _ID_, _name_, and _address_ from _person_, in addition to inheriting _salary_ from _employee_.
 
-A lower-level entity set (or subclass) also inherits participation in the relation- ship sets in which its higher-level entity (or superclass) participates. Like attribute inheritance, participation inheritance applies through all tiers of lower-level en- tity sets. For example, suppose the person entity set participates in a relationship _person dept_ with department. Then, the student, employee, instructor and secretary en- tity sets, which are subclasses of the person entity set, also implicitly participate in the _person dept_ relationship with department. The above entity sets can participate in any relationships in which the person entity set participates.  
+A lower-level entity set (or subclass) also inherits participation in the relation- ship sets in which its higher-level entity (or superclass) participates. Like attribute inheritance, participation inheritance applies through all tiers of lower-level en- tity sets. For example, suppose the _person_ entity set participates in a relationship _person dept_ with _department_. Then, the _student_, _employee_, _instructor_ and _secretary_ en- tity sets, which are subclasses of the _person_ entity set, also implicitly participate in the _person dept_ relationship with _department_. The above entity sets can participate in any relationships in which the _person_ entity set participates.  
 
 **7.8 Extended E-R Features 299**
 
@@ -1387,25 +1387,25 @@ Whether a given portion of an E-R model was arrived at by specialization or gene
 
 In what follows, although we often refer to only generalization, the properties that we discuss belong fully to both processes.
 
-Figure 7.21 depicts a **hierarchy** of entity sets. In the figure, employee is a lower-level entity set of person and a higher-level entity set of the instructor and secretary entity sets. In a hierarchy, a given entity set may be involved as a lower- level entity set in only one ISA relationship; that is, entity sets in this diagram have only **single inheritance**. If an entity set is a lower-level entity set in more than one ISA relationship, then the entity set has **multiple inheritance**, and the resulting structure is said to be a lattice.
+Figure 7.21 depicts a **hierarchy** of entity sets. In the figure, _employee_ is a lower-level entity set of _person_ and a higher-level entity set of the _instructor_ and _secretary_ entity sets. In a hierarchy, a given entity set may be involved as a lower- level entity set in only one ISA relationship; that is, entity sets in this diagram have only **single inheritance**. If an entity set is a lower-level entity set in more than one ISA relationship, then the entity set has **multiple inheritance**, and the resulting structure is said to be a _lattice_.
 
 **7.8.4 Constraints on Generalizations**
 
 To model an enterprise more accurately, the database designer may choose to place certain constraints on a particular generalization. One type of constraint involves determining which entities can be members of a given lower-level entity set. Such membership may be one of the following:
 
-• **Condition-defined.** In condition-defined lower-level entity sets, membership is evaluated on the basis of whether or not an entity satisfies an explicit condi- tion or predicate. For example, assume that the higher-level entity set student has the attribute _student type_. All student entities are evaluated on the defin- ing _student type_ attribute. Only those entities that satisfy the condition _student type_ \= “graduate” are allowed to belong to the lower-level entity set _graduate student_. All entities that satisfy the condition _student type_ \= “undergraduate”
+• **Condition-defined.** In condition-defined lower-level entity sets, membership is evaluated on the basis of whether or not an entity satisfies an explicit condi- tion or predicate. For example, assume that the higher-level entity set _student_ has the attribute _student type_. All _student_ entities are evaluated on the defin- ing _student type_ attribute. Only those entities that satisfy the condition _student type_ \= “graduate” are allowed to belong to the lower-level entity set _graduate student_. All entities that satisfy the condition _student type_ \= “undergraduate”
 
 are included in _undergraduate student_. Since all the lower-level entities are evaluated on the basis of the same attribute (in this case, on _student type_), this type of generalization is said to be **attribute-defined.**
 
-• **User-defined.** User-defined lower-level entity sets are not constrained by a membership condition; rather, the database user assigns entities to a given entity set. For instance, let us assume that, after 3 months of employment, university employees are assigned to one of four work teams. We therefore represent the teams as four lower-level entity sets of the higher-level employee entity set. A given employee is not assigned to a specific team entity auto- matically on the basis of an explicit defining condition. Instead, the user in charge of this decision makes the team assignment on an individual basis. The assignment is implemented by an operation that adds an entity to an entity set.  
+• **User-defined.** User-defined lower-level entity sets are not constrained by a membership condition; rather, the database user assigns entities to a given entity set. For instance, let us assume that, after 3 months of employment, university employees are assigned to one of four work teams. We therefore represent the teams as four lower-level entity sets of the higher-level _employee_ entity set. A given employee is not assigned to a specific team entity auto- matically on the basis of an explicit defining condition. Instead, the user in charge of this decision makes the team assignment on an individual basis. The assignment is implemented by an operation that adds an entity to an entity set.  
 
 **300 Chapter 7 Database Design and the E-R Model**
 
 A second type of constraint relates to whether or not entities may belong to more than one lower-level entity set within a single generalization. The lower- level entity sets may be one of the following:
 
-• **Disjoint**. A _disjointness constraint_ requires that an entity belong to no more than one lower-level entity set. In our example, student entity can satisfy only one condition for the _student type_ attribute; an entity can be either a graduate student or an undergraduate student, but cannot be both.
+• **Disjoint**. A _disjointness constraint_ requires that an entity belong to no more than one lower-level entity set. In our example, _student_ entity can satisfy only one condition for the _student type_ attribute; an entity can be either a graduate student or an undergraduate student, but cannot be both.
 
-• **Overlapping**. In _overlapping generalizations_, the same entity may belong to more than one lower-level entity set within a single generalization. For an illustration, consider the employee work-team example, and assume that certain employees participate in more than one work team. A given employee may therefore appear in more than one of the team entity sets that are lower- level entity sets of employee. Thus, the generalization is overlapping.
+• **Overlapping**. In _overlapping generalizations_, the same entity may belong to more than one lower-level entity set within a single generalization. For an illustration, consider the employee work-team example, and assume that certain employees participate in more than one work team. A given employee may therefore appear in more than one of the team entity sets that are lower- level entity sets of _employee_. Thus, the generalization is overlapping.
 
 In Figure 7.21, we assume a person may be both an employee and a student. We show this overlapping generalization via separate arrows: one from employee to person and another from student to person. However, the generalization of instructor and secretaries is disjoint. We show this using a single arrow.
 
@@ -1417,33 +1417,33 @@ A final constraint, the **completeness constraint** on a generalization or speci
 
 Partial generalization is the default. We can specify total generalization in an E-R diagram by adding the keyword “total” in the diagram and drawing a dashed line from the keyword to the corresponding hollow arrow-head to which it applies (for a total generalization), or to the set of hollow arrow-heads to which it applies (for an overlapping generalization).
 
-The student generalization is total: All student entities must be either graduate or undergraduate. Because the higher-level entity set arrived at through general- ization is generally composed of only those entities in the lower-level entity sets, the completeness constraint for a generalized higher-level entity set is usually total. When the generalization is partial, a higher-level entity is not constrained to appear in a lower-level entity set. The work team entity sets illustrate a partial specialization. Since employees are assigned to a team only after 3 months on the job, some employee entities may not be members of any of the lower-level team entity sets.
+The _student_ generalization is total: All student entities must be either graduate or undergraduate. Because the higher-level entity set arrived at through general- ization is generally composed of only those entities in the lower-level entity sets, the completeness constraint for a generalized higher-level entity set is usually total. When the generalization is partial, a higher-level entity is not constrained to appear in a lower-level entity set. The work team entity sets illustrate a partial specialization. Since employees are assigned to a team only after 3 months on the job, some _employee_ entities may not be members of any of the lower-level team entity sets.
 
-We may characterize the team entity sets more fully as a partial, overlapping specialization of employee. The generalization of _graduate student_ and _undergrad-_  
+We may characterize the team entity sets more fully as a partial, overlapping specialization of _employee_. The generalization of _graduate student_ and _undergrad-_  
 
 **7.8 Extended E-R Features 301**
 
-_uate student_ into student is a total, disjoint generalization. The completeness and disjointness constraints, however, do not depend on each other. Constraint pat- terns may also be partial-disjoint and total-overlapping.
+_uate student_ into _student_ is a total, disjoint generalization. The completeness and disjointness constraints, however, do not depend on each other. Constraint pat- terns may also be partial-disjoint and total-overlapping.
 
 We can see that certain insertion and deletion requirements follow from the constraints that apply to a given generalization or specialization. For instance, when a total completeness constraint is in place, an entity inserted into a higher- level entity set must also be inserted into at least one of the lower-level entity sets. With a condition-defined constraint, all higher-level entities that satisfy the condition must be inserted into that lower-level entity set. Finally, an entity that is deleted from a higher-level entity set also is deleted from all the associated lower-level entity sets to which it belongs.
 
 **7.8.5 Aggregation**
 
-One limitation of the E-R model is that it cannot express relationships among relationships. To illustrate the need for such a construct, consider the ternary relationship _proj guide_, which we saw earlier, between an instructor, student and project (see Figure 7.13).
+One limitation of the E-R model is that it cannot express relationships among relationships. To illustrate the need for such a construct, consider the ternary relationship _proj guide_, which we saw earlier, between an _instructor_, _student_ and _project_ (see Figure 7.13).
 
-Now suppose that each instructor guiding a student on a project is required to file a monthly evaluation report. We model the evaluation report as an entity _eval- uation_, with a primary key _evaluation id_. One alternative for recording the (student, project, instructor) combination to which an evaluation corresponds is to create a quaternary (4-way) relationship set _eval for_ between instructor, student, project, and evaluation. (A quaternary relationship is required—a binary relationship between student and evaluation, for example, would not permit us to represent the (project, instructor) combination to which an evaluation corresponds.) Using the basic E-R modeling constructs, we obtain the E-R diagram of Figure 7.22. (We have omitted the attributes of the entity sets, for simplicity.)
+Now suppose that each instructor guiding a student on a project is required to file a monthly evaluation report. We model the evaluation report as an entity _eval- uation_, with a primary key _evaluation id_. One alternative for recording the (_student_, _project_, _instructor_) combination to which an _evaluation_ corresponds is to create a quaternary (4-way) relationship set _eval for_ between _instructor_, _student_, _project_, and _evaluation_. (A quaternary relationship is required—a binary relationship between _student_ and _evaluation_, for example, would not permit us to represent the (_project_, _instructor_) combination to which an _evaluation_ corresponds.) Using the basic E-R modeling constructs, we obtain the E-R diagram of Figure 7.22. (We have omitted the attributes of the entity sets, for simplicity.)
 
-It appears that the relationship sets _proj guide_ and _eval for_ can be combined into one single relationship set. Nevertheless, we should not combine them into a single relationship, since some instructor, student, project combinations may not have an associated evaluation.
+It appears that the relationship sets _proj guide_ and _eval for_ can be combined into one single relationship set. Nevertheless, we should not combine them into a single relationship, since some _instructor_, _student_, _project_ combinations may not have an associated _evaluation_.
 
-There is redundant information in the resultant figure, however, since every instructor, student, project combination in _eval for_ must also be in _proj guide_. If the evaluation were a value rather than a entity, we could instead make evaluation a multivalued composite attribute of the relationship set _proj guide_. However, this alternative may not be be an option if an evaluation may also be related to other entities; for example, each evaluation report may be associated with a secretary who is responsible for further processing of the evaluation report to make scholarship payments.
+There is redundant information in the resultant figure, however, since every _instructor_, _student_, _project_ combination in _eval for_ must also be in _proj guide_. If the _evaluation_ were a value rather than a entity, we could instead make _evaluation_ a multivalued composite attribute of the relationship set _proj guide_. However, this alternative may not be be an option if an _evaluation_ may also be related to other entities; for example, each evaluation report may be associated with a _secretary_ who is responsible for further processing of the evaluation report to make scholarship payments.
 
-The best way to model a situation such as the one just described is to use ag- gregation. **Aggregation** is an abstraction through which relationships are treated as higher-level entities. Thus, for our example, we regard the relationship set _proj guide_ (relating the entity sets instructor, student, and project) as a higher-level entity set called _proj guide_. Such an entity set is treated in the same manner as is any other entity set. We can then create a binary relationship _eval for_ between proj  
+The best way to model a situation such as the one just described is to use ag- gregation. **Aggregation** is an abstraction through which relationships are treated as higher-level entities. Thus, for our example, we regard the relationship set _proj guide_ (relating the entity sets _instructor_, _student_, and _project_) as a higher-level entity set called _proj guide_. Such an entity set is treated in the same manner as is any other entity set. We can then create a binary relationship _eval for_ between _proj_  
 
 **302 Chapter 7 Database Design and the E-R Model**
 
-project
+_project_
 
-evaluation
+_evaluation_
 
 _instructor student_
 
@@ -1453,7 +1453,7 @@ _proj\_ guide_
 
 **Figure 7.22** E-R diagram with redundant relationships.
 
-guide and evaluation to represent which (student, project, instructor) combination an evaluation is for. Figure 7.23 shows a notation for aggregation commonly used to represent this situation.
+_guide_ and _evaluation_ to represent which (_student_, _project_, _instructor_) combination an _evaluation_ is for. Figure 7.23 shows a notation for aggregation commonly used to represent this situation.
 
 **7.8.6 Reduction to Relation Schemas**
 
@@ -1461,49 +1461,49 @@ We are in a position now to describe how the extended E-R features can be transl
 
 **7.8.6.1 Representation of Generalization**
 
-There are two different methods of designing relation schemas for an E-R diagram that includes generalization. Although we refer to the generalization in Figure 7.21 in this discussion, we simplify it by including only the first tier of lower-level entity sets—that is, employee and student. We assume that ID is the primary key of person.
+There are two different methods of designing relation schemas for an E-R diagram that includes generalization. Although we refer to the generalization in Figure 7.21 in this discussion, we simplify it by including only the first tier of lower-level entity sets—that is, _employee_ and _student_. We assume that _ID_ is the primary key of _person_.
 
-**1.** Create a schema for the higher-level entity set. For each lower-level entity set, create a schema that includes an attribute for each of the attributes of that entity set plus one for each attribute of the primary key of the higher-level entity set. Thus, for the E-R diagram of Figure 7.21 (ignoring the instructor and secretary entity sets) we have three schemas:
+**1\.** Create a schema for the higher-level entity set. For each lower-level entity set, create a schema that includes an attribute for each of the attributes of that entity set plus one for each attribute of the primary key of the higher-level entity set. Thus, for the E-R diagram of Figure 7.21 (ignoring the _instructor_ and _secretary_ entity sets) we have three schemas:
 
-person (ID, _name, street, city_) employee (ID, salary) student (ID, _tot cred_)  
+_person_ (_ID_, _name, street, city_) _employee_ (_ID_, _salary_) _student_ (_ID_, _tot cred_)  
 
 **7.8 Extended E-R Features 303**
 
-evaluation
+_evaluation_
 
 _proj\_ guide instructor student_
 
 _eval\_ for_
 
-project
+_project_
 
 **Figure 7.23** E-R diagram with aggregation.
 
 The primary-key attributes of the higher-level entity set become primary- key attributes of the higher-level entity set as well as all lower-level entity sets. These can be seen underlined in the above example.
 
-In addition, we create foreign-key constraints on the lower-level entity sets, with their primary-key attributes referencing the primary key of the relation created from the higher-level entity set. In the above example, the ID attribute of employee would reference the primary key of person, and similarly for student.
+In addition, we create foreign-key constraints on the lower-level entity sets, with their primary-key attributes referencing the primary key of the relation created from the higher-level entity set. In the above example, the _ID_ attribute of _employee_ would reference the primary key of _person_, and similarly for _student_.
 
-**2.** An alternative representation is possible, if the generalization is disjoint and complete—that is, if no entity is a member of two lower-level entity sets directly below a higher-level entity set, and if every entity in the higher-level entity set is also a member of one of the lower-level entity sets. Here, we do not create a schema for the higher-level entity set. Instead, for each lower- level entity set, we create a schema that includes an attribute for each of the attributes of that entity set plus one for each attribute of the higher-level entity set. Then, for the E-R diagram of Figure 7.21, we have two schemas:
+**2\.** An alternative representation is possible, if the generalization is disjoint and complete—that is, if no entity is a member of two lower-level entity sets directly below a higher-level entity set, and if every entity in the higher-level entity set is also a member of one of the lower-level entity sets. Here, we do not create a schema for the higher-level entity set. Instead, for each lower- level entity set, we create a schema that includes an attribute for each of the attributes of that entity set plus one for _each_ attribute of the higher-level entity set. Then, for the E-R diagram of Figure 7.21, we have two schemas:
 
-employee (ID, name, street, city, salary) student (ID, name, street, city, _tot cred_)
+_employee_ (_ID_, _name_, _street_, _city_, _salary_) _student_ (_ID_, _name_, _street_, _city_, _tot cred_)
 
-Both these schemas have ID, which is the primary-key attribute of the higher- level entity set person, as their primary key.  
+Both these schemas have _ID_, which is the primary-key attribute of the higher- level entity set _person_, as their primary key.  
 
 **304 Chapter 7 Database Design and the E-R Model**
 
-One drawback of the second method lies in defining foreign-key constraints. To illustrate the problem, suppose we had a relationship set R involving entity set person. With the first method, when we create a relation schema R from the relationship set, we would also define a foreign-key constraint on R, referencing the schema person. Unfortunately, with the second method, we do not have a single relation to which a foreign-key constraint on R can refer. To avoid this problem, we need to create a relation schema person containing at least the primary-key attributes of the person entity.
+One drawback of the second method lies in defining foreign-key constraints. To illustrate the problem, suppose we had a relationship set _R_ involving entity set _person_. With the first method, when we create a relation schema _R_ from the relationship set, we would also define a foreign-key constraint on _R_, referencing the schema _person_. Unfortunately, with the second method, we do not have a single relation to which a foreign-key constraint on _R_ can refer. To avoid this problem, we need to create a relation schema _person_ containing at least the primary-key attributes of the _person_ entity.
 
-If the second method were used for an overlapping generalization, some values would be stored multiple times, unnecessarily. For instance, if a person is both an employee and a student, values for street and city would be stored twice.
+If the second method were used for an overlapping generalization, some values would be stored multiple times, unnecessarily. For instance, if a person is both an employee and a student, values for _street_ and _city_ would be stored twice.
 
 If the generalization were disjoint but not complete—that is, if some person is neither an employee nor a student—then an extra schema
 
-person (ID, _name, street, city_)
+_person_ (_ID_, _name, street, city_)
 
-would be required to represent such people. However, the problem with foreign- key constraints mentioned above would remain. As an attempt to work around the problem, suppose employees and students are additionally represented in the person relation. Unfortunately, name, street, and city information would then be stored redundantly in the person relation and the student relation for students, and similarly in the person relation and the employee relation for employees. That suggests storing name, street, and city information only in the person relation and removing that information from student and employee. If we do that, the result is exactly the first method we presented.
+would be required to represent such people. However, the problem with foreign- key constraints mentioned above would remain. As an attempt to work around the problem, suppose employees and students are additionally represented in the _person_ relation. Unfortunately, name, street, and city information would then be stored redundantly in the _person_ relation and the _student_ relation for students, and similarly in the _person_ relation and the _employee_ relation for employees. That suggests storing name, street, and city information only in the _person_ relation and removing that information from _student_ and _employee_. If we do that, the result is exactly the first method we presented.
 
 **7.8.6.2 Representation of Aggregation**
 
-Designing schemas for an E-R diagram containing aggregation is straightforward. Consider the diagram of Figure 7.23. The schema for the relationship set _eval for_ between the aggregation of _proj guide_ and the entity set evaluation includes an attribute for each attribute in the primary keys of the entity set evaluation, and the relationship set _proj guide_. It also includes an attribute for any descriptive attributes, if they exist, of the relationship set _eval for_. We then transform the relationship sets and entity sets within the aggregated entity set following the rules we have already defined.
+Designing schemas for an E-R diagram containing aggregation is straightforward. Consider the diagram of Figure 7.23. The schema for the relationship set _eval for_ between the aggregation of _proj guide_ and the entity set _evaluation_ includes an attribute for each attribute in the primary keys of the entity set _evaluation_, and the relationship set _proj guide_. It also includes an attribute for any descriptive attributes, if they exist, of the relationship set _eval for_. We then transform the relationship sets and entity sets within the aggregated entity set following the rules we have already defined.
 
 The rules we saw earlier for creating primary-key and foreign-key constraints on relationship sets can be applied to relationship sets involving aggregations as well, with the aggregation treated like any other entity set. The primary key of the aggregation is the primary key of its defining relationship set. No separate relation is required to represent the aggregation; the relation created from the defining relationship is used instead.
 
@@ -1627,11 +1627,11 @@ R
 
 R
 
-*
+\*
 
-*
+\*
 
-*
+\*
 
 1
 
@@ -1673,7 +1673,7 @@ RE1 E2
 
 Cardinality constraints on relationships can be indicated in several different ways, as shown in Figure 7.25. In one alternative, shown on the left side of the figure, labels ∗ and 1 on the edges out of the relationship are used for depicting many-to-many, one-to-one, and many-to-one relationships. The case of one-to- many is symmetric to many-to-one, and is not shown.
 
-In another alternative notation shown on the right side of the figure, relation- ship sets are represented by lines between entity sets, without diamonds; only binary relationships can be modeled thus. Cardinality constraints in such a no- tation are shown by “crow’s-foot” notation, as in the figure. In a relationship R between E1 and E2, crow’s feet on both sides indicates a many-to-many relation- ship, while crow’s feet on just the E1 side indicates a many-to-one relationship from E1 to E2. Total participation is specified in this notation by a vertical bar. Note however, that in a relationship R between entities E1 and E2, if the partici- pation of E1 in R is total, the vertical bar is placed on the opposite side, adjacent to entity E2. Similarly, partial participation is indicated by using a circle, again on the opposite side.
+In another alternative notation shown on the right side of the figure, relation- ship sets are represented by lines between entity sets, without diamonds; only binary relationships can be modeled thus. Cardinality constraints in such a no- tation are shown by “crow’s-foot” notation, as in the figure. In a relationship _R_ between _E_1 and _E_2, crow’s feet on both sides indicates a many-to-many relation- ship, while crow’s feet on just the _E_1 side indicates a many-to-one relationship from _E_1 to _E_2\. Total participation is specified in this notation by a vertical bar. Note however, that in a relationship _R_ between entities _E_1 and _E_2, if the partici- pation of _E_1 in _R_ is total, the vertical bar is placed on the opposite side, adjacent to entity _E_2\. Similarly, partial participation is indicated by using a circle, again on the opposite side.
 
 The bottom part of Figure 7.25 shows an alternative representation of gener- alization, using triangles instead of hollow arrow-heads.
 
@@ -1685,7 +1685,7 @@ With the growth in the use of Unified Markup Language (UML), described later in 
 
 There are a variety of tools for constructing E-R diagrams, each of which has its own notational variants. Some of the tools even provide a choice between several E-R notation variants. See the references in the bibliographic notes for more information.
 
-One key difference between entity sets in an E-R diagram and the relation schemas created from such entities is that attributes in the relational schema corresponding to E-R relationships, such as the _dept name_ attribute of instructor, are not shown in the entity set in the E-R diagram. Some data modeling tools allow users to choose between two views of the same entity, one an entity view without such attributes, and other a relational view with such attributes.  
+One key difference between entity sets in an E-R diagram and the relation schemas created from such entities is that attributes in the relational schema corresponding to E-R relationships, such as the _dept name_ attribute of _instructor_, are not shown in the entity set in the E-R diagram. Some data modeling tools allow users to choose between two views of the same entity, one an entity view without such attributes, and other a relational view with such attributes.  
 
 **308 Chapter 7 Database Design and the E-R Model**
 
@@ -1743,7 +1743,7 @@ A1 R
 
 R cardinality constraintsE2E1
 
-R E2E10.. * 0..1 0..1 0.. *
+R E2E10.. \* 0..1 0..1 0.. \*
 
 R E3
 
@@ -1781,11 +1781,11 @@ box by a dotted line to the line depicting the relationship set. This box can th
 
 Since UML version 1.3, UML supports nonbinary relationships, using the same diamond notation used in E-R diagrams. Nonbinary relationships could not be directly represented in earlier versions of UML—they had to be converted to binary relationships by the technique we have seen earlier in Section 7.7.3. UML allows the diamond notation to be used even for binary relationships, but most designers use the line notation.
 
-Cardinality constraints are specified in UML in the same way as in E-R dia- grams, in the form _l..h_, where l denotes the minimum and h the maximum number of relationships an entity can participate in. However, you should be aware that the positioning of the constraints is exactly the reverse of the positioning of con- straints in E-R diagrams, as shown in Figure 7.26. The constraint 0_.._∗ on the E2  
+Cardinality constraints are specified in UML in the same way as in E-R dia- grams, in the form _l..h_, where _l_ denotes the minimum and _h_ the maximum number of relationships an entity can participate in. However, you should be aware that the positioning of the constraints is exactly the reverse of the positioning of con- straints in E-R diagrams, as shown in Figure 7.26. The constraint 0_.._∗ on the _E_2  
 
 **310 Chapter 7 Database Design and the E-R Model**
 
-side and 0_.._1 on the E1 side means that each E2 entity can participate in at most one relationship, whereas each E1 entity can participate in many relationships; in other words, the relationship is many-to-one from E2 to E1.
+side and 0_.._1 on the _E_1 side means that each _E_2 entity can participate in at most one relationship, whereas each _E_1 entity can participate in many relationships; in other words, the relationship is many-to-one from _E_2 to _E_1.
 
 Single values such as 1 or ∗ may be written on edges; the single value 1 on an edge is treated as equivalent to 1_.._1, while ∗ is equivalent to 0_.._∗. UML supports generalization; the notation is basically the same as in our E-R notation, including the representation of disjoint and overlapping generalizations.
 
@@ -1821,7 +1821,7 @@ There are two main metrics for performance:
 
 • **Throughput**—the number of queries or updates (often referred to as _trans- actions_) that can be processed on average per unit of time.
 
-• **Response time**—the amount of time a single transaction takes from start to finish in either the average case or the worst case.
+• **Response time**—the amount of time a _single_ transaction takes from start to finish in either the average case or the worst case.
 
 Systems that process large numbers of transactions in a batch style focus on having high throughput. Systems that interact with people or time-critical systems often focus on response time. These two metrics are not equivalent. High throughput arises from obtaining high utilization of system components. Doing so may result in certain transactions being delayed until such time that they can be run more efficiently. Those delayed transactions suffer poor response time.
 
@@ -1841,7 +1841,7 @@ Authorization constraints affect design of the database as well because SQL allo
 
 Database applications are often part of a larger enterprise application that in- teracts not only with the database system but also with various specialized ap- plications. For example, in a manufacturing company, a computer-aided design (CAD) system may assist in the design of new products. The CAD system may extract data from the database via an SQL statement, process the data internally, perhaps interacting with a product designer, and then update the database. Dur- ing this process, control of the data may pass among several product designers as well as other people. As another example, consider a travel-expense report. It is created by an employee returning from a business trip (possibly by means of a special software package) and is subsequently routed to the employee’s manager, perhaps other higher-level managers, and eventually to the accounting depart- ment for payment (at which point it interacts with the enterprise’s accounting information systems).
 
-The term workflow refers to the combination of data and tasks involved in pro- cesses like those of the preceding examples. Workflows interact with the database system as they move among users and users perform their tasks on the workflow. In addition to the data on which workflows operate, the database may store data about the workflow itself, including the tasks making up a workflow and how they are to be routed among users. Workflows thus specify a series of queries and updates to the database that may be taken into account as part of the database- design process. Put in other terms, modeling the enterprise requires us not only to understand the semantics of the data but also the business processes that use those data.  
+The term _workflow_ refers to the combination of data and tasks involved in pro- cesses like those of the preceding examples. Workflows interact with the database system as they move among users and users perform their tasks on the workflow. In addition to the data on which workflows operate, the database may store data about the workflow itself, including the tasks making up a workflow and how they are to be routed among users. Workflows thus specify a series of queries and updates to the database that may be taken into account as part of the database- design process. Put in other terms, modeling the enterprise requires us not only to understand the semantics of the data but also the business processes that use those data.  
 
 **7.11 Summary 313**
 
@@ -1891,69 +1891,69 @@ Finally, it is worth noting that database design is a human-oriented activity in
 
 • Entity-relationship data model • Entity and entity set
 
-    ◦ Attributes
+◦ Attributes
 
-    ◦ Domain
+◦ Domain
 
-    ◦ Simple and composite attributes
+◦ Simple and composite attributes
 
-    ◦ Single-valued and multivalued attributes
+◦ Single-valued and multivalued attributes
 
-    ◦ Null value
+◦ Null value
 
-    ◦ Derived attribute
+◦ Derived attribute
 
-    ◦ Superkey, candidate key, and primary key
+◦ Superkey, candidate key, and primary key
 
 • Relationship and relationship set
 
-    ◦ Binary relationship set
+◦ Binary relationship set
 
-    ◦ Degree of relationship set
+◦ Degree of relationship set
 
-    ◦ Descriptive attributes
+◦ Descriptive attributes
 
-    ◦ Superkey, candidate key, and primary key
+◦ Superkey, candidate key, and primary key
 
-    ◦ Role
+◦ Role
 
-    ◦ Recursive relationship set
+◦ Recursive relationship set
 
 • E-R diagram • Mapping cardinality:
 
-    ◦ One-to-one relationship
+◦ One-to-one relationship
 
-    ◦ One-to-many relationship
+◦ One-to-many relationship
 
-    ◦ Many-to-one relationship
+◦ Many-to-one relationship
 
-    ◦ Many-to-many relationship
+◦ Many-to-many relationship
 
 • Participation
 
-    ◦ Total participation
+◦ Total participation
 
-    ◦ Partial participation
+◦ Partial participation
 
 • Weak entity sets and strong entity sets
 
-    ◦ Discriminator attributes
+◦ Discriminator attributes
 
-    ◦ Identifying relationship
+◦ Identifying relationship
 
 • Specialization and generalization
 
-    ◦ Superclass and subclass
+◦ Superclass and subclass
 
-    ◦ Attribute inheritance
+◦ Attribute inheritance
 
-    ◦ Single and multiple inheritance
+◦ Single and multiple inheritance
 
-    ◦ Condition-defined and user- defined membership
+◦ Condition-defined and user- defined membership
 
-    ◦ Disjoint and overlapping gener- alization
+◦ Disjoint and overlapping gener- alization
 
-    ◦ Total and partial generalization
+◦ Total and partial generalization
 
 • Aggregation • UML
 
@@ -1969,7 +1969,7 @@ Finally, it is worth noting that database design is a human-oriented activity in
 
 a. Construct an E-R diagram that models exams as entities, and uses a ternary relationship, for the database.
 
-b. Construct an alternative E-R diagram that uses only a binary relation- ship between student and section. Make sure that only one relationship exists between a particular student and section pair, yet you can rep- resent the marks that a student gets in different exams.
+b. Construct an alternative E-R diagram that uses only a binary relation- ship between _student_ and _section_. Make sure that only one relationship exists between a particular _student_ and _section_ pair, yet you can rep- resent the marks that a student gets in different exams.
 
 **7.3** Design an E-R diagram for keeping track of the exploits of your favorite sports team. You should store the matches played, the scores in each match, the players in each match, and individual player statistics for each match. Summary statistics should be modeled as derived attributes.
 
@@ -1985,13 +1985,13 @@ b. The graph has a cycle.
 
 _B C_
 
-A
+_A_
 
 _CB E_
 
-A
+_A_
 
-RA
+_RA_
 
 _RB RC_
 
@@ -1999,13 +1999,13 @@ _RB RC_
 
 (c)
 
-A
+_A_
 
 _B C_
 
-R
+_R_
 
-RBC
+_RBC_
 
 _RAB RAC_
 
@@ -2013,21 +2013,21 @@ _RAB RAC_
 
 **Practice Exercises 317**
 
-a. Show a simple instance of _E, A, B, C_ , _RA, RB_ , and RC that cannot correspond to any instance of _A, B, C_ , and R.
+a. Show a simple instance of _E, A, B, C_ , _RA, RB_ , and _RC_ that cannot correspond to any instance of _A, B, C_ , and _R_.
 
-b. Modify the E-R diagram of Figure 7.27b to introduce constraints that will guarantee that any instance of _E, A, B, C_ , _RA, RB_ , and RC that satisfies the constraints will correspond to an instance of _A, B, C_ , and R.
+b. Modify the E-R diagram of Figure 7.27b to introduce constraints that will guarantee that any instance of _E, A, B, C_ , _RA, RB_ , and _RC_ that satisfies the constraints will correspond to an instance of _A, B, C_ , and _R_.
 
 c. Modify the translation above to handle total participation constraints on the ternary relationship.
 
-d. The above representation requires that we create a primary-key at- tribute for E . Show how to treat E as a weak entity set so that a primary-key attribute is not required.
+d. The above representation requires that we create a primary-key at- tribute for _E_ . Show how to treat _E_ as a weak entity set so that a primary-key attribute is not required.
 
 **7.7** A weak entity set can always be made into a strong entity set by adding to its attributes the primary-key attributes of its identifying entity set. Outline what sort of redundancy will result if we do so.
 
 **7.8** Consider a relation such as _sec course_, generated from a many-to-one rela- tionship _sec course_. Do the primary and foreign key constraints created on the relation enforce the many-to-one cardinality constraint? Explain why.
 
-**7.9** Suppose the advisor relationship were one-to-one. What extra constraints are required on the relation advisorto ensure that the one-to-one cardinality constraint is enforced?
+**7.9** Suppose the _advisor_ relationship were one-to-one. What extra constraints are required on the relation _advisor_to ensure that the one-to-one cardinality constraint is enforced?
 
-**7.10** Consider a many-to-one relationship R between entity sets A and B. Sup- pose the relation created from R is combined with the relation created from A. In SQL, attributes participating in a foreign key constraint can be null. Explain how a constraint on total participation of A in R can be enforced using **not null** constraints in SQL.
+**7.10** Consider a many-to-one relationship _R_ between entity sets _A_ and _B_. Sup- pose the relation created from _R_ is combined with the relation created from _A_. In SQL, attributes participating in a foreign key constraint can be null. Explain how a constraint on total participation of _A_ in _R_ can be enforced using **not null** constraints in SQL.
 
 **7.11** In SQL, foreign key constraints can only reference the primary key attributes of the referenced relation, or other attributes declared to be a super key us- ing the **unique** constraint. As a result, total participation constraints on a many-to-many relationship (or on the “one” side of a one-to-many rela- tionship) cannot be enforced on the relations created from the relationship, using primary key, foreign key and not null constraints on the relations.
 
@@ -2035,7 +2035,7 @@ a. Explain why.
 
 b. Explain how to enforce total participation constraints using com- plex check constraints or assertions (see Section 4.4.7). (Unfortunately, these features are not supported on any widely used database cur- rently.)
 
-**7.12** Figure 7.28 shows a lattice structure of generalization and specialization (attributes not shown). For entity sets A, B, and C , explain how attributes  
+**7.12** Figure 7.28 shows a lattice structure of generalization and specialization (attributes not shown). For entity sets _A_, _B_, and _C_ , explain how attributes  
 
 **318 Chapter 7 Database Design and the E-R Model**
 
@@ -2045,13 +2045,13 @@ _A B C_
 
 **Figure 7.28** E-R diagram for Practice Exercise 7.12.
 
-are inherited from the higher-level entity sets X and Y. Discuss how to handle a case where an attribute of X has the same name as some attribute of Y.
+are inherited from the higher-level entity sets _X_ and _Y_. Discuss how to handle a case where an attribute of _X_ has the same name as some attribute of _Y_.
 
-**7.13 Temporal changes**: An E-R diagram usually models the state of an enter- prise at a point in time. Suppose we wish to track _temporal changes_, that is, changes to data over time. For example, Zhang may have been a student between 1 September 2005 31 May 2009, while Shankar may have had in- structor Einstein as advisor from 31 May 2008 to 5 December 2008, and again from 1 June 2009 to 5 January 2010. Similarly, attribute values of an entity or relationship, such as title and credits of course, salary, or even name of instructor, and _tot cred_ of student, can change over time.
+**7.13 Temporal changes**: An E-R diagram usually models the state of an enter- prise at a point in time. Suppose we wish to track _temporal changes_, that is, changes to data over time. For example, Zhang may have been a student between 1 September 2005 31 May 2009, while Shankar may have had in- structor Einstein as advisor from 31 May 2008 to 5 December 2008, and again from 1 June 2009 to 5 January 2010. Similarly, attribute values of an entity or relationship, such as _title_ and _credits_ of _course_, _salary_, or even _name_ of _instructor_, and _tot cred_ of _student_, can change over time.
 
 One way to model temporal changes is as follows. We define a new data type called **valid time**, which is a time-interval, or a set of time-intervals. We then associate a _valid time_ attribute with each entity and relationship, recording the time periods during which the entity or relationship is valid. The end-time of an interval can be infinity; for example, if Shankar became a student on 2 September 2008, and is still a student, we can represent the end-time of the _valid time_ interval as infinity for the Shankar entity. Similarly, we model attributes that can change over time as a set of values, each with its own _valid time_.
 
-a. Draw an E-R diagram with the student and instructor entities, and the advisor relationship, with the above extensions to track temporal changes.
+a. Draw an E-R diagram with the _student_ and _instructor_ entities, and the _advisor_ relationship, with the above extensions to track temporal changes.
 
 b. Convert the above E-R diagram into a set of relations.
 
@@ -2093,23 +2093,23 @@ Your design should include an E-R diagram, a set of relational schemas, and a li
 
 _author name address URL_
 
-_written\_by published\by
+_written\_by published\_by_
 
-contains
+_contains_
 
-number
+_number_
 
-number
+_number_
 
-stocks
+_stocks_
 
-book
+_book_
 
-_shopping\basket
+_shopping\_basket_
 
-_basket\id
+_basket\_id_
 
-warehouse
+_warehouse_
 
 _basket\_of ISBN title year price_
 
@@ -2177,23 +2177,23 @@ For ease of reference, we repeat the schemas for the university database in Figu
 
 **324 Chapter 8 Relational Database Design**
 
-classroom(building, _room number_, capacity) department(_dept name_, building, budget) course(_course id_, title, _dept name_, credits) instructor(ID, name, _dept name_, salary) section(_course id_, _sec id_, semester, year, building, _room number_, _time slot id_) teaches(ID, _course id_, _sec id_, semester, year) student(ID, name, _dept name_, _tot cred_) takes(ID, _course id_, _sec id_, semester, year, grade) advisor(_s ID_, _i ID_) _time slot_(_time slot id_, day, _start time_, _end time_) prereq(_course id_, _prereq id_)
+_classroom_(_building_, _room number_, _capacity_) _department_(_dept name_, _building_, _budget_) _course_(_course id_, _title_, _dept name_, _credits_) _instructor_(_ID_, _name_, _dept name_, _salary_) _section_(_course id_, _sec id_, _semester_, _year_, _building_, _room number_, _time slot id_) _teaches_(_ID_, _course id_, _sec id_, _semester_, _year_) _student_(_ID_, _name_, _dept name_, _tot cred_) _takes_(_ID_, _course id_, _sec id_, _semester_, _year_, _grade_) _advisor_(_s ID_, _i ID_) _time slot_(_time slot id_, _day_, _start time_, _end time_) _prereq_(_course id_, _prereq id_)
 
 **Figure 8.1** Schema for the university database.
 
 **8.1.1 Design Alternative: Larger Schemas**
 
-Now, let us explore features of this relational database design as well as some alternatives. Suppose that instead of having the schemas instructor and department, we have the schema:
+Now, let us explore features of this relational database design as well as some alternatives. Suppose that instead of having the schemas _instructor_ and _department_, we have the schema:
 
-_inst dept_ (ID, name, salary, _dept name_, building, budget)
+_inst dept_ (_ID_, _name_, _salary_, _dept name_, _building_, _budget_)
 
-This represents the result of a natural join on the relations corresponding to instructor and department. This seems like a good idea because some queries can be expressed using fewer joins, until we think carefully about the facts about the university that led to our E-R design.
+This represents the result of a natural join on the relations corresponding to _instructor_ and _department_. This seems like a good idea because some queries can be expressed using fewer joins, until we think carefully about the facts about the university that led to our E-R design.
 
 Let us consider the instance of the _inst dept_ relation shown in Figure 8.2. Notice that we have to repeat the department information (“building” and “budget”) once for each instructor in the department. For example, the information about the Comp. Sci. department (Taylor, 100000) is included in the tuples of instructors Katz, Srinivasan, and Brandt.
 
-It is important that all these tuples agree as to the budget amount since other- wise our database would be inconsistent. In our original design using instructor and department, we stored the amount of each budget exactly once. This suggests that using _inst dept_ is a bad idea since it stores the budget amounts redundantly and runs the risk that some user might update the budget amount in one tuple but not all, and thus create inconsistency.
+It is important that all these tuples agree as to the budget amount since other- wise our database would be inconsistent. In our original design using _instructor_ and _department_, we stored the amount of each budget exactly once. This suggests that using _inst dept_ is a bad idea since it stores the budget amounts redundantly and runs the risk that some user might update the budget amount in one tuple but not all, and thus create inconsistency.
 
-Even if we decided to live with the redundancy problem, there is still another problem with the _inst dept_ schema. Suppose we are creating a new department in the university. In the alternative design above, we cannot represent directly the information concerning a department (_dept name_, building, budget) unless that department has at least one instructor at the university. This is because tuples in the _inst dept_ table require values for ID, name, and salary. This means that we cannot record information about the newly created department until the first instructor  
+Even if we decided to live with the redundancy problem, there is still another problem with the _inst dept_ schema. Suppose we are creating a new department in the university. In the alternative design above, we cannot represent directly the information concerning a department (_dept name_, _building_, _budget_) unless that department has at least one instructor at the university. This is because tuples in the _inst dept_ table require values for _ID_, _name_, and _salary_. This means that we cannot record information about the newly created department until the first instructor  
 
 **8.1 Features of Good Relational Designs 325**
 
@@ -2203,35 +2203,35 @@ _ID name salary dept name building budget_
 
 **Figure 8.2** The _inst dept_ table.
 
-is hired for the new department. In the old design, the schema department can handle this, but under the revised design, we would have to create a tuple with a null value for building and budget. In some cases null values are troublesome, as we saw in our study of SQL. However, if we decide that this is not a problem to us in this case, then we can proceed to use the revised design.
+is hired for the new department. In the old design, the schema _department_ can handle this, but under the revised design, we would have to create a tuple with a null value for _building_ and _budget_. In some cases null values are troublesome, as we saw in our study of SQL. However, if we decide that this is not a problem to us in this case, then we can proceed to use the revised design.
 
 **8.1.2 Design Alternative: Smaller Schemas**
 
-Suppose again that, somehow, we had started out with the schema _inst dept_. How would we recognize that it requires repetition of information and should be split into the two schemas instructor and department?
+Suppose again that, somehow, we had started out with the schema _inst dept_. How would we recognize that it requires repetition of information and should be split into the two schemas _instructor_ and _department_?
 
-By observing the contents of actual relations on schema _inst dept_, we could note the repetition of information resulting from having to list the building and budget once for each instructor associated with a department. However, this is an unreliable process. A real-world database has a large number of schemas and an even larger number of attributes. The number of tuples can be in the millions or higher. Discovering repetition would be costly. There is an even more fundamental problem with this approach. It does not allow us to determine whether the lack of repetition is just a “lucky” special case or whether it is a manifestation of a general rule. In our example, how would we know that in our university organization, each department (identified by its department name) must reside in a single building and must have a single budget amount? Is the fact that the budget amount for the Comp. Sci. department appears three times with the same budget amount just a coincidence? We cannot answer these questions without going back to the enterprise itself and understanding its rules. In particular, we would need to discover that the university requires that every department (identified by its department name) must have only one building and one budget value.
+By observing the contents of actual relations on schema _inst dept_, we could note the repetition of information resulting from having to list the building and budget once for each instructor associated with a department. However, this is an unreliable process. A real-world database has a large number of schemas and an even larger number of attributes. The number of tuples can be in the millions or higher. Discovering repetition would be costly. There is an even more fundamental problem with this approach. It does not allow us to determine whether the lack of repetition is just a “lucky” special case or whether it is a manifestation of a general rule. In our example, how would we _know_ that in our university organization, each department (identified by its department name) _must_ reside in a single building and must have a single budget amount? Is the fact that the budget amount for the Comp. Sci. department appears three times with the same budget amount just a coincidence? We cannot answer these questions without going back to the enterprise itself and understanding its rules. In particular, we would need to discover that the university requires that every department (identified by its department name) _must_ have only one building and one budget value.
 
 In the case of _inst dept_, our process of creating an E-R design successfully avoided the creation of this schema. However, this fortuitous situation does not  
 
 **326 Chapter 8 Relational Database Design**
 
-always occur. Therefore, we need to allow the database designer to specify rules such as “each specific value for _dept name_ corresponds to at most one budget” even in cases where _dept name_ is not the primary key for the schema in question. In other words, we need to write a rule that says “if there were a schema (_dept name_, budget), then _dept name_ is able to serve as the primary key.” This rule is specified as a **functional dependency**
+always occur. Therefore, we need to allow the database designer to specify rules such as “each specific value for _dept name_ corresponds to at most one _budget_” even in cases where _dept name_ is not the primary key for the schema in question. In other words, we need to write a rule that says “if there were a schema (_dept name_, _budget_), then _dept name_ is able to serve as the primary key.” This rule is specified as a **functional dependency**
 
-_dept name_ → budget
+_dept name_ → _budget_
 
 Given such a rule, we now have sufficient information to recognize the problem of the _inst dept_ schema. Because _dept name_ cannot be the primary key for _inst dept_ (because a department may need several tuples in the relation on schema _inst dept_), the amount of a budget may have to be repeated.
 
-Observations such as these and the rules (functional dependencies in partic- ular) that result from them allow the database designer to recognize situations where a schema ought to be split, or decomposed, into two or more schemas. It is not hard to see that the right way to decompose _inst dept_ is into schemas _instruc- tor_ and department as in the original design. Finding the right decomposition is much harder for schemas with a large number of attributes and several functional dependencies. To deal with this, we shall rely on a formal methodology that we develop later in this chapter.
+Observations such as these and the rules (functional dependencies in partic- ular) that result from them allow the database designer to recognize situations where a schema ought to be split, or _decomposed_, into two or more schemas. It is not hard to see that the right way to decompose _inst dept_ is into schemas _instruc- tor_ and _department_ as in the original design. Finding the right decomposition is much harder for schemas with a large number of attributes and several functional dependencies. To deal with this, we shall rely on a formal methodology that we develop later in this chapter.
 
-Not all decompositions of schemas are helpful. Consider an extreme case where all we had were schemas consisting of one attribute. No interesting rela- tionships of any kind could be expressed. Now consider a less extreme case where we choose to decompose the employee schema (Section 7.8):
+Not all decompositions of schemas are helpful. Consider an extreme case where all we had were schemas consisting of one attribute. No interesting rela- tionships of any kind could be expressed. Now consider a less extreme case where we choose to decompose the _employee_ schema (Section 7.8):
 
-employee (ID, name, street, city, salary)
+_employee_ (_ID_, _name_, _street_, _city_, _salary_)
 
 into the following two schemas:
 
-_employee1_ (ID, name) _employee2_ (name, street, city, salary)
+_employee1_ (_ID_, _name_) _employee2_ (_name_, _street_, _city_, _salary_)
 
-The flaw in this decomposition arises from the possibility that the enterprise has two employees with the same name. This is not unlikely in practice, as many cultures have certain highly popular names. Of course each person would have a unique employee-id, which is why ID can serve as the primary key. As an example, let us assume two employees, both named Kim, work at the university and have the following tuples in the relation on schema employee in the original design:
+The flaw in this decomposition arises from the possibility that the enterprise has two employees with the same name. This is not unlikely in practice, as many cultures have certain highly popular names. Of course each person would have a unique employee-id, which is why _ID_ can serve as the primary key. As an example, let us assume two employees, both named Kim, work at the university and have the following tuples in the relation on schema _employee_ in the original design:
 
 (57766, Kim, Main, Perryridge, 75000) (98776, Kim, North, Hampton, 67000)  
 
@@ -2267,7 +2267,7 @@ _... Kim Kim.._.
 
 _ID name street city salary_
 
-employee
+_employee_
 
 _... 57766 57766 98776 98776_
 
@@ -2293,13 +2293,13 @@ The E-R model allows entity sets and relationship sets to have attributes that h
 
 **328 Chapter 8 Relational Database Design**
 
-_phone number_ in Figure 7.11 and composite attributes (such as an attribute address with component attributes street, city, state, and zip). When we create tables from E-R designs that contain these types of attributes, we eliminate this substructure. For composite attributes, we let each component be an attribute in its own right. For multivalued attributes, we create one tuple for each item in a multivalued set.
+_phone number_ in Figure 7.11 and composite attributes (such as an attribute _address_ with component attributes _street_, _city_, _state_, and _zip_). When we create tables from E-R designs that contain these types of attributes, we eliminate this substructure. For composite attributes, we let each component be an attribute in its own right. For multivalued attributes, we create one tuple for each item in a multivalued set.
 
-In the relational model, we formalize this idea that attributes do not have any substructure. A domain is **atomic** if elements of the domain are considered to be indivisible units. We say that a relation schema R is in **first normal form** (1NF) if the domains of all attributes of R are atomic.
+In the relational model, we formalize this idea that attributes do not have any substructure. A domain is **atomic** if elements of the domain are considered to be indivisible units. We say that a relation schema _R_ is in **first normal form** (1NF) if the domains of all attributes of _R_ are atomic.
 
-A set of names is an example of a nonatomic value. For example, if the schema of a relation employee included an attribute children whose domain elements are sets of names, the schema would not be in first normal form.
+A set of names is an example of a nonatomic value. For example, if the schema of a relation _employee_ included an attribute _children_ whose domain elements are sets of names, the schema would not be in first normal form.
 
-Composite attributes, such as an attribute address with component attributes street, city, state, and zip also have nonatomic domains.
+Composite attributes, such as an attribute _address_ with component attributes _street_, _city_, _state_, and _zip_ also have nonatomic domains.
 
 Integers are assumed to be atomic, so the set of integers is an atomic domain; however, the set of all sets of integers is a nonatomic domain. The distinction is that we do not normally consider integers to have subparts, but we consider sets of integers to have subparts—namely, the integers making up the set. But the important issue is not what the domain itself is, but rather how we use domain elements in our database. The domain of all integers would be nonatomic if we considered each integer to be an ordered list of digits.
 
@@ -2307,13 +2307,13 @@ As a practical illustration of the above point, consider an organization that as
 
 When such identification numbers are used, the department of an employee can be found by writing code that breaks up the structure of an identification number. Doing so requires extra programming, and information gets encoded in the application program rather than in the database. Further problems arise if such identification numbers are used as primary keys: When an employee changes departments, the employee’s identification number must be changed everywhere it occurs, which can be a difficult task, or the code that interprets the number would give a wrong result.
 
-From the above discussion, it may appear that our use of course identifiers such as “CS-101”, where “CS” indicates the Computer Science department, means that the domain of course identifiers is not atomic. Such a domain is not atomic as far as humans using the system are concerned. However, the database application still treats the domain as atomic, as long as it does not attempt to split the identifier and interpret parts of the identifier as a department abbreviation. The course schema stores the department name as a separate attribute, and the database application can use this attribute value to find the department of a course, instead  
+From the above discussion, it may appear that our use of course identifiers such as “CS-101”, where “CS” indicates the Computer Science department, means that the domain of course identifiers is not atomic. Such a domain is not atomic as far as humans using the system are concerned. However, the database application still treats the domain as atomic, as long as it does not attempt to split the identifier and interpret parts of the identifier as a department abbreviation. The _course_ schema stores the department name as a separate attribute, and the database application can use this attribute value to find the department of a course, instead  
 
 **8.3 Decomposition Using Functional Dependencies 329**
 
 of interpreting particular characters of the course identifier. Thus, our university schema can be considered to be in first normal form.
 
-The use of set-valued attributes can lead to designs with redundant storage of data, which in turn can result in inconsistencies. For instance, instead of having the relationship between instructors and sections being represented as a separate relation teaches, a database designer may be tempted to store a set of course section identifiers with each instructor and a set of instructor identifiers with each section. (The primary keys of section and instructor are used as identifiers.) Whenever data pertaining to which instructor teaches which section is changed, the update has to be performed at two places: in the set of instructors for the section, and the set of sections for the instructor. Failure to perform both updates can leave the database in an inconsistent state. Keeping only one of these sets, that either the set of instructors of a section, or the set of sections of an instructor, would avoid repeated information; however keeping only one of these would complicate some queries, and it is unclear which of the two to retain.
+The use of set-valued attributes can lead to designs with redundant storage of data, which in turn can result in inconsistencies. For instance, instead of having the relationship between instructors and sections being represented as a separate relation _teaches_, a database designer may be tempted to store a set of course section identifiers with each instructor and a set of instructor identifiers with each section. (The primary keys of _section_ and _instructor_ are used as identifiers.) Whenever data pertaining to which instructor teaches which section is changed, the update has to be performed at two places: in the set of instructors for the section, and the set of sections for the instructor. Failure to perform both updates can leave the database in an inconsistent state. Keeping only one of these sets, that either the set of instructors of a section, or the set of sections of an instructor, would avoid repeated information; however keeping only one of these would complicate some queries, and it is unclear which of the two to retain.
 
 Some types of nonatomic values can be useful, although they should be used with care. For example, composite-valued attributes are often useful, and set- valued attributes are also useful in many cases, which is why both are supported in the E-R model. In many domains where entities have a complex structure, forcing a first normal form representation represents an unnecessary burden on the application programmer, who has to write code to convert data into atomic form. There is also the runtime overhead of converting data back and forth from the atomic form. Support for nonatomic values can thus be very useful in such domains. In fact, modern database systems do support many types of nonatomic values, as we shall see in Chapter 22. However, in this chapter we restrict ourselves to relations in first normal form and, thus, all domains are atomic.
 
@@ -2323,7 +2323,7 @@ In Section 8.1, we noted that there is a formal methodology for evaluating wheth
 
 In discussing algorithms for relational database design, we shall need to talk about arbitrary relations and their schema, rather than talking only about examples. Recalling our introduction to the relational model in Chapter 2, we summarize our notation here.
 
-• In general, we use Greek letters for sets of attributes (for example, ). We use a lowercase Roman letter followed by an uppercase Roman letter in parentheses to refer to a relation schema (for example, r (R)). We use the notation r (R) to show that the schema is for relation r , with R denoting the set of attributes, but at times simplify our notation to use just R when the relation name does not matter to us.
+• In general, we use Greek letters for sets of attributes (for example, ). We use a lowercase Roman letter followed by an uppercase Roman letter in parentheses to refer to a relation schema (for example, _r_ (_R_)). We use the notation _r_ (_R_) to show that the schema is for relation _r_ , with _R_ denoting the set of attributes, but at times simplify our notation to use just _R_ when the relation name does not matter to us.
 
 Of course, a relation schema is a set of attributes, but not all sets of attributes are schemas. When we use a lowercase Greek letter, we are referring to a set  
 
@@ -2331,133 +2331,133 @@ Of course, a relation schema is a set of attributes, but not all sets of attribu
 
 of attributes that may or may not be a schema. A Roman letter is used when we wish to indicate that the set of attributes is definitely a schema.
 
-• When a set of attributes is a superkey, we denote it by K . A superkey pertains to a specific relation schema, so we use the terminology “K is a superkey of r (R).”
+• When a set of attributes is a superkey, we denote it by _K_ . A superkey pertains to a specific relation schema, so we use the terminology “_K_ is a superkey of _r_ (_R_).”
 
-• We use a lowercase name for relations. In our examples, these names are intended to be realistic (for example, instructor), while in our definitions and algorithms, we use single letters, like r .
+• We use a lowercase name for relations. In our examples, these names are intended to be realistic (for example, _instructor_), while in our definitions and algorithms, we use single letters, like _r_ .
 
-• A relation, of course, has a particular value at any given time; we refer to that as an instance and use the term “instance of r”. When it is clear that we are talking about an instance, we may use simply the relation name (for example, r ).
+• A relation, of course, has a particular value at any given time; we refer to that as an instance and use the term “instance of _r_”. When it is clear that we are talking about an instance, we may use simply the relation name (for example, _r_ ).
 
 **8.3.1 Keys and Functional Dependencies**
 
 A database models a set of entities and relationships in the real world. There are usually a variety of constraints (rules) on the data in the real world. For example, some of the constraints that are expected to hold in a university database are:
 
-**1.** Students and instructors are uniquely identified by their ID.
+**1\.** Students and instructors are uniquely identified by their ID.
 
-**2.** Each student and instructor has only one name.
+**2\.** Each student and instructor has only one name.
 
-**3.** Each instructor and student is (primarily) associated with only one depart- ment.1
+**3\.** Each instructor and student is (primarily) associated with only one depart- ment.1
 
-**4.** Each department has only one value for its budget, and only one associated building.
+**4\.** Each department has only one value for its budget, and only one associated building.
 
 An instance of a relation that satisfies all such real-world constraints is called a **legal instance** of the relation; a legal instance of a database is one where all the relation instances are legal instances.
 
 Some of the most commonly used types of real-world constraints can be represented formally as keys (superkeys, candidate keys and primary keys), or as functional dependencies, which we define below.
 
-In Section 2.3, we defined the notion of a superkey as a set of one or more attributes that, taken collectively, allows us to identify uniquely a tuple in the relation. We restate that definition here as follows: Let r (R) be a relation schema. A subset K of R is a **superkey** of r (R) if, in any legal instance of r (R), for all pairs t1 and t2 of tuples in the instance of r if t1 = t2, then t1[K ] = t2[K ]. That is, no two tuples in any legal instance of relation r (R) may have the same value on
+In Section 2.3, we defined the notion of a _superkey_ as a set of one or more attributes that, taken collectively, allows us to identify uniquely a tuple in the relation. We restate that definition here as follows: Let _r_ (_R_) be a relation schema. A subset _K_ of _R_ is a **superkey** of _r_ (_R_) if, in any legal instance of _r_ (_R_), for all pairs _t_1 and _t_2 of tuples in the instance of _r_ if _t_1 = _t_2, then _t_1[_K_ ] = _t_2[_K_ ]. That is, no two tuples in any legal instance of relation _r_ (_R_) may have the same value on
 
 1An instructor or a student can be associated with more than one department, for example as an adjunct faculty, or as a minor department. Our simplified university schema models only the primary department associated with each instructor or student. A real university schema would capture secondary associations in other relations.  
 
 **8.3 Decomposition Using Functional Dependencies 331**
 
-attribute set K. Clearly, if no two tuples in r have the same value on K , then a K \-value uniquely identifies a tuple in r .
+attribute set _K_. Clearly, if no two tuples in _r_ have the same value on _K_ , then a _K_ \-value uniquely identifies a tuple in _r_ .
 
-Whereas a superkey is a set of attributes that uniquely identifies an entire tuple, a functional dependency allows us to express constraints that uniquely identify the values of certain attributes. Consider a relation schema r (R), and let  ⊆ R and  ⊆ R.
+Whereas a superkey is a set of attributes that uniquely identifies an entire tuple, a functional dependency allows us to express constraints that uniquely identify the values of certain attributes. Consider a relation schema _r_ (_R_), and let  ⊆ _R_ and  ⊆ _R_.
 
-• Given an instance of r (R), we say that the instance **satisfies** the **functional dependency**  →  if for all pairs of tuples t1 and t2 in the instance such that t1[] = t2[], it is also the case that t1[] = t2[].
+• Given an instance of _r_ (_R_), we say that the instance **satisfies** the **functional dependency**  →  if for all pairs of tuples _t_1 and _t_2 in the instance such that _t_1[] = _t_2[], it is also the case that _t_1[] = _t_2[].
 
-• We say that the functional dependency  →  **holds** on schema r (R) if, in every legal instance of r (R) it satisfies the functional dependency.
+• We say that the functional dependency  →  **holds** on schema _r_ (_R_) if, in every legal instance of _r_ (_R_) it satisfies the functional dependency.
 
-Using the functional-dependency notation, we say that _K is a superkey of r_ (R) if the functional dependency K → R holds on r (R). In other words, K is a superkey if, for every legal instance of r (R), for every pair of tuples t1 and t2 from the instance, whenever t1[K ] = t2[K ]_,_ it is also the case that t1[R] = t2[R] (that is, t1 = t2).2
+Using the functional-dependency notation, we say that _K is a superkey of r_ (_R_) if the functional dependency _K_ → _R_ holds on _r_ (_R_). In other words, _K_ is a superkey if, for every legal instance of _r_ (_R_), for every pair of tuples _t_1 and _t_2 from the instance, whenever _t_1[_K_ ] = _t_2[_K_ ]_,_ it is also the case that _t_1[_R_] = _t_2[_R_] (that is, _t_1 = _t_2).2
 
 Functional dependencies allow us to express constraints that we cannot ex- press with superkeys. In Section 8.1.2, we considered the schema:
 
-_inst dept_ (ID, name, salary, _dept name_, building, budget)
+_inst dept_ (_ID_, _name_, _salary_, _dept name_, _building_, _budget_)
 
-in which the functional dependency _dept name_ → budget holds because for each department (identified by _dept name_) there is a unique budget amount.
+in which the functional dependency _dept name_ → _budget_ holds because for each department (identified by _dept name_) there is a unique budget amount.
 
-We denote the fact that the pair of attributes (ID, _dept name_) forms a superkey for _inst dept_ by writing:
+We denote the fact that the pair of attributes (_ID_, _dept name_) forms a superkey for _inst dept_ by writing:
 
-ID, _dept name_ → name, salary, building, budget
+_ID_, _dept name_ → _name_, _salary_, _building_, _budget_
 
 We shall use functional dependencies in two ways:
 
-**1.** To test instances of relations to see whether they satisfy a given set F of functional dependencies.
+**1\.** To test instances of relations to see whether they satisfy a given set _F_ of functional dependencies.
 
-**2.** To specify constraints on the set of legal relations. We shall thus concern our- selves with only those relation instances that satisfy a given set of functional dependencies. If we wish to constrain ourselves to relations on schema r (R) that satisfy a set F of functional dependencies, we say that F **holds** on r (R).
+**2\.** To specify constraints on the set of legal relations. We shall thus concern our- selves with _only_ those relation instances that satisfy a given set of functional dependencies. If we wish to constrain ourselves to relations on schema _r_ (_R_) that satisfy a set _F_ of functional dependencies, we say that _F_ **holds** on _r_ (_R_).
 
-Let us consider the instance of relation r of Figure 8.4, to see which functional dependencies are satisfied. Observe that A → C is satisfied. There are two tuples
+Let us consider the instance of relation _r_ of Figure 8.4, to see which functional dependencies are satisfied. Observe that _A_ → _C_ is satisfied. There are two tuples
 
-2Note that we assume here that relations are sets. SQL deals with multisets, and a **primary key** declaration in SQL for a set of attributes K requires not only that t1 = t2 if t1[K ] = t2[K ], but also that there be no duplicate tuples. SQL also requires that attributes in the set K cannot be assigned a null value.  
+2Note that we assume here that relations are sets. SQL deals with multisets, and a **primary key** declaration in SQL for a set of attributes _K_ requires not only that _t_1 = _t_2 if _t_1[_K_ ] = _t_2[_K_ ], but also that there be no duplicate tuples. SQL also requires that attributes in the set _K_ cannot be assigned a _null_ value.  
 
 **332 Chapter 8 Relational Database Design**
 
 _A B C D_
 
-a1 b1 c1 d1 a1 b2 c1 d2 a2 b2 c2 d2 a2 b3 c2 d3 a3 b3 c2 d4
+_a_1 _b_1 _c_1 _d_1 _a_1 _b_2 _c_1 _d_2 _a_2 _b_2 _c_2 _d_2 _a_2 _b_3 _c_2 _d_3 _a_3 _b_3 _c_2 _d_4
 
-**Figure 8.4** Sample instance of relation r.
+**Figure 8.4** Sample instance of relation _r_.
 
-that have an A value of a1. These tuples have the same C value—namely, c1. Similarly, the two tuples with an A value of a2 have the same C value, c2. There are no other pairs of distinct tuples that have the same A value. The functional dependency C → A is not satisfied, however. To see that it is not, consider the tuples t1 = (a2_, b_3_, c_2_, d_3) and t2 = (a3_, b_3_, c_2_, d_4). These two tuples have the same C values, c2, but they have different A values, a2 and a3, respectively. Thus, we have found a pair of tuples t1 and t2 such that t1[C] = t2[C], but t1[A] = t2[A].
+that have an _A_ value of _a_1\. These tuples have the same _C_ value—namely, _c_1\. Similarly, the two tuples with an _A_ value of _a_2 have the same _C_ value, _c_2\. There are no other pairs of distinct tuples that have the same _A_ value. The functional dependency _C_ → _A_ is not satisfied, however. To see that it is not, consider the tuples _t_1 = (_a_2_, b_3_, c_2_, d_3) and _t_2 = (_a_3_, b_3_, c_2_, d_4). These two tuples have the same _C_ values, _c_2, but they have different _A_ values, _a_2 and _a_3, respectively. Thus, we have found a pair of tuples _t_1 and _t_2 such that _t_1[_C_] = _t_2[_C_], but _t_1[_A_] = _t_2[_A_].
 
-Some functional dependencies are said to be **trivial** because they are satis- fied by all relations. For example, A → A is satisfied by all relations involving attribute A. Reading the definition of functional dependency literally, we see that, for all tuples t1 and t2 such that t1[A] = t2[A], it is the case that t1[A] = t2[A]. Similarly, AB → A is satisfied by all relations involving attribute A. In general, a functional dependency of the form  →  is **trivial** if  ⊆ .
+Some functional dependencies are said to be **trivial** because they are satis- fied by all relations. For example, _A_ → _A_ is satisfied by all relations involving attribute _A_. Reading the definition of functional dependency literally, we see that, for all tuples _t_1 and _t_2 such that _t_1[_A_] = _t_2[_A_], it is the case that _t_1[_A_] = _t_2[_A_]. Similarly, _AB_ → _A_ is satisfied by all relations involving attribute _A_. In general, a functional dependency of the form  →  is **trivial** if  ⊆ .
 
-It is important to realize that an instance of a relation may satisfy some func- tional dependencies that are not required to hold on the relation’s schema. In the instance of the classroom relation of Figure 8.5, we see that _room number_ → capacity is satisfied. However, we believe that, in the real world, two classrooms in differ- ent buildings can have the same room number but with different room capacity. Thus, it is possible, at some time, to have an instance of the classroom relation in which _room number_ → capacity is not satisfied. So, we would not include _room number_ → capacity in the set of functional dependencies that hold on the schema
+It is important to realize that an instance of a relation may satisfy some func- tional dependencies that are not required to hold on the relation’s schema. In the instance of the _classroom_ relation of Figure 8.5, we see that _room number_ → _capacity_ is satisfied. However, we believe that, in the real world, two classrooms in differ- ent buildings can have the same room number but with different room capacity. Thus, it is possible, at some time, to have an instance of the _classroom_ relation in which _room number_ → _capacity_ is not satisfied. So, we would not include _room number_ → _capacity_ in the set of functional dependencies that hold on the schema
 
-for the classroom relation. However, we would expect the functional dependency building, _room number_ → capacity to hold on the classroom schema.
+for the _classroom_ relation. However, we would expect the functional dependency _building_, _room number_ → _capacity_ to hold on the _classroom_ schema.
 
-Given that a set of functional dependencies F holds on a relation r (R), it may be possible to infer that certain other functional dependencies must also hold on
+Given that a set of functional dependencies _F_ holds on a relation _r_ (_R_), it may be possible to infer that certain other functional dependencies must also hold on
 
 _building room number capacity_
 
 Packard 101 500 Painter 514 10 Taylor 3128 70 Watson 100 30 Watson 120 50
 
-**Figure 8.5** An instance of the classroom relation.  
+**Figure 8.5** An instance of the _classroom_ relation.  
 
 **8.3 Decomposition Using Functional Dependencies 333**
 
-the relation. For example, given a schema r (_A, B, C_), if functional dependencies A → B and B → C , hold on r , we can infer the functional dependency A → C must also hold on r . This is because, given any value of A there can be only one corresponding value for B, and for that value of B, there can only be one corresponding value for C . We study later, in Section 8.4.1, how to make such inferences.
+the relation. For example, given a schema _r_ (_A, B, C_), if functional dependencies _A_ → _B_ and _B_ → _C_ , hold on _r_ , we can infer the functional dependency _A_ → _C_ must also hold on _r_ . This is because, given any value of _A_ there can be only one corresponding value for _B_, and for that value of _B_, there can only be one corresponding value for _C_ . We study later, in Section 8.4.1, how to make such inferences.
 
-We will use the notation F \+ to denote the **closure** of the set F , that is, the set of all functional dependencies that can be inferred given the set F . Clearly F \+ contains all of the functional dependencies in F .
+We will use the notation _F_ \+ to denote the **closure** of the set _F_ , that is, the set of all functional dependencies that can be inferred given the set _F_ . Clearly _F_ \+ contains all of the functional dependencies in _F_ .
 
 **8.3.2 Boyce–Codd Normal Form**
 
-One of the more desirable normal forms that we can obtain is **Boyce–Codd normal form** (**BCNF**). It eliminates all redundancy that can be discovered based on functional dependencies, though, as we shall see in Section 8.6, there may be other types of redundancy remaining. A relation schema R is in BCNF with respect to a set F of functional dependencies if, for all functional dependencies in F \+ of the form  → , where  ⊆ R and  ⊆ R, at least one of the following holds:
+One of the more desirable normal forms that we can obtain is **Boyce–Codd normal form** (**BCNF**). It eliminates all redundancy that can be discovered based on functional dependencies, though, as we shall see in Section 8.6, there may be other types of redundancy remaining. A relation schema _R_ is in BCNF with respect to a set _F_ of functional dependencies if, for all functional dependencies in _F_ \+ of the form  → , where  ⊆ _R_ and  ⊆ _R_, at least one of the following holds:
 
 •  →  is a trivial functional dependency (that is,  ⊆ ).
 
-•  is a superkey for schema R.
+•  is a superkey for schema _R_.
 
 A database design is in BCNF if each member of the set of relation schemas that constitutes the design is in BCNF.
 
 We have already seen in Section 8.1 an example of a relational schema that is not in BCNF:
 
-_inst dept_ (ID, name, salary, _dept name_, building, budget)
+_inst dept_ (_ID_, _name_, _salary_, _dept name_, _building_, _budget_)
 
-The functional dependency _dept name_ → budget holds on _inst dept_, but _dept name_ is not a superkey (because, a department may have a number of different instruc- tors). In Section 8.1.2, we saw that the decomposition of _inst dept_ into instructor and department is a better design. The instructor schema is in BCNF. All of the nontrivial functional dependencies that hold, such as:
+The functional dependency _dept name_ → _budget_ holds on _inst dept_, but _dept name_ is not a superkey (because, a department may have a number of different instruc- tors). In Section 8.1.2, we saw that the decomposition of _inst dept_ into _instructor_ and _department_ is a better design. The _instructor_ schema is in BCNF. All of the nontrivial functional dependencies that hold, such as:
 
-ID → name, _dept name_, salary
+_ID_ → _name_, _dept name_, _salary_
 
-include ID on the left side of the arrow, and ID is a superkey (actually, in this case, the primary key) for instructor. (In other words, there is no nontrivial functional dependency with any combination of name, _dept name_, and salary, without ID, on the side.) Thus, instructor is in BCNF.
+include _ID_ on the left side of the arrow, and _ID_ is a superkey (actually, in this case, the primary key) for _instructor_. (In other words, there is no nontrivial functional dependency with any combination of _name_, _dept name_, and _salary_, without _ID_, on the side.) Thus, _instructor_ is in BCNF.
 
-Similarly, the department schema is in BCNF because all of the nontrivial func- tional dependencies that hold, such as:
+Similarly, the _department_ schema is in BCNF because all of the nontrivial func- tional dependencies that hold, such as:
 
-_dept name_ → building, budget  
+_dept name_ → _building_, _budget_  
 
 **334 Chapter 8 Relational Database Design**
 
-include _dept name_ on the left side of the arrow, and _dept name_ is a superkey (and the primary key) for department. Thus, department is in BCNF.
+include _dept name_ on the left side of the arrow, and _dept name_ is a superkey (and the primary key) for _department_. Thus, _department_ is in BCNF.
 
-We now state a general rule for decomposing that are not in BCNF. Let R be a schema that is not in BCNF. Then there is at least one nontrivial functional dependency  →  such that  is not a superkey for R. We replace R in our design with two schemas:
+We now state a general rule for decomposing that are not in BCNF. Let _R_ be a schema that is not in BCNF. Then there is at least one nontrivial functional dependency  →  such that  is not a superkey for _R_. We replace _R_ in our design with two schemas:
 
 • ( ∪ )
 
-• (R − ( − ))
+• (_R_ − ( − ))
 
 In the case of _inst dept_ above,  = _dept name_,  = _{building_, _budget}_, and _inst dept_ is replaced by
 
-• ( ∪ ) = (_dept name_, building,budget)
+• ( ∪ ) = (_dept name_, _building_,_budget_)
 
-• (R − ( − )) = (ID, name, _dept name_, salary)
+• (_R_ − ( − )) = (_ID_, _name_, _dept name_, _salary_)
 
 In this example, it turns out that  −  = . We need to state the rule as we did so as to deal correctly with functional dependencies that have attributes that appear on both sides of the arrow. The technical reasons for this are covered later in Section 8.5.1.
 
@@ -2467,9 +2467,9 @@ When we decompose a schema that is not in BCNF, it may be that one or more of th
 
 We have seen several ways in which to express database consistency constraints: primary-key constraints, functional dependencies, **check** constraints, assertions, and triggers. Testing these constraints each time the database is updated can be costly and, therefore, it is useful to design the database in a way that constraints can be tested efficiently. In particular, if testing a functional dependency can be done by considering just one relation, then the cost of testing this constraint is low. We shall see that, in some cases, decomposition into BCNF can prevent efficient testing of certain functional dependencies.
 
-To illustrate this, suppose that we make a small change to our university organization. In the design of Figure 7.15, a student may have only one advisor. This follows from the relationship set advisor being many-to-one from student to advisor. The “small” change we shall make is that an instructor can be associated with only a single department and a student may have more than one advisor, but at most one from a given department.3
+To illustrate this, suppose that we make a small change to our university organization. In the design of Figure 7.15, a student may have only one advisor. This follows from the relationship set _advisor_ being many-to-one from _student_ to _advisor_. The “small” change we shall make is that an instructor can be associated with only a single department and a student may have more than one advisor, but at most one from a given department.3
 
-One way to implement this change using the E-R design is by replacing the advisor relationship set with a ternary relationship set, _dept advisor_, involving entity sets instructor, student, and department that is many-to-one from the pair
+One way to implement this change using the E-R design is by replacing the _advisor_ relationship set with a ternary relationship set, _dept advisor_, involving entity sets _instructor_, _student_, and _department_ that is many-to-one from the pair
 
 3Such an arrangement makes sense for students with a double major.  
 
@@ -2477,23 +2477,23 @@ One way to implement this change using the E-R design is by replacing the adviso
 
 _dept\_name building budget_
 
-department
+_department_
 
-_dept\advisor
+_dept\_advisor_
 
-instructor
+_instructor_
 
 _ID name salary_
 
-student
+_student_
 
-_ID name tot\cred
+_ID name tot\_cred_
 
 **Figure 8.6** The _dept advisor_ relationship set.
 
-_{student_, _instructor}_ to department as shown in Figure 8.6. The E-R diagram specifies the constraint that “a student may have more than one advisor, but at most one corresponding to a given department”.
+_{student_, _instructor}_ to _department_ as shown in Figure 8.6. The E-R diagram specifies the constraint that “a student may have more than one advisor, but at most one corresponding to a given department”.
 
-With this new E-R diagram, the schemas for the instructor, department, and student are unchanged. However, the schema derived from _dept advisor_ is now:
+With this new E-R diagram, the schemas for the _instructor_, _department_, and _student_ are unchanged. However, the schema derived from _dept advisor_ is now:
 
 _dept advisor_ (_s ID_, _i ID_, _dept name_)
 
@@ -2519,15 +2519,15 @@ Because our design makes it computationally hard to enforce this functional depe
 
 BCNF requires that all nontrivial dependencies be of the form  → , where  is a superkey. Third normal form (3NF) relaxes this constraint slightly by allowing certain nontrivial functional dependencies whose left side is not a superkey. Before we define 3NF, we recall that a candidate key is a minimal superkey—that is, a superkey no proper subset of which is also a superkey.
 
-A relation schema R is in **third normal form** with respect to a set F of functional dependencies if, for all functional dependencies in F \+ of the form  → , where  ⊆ R and  ⊆ R, at least one of the following holds:
+A relation schema _R_ is in **third normal form** with respect to a set _F_ of functional dependencies if, for all functional dependencies in _F_ \+ of the form  → , where  ⊆ _R_ and  ⊆ _R_, at least one of the following holds:
 
 •  →  is a trivial functional dependency.
 
-•  is a superkey for R.
+•  is a superkey for _R_.
 
-• Each attribute A in  −  is contained in a candidate key for R.
+• Each attribute _A_ in  −  is contained in a candidate key for _R_.
 
-Note that the third condition above does not say that a single candidate key must contain all the attributes in  − ; each attribute A in  −  may be contained in a different candidate key.
+Note that the third condition above does not say that a single candidate key must contain all the attributes in  − ; each attribute _A_ in  −  may be contained in a _different_ candidate key.
 
 The first two alternatives are the same as the two alternatives in the definition of BCNF. The third alternative of the 3NF definition seems rather unintuitive, and it is not obvious why it is useful. It represents, in some sense, a minimal relaxation of the BCNF conditions that helps ensure that every schema has a dependency- preserving decomposition into 3NF. Its purpose will become more clear later, when we study decomposition into 3NF.
 
@@ -2551,15 +2551,15 @@ We have seen the trade-off that must be made between BCNF and 3NF when there is 
 
 **8.3.5 Higher Normal Forms**
 
-Using functional dependencies to decompose schemas may not be sufficient to avoid unnecessary repetition of information in certain cases. Consider a slight variation in the instructor entity-set definition in which we record with each instructor a set of children’s names and a set of phone numbers. The phone numbers may be shared by multiple people. Thus, _phone number_ and _child name_ would be multivalued attributes and, following our rules for generating schemas from an E-R design, we would have two schemas, one for each of the multivalued attributes, _phone number_ and _child name_:
+Using functional dependencies to decompose schemas may not be sufficient to avoid unnecessary repetition of information in certain cases. Consider a slight variation in the _instructor_ entity-set definition in which we record with each instructor a set of children’s names and a set of phone numbers. The phone numbers may be shared by multiple people. Thus, _phone number_ and _child name_ would be multivalued attributes and, following our rules for generating schemas from an E-R design, we would have two schemas, one for each of the multivalued attributes, _phone number_ and _child name_:
 
-(ID, _child name_) (ID, _phone number_)
+(_ID_, _child name_) (_ID_, _phone number_)
 
 If we were to combine these schemas to get
 
-(ID, _child name_, _phone number_)
+(_ID_, _child name_, _phone number_)
 
-we would find the result to be in BCNF because only nontrivial functional de- pendencies hold. As a result we might think that such a combination is a good idea. However, such a combination is a bad idea, as we can see by consider- ing the example of an instructor with two children and two phone numbers. For example, let the instructor with ID 99999 have two children named “David” and “William” and two phone numbers, 512-555-1234 and 512-555-4321. In the combined schema, we must repeat the phone numbers once for each dependent:
+we would find the result to be in BCNF because only nontrivial functional de- pendencies hold. As a result we might think that such a combination is a good idea. However, such a combination is a bad idea, as we can see by consider- ing the example of an instructor with two children and two phone numbers. For example, let the instructor with _ID_ 99999 have two children named “David” and “William” and two phone numbers, 512-555-1234 and 512-555-4321. In the combined schema, we must repeat the phone numbers once for each dependent:
 
 (99999, David, 512-555-1234) (99999, David, 512-555-4321) (99999, William, 512-555-1234) (99999, William, 512-555-4321)
 
@@ -2577,39 +2577,39 @@ We have seen in our examples that it is useful to be able to reason systematical
 
 **8.4.1 Closure of a Set of Functional Dependencies**
 
-We shall see that, given a set F of functional dependencies on a schema, we can prove that certain other functional dependencies also hold on the schema. We say that such functional dependencies are “logically implied” by F. When testing for normal forms, it is not sufficient to consider the given set of functional dependencies; rather, we need to consider all functional dependencies that hold on the schema.
+We shall see that, given a set _F_ of functional dependencies on a schema, we can prove that certain other functional dependencies also hold on the schema. We say that such functional dependencies are “logically implied” by _F_. When testing for normal forms, it is not sufficient to consider the given set of functional dependencies; rather, we need to consider _all_ functional dependencies that hold on the schema.
 
-More formally, given a relational schema r (R), a functional dependency f on R is **logically implied** by a set of functional dependencies F on r if every instance of r (R) that satisfies F also satisfies f .
+More formally, given a relational schema _r_ (_R_), a functional dependency _f_ on _R_ is **logically implied** by a set of functional dependencies _F_ on _r_ if every instance of _r_ (_R_) that satisfies _F_ also satisfies _f_ .
 
-Suppose we are given a relation schema r (A, B, C , G, H, I ) and the set of functional dependencies:
+Suppose we are given a relation schema _r_ (_A_, _B_, _C_ , _G_, _H_, _I_ ) and the set of functional dependencies:
 
-A → _B A_ → _C CG_ → _H CG_ → _I B_ → H
+_A_ → _B A_ → _C CG_ → _H CG_ → _I B_ → _H_
 
 The functional dependency:
 
-A → H
+_A_ → _H_
 
-is logically implied. That is, we can show that, whenever a relation satisfies our given set of functional dependencies, A → H must also be satisfied by that relation. Suppose that t1 and t2 are tuples such that:
+is logically implied. That is, we can show that, whenever a relation satisfies our given set of functional dependencies, _A_ → _H_ must also be satisfied by that relation. Suppose that _t_1 and _t_2 are tuples such that:
 
-t1[A] = t2[A]
+_t_1[_A_] = _t_2[_A_]
 
-Since we are given that A → B, it follows from the definition of functional depen- dency that:
+Since we are given that _A_ → _B_, it follows from the definition of functional depen- dency that:
 
-t1[B] = t2[B]  
+_t_1[_B_] = _t_2[_B_]  
 
 **8.4 Functional-Dependency Theory 339**
 
-Then, since we are given that B → H, it follows from the definition of functional dependency that:
+Then, since we are given that _B_ → _H_, it follows from the definition of functional dependency that:
 
-t1[H] = t2[H]
+_t_1[_H_] = _t_2[_H_]
 
-Therefore, we have shown that, whenever t1 and t2 are tuples such that t1[A] = t2[A], it must be that t1[H] = t2[H]. But that is exactly the definition of A → H.
+Therefore, we have shown that, whenever _t_1 and _t_2 are tuples such that _t_1[_A_] = _t_2[_A_], it must be that _t_1[_H_] = _t_2[_H_]. But that is exactly the definition of _A_ → _H_.
 
-Let F be a set of functional dependencies. The **closure** of F, denoted by F +, is the set of all functional dependencies logically implied by F. Given F, we can compute F \+ directly from the formal definition of functional dependency. If F were large, this process would be lengthy and difficult. Such a computation of F \+ requires arguments of the type just used to show that A → H is in the closure of our example set of dependencies.
+Let _F_ be a set of functional dependencies. The **closure** of _F_, denoted by _F_ +, is the set of all functional dependencies logically implied by _F_. Given _F_, we can compute _F_ \+ directly from the formal definition of functional dependency. If _F_ were large, this process would be lengthy and difficult. Such a computation of _F_ \+ requires arguments of the type just used to show that _A_ → _H_ is in the closure of our example set of dependencies.
 
 **Axioms**, or rules of inference, provide a simpler technique for reasoning about functional dependencies. In the rules that follow, we use Greek letters (, ,  , _. . ._ ) for sets of attributes, and uppercase Roman letters from the beginning of the alphabet for individual attributes. We use  to denote  ∪ .
 
-We can use the following three rules to find logically implied functional dependencies. By applying these rules repeatedly, we can find all of F +, given F. This collection of rules is called **Armstrong’s axioms** in honor of the person who first proposed it.
+We can use the following three rules to find logically implied functional dependencies. By applying these rules _repeatedly_, we can find all of _F_ +, given _F_. This collection of rules is called **Armstrong’s axioms** in honor of the person who first proposed it.
 
 • **Reflexivity rule**. If  is a set of attributes and  ⊆ , then  →  holds.
 
@@ -2617,9 +2617,9 @@ We can use the following three rules to find logically implied functional depend
 
 • **Transitivity rule**. If  →  holds and  →  holds, then  →  holds.
 
-Armstrong’s axioms are **sound**, because they do not generate any incorrect functional dependencies. They are **complete**, because, for a given set F of func- tional dependencies, they allow us to generate all F +. The bibliographical notes provide references for proofs of soundness and completeness.
+Armstrong’s axioms are **sound**, because they do not generate any incorrect functional dependencies. They are **complete**, because, for a given set _F_ of func- tional dependencies, they allow us to generate all _F_ +. The bibliographical notes provide references for proofs of soundness and completeness.
 
-Although Armstrong’s axioms are complete, it is tiresome to use them directly for the computation of F +. To simplify matters further, we list additional rules. It is possible to use Armstrong’s axioms to prove that these rules are sound (see Practice Exercises 8.4 and 8.5 and Exercise 8.26).
+Although Armstrong’s axioms are complete, it is tiresome to use them directly for the computation of _F_ +. To simplify matters further, we list additional rules. It is possible to use Armstrong’s axioms to prove that these rules are sound (see Practice Exercises 8.4 and 8.5 and Exercise 8.26).
 
 • **Union rule**. If  →  holds and  →  holds, then  →  holds.
 
@@ -2627,215 +2627,215 @@ Although Armstrong’s axioms are complete, it is tiresome to use them directly 
 
 • **Pseudotransitivity rule**. If  →  holds and  →  holds, then  →  holds.
 
-Let us apply our rules to the example of schema R \= (A, B, C , G, H, I ) and the set F of functional dependencies {A → B, A → C , CG → H, CG → I , B → H}. We list several members of F \+ here:  
+Let us apply our rules to the example of schema _R_ \= (_A_, _B_, _C_ , _G_, _H_, _I_ ) and the set _F_ of functional dependencies {_A_ → _B_, _A_ → _C_ , _CG_ → _H_, _CG_ → _I_ , _B_ → _H_}. We list several members of _F_ \+ here:  
 
 **340 Chapter 8 Relational Database Design**
 
-• A → H. Since A → B and B → H hold, we apply the transitivity rule. Observe that it was much easier to use Armstrong’s axioms to show that A → H holds than it was to argue directly from the definitions, as we did earlier in this section.
+• _A_ → _H_. Since _A_ → _B_ and _B_ → _H_ hold, we apply the transitivity rule. Observe that it was much easier to use Armstrong’s axioms to show that _A_ → _H_ holds than it was to argue directly from the definitions, as we did earlier in this section.
 
-• CG → HI . Since CG → H and CG → I , the union rule implies that CG → HI .
+• _CG_ → _HI_ . Since _CG_ → _H_ and _CG_ → _I_ , the union rule implies that _CG_ → _HI_ .
 
-• AG → I . Since A → C and CG → I , the pseudotransitivity rule implies that AG → I holds.
+• _AG_ → _I_ . Since _A_ → _C_ and _CG_ → _I_ , the pseudotransitivity rule implies that _AG_ → _I_ holds.
 
-Another way of finding that AG → I holds is as follows: We use the augmentation rule on A → C to infer AG → CG. Applying the transitivity rule to this dependency and CG → I , we infer AG → I .
+Another way of finding that _AG_ → _I_ holds is as follows: We use the augmentation rule on _A_ → _C_ to infer _AG_ → _CG_. Applying the transitivity rule to this dependency and _CG_ → _I_ , we infer _AG_ → _I_ .
 
-Figure 8.7 shows a procedure that demonstrates formally how to use Arm- strong’s axioms to compute F +. In this procedure, when a functional dependency is added to F +, it may be already present, and in that case there is no change to F +. We shall see an alternative way of computing F \+ in Section 8.4.2.
+Figure 8.7 shows a procedure that demonstrates formally how to use Arm- strong’s axioms to compute _F_ +. In this procedure, when a functional dependency is added to _F_ +, it may be already present, and in that case there is no change to _F_ +. We shall see an alternative way of computing _F_ \+ in Section 8.4.2.
 
-The left-hand and right-hand sides of a functional dependency are both sub- sets of R. Since a set of size n has 2n subsets, there are a total of 2n × 2n \= 22n
+The left-hand and right-hand sides of a functional dependency are both sub- sets of _R_. Since a set of size _n_ has 2_n_ subsets, there are a total of 2_n_ × 2_n_ \= 22_n_
 
-possible functional dependencies, where n is the number of attributes in R. Each iteration of the repeat loop of the procedure, except the last iteration, adds at least one functional dependency to F +. Thus, the procedure is guaranteed to terminate.
+possible functional dependencies, where _n_ is the number of attributes in _R_. Each iteration of the repeat loop of the procedure, except the last iteration, adds at least one functional dependency to _F_ +. Thus, the procedure is guaranteed to terminate.
 
 **8.4.2 Closure of Attribute Sets**
 
-We say that an attribute B is **functionally determined** by  if  → B. To test whether a set  is a superkey, we must devise an algorithm for computing the set of attributes functionally determined by . One way of doing this is to compute F +, take all functional dependencies with  as the left-hand side, and take the union of the right-hand sides of all such dependencies. However, doing so can be expensive, since F \+ can be large.
+We say that an attribute _B_ is **functionally determined** by  if  → _B_. To test whether a set  is a superkey, we must devise an algorithm for computing the set of attributes functionally determined by . One way of doing this is to compute _F_ +, take all functional dependencies with  as the left-hand side, and take the union of the right-hand sides of all such dependencies. However, doing so can be expensive, since _F_ \+ can be large.
 
 An efficient algorithm for computing the set of attributes functionally deter- mined by  is useful not only for testing whether  is a superkey, but also for several other tasks, as we shall see later in this section.
 
-F \+ = F **repeat**
+_F_ \+ = _F_ **repeat**
 
-**for each** functional dependency f in F \+ apply reflexivity and augmentation rules on f add the resulting functional dependencies to F +
+**for each** functional dependency _f_ in _F_ \+ apply reflexivity and augmentation rules on _f_ add the resulting functional dependencies to _F_ +
 
-**for each** pair of functional dependencies f1 and f2 in F \+ **if** f1 and f2 can be combined using transitivity
+**for each** pair of functional dependencies _f_1 and _f_2 in _F_ \+ **if** _f_1 and _f_2 can be combined using transitivity
 
-add the resulting functional dependency to F \+ **until** F \+ does not change any further
+add the resulting functional dependency to _F_ \+ **until** _F_ \+ does not change any further
 
-**Figure 8.7** A procedure to compute F +.  
+**Figure 8.7** A procedure to compute _F_ +.  
 
 **8.4 Functional-Dependency Theory 341**
 
-result := ; **repeat**
+_result_ := ; **repeat**
 
-**for each** functional dependency  →  **in** F **do begin**
+**for each** functional dependency  →  **in** _F_ **do begin**
 
-**if**  ⊆ result **then** result := result ∪  ; **end**
+**if**  ⊆ _result_ **then** _result_ := _result_ ∪  ; **end**
 
-**until** (result does not change)
+**until** (_result_ does not change)
 
-**Figure 8.8** An algorithm to compute +, the closure of  under F.
+**Figure 8.8** An algorithm to compute +, the closure of  under _F_.
 
-Let  be a set of attributes. We call the set of all attributes functionally de- termined by  under a set F of functional dependencies the **closure** of  under F; we denote it by +. Figure 8.8 shows an algorithm, written in pseudocode, to compute +. The input is a set F of functional dependencies and the set  of attributes. The output is stored in the variable result.
+Let  be a set of attributes. We call the set of all attributes functionally de- termined by  under a set _F_ of functional dependencies the **closure** of  under _F_; we denote it by +. Figure 8.8 shows an algorithm, written in pseudocode, to compute +. The input is a set _F_ of functional dependencies and the set  of attributes. The output is stored in the variable _result_.
 
-To illustrate how the algorithm works, we shall use it to compute (AG)+ with the functional dependencies defined in Section 8.4.1. We start with result \= AG . The first time that we execute the **repeat** loop to test each functional dependency, we find that:
+To illustrate how the algorithm works, we shall use it to compute (_AG_)+ with the functional dependencies defined in Section 8.4.1. We start with _result_ \= _AG_ . The first time that we execute the **repeat** loop to test each functional dependency, we find that:
 
-• A → B causes us to include B in result. To see this fact, we observe that A → B is in F, A ⊆ result (which is AG), so result := result ∪B.
+• _A_ → _B_ causes us to include _B_ in _result_. To see this fact, we observe that _A_ → _B_ is in _F_, _A_ ⊆ _result_ (which is _AG_), so _result_ := _result_ ∪_B_.
 
-• A → C causes result to become ABCG.
+• _A_ → _C_ causes _result_ to become _ABCG_.
 
-• CG → H causes result to become ABCGH.
+• _CG_ → _H_ causes _result_ to become _ABCGH_.
 
-• CG → I causes result to become ABCGHI.
+• _CG_ → _I_ causes _result_ to become _ABCGHI_.
 
-The second time that we execute the **repeat** loop, no new attributes are added to result, and the algorithm terminates.
+The second time that we execute the **repeat** loop, no new attributes are added to _result_, and the algorithm terminates.
 
-Let us see why the algorithm of Figure 8.8 is correct. The first step is correct, since  →  always holds (by the reflexivity rule). We claim that, for any subset  of result,  → . Since we start the **repeat** loop with  → result being true, we can add  to result only if  ⊆ result and  →  . But then result →  by the reflexivity rule, so  →  by transitivity. Another application of transitivity shows that  →  (using  →  and  →  ). The union rule implies that  → result ∪  , so  functionally determines any new result generated in the **repeat** loop. Thus, any attribute returned by the algorithm is in +.
+Let us see why the algorithm of Figure 8.8 is correct. The first step is correct, since  →  always holds (by the reflexivity rule). We claim that, for any subset  of _result_,  → . Since we start the **repeat** loop with  → _result_ being true, we can add  to _result_ only if  ⊆ _result_ and  →  . But then _result_ →  by the reflexivity rule, so  →  by transitivity. Another application of transitivity shows that  →  (using  →  and  →  ). The union rule implies that  → _result_ ∪  , so  functionally determines any new result generated in the **repeat** loop. Thus, any attribute returned by the algorithm is in +.
 
-It is easy to see that the algorithm finds all of +. If there is an attribute in + that is not yet in result at any point during the execution, then there must be a functional dependency  →  for which  ⊆ result, and at least one attribute in  is not in result. When the algorithm terminates, all such functional dependencies have been processed, and the attributes in  added to result; we can thus be sure that all attributes in + are in result.  
+It is easy to see that the algorithm finds all of +. If there is an attribute in + that is not yet in _result_ at any point during the execution, then there must be a functional dependency  →  for which  ⊆ _result_, and at least one attribute in  is not in _result_. When the algorithm terminates, all such functional dependencies have been processed, and the attributes in  added to _result_; we can thus be sure that all attributes in + are in _result_.  
 
 **342 Chapter 8 Relational Database Design**
 
-It turns out that, in the worst case, this algorithm may take an amount of time quadratic in the size of F. There is a faster (although slightly more complex) algorithm that runs in time linear in the size of F; that algorithm is presented as part of Practice Exercise 8.8.
+It turns out that, in the worst case, this algorithm may take an amount of time quadratic in the size of _F_. There is a faster (although slightly more complex) algorithm that runs in time linear in the size of _F_; that algorithm is presented as part of Practice Exercise 8.8.
 
 There are several uses of the attribute closure algorithm:
 
-• To test if  is a superkey, we compute +, and check if + contains all attributes in R.
+• To test if  is a superkey, we compute +, and check if + contains all attributes in _R_.
 
-• We can check if a functional dependency  →  holds (or, in other words, is in F +), by checking if  ⊆ +. That is, we compute + by using attribute closure, and then check if it contains . This test is particularly useful, as we shall see later in this chapter.
+• We can check if a functional dependency  →  holds (or, in other words, is in _F_ +), by checking if  ⊆ +. That is, we compute + by using attribute closure, and then check if it contains . This test is particularly useful, as we shall see later in this chapter.
 
-• It gives us an alternative way to compute F +: For each  ⊆ R, we find the closure +, and for each S ⊆ +, we output a functional dependency  → S.
+• It gives us an alternative way to compute _F_ +: For each  ⊆ _R_, we find the closure +, and for each _S_ ⊆ +, we output a functional dependency  → _S_.
 
 **8.4.3 Canonical Cover**
 
-Suppose that we have a set of functional dependencies F on a relation schema. Whenever a user performs an update on the relation, the database system must ensure that the update does not violate any functional dependencies, that is, all the functional dependencies in F are satisfied in the new database state.
+Suppose that we have a set of functional dependencies _F_ on a relation schema. Whenever a user performs an update on the relation, the database system must ensure that the update does not violate any functional dependencies, that is, all the functional dependencies in _F_ are satisfied in the new database state.
 
-The system must roll back the update if it violates any functional dependen- cies in the set F .
+The system must roll back the update if it violates any functional dependen- cies in the set _F_ .
 
 We can reduce the effort spent in checking for violations by testing a simplified set of functional dependencies that has the same closure as the given set. Any database that satisfies the simplified set of functional dependencies also satisfies the original set, and vice versa, since the two sets have the same closure. However, the simplified set is easier to test. We shall see how the simplified set can be constructed in a moment. First, we need some definitions.
 
-An attribute of a functional dependency is said to be **extraneous** if we can remove it without changing the closure of the set of functional dependencies. The formal definition of **extraneous attributes** is as follows: Consider a set F of functional dependencies and the functional dependency  →  in F.
+An attribute of a functional dependency is said to be **extraneous** if we can remove it without changing the closure of the set of functional dependencies. The formal definition of **extraneous attributes** is as follows: Consider a set _F_ of functional dependencies and the functional dependency  →  in _F_.
 
-• Attribute A is extraneous in  if A ∈ , and F logically implies (F − { → }) ∪ {( − A) → }.
+• Attribute _A_ is extraneous in  if _A_ ∈ , and _F_ logically implies (_F_ − { → }) ∪ {( − _A_) → }.
 
-• Attribute A is extraneous in  if A ∈ , and the set of functional dependencies (F − _{_ → _}_) ∪ { → ( − A)} logically implies F.
+• Attribute _A_ is extraneous in  if _A_ ∈ , and the set of functional dependencies (_F_ − _{_ → _}_) ∪ { → ( − _A_)} logically implies _F_.
 
-For example, suppose we have the functional dependencies AB → C and A → C in F . Then, B is extraneous in AB → C . As another example, suppose we have the functional dependencies AB → _C D_ and A → C in F . Then C would be extraneous in the right-hand side of AB → _C D_.
+For example, suppose we have the functional dependencies _AB_ → _C_ and _A_ → _C_ in _F_ . Then, _B_ is extraneous in _AB_ → _C_ . As another example, suppose we have the functional dependencies _AB_ → _C D_ and _A_ → _C_ in _F_ . Then _C_ would be extraneous in the right-hand side of _AB_ → _C D_.
 
 Beware of the direction of the implications when using the definition of ex- traneous attributes: If you exchange the left-hand side with the right-hand side,  
 
 **8.4 Functional-Dependency Theory 343**
 
-Fc \= F **repeat**
+_Fc_ \= _F_ **repeat**
 
-Use the union rule to replace any dependencies in Fc of the form 1 → 1 and 1 → 2 with 1 → 1 2.
+Use the union rule to replace any dependencies in _Fc_ of the form 1 → 1 and 1 → 2 with 1 → 1 2.
 
-Find a functional dependency  →  in Fc with an extraneous attribute either in  or in . /* Note: the test for extraneous attributes is done using Fc , not F */
+Find a functional dependency  →  in _Fc_ with an extraneous attribute either in  or in . /\* Note: the test for extraneous attributes is done using _Fc_ , not _F_ \*/
 
-If an extraneous attribute is found, delete it from  →  in Fc . **until** (Fc does not change)
+If an extraneous attribute is found, delete it from  →  in _Fc_ . **until** (_Fc_ does not change)
 
 **Figure 8.9** Computing canonical cover.
 
-the implication will always hold. That is, (F − { → }) ∪ {( − A) → } al- ways logically implies F, and also F always logically implies (F − _{_ → _}_) ∪ { → ( − A)}.
+the implication will _always_ hold. That is, (_F_ − { → }) ∪ {( − _A_) → } al- ways logically implies _F_, and also _F_ always logically implies (_F_ − _{_ → _}_) ∪ { → ( − _A_)}.
 
-Here is how we can test efficiently if an attribute is extraneous. Let R be the relation schema, and let F be the given set of functional dependencies that hold on R. Consider an attribute A in a dependency  → .
+Here is how we can test efficiently if an attribute is extraneous. Let _R_ be the relation schema, and let _F_ be the given set of functional dependencies that hold on _R_. Consider an attribute _A_ in a dependency  → .
 
-• If A ∈ , to check if A is extraneous, consider the set
+• If _A_ ∈ , to check if _A_ is extraneous, consider the set
 
-F ′ = (F − _{_ → _}_) ∪ { → ( − A)} and check if  → Acan be inferred from F ′. To do so, compute + (the closure of ) under F ′; if + includes A, then A is extraneous in .
+_F_ ′ = (_F_ − _{_ → _}_) ∪ { → ( − _A_)} and check if  → _A_can be inferred from _F_ ′. To do so, compute + (the closure of ) under _F_ ′; if + includes _A_, then _A_ is extraneous in .
 
-• If A ∈ , to check if A is extraneous, let  =  − {A}, and check if  →  can be inferred from F . To do so, compute + (the closure of  ) under F ; if + includes all attributes in , then A is extraneous in .
+• If _A_ ∈ , to check if _A_ is extraneous, let  =  − {_A_}, and check if  →  can be inferred from _F_ . To do so, compute + (the closure of  ) under _F_ ; if + includes all attributes in , then _A_ is extraneous in .
 
-For example, suppose F contains AB → _C D_, A → E , and E → C . To check if C is extraneous in AB → _C D_, we compute the attribute closure of AB under F ′ = {AB → D, A → E , and E → C}. The closure is _ABC DE_ , which includes _C D_, so we infer that C is extraneous.
+For example, suppose _F_ contains _AB_ → _C D_, _A_ → _E_ , and _E_ → _C_ . To check if _C_ is extraneous in _AB_ → _C D_, we compute the attribute closure of _AB_ under _F_ ′ = {_AB_ → _D_, _A_ → _E_ , and _E_ → _C_}. The closure is _ABC DE_ , which includes _C D_, so we infer that _C_ is extraneous.
 
-A **canonical cover** Fc for F is a set of dependencies such that F logically implies all dependencies in Fc , and Fc logically implies all dependencies in F. Furthermore, Fc must have the following properties:
+A **canonical cover** _Fc_ for _F_ is a set of dependencies such that _F_ logically implies all dependencies in _Fc_ , and _Fc_ logically implies all dependencies in _F_. Furthermore, _Fc_ must have the following properties:
 
-• No functional dependency in Fc contains an extraneous attribute.
+• No functional dependency in _Fc_ contains an extraneous attribute.
 
-• Each left side of a functional dependency in Fc is unique. That is, there are no two dependencies 1 → 1 and 2 → 2 in Fc such that 1 = 2.
+• Each left side of a functional dependency in _Fc_ is unique. That is, there are no two dependencies 1 → 1 and 2 → 2 in _Fc_ such that 1 = 2.
 
-A canonical cover for a set of functional dependencies F can be computed as depicted in Figure 8.9. It is important to note that when checking if an attribute is extraneous, the check uses the dependencies in the current value of Fc , and **not** the dependencies in F . If a functional dependency contains only one attribute  
+A canonical cover for a set of functional dependencies _F_ can be computed as depicted in Figure 8.9. It is important to note that when checking if an attribute is extraneous, the check uses the dependencies in the current value of _Fc_ , and **not** the dependencies in _F_ . If a functional dependency contains only one attribute  
 
 **344 Chapter 8 Relational Database Design**
 
-in its right-hand side, for example A → C , and that attribute is found to be extraneous, we would get a functional dependency with an empty right-hand side. Such functional dependencies should be deleted.
+in its right-hand side, for example _A_ → _C_ , and that attribute is found to be extraneous, we would get a functional dependency with an empty right-hand side. Such functional dependencies should be deleted.
 
-The canonical cover of F , Fc , can be shown to have the same closure as F ; hence, testing whether Fc is satisfied is equivalent to testing whether F is satis- fied. However, Fc is minimal in a certain sense—it does not contain extraneous attributes, and it combines functional dependencies with the same left side. It is cheaper to test Fc than it is to test F itself.
+The canonical cover of _F_ , _Fc_ , can be shown to have the same closure as _F_ ; hence, testing whether _Fc_ is satisfied is equivalent to testing whether _F_ is satis- fied. However, _Fc_ is minimal in a certain sense—it does not contain extraneous attributes, and it combines functional dependencies with the same left side. It is cheaper to test _Fc_ than it is to test _F_ itself.
 
-Consider the following set F of functional dependencies on schema (_A, B, C_):
+Consider the following set _F_ of functional dependencies on schema (_A, B, C_):
 
-A → _BC B_ → _C A_ → _B AB_ → C
+_A_ → _BC B_ → _C A_ → _B AB_ → _C_
 
-Let us compute the canonical cover for F.
+Let us compute the canonical cover for _F_.
 
 • There are two functional dependencies with the same set of attributes on the left side of the arrow:
 
-A → _BC A_ → B
+_A_ → _BC A_ → _B_
 
-We combine these functional dependencies into A → BC.
+We combine these functional dependencies into _A_ → _BC_.
 
-• A is extraneous in AB → C because F logically implies (F − {AB → C}) ∪ {B → C}. This assertion is true because B → C is already in our set of functional dependencies.
+• _A_ is extraneous in _AB_ → _C_ because _F_ logically implies (_F_ − {_AB_ → _C_}) ∪ {_B_ → _C_}. This assertion is true because _B_ → _C_ is already in our set of functional dependencies.
 
-• C is extraneous in A → BC, since A → BC is logically implied by A → B and B → C.
+• _C_ is extraneous in _A_ → _BC_, since _A_ → _BC_ is logically implied by _A_ → _B_ and _B_ → _C_.
 
 Thus, our canonical cover is:
 
-A → _B B_ → C
+_A_ → _B B_ → _C_
 
-Given a set F of functional dependencies, it may be that an entire functional dependency in the set is extraneous, in the sense that dropping it does not change the closure of F . We can show that a canonical cover Fc of F contains no such extraneous functional dependency. Suppose that, to the contrary, there were such an extraneous functional dependency in Fc . The right-side attributes of the de- pendency would then be extraneous, which is not possible by the definition of canonical covers.
+Given a set _F_ of functional dependencies, it may be that an entire functional dependency in the set is extraneous, in the sense that dropping it does not change the closure of _F_ . We can show that a canonical cover _Fc_ of _F_ contains no such extraneous functional dependency. Suppose that, to the contrary, there were such an extraneous functional dependency in _Fc_ . The right-side attributes of the de- pendency would then be extraneous, which is not possible by the definition of canonical covers.
 
-A canonical cover might not be unique. For instance, consider the set of functional dependencies F \= {A → BC , B → AC , and C → AB}. If we apply  
+A canonical cover might not be unique. For instance, consider the set of functional dependencies _F_ \= {_A_ → _BC_ , _B_ → _AC_ , and _C_ → _AB_}. If we apply  
 
 **8.4 Functional-Dependency Theory 345**
 
-the extraneity test to A → BC , we find that both B and C are extraneous under F . However, it is incorrect to delete both! The algorithm for finding the canonical cover picks one of the two, and deletes it. Then,
+the extraneity test to _A_ → _BC_ , we find that both _B_ and _C_ are extraneous under _F_ . However, it is incorrect to delete both! The algorithm for finding the canonical cover picks one of the two, and deletes it. Then,
 
-**1.** If C is deleted, we get the set F ′ = {A → B, B → AC , and C → AB}. Now, B is not extraneous in the side of A → B under F ′. Continuing the algorithm, we find A and B are extraneous in the right-hand side of C → AB, leading to two canonical covers
+**1\.** If _C_ is deleted, we get the set _F_ ′ = {_A_ → _B_, _B_ → _AC_ , and _C_ → _AB_}. Now, _B_ is not extraneous in the side of _A_ → _B_ under _F_ ′. Continuing the algorithm, we find _A_ and _B_ are extraneous in the right-hand side of _C_ → _AB_, leading to two canonical covers
 
-Fc \= {A → B, B → C , C → A} Fc \= {A → B, B → AC , C → B}.
+_Fc_ \= {_A_ → _B_, _B_ → _C_ , _C_ → _A_} _Fc_ \= {_A_ → _B_, _B_ → _AC_ , _C_ → _B_}.
 
-**2.** If B is deleted, we get the set {A → C , B → AC , and C → AB}. This case is symmetrical to the previous case, leading to the canonical covers
+**2\.** If _B_ is deleted, we get the set {_A_ → _C_ , _B_ → _AC_ , and _C_ → _AB_}. This case is symmetrical to the previous case, leading to the canonical covers
 
-Fc \= {A → C , C → B, and B → A} Fc \= {A → C , B → C , and C → AB}.
+_Fc_ \= {_A_ → _C_ , _C_ → _B_, and _B_ → _A_} _Fc_ \= {_A_ → _C_ , _B_ → _C_ , and _C_ → _AB_}.
 
-As an exercise, can you find one more canonical cover for F ?
+As an exercise, can you find one more canonical cover for _F_ ?
 
 **8.4.4 Lossless Decomposition**
 
-Let r (R) be a relation schema, and let F be a set of functional dependencies on r (R). Let R1 and R2 form a decomposition of R. We say that the decomposition is a **lossless decomposition** if there is no loss of information by replacing r (R) with two relation schemas r1(R1) and r2(R2). More precisely, we say the decomposition is lossless if, for all legal database instances (that is, database instances that satisfy the specified functional dependencies and other constraints), relation r contains the same set of tuples as the result of the following SQL query:
+Let _r_ (_R_) be a relation schema, and let _F_ be a set of functional dependencies on _r_ (_R_). Let _R_1 and _R_2 form a decomposition of _R_. We say that the decomposition is a **lossless decomposition** if there is no loss of information by replacing _r_ (_R_) with two relation schemas _r_1(_R_1) and _r_2(_R_2). More precisely, we say the decomposition is lossless if, for all legal database instances (that is, database instances that satisfy the specified functional dependencies and other constraints), relation _r_ contains the same set of tuples as the result of the following SQL query:
 
-**select** * **from** (**select** R1 **from** r)
+**select** \* **from** (**select** _R_1 **from** r)
 
-**natural join** (**select** R2 **from** r)
+**natural join** (**select** _R_2 **from** r)
 
 This is stated more succinctly in the relational algebra as:
 
-_R_1 (r ) _ R_2 (r ) = r
+_R_1 (_r_ ) _ R_2 (_r_ ) = _r_
 
-In other words, if we project r onto R1 and R2, and compute the natural join of the projection results, we get back exactly r . A decomposition that is not a lossless decomposition is called a **lossy decomposition**. The terms **lossless-join decomposition** and **lossy-join decomposition** are sometimes used in place of lossless decomposition and lossy decomposition.
+In other words, if we project _r_ onto _R_1 and _R_2, and compute the natural join of the projection results, we get back exactly _r_ . A decomposition that is not a lossless decomposition is called a **lossy decomposition**. The terms **lossless-join decomposition** and **lossy-join decomposition** are sometimes used in place of lossless decomposition and lossy decomposition.
 
-As an example of a lossy decomposition, recall the decomposition of the employee schema into:  
+As an example of a lossy decomposition, recall the decomposition of the _employee_ schema into:  
 
 **346 Chapter 8 Relational Database Design**
 
-_employee1_ (ID, name) _employee2_ (name, street, city, salary)
+_employee1_ (_ID_, _name_) _employee2_ (_name_, _street_, _city_, _salary_)
 
-that we saw earlier in Section 8.1.2. As we saw in Figure 8.3, the result of _employee1  employee2_ is a superset of the original relation employee, but the decomposition is lossy since the join result has lost information about which employee identi- fiers correspond to which addresses and salaries, in the case where two or more employees have the same name.
+that we saw earlier in Section 8.1.2. As we saw in Figure 8.3, the result of _employee1  employee2_ is a superset of the original relation _employee_, but the decomposition is lossy since the join result has lost information about which employee identi- fiers correspond to which addresses and salaries, in the case where two or more employees have the same name.
 
-We can use functional dependencies to show when certain decompositions are lossless. Let R, R1, R2, and F be as above. R1 and R2 form a lossless decomposition of R if at least one of the following functional dependencies is in F +:
+We can use functional dependencies to show when certain decompositions are lossless. Let _R_, _R_1, _R_2, and _F_ be as above. _R_1 and _R_2 form a lossless decomposition of _R_ if at least one of the following functional dependencies is in _F_ +:
 
-• R1 ∩ R2 → R1
+• _R_1 ∩ _R_2 → _R_1
 
-• R1 ∩ R2 → R2
+• _R_1 ∩ _R_2 → _R_2
 
-In other words, if R1 ∩ R2 forms a superkey of either R1 or R2, the decomposition of R is a lossless decomposition. We can use attribute closure to test efficiently for superkeys, as we have seen earlier.
+In other words, if _R_1 ∩ _R_2 forms a superkey of either _R_1 or _R_2, the decomposition of _R_ is a lossless decomposition. We can use attribute closure to test efficiently for superkeys, as we have seen earlier.
 
 To illustrate this, consider the schema
 
-_inst dept_ (ID, name, salary, _dept name_, building, budget)
+_inst dept_ (_ID_, _name_, _salary_, _dept name_, _building_, _budget_)
 
-that we decomposed in Section 8.1.2 into the instructor and department schemas:
+that we decomposed in Section 8.1.2 into the _instructor_ and _department_ schemas:
 
-instructor (ID, name, _dept name_, salary) department (_dept name_, building, budget)
+_instructor_ (_ID_, _name_, _dept name_, _salary_) _department_ (_dept name_, _building_, _budget_)
 
-Consider the intersection of these two schemas, which is _dept name_. We see that because _dept name_→ _dept name_, building, budget, the lossless-decomposition rule is satisfied.
+Consider the intersection of these two schemas, which is _dept name_. We see that because _dept name_→ _dept name_, _building_, _budget_, the lossless-decomposition rule is satisfied.
 
 For the general case of decomposition of a schema into multiple schemas at once, the test for lossless decomposition is more complicated. See the bibliograph- ical notes for references on the topic.
 
@@ -2847,25 +2847,25 @@ Using the theory of functional dependencies, it is easier to characterize depen-
 
 **8.4 Functional-Dependency Theory 347**
 
-Let F be a set of functional dependencies on a schema R, and let R1, R2_, . . . , Rn_ be a decomposition of R. The **restriction** of F to Ri is the set Fi of all functional dependencies in F \+ that include only attributes of Ri . Since all functional depen- dencies in a restriction involve attributes of only one relation schema, it is possible to test such a dependency for satisfaction by checking only one relation.
+Let _F_ be a set of functional dependencies on a schema _R_, and let _R_1, _R_2_, . . . , Rn_ be a decomposition of _R_. The **restriction** of _F_ to _Ri_ is the set _Fi_ of all functional dependencies in _F_ \+ that include _only_ attributes of _Ri_ . Since all functional depen- dencies in a restriction involve attributes of only one relation schema, it is possible to test such a dependency for satisfaction by checking only one relation.
 
-Note that the definition of restriction uses all dependencies in F +, not just those in F . For instance, suppose F \= {A → _B, B_ → C}, and we have a decompo- sition into AC and AB. The restriction of F to AC includes A → C , since A → C is in F +, even though it is not in F .
+Note that the definition of restriction uses all dependencies in _F_ +, not just those in _F_ . For instance, suppose _F_ \= {_A_ → _B, B_ → _C_}, and we have a decompo- sition into _AC_ and _AB_. The restriction of _F_ to _AC_ includes _A_ → _C_ , since _A_ → _C_ is in _F_ +, even though it is not in _F_ .
 
-The set of restrictions F1_, F_2_, . . . , Fn_ is the set of dependencies that can be checked efficiently. We now must ask whether testing only the restrictions is sufficient. Let F ′ = F1 ∪ F2 ∪ · · · ∪ Fn. F ′ is a set of functional dependencies on schema R, but, in general, F ′ = F . However, even if F ′ = F , it may be that F ′+ = F +. If the latter is true, then every dependency in F is logically implied by F ′, and, if we verify that F ′ is satisfied, we have verified that F is satisfied. We say that a decomposition having the property F ′+ = F \+ is a **dependency-preserving decomposition**.
+The set of restrictions _F_1_, F_2_, . . . , Fn_ is the set of dependencies that can be checked efficiently. We now must ask whether testing only the restrictions is sufficient. Let _F_ ′ = _F_1 ∪ _F_2 ∪ · · · ∪ _Fn_. _F_ ′ is a set of functional dependencies on schema _R_, but, in general, _F_ ′ = _F_ . However, even if _F_ ′ = _F_ , it may be that _F_ ′+ = _F_ +. If the latter is true, then every dependency in _F_ is logically implied by _F_ ′, and, if we verify that _F_ ′ is satisfied, we have verified that _F_ is satisfied. We say that a decomposition having the property _F_ ′+ = _F_ \+ is a **dependency-preserving decomposition**.
 
-Figure 8.10 shows an algorithm for testing dependency preservation. The input is a set D \= _{R_1_, R_2_, . . . , Rn}_ of decomposed relation schemas, and a set F of functional dependencies. This algorithm is expensive since it requires computation of F +. Instead of applying the algorithm of Figure 8.10, we consider two alternatives.
+Figure 8.10 shows an algorithm for testing dependency preservation. The input is a set _D_ \= _{R_1_, R_2_, . . . , Rn}_ of decomposed relation schemas, and a set _F_ of functional dependencies. This algorithm is expensive since it requires computation of _F_ +. Instead of applying the algorithm of Figure 8.10, we consider two alternatives.
 
-First, note that if each member of F can be tested on one of the relations of the decomposition, then the decomposition is dependency preserving. This is an easy way to show dependency preservation; however, it does not always work. There are cases where, even though the decomposition is dependency preserving, there is a dependency in F that cannot be tested in any one relation in the decomposition. Thus, this alternative test can be used only as a sufficient condition that is easy
+First, note that if each member of _F_ can be tested on one of the relations of the decomposition, then the decomposition is dependency preserving. This is an easy way to show dependency preservation; however, it does not always work. There are cases where, even though the decomposition is dependency preserving, there is a dependency in _F_ that cannot be tested in any one relation in the decomposition. Thus, this alternative test can be used only as a sufficient condition that is easy
 
-compute F +; **for each** schema Ri in D **do**
+compute _F_ +; **for each** schema _Ri_ in _D_ **do**
 
-**begin** Fi : = the restriction of F \+ to Ri ;
+**begin** _Fi_ : = the restriction of _F_ \+ to _Ri_ ;
 
-**end** F ′ := ∅ **for each** restriction Fi **do**
+**end** _F_ ′ := ∅ **for each** restriction _Fi_ **do**
 
-**begin** F ′ = F ′ ∪ Fi
+**begin** _F_ ′ = _F_ ′ ∪ _Fi_
 
-**end** compute F ′+; **if** (F ′+ = F +) **then** return (true)
+**end** compute _F_ ′+; **if** (_F_ ′+ = _F_ +) **then** return (true)
 
 **else** return (false);
 
@@ -2875,25 +2875,25 @@ compute F +; **for each** schema Ri in D **do**
 
 to check; if it fails we cannot conclude that the decomposition is not dependency preserving; instead we will have to apply the general test.
 
-We now give a second alternative test for dependency preservation that avoids computing F +. We explain the intuition behind the test after presenting the test. The test applies the following procedure to each  →  in F .
+We now give a second alternative test for dependency preservation that avoids computing _F_ +. We explain the intuition behind the test after presenting the test. The test applies the following procedure to each  →  in _F_ .
 
-result \=  **repeat**
+_result_ \=  **repeat**
 
-**for each** Ri in the decomposition t \= (result ∩ Ri )+ ∩ _Ri result_ \= result ∪ t
+**for each** _Ri_ in the decomposition _t_ \= (_result_ ∩ _Ri_ )+ ∩ _Ri result_ \= _result_ ∪ _t_
 
-**until** (result does not change)
+**until** (_result_ does not change)
 
-The attribute closure here is under the set of functional dependencies F . If result contains all attributes in , then the functional dependency  →  is preserved. The decomposition is dependency preserving if and only if the procedure shows that all the dependencies in F are preserved.
+The attribute closure here is under the set of functional dependencies _F_ . If _result_ contains all attributes in , then the functional dependency  →  is preserved. The decomposition is dependency preserving if and only if the procedure shows that all the dependencies in _F_ are preserved.
 
 The two key ideas behind the above test are as follows:
 
-• The first idea is to test each functional dependency  →  in F to see if it is preserved in F ′ (where F ′ is as defined in Figure 8.10). To do so, we compute the closure of  under F ′; the dependency is preserved exactly when the closure includes . The decomposition is dependency preserving if (and only if) all the dependencies in F are found to be preserved.
+• The first idea is to test each functional dependency  →  in _F_ to see if it is preserved in _F_ ′ (where _F_ ′ is as defined in Figure 8.10). To do so, we compute the closure of  under _F_ ′; the dependency is preserved exactly when the closure includes . The decomposition is dependency preserving if (and only if) all the dependencies in _F_ are found to be preserved.
 
-• The second idea is to use a modified form of the attribute-closure algorithm to compute closure under F ′, without actually first computing F ′. We wish to avoid computing F ′ since computing it is quite expensive. Note that F ′ is the union of Fi , where Fi is the restriction of F on Ri . The algorithm computes the attribute closure of (result ∩ Ri ) with respect to F , intersects the closure with Ri , and adds the resultant set of attributes to result; this sequence of steps is equivalent to computing the closure of result under Fi . Repeating this step for each i inside the while loop gives the closure of result under F ′.
+• The second idea is to use a modified form of the attribute-closure algorithm to compute closure under _F_ ′, without actually first computing _F_ ′. We wish to avoid computing _F_ ′ since computing it is quite expensive. Note that _F_ ′ is the union of _Fi_ , where _Fi_ is the restriction of _F_ on _Ri_ . The algorithm computes the attribute closure of (_result_ ∩ _Ri_ ) with respect to _F_ , intersects the closure with _Ri_ , and adds the resultant set of attributes to _result_; this sequence of steps is equivalent to computing the closure of _result_ under _Fi_ . Repeating this step for each _i_ inside the while loop gives the closure of _result_ under _F_ ′.
 
-To understand why this modified attribute-closure approach works cor- rectly, we note that for any  ⊆ Ri ,  → + is a functional dependency in F +, and  → + ∩ Ri is a functional dependency that is in Fi , the restriction of F \+ to Ri . Conversely, if  →  were in Fi , then  would be a subset of + ∩ Ri .
+To understand why this modified attribute-closure approach works cor- rectly, we note that for any  ⊆ _Ri_ ,  → + is a functional dependency in _F_ +, and  → + ∩ _Ri_ is a functional dependency that is in _Fi_ , the restriction of _F_ \+ to _Ri_ . Conversely, if  →  were in _Fi_ , then  would be a subset of + ∩ _Ri_ .
 
-This test takes polynomial time, instead of the exponential time required to compute F +.
+This test takes polynomial time, instead of the exponential time required to compute _F_ +.
 
 **8.5 Algorithms for Decomposition**
 
@@ -2905,135 +2905,135 @@ that are in appropriate normal form. In this section, we present algorithms for 
 
 **8.5.1 BCNF Decomposition**
 
-The definition of BCNF can be used directly to test if a relation is in BCNF. However, computation of F \+ can be a tedious task. We first describe below simplified tests for verifying if a relation is in BCNF. If a relation is not in BCNF, it can be decomposed to create relations that are in BCNF. Later in this section, we describe an algorithm to create a lossless decomposition of a relation, such that the decomposition is in BCNF.
+The definition of BCNF can be used directly to test if a relation is in BCNF. However, computation of _F_ \+ can be a tedious task. We first describe below simplified tests for verifying if a relation is in BCNF. If a relation is not in BCNF, it can be decomposed to create relations that are in BCNF. Later in this section, we describe an algorithm to create a lossless decomposition of a relation, such that the decomposition is in BCNF.
 
 **8.5.1.1 Testing for BCNF**
 
-Testing of a relation schema R to see if it satisfies BCNF can be simplified in some cases:
+Testing of a relation schema _R_ to see if it satisfies BCNF can be simplified in some cases:
 
-• To check if a nontrivial dependency  →  causes a violation of BCNF, compute + (the attribute closure of ), and verify that it includes all attributes of R; that is, it is a superkey of R.
+• To check if a nontrivial dependency  →  causes a violation of BCNF, compute + (the attribute closure of ), and verify that it includes all attributes of _R_; that is, it is a superkey of _R_.
 
-• To check if a relation schema R is in BCNF, it suffices to check only the dependencies in the given set F for violation of BCNF, rather than check all dependencies in F +.
+• To check if a relation schema _R_ is in BCNF, it suffices to check only the dependencies in the given set _F_ for violation of BCNF, rather than check all dependencies in _F_ +.
 
-We can show that if none of the dependencies in F causes a violation of BCNF, then none of the dependencies in F \+ will cause a violation of BCNF, either.
+We can show that if none of the dependencies in _F_ causes a violation of BCNF, then none of the dependencies in _F_ \+ will cause a violation of BCNF, either.
 
-Unfortunately, the latter procedure does not work when a relation is decomposed. That is, it _does not_ suffice to use F when we test a relation Ri , in a decomposition of R, for violation of BCNF. For example, consider relation schema R (_A, B, C, D, E_), with functional dependencies F containing A → B and BC → D. Suppose this were decomposed into R1(_A, B_) and R2(_A, C, D, E_). Now, neither of the dependencies in F contains only attributes from (_A, C, D, E_) so we might be misled into thinking R2 satisfies BCNF. In fact, there is a dependency AC → D in F \+ (which can be inferred using the pseudotransitivity rule from the two dependencies in F ) that shows that R2 is not in BCNF. Thus, we may need a dependency that is in F +, but is not in F , to show that a decomposed relation is not in BCNF.
+Unfortunately, the latter procedure does not work when a relation is decomposed. That is, it _does not_ suffice to use _F_ when we test a relation _Ri_ , in a decomposition of _R_, for violation of BCNF. For example, consider relation schema _R_ (_A, B, C, D, E_), with functional dependencies _F_ containing _A_ → _B_ and _BC_ → _D_. Suppose this were decomposed into _R_1(_A, B_) and _R_2(_A, C, D, E_). Now, neither of the dependencies in _F_ contains only attributes from (_A, C, D, E_) so we might be misled into thinking _R_2 satisfies BCNF. In fact, there is a dependency _AC_ → _D_ in _F_ \+ (which can be inferred using the pseudotransitivity rule from the two dependencies in _F_ ) that shows that _R_2 is not in BCNF. Thus, we may need a dependency that is in _F_ +, but is not in _F_ , to show that a decomposed relation is not in BCNF.
 
-An alternative BCNF test is sometimes easier than computing every depen- dency in F +. To check if a relation Ri in a decomposition of R is in BCNF, we apply this test:
+An alternative BCNF test is sometimes easier than computing every depen- dency in _F_ +. To check if a relation _Ri_ in a decomposition of _R_ is in BCNF, we apply this test:
 
-• For every subset  of attributes in Ri , check that + (the attribute closure of  under F ) either includes no attribute of Ri − , or includes all attributes of Ri .  
+• For every subset  of attributes in _Ri_ , check that + (the attribute closure of  under _F_ ) either includes no attribute of _Ri_ − , or includes all attributes of _Ri_ .  
 
 **350 Chapter 8 Relational Database Design**
 
-result := _{R}_; done := false; compute F +; **while** (**not** done) **do**
+_result_ := _{R}_; _done_ := false; compute _F_ +; **while** (**not** _done_) **do**
 
-**if** (there is a schema Ri in result that is not in BCNF) **then begin**
+**if** (there is a schema _Ri_ in _result_ that is not in BCNF) **then begin**
 
-let  →  be a nontrivial functional dependency that holds on Ri such that  → Ri is not in F +, and  ∩  = ∅ ; result := (result − Ri ) ∪ (Ri − ) ∪ ( _,_ );
+let  →  be a nontrivial functional dependency that holds on _Ri_ such that  → _Ri_ is not in _F_ +, and  ∩  = ∅ ; _result_ := (_result_ − _Ri_ ) ∪ (_Ri_ − ) ∪ ( _,_ );
 
-**end else** done := true;
+**end else** _done_ := true;
 
 **Figure 8.11** BCNF decomposition algorithm.
 
-If the condition is violated by some set of attributes  in Ri , consider the following functional dependency, which can be shown to be present in F +:
+If the condition is violated by some set of attributes  in _Ri_ , consider the following functional dependency, which can be shown to be present in _F_ +:
 
- → (+ − ) ∩ Ri .
+ → (+ − ) ∩ _Ri_ .
 
-The above dependency shows that Ri violates BCNF.
+The above dependency shows that _Ri_ violates BCNF.
 
 **8.5.1.2 BCNF Decomposition Algorithm**
 
-We are now able to state a general method to decompose a relation schema so as to satisfy BCNF. Figure 8.11 shows an algorithm for this task. If R is not in BCNF, we can decompose R into a collection of BCNF schemas R1_, R_2_, . . . , Rn_ by the algorithm. The algorithm uses dependencies that demonstrate violation of BCNF to perform the decomposition.
+We are now able to state a general method to decompose a relation schema so as to satisfy BCNF. Figure 8.11 shows an algorithm for this task. If _R_ is not in BCNF, we can decompose _R_ into a collection of BCNF schemas _R_1_, R_2_, . . . , Rn_ by the algorithm. The algorithm uses dependencies that demonstrate violation of BCNF to perform the decomposition.
 
-The decomposition that the algorithm generates is not only in BCNF, but is also a lossless decomposition. To see why our algorithm generates only lossless decompositions, we note that, when we replace a schema Ri with (Ri − ) and (_,_ ), the dependency  →  holds, and (Ri − ) ∩ (_,_ ) = .
+The decomposition that the algorithm generates is not only in BCNF, but is also a lossless decomposition. To see why our algorithm generates only lossless decompositions, we note that, when we replace a schema _Ri_ with (_Ri_ − ) and (_,_ ), the dependency  →  holds, and (_Ri_ − ) ∩ (_,_ ) = .
 
-If we did not require  ∩  = ∅, then those attributes in  ∩  would not appear in the schema (Ri − ) and the dependency  →  would no longer hold.
+If we did not require  ∩  = ∅, then those attributes in  ∩  would not appear in the schema (_Ri_ − ) and the dependency  →  would no longer hold.
 
-It is easy to see that our decomposition of _inst dept_ in Section 8.3.2 would result from applying the algorithm. The functional dependency _dept name_ → building, budget satisfies the  ∩  = ∅ condition and would therefore be chosen to decompose the schema.
+It is easy to see that our decomposition of _inst dept_ in Section 8.3.2 would result from applying the algorithm. The functional dependency _dept name_ → _building_, _budget_ satisfies the  ∩  = ∅ condition and would therefore be chosen to decompose the schema.
 
 The BCNF decomposition algorithm takes time exponential in the size of the initial schema, since the algorithm for checking if a relation in the decomposition satisfies BCNF can take exponential time. The bibliographical notes provide ref- erences to an algorithm that can compute a BCNF decomposition in polynomial time. However, the algorithm may “overnormalize,” that is, decompose a relation unnecessarily.
 
-As a longer example of the use of the BCNF decomposition algorithm, suppose we have a database design using the class schema below:  
+As a longer example of the use of the BCNF decomposition algorithm, suppose we have a database design using the _class_ schema below:  
 
 **8.5 Algorithms for Decomposition 351**
 
-class (_course id_, title, _dept name_, credits, _sec id_, semester, year, building, _room number_, capacity, _time slot id_)
+_class_ (_course id_, _title_, _dept name_, _credits_, _sec id_, _semester_, _year_, _building_, _room number_, _capacity_, _time slot id_)
 
-The set of functional dependencies that we require to hold on class are:
+The set of functional dependencies that we require to hold on _class_ are:
 
-_course id_ → title, _dept name_, _credits building_, _room number_ → _capacity course id_, _sec id_, semester, year→ building, _room number_, _time slot id_
+_course id_ → _title_, _dept name_, _credits building_, _room number_ → _capacity course id_, _sec id_, _semester_, _year_→ _building_, _room number_, _time slot id_
 
-A candidate key for this schema is _{course id_, _sec id_, semester, _year}_. We can apply the algorithm of Figure 8.11 to the class example as follows:
+A candidate key for this schema is _{course id_, _sec id_, _semester_, _year}_. We can apply the algorithm of Figure 8.11 to the _class_ example as follows:
 
 • The functional dependency:
 
-_course id_ → title, _dept name_, credits
+_course id_ → _title_, _dept name_, _credits_
 
-holds, but _course id_ is not a superkey. Thus, class is not in BCNF. We replace class by:
+holds, but _course id_ is not a superkey. Thus, _class_ is not in BCNF. We replace _class_ by:
 
-course(_course id_, title, _dept name_, credits) _class-1_ (_course id_, _sec id_, semester, year, building, _room number_
+_course_(_course id_, _title_, _dept name_, _credits_) _class-1_ (_course id_, _sec id_, _semester_, _year_, _building_, _room number_
 
-capacity, _time slot id_)
+_capacity_, _time slot id_)
 
-The only nontrivial functional dependencies that hold on course include _course id_ on the left side of the arrow. Since _course id_ is a key for course, the relation
+The only nontrivial functional dependencies that hold on _course_ include _course id_ on the left side of the arrow. Since _course id_ is a key for _course_, the relation
 
-course is in BCNF.
+_course_ is in BCNF.
 
-• A candidate key for _class-1_ is _{course id_, _sec id_, semester, _year}_. The functional dependency:
+• A candidate key for _class-1_ is _{course id_, _sec id_, _semester_, _year}_. The functional dependency:
 
-building, _room number_ → capacity
+_building_, _room number_ → _capacity_
 
 holds on _class-1_, but _{building_, _room number}_ is not a superkey for _class-1_. We replace _class-1_ by:
 
-classroom (building, _room number_, capacity) section (_course id_, _sec id_, semester, year,
+_classroom_ (_building_, _room number_, _capacity_) _section_ (_course id_, _sec id_, _semester_, _year_,
 
-building, _room number_, _time slot id_)
+_building_, _room number_, _time slot id_)
 
-classroom and section are in BCNF.
+_classroom_ and _section_ are in BCNF.
 
-Thus, the decomposition of class results in the three relation schemas course, _class- room_, and section, each of which is in BCNF. These correspond to the schemas that we have used in this, and previous, chapters. You can verify that the decomposi- tion is lossless and dependency preserving.  
+Thus, the decomposition of _class_ results in the three relation schemas _course_, _class- room_, and _section_, each of which is in BCNF. These correspond to the schemas that we have used in this, and previous, chapters. You can verify that the decomposi- tion is lossless and dependency preserving.  
 
 **352 Chapter 8 Relational Database Design**
 
-let Fc be a canonical cover for F; i := 0; **for each** functional dependency  →  in Fc
+let _Fc_ be a canonical cover for _F_; _i_ := 0; **for each** functional dependency  →  in _Fc_
 
-i := i \+ 1; Ri :=  ;
+_i_ := _i_ \+ 1; _Ri_ :=  ;
 
-**if** none of the schemas _Rj , j_ \= 1_,_ 2_, . . . , i_ contains a candidate key for R **then**
+**if** none of the schemas _Rj , j_ \= 1_,_ 2_, . . . , i_ contains a candidate key for _R_ **then**
 
-i := i \+ 1; Ri := any candidate key for R;
+_i_ := _i_ \+ 1; _Ri_ := any candidate key for _R_;
 
-/* Optionally, remove redundant relations */ **repeat**
+/\* Optionally, remove redundant relations \*/ **repeat**
 
-**if** any schema Rj is contained in another schema Rk **then**
+**if** any schema _Rj_ is contained in another schema _Rk_ **then**
 
-/* Delete Rj */ Rj := Ri ; i := i \- 1;
+/\* Delete _Rj_ \*/ _Rj_ := _Ri_ ; _i_ := _i_ \- 1;
 
-**until** no more Rj s can be deleted **return** (R1_, R_2_, . . . , Ri_ )
+**until** no more _Rj_ s can be deleted **return** (_R_1_, R_2_, . . . , Ri_ )
 
 **Figure 8.12** Dependency-preserving, lossless decomposition into 3NF.
 
 **8.5.2 3NF Decomposition**
 
-Figure 8.12 shows an algorithm for finding a dependency-preserving, lossless decomposition into 3NF. The set of dependencies Fc used in the algorithm is a canonical cover for F. Note that the algorithm considers the set of schemas _Rj , j_ \= 1_,_ 2_, . . . , i_ ; initially i \= 0, and in this case the set is empty.
+Figure 8.12 shows an algorithm for finding a dependency-preserving, lossless decomposition into 3NF. The set of dependencies _Fc_ used in the algorithm is a canonical cover for _F_. Note that the algorithm considers the set of schemas _Rj , j_ \= 1_,_ 2_, . . . , i_ ; initially _i_ \= 0, and in this case the set is empty.
 
 Let us apply this algorithm to our example of Section 8.3.4, where we showed that:
 
 _dept advisor_ (_s ID_, _i ID_, _dept name_)
 
-is in 3NF even though it is not in BCNF. The algorithm uses the following functional dependencies in F :
+is in 3NF even though it is not in BCNF. The algorithm uses the following functional dependencies in _F_ :
 
-f1: _i ID_ → _dept name f_2: _s ID_, _dept name_ → _i ID_
+_f_1: _i ID_ → _dept name f_2: _s ID_, _dept name_ → _i ID_
 
-There are no extraneous attributes in any of the functional dependencies in F , so Fc contains f1 and f2. The algorithm then generates as R1 the schema, (_i ID dept name_), and as R2 the schema (_s ID_, _dept name_, _i ID_). The algorithm then finds that R2 contains a candidate key, so no further relation schema is created.
+There are no extraneous attributes in any of the functional dependencies in _F_ , so _Fc_ contains _f_1 and _f_2\. The algorithm then generates as _R_1 the schema, (_i ID dept name_), and as _R_2 the schema (_s ID_, _dept name_, _i ID_). The algorithm then finds that _R_2 contains a candidate key, so no further relation schema is created.
 
-The resultant set of schemas can contain redundant schemas, with one schema Rk containing all the attributes of another schema Rj . For example, R2 above contains all the attributes from R1. The algorithm deletes all such schemas that are contained in another schema. Any dependencies that could be tested on an  
+The resultant set of schemas can contain redundant schemas, with one schema _Rk_ containing all the attributes of another schema _Rj_ . For example, _R_2 above contains all the attributes from _R_1\. The algorithm deletes all such schemas that are contained in another schema. Any dependencies that could be tested on an  
 
 **8.5 Algorithms for Decomposition 353**
 
-Rj that is deleted can also be tested on the corresponding relation Rk , and the decomposition is lossless even if Rj is deleted.
+_Rj_ that is deleted can also be tested on the corresponding relation _Rk_ , and the decomposition is lossless even if _Rj_ is deleted.
 
-Now let us consider again the class schema of Section 8.5.1.2 and apply the 3NF decomposition algorithm. The set of functional dependencies we listed there happen to be a canonical cover. As a result, the algorithm gives us the same three schemas _course, classroom_, and section.
+Now let us consider again the _class_ schema of Section 8.5.1.2 and apply the 3NF decomposition algorithm. The set of functional dependencies we listed there happen to be a canonical cover. As a result, the algorithm gives us the same three schemas _course, classroom_, and _section_.
 
 The above example illustrates an interesting property of the 3NF algorithm. Sometimes, the result is not only in 3NF, but also in BCNF. This suggests an alternative method of generating a BCNF design. First use the 3NF algorithm. Then, for any schema in the 3NF design that is not in BCNF, decompose using the BCNF algorithm. If the result is not dependency-preserving, revert to the 3NF design.
 
@@ -3041,23 +3041,23 @@ The above example illustrates an interesting property of the 3NF algorithm. Some
 
 The 3NF algorithm ensures the preservation of dependencies by explicitly building a schema for each dependency in a canonical cover. It ensures that the decomposi- tion is a lossless decomposition by guaranteeing that at least one schema contains a candidate key for the schema being decomposed. Practice Exercise 8.14 provides some insight into the proof that this suffices to guarantee a lossless decomposition.
 
-This algorithm is also called the **3NF synthesis algorithm**, since it takes a set of dependencies and adds one schema at a time, instead of decomposing the initial schema repeatedly. The result is not uniquely defined, since a set of functional dependencies can have more than one canonical cover, and, further, in some cases, the result of the algorithm depends on the order in which it considers the dependencies in Fc . The algorithm may decompose a relation even if it is already in 3NF; however, the decomposition is still guaranteed to be in 3NF.
+This algorithm is also called the **3NF synthesis algorithm**, since it takes a set of dependencies and adds one schema at a time, instead of decomposing the initial schema repeatedly. The result is not uniquely defined, since a set of functional dependencies can have more than one canonical cover, and, further, in some cases, the result of the algorithm depends on the order in which it considers the dependencies in _Fc_ . The algorithm may decompose a relation even if it is already in 3NF; however, the decomposition is still guaranteed to be in 3NF.
 
-If a relation Ri is in the decomposition generated by the synthesis algorithm, then Ri is in 3NF. Recall that when we test for 3NF it suffices to consider functional dependencies whose right-hand side is a single attribute. Therefore, to see that Ri is in 3NF you must convince yourself that any functional dependency  → B that holds on Ri satisfies the definition of 3NF. Assume that the dependency that generated Ri in the synthesis algorithm is  → . Now, B must be in  or , since B is in Ri and  →  generated Ri . Let us consider the three possible cases:
+If a relation _Ri_ is in the decomposition generated by the synthesis algorithm, then _Ri_ is in 3NF. Recall that when we test for 3NF it suffices to consider functional dependencies whose right-hand side is a single attribute. Therefore, to see that _Ri_ is in 3NF you must convince yourself that any functional dependency  → _B_ that holds on _Ri_ satisfies the definition of 3NF. Assume that the dependency that generated _Ri_ in the synthesis algorithm is  → . Now, _B_ must be in  or , since _B_ is in _Ri_ and  →  generated _Ri_ . Let us consider the three possible cases:
 
-• B is in both  and . In this case, the dependency  →  would not have been in Fc since B would be extraneous in . Thus, this case cannot hold.
+• _B_ is in both  and . In this case, the dependency  →  would not have been in _Fc_ since _B_ would be extraneous in . Thus, this case cannot hold.
 
-• B is in  but not . Consider two cases:
+• _B_ is in  but not . Consider two cases:
 
-    ◦  is a superkey. The second condition of 3NF is satisfied.
+◦  is a superkey. The second condition of 3NF is satisfied.
 
-    ◦  is not a superkey. Then  must contain some attribute not in  . Now, since  → B is in F +, it must be derivable from Fc by using the attribute closure algorithm on  . The derivation could not have used  → — if it had been used,  must be contained in the attribute closure of  , which is not possible, since we assumed  is not a superkey. Now, using  → ( − {B}) and  → B, we can derive  → B (since  ⊆ , and   
+◦  is not a superkey. Then  must contain some attribute not in  . Now, since  → _B_ is in _F_ +, it must be derivable from _Fc_ by using the attribute closure algorithm on  . The derivation could not have used  → — if it had been used,  must be contained in the attribute closure of  , which is not possible, since we assumed  is not a superkey. Now, using  → ( − {_B_}) and  → _B_, we can derive  → _B_ (since  ⊆ , and   
 
 **354 Chapter 8 Relational Database Design**
 
-cannot contain B because  → B is nontrivial). This would imply that B is extraneous in the right-hand side of  → , which is not possible since  →  is in the canonical cover Fc . Thus, if B is in , then  must be a superkey, and the second condition of 3NF must be satisfied.
+cannot contain _B_ because  → _B_ is nontrivial). This would imply that _B_ is extraneous in the right-hand side of  → , which is not possible since  →  is in the canonical cover _Fc_ . Thus, if _B_ is in , then  must be a superkey, and the second condition of 3NF must be satisfied.
 
-• B is in  but not . Since  is a candidate key, the third alternative in the definition of 3NF is satisfied.
+• _B_ is in  but not . Since  is a candidate key, the third alternative in the definition of 3NF is satisfied.
 
 Interestingly, the algorithm we described for decomposition into 3NF can be implemented in polynomial time, even though testing a given relation to see if it satisfies 3NF is NP-hard (which means that it is very unlikely that a polynomial- time algorithm will ever be invented for this task).
 
@@ -3067,17 +3067,17 @@ Of the two normal forms for relational database schemas, 3NF and BCNF there are 
 
 Our goals of database design with functional dependencies are:
 
-**1.** BCNF.
+**1\.** BCNF.
 
-**2.** Losslessness.
+**2\.** Losslessness.
 
-**3.** Dependency preservation.
+**3\.** Dependency preservation.
 
 Since it is not always possible to satisfy all three, we may be forced to choose between BCNF and dependency preservation with 3NF.
 
 It is worth noting that SQL does not provide a way of specifying functional dependencies, except for the special case of declaring superkeys by using the **primary key** or **unique** constraints. It is possible, although a little complicated, to write assertions that enforce a functional dependency (see Practice Exercise 8.9); unfortunately, currently no database system supports the complex assertions that are required to enforce a functional dependency, and the assertions would be expensive to test. Thus even if we had a dependency-preserving decomposition, if we use standard SQL we can test efficiently only those functional dependencies whose left-hand side is a key.
 
-Although testing functional dependencies may involve a join if the decom- position is not dependency preserving, we could in principle reduce the cost by using materialized views, which many database systems support, provided the database system supports primary key constraints on materialized views. Given a BCNF decomposition that is not dependency preserving, we consider each de- pendency in a canonical cover Fc that is not preserved in the decomposition. For each such dependency  → , we define a materialized view that computes a  
+Although testing functional dependencies may involve a join if the decom- position is not dependency preserving, we could in principle reduce the cost by using materialized views, which many database systems support, provided the database system supports primary key constraints on materialized views. Given a BCNF decomposition that is not dependency preserving, we consider each de- pendency in a canonical cover _Fc_ that is not preserved in the decomposition. For each such dependency  → , we define a materialized view that computes a  
 
 **8.6 Decomposition Using Multivalued Dependencies 355**
 
@@ -3093,27 +3093,27 @@ Thus, in case we are not able to get a dependency-preserving BCNF decom- positio
 
 Some relation schemas, even though they are in BCNF, do not seem to be suffi- ciently normalized, in the sense that they still suffer from the problem of repetition of information. Consider a variation of the university organization where an in- structor may be associated with multiple departments.
 
-inst (ID, _dept name_, name, street, city)
+_inst_ (_ID_, _dept name_, _name_, _street_, _city_)
 
 The astute reader will recognize this schema as a non-BCNF schema because of the functional dependency
 
-ID → name, street, city
+_ID_ → _name_, _street_, _city_
 
-and because ID is not a key for inst. Further assume that an instructor may have several addresses (say, a winter
+and because _ID_ is not a key for _inst_. Further assume that an instructor may have several addresses (say, a winter
 
-home and a summer home). Then, we no longer wish to enforce the functional dependency “ID→ street, city”, though, of course, we still want to enforce “ID → name” (that is, the university is not dealing with instructors who operate under multiple aliases!). Following the BCNF decomposition algorithm, we obtain two schemas:
+home and a summer home). Then, we no longer wish to enforce the functional dependency “_ID_→ _street_, _city_”, though, of course, we still want to enforce “_ID_ → _name_” (that is, the university is not dealing with instructors who operate under multiple aliases!). Following the BCNF decomposition algorithm, we obtain two schemas:
 
 7At least as of Oracle version 10g.  
 
 **356 Chapter 8 Relational Database Design**
 
-r1 (ID, name) r2 (ID, _dept name_, street, city)
+_r_1 (_ID_, _name_) _r_2 (_ID_, _dept name_, _street_, _city_)
 
-Both of these are in BCNF (recall that an instructor can be associated with multi- ple departments and a department may have several instructors, and therefore, neither “ID → _dept name_” nor “_dept name_ → ID” hold).
+Both of these are in BCNF (recall that an instructor can be associated with multi- ple departments and a department may have several instructors, and therefore, neither “_ID_ → _dept name_” nor “_dept name_ → _ID_” hold).
 
-Despite r2 being in BCNF, there is redundancy. We repeat the address informa- tion of each residence of an instructor once for each department with which the instructor is associated. We could solve this problem by decomposing r2 further into:
+Despite _r_2 being in BCNF, there is redundancy. We repeat the address informa- tion of each residence of an instructor once for each department with which the instructor is associated. We could solve this problem by decomposing _r_2 further into:
 
-r21(_dept name_, ID) r22(ID, street, city)
+_r_21(_dept name_, _ID_) _r_22(_ID_, _street_, _city_)
 
 but there is no constraint that leads us to do this. To deal with this problem, we must define a new form of constraint, called
 
@@ -3121,41 +3121,41 @@ a _multivalued dependency_. As we did for functional dependencies, we shall use 
 
 **8.6.1 Multivalued Dependencies**
 
-Functional dependencies rule out certain tuples from being in a relation. If A → B, then we cannot have two tuples with the same A value but different B values. Multivalued dependencies, on the other hand, do not rule out the existence of certain tuples. Instead, they require that other tuples of a certain form be present in the relation. For this reason, functional dependencies sometimes are referred to as **equality-generating dependencies**, and multivalued dependencies are referred to as **tuple-generating dependencies**.
+Functional dependencies rule out certain tuples from being in a relation. If _A_ → _B_, then we cannot have two tuples with the same _A_ value but different _B_ values. Multivalued dependencies, on the other hand, do not rule out the existence of certain tuples. Instead, they _require_ that other tuples of a certain form be present in the relation. For this reason, functional dependencies sometimes are referred to as **equality-generating dependencies**, and multivalued dependencies are referred to as **tuple-generating dependencies**.
 
-Let r (R) be a relation schema and let  ⊆ R and  ⊆ R. The **multivalued dependency**
+Let _r_ (_R_) be a relation schema and let  ⊆ _R_ and  ⊆ _R_. The **multivalued dependency**
 
  →→ 
 
-holds on R if, in any legal instance of relation r (R), for all pairs of tuples t1 and t2 in r such that t1[] = t2[], there exist tuples t3 and t4 in r such that
+holds on _R_ if, in any legal instance of relation _r_ (_R_), for all pairs of tuples _t_1 and _t_2 in _r_ such that _t_1[] = _t_2[], there exist tuples _t_3 and _t_4 in _r_ such that
 
-t1[] = t2[] = t3[] = t4[] t3[] = t1[] t3[R − ] = t2[R − ] t4[] = t2[] t4[R − ] = t1[R − ]  
+_t_1[] = _t_2[] = _t_3[] = _t_4[] _t_3[] = _t_1[] _t_3[_R_ − ] = _t_2[_R_ − ] _t_4[] = _t_2[] _t_4[_R_ − ] = _t_1[_R_ − ]  
 
 **8.6 Decomposition Using Multivalued Dependencies 357**
 
-α α ββ –R – t1 t2 t3 t4
+α α ββ –_R_ – _t_1 _t_2 _t_3 _t_4
 
-a1 . . . _ai a_1 . . . _ai a_1 . . . _ai a_1 . . . ai
+_a_1 . . . _ai a_1 . . . _ai a_1 . . . _ai a_1 . . . _ai_
 
-_ai +_ 1 . . . _aj bi +_ 1 . . . _bj ai +_ 1 . . . _aj bi +_ 1 . . . bj
+_ai +_ 1 . . . _aj bi +_ 1 . . . _bj ai +_ 1 . . . _aj bi +_ 1 . . . _bj_
 
-_aj +_ 1 . . . _an bj +_ 1 . . . _bn bj +_ 1 . . . _bn aj +_ 1 . . . an
+_aj +_ 1 . . . _an bj +_ 1 . . . _bn bj +_ 1 . . . _bn aj +_ 1 . . . _an_
 
 **Figure 8.13** Tabular representation of  →→ .
 
-This definition is less complicated than it appears to be. Figure 8.13 gives a tabular picture of t1, t2, t3, and t4. Intuitively, the multivalued dependency  →→  says that the relationship between  and  is independent of the relationship between  and R−. If the multivalued dependency  →→  is satisfied by all relations on schema R, then  →→  is a trivial multivalued dependency on schema R. Thus,  →→  is trivial if  ⊆  or  ∪  = R.
+This definition is less complicated than it appears to be. Figure 8.13 gives a tabular picture of _t_1, _t_2, _t_3, and _t_4\. Intuitively, the multivalued dependency  →→  says that the relationship between  and  is independent of the relationship between  and _R_−. If the multivalued dependency  →→  is satisfied by all relations on schema _R_, then  →→  is a _trivial_ multivalued dependency on schema _R_. Thus,  →→  is trivial if  ⊆  or  ∪  = _R_.
 
-To illustrate the difference between functional and multivalued dependencies, we consider the schema r2 again, and an example relation on that schema shown in Figure 8.14. We must repeat the department name once for each address that an instructor has, and we must repeat the address for each department with which an instructor is associated. This repetition is unnecessary, since the relationship between an instructor and his address is independent of the relationship between that instructor and a department. If an instructor with ID 22222 is associated with the Physics department, we want that department to be associated with all of that instructor’s addresses. Thus, the relation of Figure 8.15 is illegal. To make this relation legal, we need to add the tuples (Physics, 22222, Main, Manchester) and (Math, 22222, North, Rye) to the relation of Figure 8.15.
+To illustrate the difference between functional and multivalued dependencies, we consider the schema _r_2 again, and an example relation on that schema shown in Figure 8.14. We must repeat the department name once for each address that an instructor has, and we must repeat the address for each department with which an instructor is associated. This repetition is unnecessary, since the relationship between an instructor and his address is independent of the relationship between that instructor and a department. If an instructor with _ID_ 22222 is associated with the Physics department, we want that department to be associated with all of that instructor’s addresses. Thus, the relation of Figure 8.15 is illegal. To make this relation legal, we need to add the tuples (Physics, 22222, Main, Manchester) and (Math, 22222, North, Rye) to the relation of Figure 8.15.
 
 Comparing the preceding example with our definition of multivalued depen- dency, we see that we want the multivalued dependency:
 
-ID →→ street, city
+_ID_ →→ _street_, _city_
 
-to hold. (The multivalued dependency ID →→ _dept name_ will do as well. We shall soon see that they are equivalent.)
+to hold. (The multivalued dependency _ID_ →→ _dept name_ will do as well. We shall soon see that they are equivalent.)
 
 As with functional dependencies, we shall use multivalued dependencies in two ways:
 
-**1.** To test relations to determine whether they are legal under a given set of functional and multivalued dependencies
+**1\.** To test relations to determine whether they are legal under a given set of functional and multivalued dependencies
 
 _ID dept name street city_
 
@@ -3169,19 +3169,19 @@ _ID dept name street city_
 
 22222 Physics North Rye 22222 Math Main Manchester
 
-**Figure 8.15** An illegal r2 relation.
+**Figure 8.15** An illegal _r_2 relation.
 
-**2.** To specify constraints on the set of legal relations; we shall thus concern ourselves with only those relations that satisfy a given set of functional and multivalued dependencies
+**2\.** To specify constraints on the set of legal relations; we shall thus concern ourselves with _only_ those relations that satisfy a given set of functional and multivalued dependencies
 
-Note that, if a relation r fails to satisfy a given multivalued dependency, we can construct a relation r ′ that does satisfy the multivalued dependency by adding tuples to r.
+Note that, if a relation _r_ fails to satisfy a given multivalued dependency, we can construct a relation _r_ ′ that _does_ satisfy the multivalued dependency by adding tuples to _r_.
 
-Let D denote a set of functional and multivalued dependencies. The **closure** D\+ of D is the set of all functional and multivalued dependencies logically im- plied by D. As we did for functional dependencies, we can compute D\+ from D, using the formal definitions of functional dependencies and multivalued de- pendencies. We can manage with such reasoning for very simple multivalued dependencies. Luckily, multivalued dependencies that occur in practice appear to be quite simple. For complex dependencies, it is better to reason about sets of dependencies by using a system of inference rules.
+Let _D_ denote a set of functional and multivalued dependencies. The **closure** _D_\+ of _D_ is the set of all functional and multivalued dependencies logically im- plied by _D_. As we did for functional dependencies, we can compute _D_\+ from _D_, using the formal definitions of functional dependencies and multivalued de- pendencies. We can manage with such reasoning for very simple multivalued dependencies. Luckily, multivalued dependencies that occur in practice appear to be quite simple. For complex dependencies, it is better to reason about sets of dependencies by using a system of inference rules.
 
-From the definition of multivalued dependency, we can derive the following rules for _,_  ⊆ R:
+From the definition of multivalued dependency, we can derive the following rules for _,_  ⊆ _R_:
 
 • If  → , then  →→ . In other words, every functional dependency is also a multivalued dependency.
 
-• If  →→ , then  →→ R −  − 
+• If  →→ , then  →→ _R_ −  − 
 
 Appendix C.1.1 outlines a system of inference rules for multivalued dependen- cies.
 
@@ -3189,41 +3189,41 @@ Appendix C.1.1 outlines a system of inference rules for multivalued dependen- ci
 
 Consider again our example of the BCNF schema:
 
-r2 (ID, _dept name_, street, city)
+_r_2 (_ID_, _dept name_, _street_, _city_)
 
-in which the multivalued dependency “ID →→ street, city” holds. We saw in the opening paragraphs of Section 8.6 that, although this schema is in BCNF, the design is not ideal, since we must repeat an instructor’s address information for each department. We shall see that we can use the given multivalued dependency to improve the database design, by decomposing this schema into a **fourth normal form** decomposition.
+in which the multivalued dependency “_ID_ →→ _street_, _city_” holds. We saw in the opening paragraphs of Section 8.6 that, although this schema is in BCNF, the design is not ideal, since we must repeat an instructor’s address information for each department. We shall see that we can use the given multivalued dependency to improve the database design, by decomposing this schema into a **fourth normal form** decomposition.
 
-A relation schema r (R) is in **fourth normal form** (4NF) with respect to a set D of functional and multivalued dependencies if, for all multivalued dependencies  
+A relation schema _r_ (_R_) is in **fourth normal form** (4NF) with respect to a set _D_ of functional and multivalued dependencies if, for all multivalued dependencies  
 
 **8.6 Decomposition Using Multivalued Dependencies 359**
 
-in D\+ of the form  →→ , where  ⊆ R and  ⊆ R, at least one of the following holds:
+in _D_\+ of the form  →→ , where  ⊆ _R_ and  ⊆ _R_, at least one of the following holds:
 
 •  →→  is a trivial multivalued dependency.
 
-•  is a superkey for R.
+•  is a superkey for _R_.
 
 A database design is in 4NF if each member of the set of relation schemas that constitutes the design is in 4NF.
 
-Note that the definition of 4NF differs from the definition of BCNF in only the use of multivalued dependencies. Every 4NF schema is in BCNF. To see this fact, we note that, if a schema r (R) is not in BCNF, then there is a nontrivial functional dependency  →  holding on R, where  is not a superkey. Since  →  implies  →→ , r (R) cannot be in 4NF.
+Note that the definition of 4NF differs from the definition of BCNF in only the use of multivalued dependencies. Every 4NF schema is in BCNF. To see this fact, we note that, if a schema _r_ (_R_) is not in BCNF, then there is a nontrivial functional dependency  →  holding on _R_, where  is not a superkey. Since  →  implies  →→ , _r_ (_R_) cannot be in 4NF.
 
-Let r (R) be a relation schema, and let r1(R1)_, r_2(R2)_, . . . , rn_(Rn) be a decompo- sition of r (R). To check if each relation schema ri in the decomposition is in 4NF, we need to find what multivalued dependencies hold on each ri . Recall that, for a set F of functional dependencies, the restriction Fi of F to Ri is all functional dependencies in F \+ that include only attributes of Ri . Now consider a set D of both functional and multivalued dependencies. The **restriction** of D to Ri is the set Di consisting of:
+Let _r_ (_R_) be a relation schema, and let _r_1(_R_1)_, r_2(_R_2)_, . . . , rn_(_Rn_) be a decompo- sition of _r_ (_R_). To check if each relation schema _ri_ in the decomposition is in 4NF, we need to find what multivalued dependencies hold on each _ri_ . Recall that, for a set _F_ of functional dependencies, the restriction _Fi_ of _F_ to _Ri_ is all functional dependencies in _F_ \+ that include _only_ attributes of _Ri_ . Now consider a set _D_ of both functional and multivalued dependencies. The **restriction** of _D_ to _Ri_ is the set _Di_ consisting of:
 
-**1.** All functional dependencies in D\+ that include only attributes of Ri .
+**1\.** All functional dependencies in _D_\+ that include only attributes of _Ri_ .
 
-**2.** All multivalued dependencies of the form:
+**2\.** All multivalued dependencies of the form:
 
- →→  ∩ Ri
+ →→  ∩ _Ri_
 
-where  ⊆ Ri and  →→  is in D+.
+where  ⊆ _Ri_ and  →→  is in _D_+.
 
 **8.6.3 4NF Decomposition**
 
-The analogy between 4NF and BCNF applies to the algorithm for decomposing a schema into 4NF. Figure 8.16 shows the 4NF decomposition algorithm. It is identical to the BCNF decomposition algorithm of Figure 8.11, except that it uses multivalued dependencies and uses the restriction of D\+ to Ri .
+The analogy between 4NF and BCNF applies to the algorithm for decomposing a schema into 4NF. Figure 8.16 shows the 4NF decomposition algorithm. It is identical to the BCNF decomposition algorithm of Figure 8.11, except that it uses multivalued dependencies and uses the restriction of _D_\+ to _Ri_ .
 
-If we apply the algorithm of Figure 8.16 to (ID, _dept name_, street, city), we find that ID→→ _dept name_ is a nontrivial multivalued dependency, and ID is not a superkey for the schema. Following the algorithm, we replace it by two schemas:
+If we apply the algorithm of Figure 8.16 to (_ID_, _dept name_, _street_, _city_), we find that _ID_→→ _dept name_ is a nontrivial multivalued dependency, and _ID_ is not a superkey for the schema. Following the algorithm, we replace it by two schemas:
 
-r21 (ID, _dept name_) r22 (ID, street, city)
+_r_21 (_ID_, _dept name_) _r_22 (_ID_, _street_, _city_)
 
 This pair of schemas, which is in 4NF, eliminates the redundancy we encountered earlier.
 
@@ -3231,23 +3231,23 @@ As was the case when we were dealing solely with functional dependencies, we are
 
 **360 Chapter 8 Relational Database Design**
 
-result := _{R}_; done := false; _compute D_+; Given schema Ri , let Di denote the restriction of D\+ to Ri **while** (**not** done) **do**
+_result_ := _{R}_; _done_ := false; _compute D_+; Given schema _Ri_ , let _Di_ denote the restriction of _D_\+ to _Ri_ **while** (**not** _done_) **do**
 
-**if** (there is a schema Ri in result that is not in 4NF w.r.t. Di ) **then begin**
+**if** (there is a schema _Ri_ in _result_ that is not in 4NF w.r.t. _Di_ ) **then begin**
 
-let  →→  be a nontrivial multivalued dependency that holds on Ri such that  → Ri is not in Di , and  ∩  = ∅; result := (result − Ri ) ∪ (Ri − ) ∪ (_,_ );
+let  →→  be a nontrivial multivalued dependency that holds on _Ri_ such that  → _Ri_ is not in _Di_ , and  ∩  = ∅; _result_ := (_result_ − _Ri_ ) ∪ (_Ri_ − ) ∪ (_,_ );
 
-**end else** done := true;
+**end else** _done_ := true;
 
 **Figure 8.16** 4NF decomposition algorithm.
 
 cies. The following fact about multivalued dependencies and losslessness shows that the algorithm of Figure 8.16 generates only lossless decompositions:
 
-• Let r (R) be a relation schema, and let D be a set of functional and multivalued dependencies on R. Let r1(R1) and r2(R2) form a decomposition of R. This decomposition is lossless of R if and only if at least one of the following multivalued dependencies is in D+:
+• Let _r_ (_R_) be a relation schema, and let _D_ be a set of functional and multivalued dependencies on _R_. Let _r_1(_R_1) and _r_2(_R_2) form a decomposition of _R_. This decomposition is lossless of _R_ if and only if at least one of the following multivalued dependencies is in _D_+:
 
-R1 ∩ R2 →→ R1 R1 ∩ R2 →→ R2
+_R_1 ∩ _R_2 →→ _R_1 _R_1 ∩ _R_2 →→ _R_2
 
-Recall that we stated in Section 8.4.4 that, if R1 ∩ R2 → R1 or R1 ∩ R2 → R2, then r1(R1) and r2(R2) are a lossless decomposition r (R) . The preceding fact about multivalued dependencies is a more general statement about losslessness. It says that, for every lossless decomposition of r (R) into two schemas r1(R1) and r2(R2), one of the two dependencies R1 ∩ R2 →→ R1 or R1 ∩ R2 →→ R2 must hold.
+Recall that we stated in Section 8.4.4 that, if _R_1 ∩ _R_2 → _R_1 or _R_1 ∩ _R_2 → _R_2, then _r_1(_R_1) and _r_2(_R_2) are a lossless decomposition _r_ (_R_) . The preceding fact about multivalued dependencies is a more general statement about losslessness. It says that, for _every_ lossless decomposition of _r_ (_R_) into two schemas _r_1(_R_1) and _r_2(_R_2), one of the two dependencies _R_1 ∩ _R_2 →→ _R_1 or _R_1 ∩ _R_2 →→ _R_2 must hold.
 
 The issue of dependency preservation when we decompose a relation schema becomes more complicated in the presence of multivalued dependencies. Ap- pendix C.1.2 pursues this topic.
 
@@ -3265,21 +3265,21 @@ Conspicuous by its absence from our discussion of normal forms is **second norma
 
 So far we have looked at detailed issues about normal forms and normalization. In this section, we study how normalization fits into the overall database-design process.
 
-Earlier in the chapter, starting in Section 8.3, we assumed that a relation schema r (R) is given, and proceeded to normalize it. There are several ways in which we could have come up with the schema r (R):
+Earlier in the chapter, starting in Section 8.3, we assumed that a relation schema _r_ (_R_) is given, and proceeded to normalize it. There are several ways in which we could have come up with the schema _r_ (_R_):
 
-**1.** r (R) could have been generated in converting an E-R diagram to a set of relation schemas.
+**1\.** _r_ (_R_) could have been generated in converting an E-R diagram to a set of relation schemas.
 
-**2.** r (R) could have been a single relation schema containing all attributes that are of interest. The normalization process then breaks up r (R) into smaller schemas.
+**2\.** _r_ (_R_) could have been a single relation schema containing _all_ attributes that are of interest. The normalization process then breaks up _r_ (_R_) into smaller schemas.
 
-**3.** r (R) could have been the result of an ad-hoc design of relations that we then test to verify that it satisfies a desired normal form.
+**3\.** _r_ (_R_) could have been the result of an ad-hoc design of relations that we then test to verify that it satisfies a desired normal form.
 
 In the rest of this section, we examine the implications of these approaches. We also examine some practical issues in database design, including denormalization for performance and examples of bad design that are not detected by normalization.
 
 **8.8.1 E-R Model and Normalization**
 
-When we define an E-R diagram carefully, identifying all entities correctly, the relation schemas generated from the E-R diagram should not need much further normalization. However, there can be functional dependencies between attributes of an entity. For instance, suppose an instructor entity set had attributes _dept name_ and _dept address_, and there is a functional dependency _dept name_ → _dept address_. We would then need to normalize the relation generated from instructor.
+When we define an E-R diagram carefully, identifying all entities correctly, the relation schemas generated from the E-R diagram should not need much further normalization. However, there can be functional dependencies between attributes of an entity. For instance, suppose an _instructor_ entity set had attributes _dept name_ and _dept address_, and there is a functional dependency _dept name_ → _dept address_. We would then need to normalize the relation generated from _instructor_.
 
-Most examples of such dependencies arise out of poor E-R diagram design. In the above example, if we had designed the E-R diagram correctly, we would have created a department entity set with attribute _dept address_ and a relationship set between instructor and department. Similarly, a relationship set involving more than two entity sets may result in a schema that may not be in a desirable normal form. Since most relationship sets are binary, such cases are relatively rare. (In  
+Most examples of such dependencies arise out of poor E-R diagram design. In the above example, if we had designed the E-R diagram correctly, we would have created a _department_ entity set with attribute _dept address_ and a relationship set between _instructor_ and _department_. Similarly, a relationship set involving more than two entity sets may result in a schema that may not be in a desirable normal form. Since most relationship sets are binary, such cases are relatively rare. (In  
 
 **362 Chapter 8 Relational Database Design**
 
@@ -3293,25 +3293,25 @@ A careful reader will have noted that in order for us to illustrate a need for m
 
 • A multivalued attribute of an entity set.
 
-For a many-to-many relationship set each related entity set has its own schema and there is an additional schema for the relationship set. For a multivalued attribute, a separate schema is created consisting of that attribute and the primary key of the entity set (as in the case of the _phone number_ attribute of the entity set instructor).
+For a many-to-many relationship set each related entity set has its own schema and there is an additional schema for the relationship set. For a multivalued attribute, a separate schema is created consisting of that attribute and the primary key of the entity set (as in the case of the _phone number_ attribute of the entity set _instructor_).
 
 The universal-relation approach to relational database design starts with an assumption that there is one single relation schema containing all attributes of interest. This single schema defines how users and applications interact with the database.
 
 **8.8.2 Naming of Attributes and Relationships**
 
-A desirable feature of a database design is the **unique-role assumption**, which means that each attribute name has a unique meaning in the database. This prevents us from using the same attribute to mean different things in different schemas. For example, we might otherwise consider using the attribute number for phone number in the instructor schema and for room number in the classroom schema. The join of a relation on schema instructor with one on classroom is meaningless. While users and application developers can work carefully to ensure use of the right number in each circumstance, having a different attribute name for phone number and for room number serves to reduce user errors.
+A desirable feature of a database design is the **unique-role assumption**, which means that each attribute name has a unique meaning in the database. This prevents us from using the same attribute to mean different things in different schemas. For example, we might otherwise consider using the attribute _number_ for phone number in the _instructor_ schema and for room number in the _classroom_ schema. The join of a relation on schema _instructor_ with one on _classroom_ is meaningless. While users and application developers can work carefully to ensure use of the right _number_ in each circumstance, having a different attribute name for phone number and for room number serves to reduce user errors.
 
-While it is a good idea to keep names for incompatible attributes distinct, if attributes of different relations have the same meaning, it may be a good idea to use the same attribute name. For this reason we used the same attribute name “name” for both the instructor and the student entity sets. If this was not the case (that is, we used different naming conventions for the instructor and student names), then if we wished to generalize these entity sets by creating a person entity set, we would have to rename the attribute. Thus, even if we did not currently  
+While it is a good idea to keep names for incompatible attributes distinct, if attributes of different relations have the same meaning, it may be a good idea to use the same attribute name. For this reason we used the same attribute name “_name_” for both the _instructor_ and the _student_ entity sets. If this was not the case (that is, we used different naming conventions for the instructor and student names), then if we wished to generalize these entity sets by creating a _person_ entity set, we would have to rename the attribute. Thus, even if we did not currently  
 
 **8.8 Database-Design Process 363**
 
-have a generalization of student and instructor, if we foresee such a possibility it is best to use the same name in both entity sets (and relations).
+have a generalization of _student_ and _instructor_, if we foresee such a possibility it is best to use the same name in both entity sets (and relations).
 
-Although technically, the order of attribute names in a schema does not matter, it is convention to list primary-key attributes first. This makes reading default output (as from **select ***) easier.
+Although technically, the order of attribute names in a schema does not matter, it is convention to list primary-key attributes first. This makes reading default output (as from **select \***) easier.
 
-In large database schemas, relationship sets (and schemas derived therefrom) are often named via a concatenation of the names of related entity sets, perhaps with an intervening hyphen or underscore. We have used a few such names, for example _inst sec_ and _student sec_. We used the names teaches and takes instead of using the longer concatenated names. This was acceptable since it is not hard for you to remember the associated entity sets for a few relationship sets. We cannot always create relationship-set names by simple concatenation; for example, a manager or works-for relationship between employees would not make much sense if it were called _employee employee_! Similarly, if there are multiple relationship sets possible between a pair of entity sets, the relationship-set names must include extra parts to identify the relationship set.
+In large database schemas, relationship sets (and schemas derived therefrom) are often named via a concatenation of the names of related entity sets, perhaps with an intervening hyphen or underscore. We have used a few such names, for example _inst sec_ and _student sec_. We used the names _teaches_ and _takes_ instead of using the longer concatenated names. This was acceptable since it is not hard for you to remember the associated entity sets for a few relationship sets. We cannot always create relationship-set names by simple concatenation; for example, a manager or works-for relationship between employees would not make much sense if it were called _employee employee_! Similarly, if there are multiple relationship sets possible between a pair of entity sets, the relationship-set names must include extra parts to identify the relationship set.
 
-Different organizations have different conventions for naming entity sets. For example, we may call an entity set of students student or students. We have chosen to use the singular form in our database designs. Using either singular or plural is acceptable, as long as the convention is used consistently across all entity sets.
+Different organizations have different conventions for naming entity sets. For example, we may call an entity set of students _student_ or _students_. We have chosen to use the singular form in our database designs. Using either singular or plural is acceptable, as long as the convention is used consistently across all entity sets.
 
 As schemas grow larger, with increasing numbers of relationship sets, using consistent naming of attributes, relationships, and entities makes life much easier for the database designer and application programmers.
 
@@ -3319,11 +3319,11 @@ As schemas grow larger, with increasing numbers of relationship sets, using cons
 
 Occasionally database designers choose a schema that has redundant information; that is, it is not normalized. They use the redundancy to improve performance for specific applications. The penalty paid for not using a normalized schema is the extra work (in terms of coding time and execution time) to keep redundant data consistent.
 
-For instance, suppose all course prerequisites have to be displayed along with a course information, every time a course is accessed. In our normalized schema, this requires a join of course with prereq.
+For instance, suppose all course prerequisites have to be displayed along with a course information, every time a course is accessed. In our normalized schema, this requires a join of _course_ with _prereq_.
 
-One alternative to computing the join on the fly is to store a relation containing all the attributes of course and prereq. This makes displaying the “full” course information faster. However, the information for a course is repeated for every course prerequisite, and all copies must be updated by the application, whenever a course prerequisite is added or dropped. The process of taking a normalized schema and making it nonnormalized is called **denormalization**, and designers use it to tune performance of systems to support time-critical operations.
+One alternative to computing the join on the fly is to store a relation containing all the attributes of _course_ and _prereq_. This makes displaying the “full” course information faster. However, the information for a course is repeated for every course prerequisite, and all copies must be updated by the application, whenever a course prerequisite is added or dropped. The process of taking a normalized schema and making it nonnormalized is called **denormalization**, and designers use it to tune performance of systems to support time-critical operations.
 
-A better alternative, supported by many database systems today, is to use the normalized schema, and additionally store the join of course and prereq as a materialized view. (Recall that a materialized view is a view whose result is stored in the database and brought up to date when the relations used in the view are updated.) Like denormalization, using materialized views does have space and  
+A better alternative, supported by many database systems today, is to use the normalized schema, and additionally store the join of _course_ and _prereq_ as a materialized view. (Recall that a materialized view is a view whose result is stored in the database and brought up to date when the relations used in the view are updated.) Like denormalization, using materialized views does have space and  
 
 **364 Chapter 8 Relational Database Design**
 
@@ -3333,11 +3333,11 @@ time overhead; however, it has the advantage that keeping the view up to date is
 
 There are some aspects of database design that are not addressed by normal- ization, and can thus lead to bad database design. Data pertaining to time or to ranges of time have several such issues. We give examples here; obviously, such designs should be avoided.
 
-Consider a university database, where we want to store the total number of instructors in each department in different years. A relation _total inst_(_dept name_, year, size) could be used to store the desired information. The only functional dependency on this relation is _dept name_, year→ size, and the relation is in BCNF.
+Consider a university database, where we want to store the total number of instructors in each department in different years. A relation _total inst_(_dept name_, _year_, _size_) could be used to store the desired information. The only functional dependency on this relation is _dept name_, _year_→ _size_, and the relation is in BCNF.
 
-An alternative design is to use multiple relations, each storing the size infor- mation for a different year. Let us say the years of interest are 2007, 2008, and 2009; we would then have relations of the form _total inst 2007_, _total inst 2008_, _total inst 2009_, all of which are on the schema (_dept name_, size). The only functional
+An alternative design is to use multiple relations, each storing the size infor- mation for a different year. Let us say the years of interest are 2007, 2008, and 2009; we would then have relations of the form _total inst 2007_, _total inst 2008_, _total inst 2009_, all of which are on the schema (_dept name_, _size_). The only functional
 
-dependency here on each relation would be _dept name_ → size, so these relations are also in BCNF.
+dependency here on each relation would be _dept name_ → _size_, so these relations are also in BCNF.
 
 However, this alternative design is clearly a bad idea—we would have to create a new relation every year, and we would also have to write new queries every year, to take each new relation into account. Queries would also be more complicated since they may have to refer to many relations.
 
@@ -3353,19 +3353,19 @@ Suppose we retain data in our university organization showing not only the addre
 
 well into the future such as 9999-12-31, can be used to indicate that the instructor is still resident at that address.
 
-In general, **temporal data** are data that have an associated time interval during which they are **valid**.8 We use the term **snapshot** of data to mean the value of the data at a particular point in time. Thus a snapshot of course data gives the values of all attributes, such as title and department, of all courses at a particular point in time.
+In general, **temporal data** are data that have an associated time interval during which they are **valid**.8 We use the term **snapshot** of data to mean the value of the data at a particular point in time. Thus a snapshot of _course_ data gives the values of all attributes, such as title and department, of all courses at a particular point in time.
 
-Modeling temporal data is a challenging problem for several reasons. For ex- ample, suppose we have an instructor entity set with which we wish to associate a time-varying address. To add temporal information to an address, we would then have to create a multivalued attribute, each of whose values is a composite value containing an address and a time interval. In addition to time-varying attribute values, entities may themselves have an associated valid time. For example, a student entity may have a valid time from the date the student entered the uni- versity to the date the student graduated (or left the university). Relationships too may have associated valid times. For example, the prereq relationship may record when a course became a prerequisite for another course. We would thus have to add valid time intervals to attribute values, entity sets, and relationship sets. Adding such detail to an E-R diagram makes it very difficult to create and to comprehend. There have been several proposals to extend the E-R notation to specify in a simple manner that an attribute value or relationship is time varying, but there are no accepted standards.
+Modeling temporal data is a challenging problem for several reasons. For ex- ample, suppose we have an _instructor_ entity set with which we wish to associate a time-varying address. To add temporal information to an address, we would then have to create a multivalued attribute, each of whose values is a composite value containing an address and a time interval. In addition to time-varying attribute values, entities may themselves have an associated valid time. For example, a student entity may have a valid time from the date the student entered the uni- versity to the date the student graduated (or left the university). Relationships too may have associated valid times. For example, the _prereq_ relationship may record when a course became a prerequisite for another course. We would thus have to add valid time intervals to attribute values, entity sets, and relationship sets. Adding such detail to an E-R diagram makes it very difficult to create and to comprehend. There have been several proposals to extend the E-R notation to specify in a simple manner that an attribute value or relationship is time varying, but there are no accepted standards.
 
 When we track data values across time, functional dependencies that we assumed to hold, such as:
 
-ID → street, city
+_ID_ → _street_, _city_
 
-may no longer hold. The following constraint (expressed in English) would hold instead: “An instructor ID has only one street and city value for any given time t.”
+may no longer hold. The following constraint (expressed in English) would hold instead: “An instructor _ID_ has only one _street_ and _city_ value for any given time _t_.”
 
-Functional dependencies that hold at a particular point in time are called temporal functional dependencies. Formally, a **temporal functional dependency** X
+Functional dependencies that hold at a particular point in time are called temporal functional dependencies. Formally, a **temporal functional dependency** _X_
 
-→ Y holds on a relation schema r (R) if, for all legal instances of r (R), all snapshots of r satisfy the functional dependency X → Y.
+→ _Y_ holds on a relation schema _r_ (_R_) if, for all legal instances of _r_ (_R_), all snapshots of _r_ satisfy the functional dependency _X_ → _Y_.
 
 We could extend the theory of relational database design to take temporal functional dependencies into account. However, reasoning with regular func- tional dependencies is difficult enough already, and few designers are prepared to deal with temporal functional dependencies.
 
@@ -3377,13 +3377,13 @@ In practice, database designers fall back to simpler approaches to design- ing t
 
 studies the various relations and decides which relations require temporal varia- tion to be tracked.
 
-The next step is to add valid time information to each such relation, by adding start and end time as attributes. For example, consider the course relation. The title of the course may change over time, which can be handled by adding a valid time range; the resultant schema would be
+The next step is to add valid time information to each such relation, by adding start and end time as attributes. For example, consider the _course_ relation. The title of the course may change over time, which can be handled by adding a valid time range; the resultant schema would be
 
-course (_course id_, title, _dept name_, _start, end_)
+_course_ (_course id_, _title_, _dept name_, _start, end_)
 
 An instance of this relation might have two records (CS-101, “Introduction to Pro- gramming”, 1985-01-01, 2000-12-31) and (CS-101, “Introduction to C”, 2001-01-01, 9999-12-31). If the relation is updated by changing the course title to “Introduction to Java,” the time “9999-12-31” would be updated to the time until which the old value (“Introduction to C”) is valid, and a new tuple would be added containing the new title (“Introduction to Java”), with an appropriate start time.
 
-If another relation had a foreign key referencing a temporal relation, the database designer has to decide if the reference is to the current version of the data or to the data as of a particular point in time. For example, we may extend the department relation to track changes in the building or budget of a department across time, but a reference from the instructor or student relation may not care about the history of the building or budget, but may instead implicitly refer to the temporally current record for the corresponding _dept name_. On the other hand, a record in a student’s transcript should refer to the course title at the time when the student took the course. In this latter case, the referencing relation must also record time information, to identify a particular record from the course relation. In our example, the year and semester when the course was taken can be mapped to a representative time/date value such as midnight of the start date of the semester; the resulting time/date value is used to identify a particular record from the temporal version of the course relation, from which the title is retrieved.
+If another relation had a foreign key referencing a temporal relation, the database designer has to decide if the reference is to the current version of the data or to the data as of a particular point in time. For example, we may extend the _department_ relation to track changes in the building or budget of a department across time, but a reference from the _instructor_ or _student_ relation may not care about the history of the building or budget, but may instead implicitly refer to the temporally current record for the corresponding _dept name_. On the other hand, a record in a student’s transcript should refer to the course title at the time when the student took the course. In this latter case, the referencing relation must also record time information, to identify a particular record from the _course_ relation. In our example, the _year_ and _semester_ when the course was taken can be mapped to a representative time/date value such as midnight of the start date of the semester; the resulting time/date value is used to identify a particular record from the temporal version of the _course_ relation, from which the _title_ is retrieved.
 
 The original primary key for a temporal relation would no longer uniquely identify a tuple. To resolve this problem, we could add the start and end time attributes to the primary key. However, some problems remain:
 
@@ -3395,9 +3395,9 @@ If the system supports temporal data in a better fashion, we can allow the refer
 
 **8.10 Summary 367**
 
-may specify a _course id_ and a time (say the start date of a semester), which is enough to identify the correct record in the course relation.
+may specify a _course id_ and a time (say the start date of a semester), which is enough to identify the correct record in the _course_ relation.
 
-As a common special case, if all references to temporal data refer to only the current data, a simpler solution is to not add time information to the relation, but instead create a corresponding history relation that has temporal information, for past values. For example, in our bank database, we could use the design we have created, ignoring temporal changes, to store only the current information. All historical information is moved to historical relations. Thus, the instructor relation may store only the current address, while a relation _instructor history_ may contain all the attributes of instructor, with additional _start time_ and _end time_ attributes.
+As a common special case, if all references to temporal data refer to only the current data, a simpler solution is to not add time information to the relation, but instead create a corresponding _history_ relation that has temporal information, for past values. For example, in our bank database, we could use the design we have created, ignoring temporal changes, to store only the current information. All historical information is moved to historical relations. Thus, the _instructor_ relation may store only the current address, while a relation _instructor history_ may contain all the attributes of _instructor_, with additional _start time_ and _end time_ attributes.
 
 Although we have not provided any formal way to deal with temporal data, the issues we have discussed and the examples we have provided should help you in designing a database that records temporal data. Further issues in handling temporal data, including temporal queries, are covered later, in Section 25.2.
 
@@ -3429,9 +3429,9 @@ Although we have not provided any formal way to deal with temporal data, the iss
 
 **Review Terms**
 
-• E-R model and normalization • Decomposition • Functional dependencies • Lossless decomposition • Atomic domains • First normal form (1NF) • Legal relations • Superkey • R satisfies F
+• E-R model and normalization • Decomposition • Functional dependencies • Lossless decomposition • Atomic domains • First normal form (1NF) • Legal relations • Superkey • _R_ satisfies _F_
 
-• F holds on R
+• _F_ holds on _R_
 
 • Boyce–Codd normal form (BCNF)
 
@@ -3439,7 +3439,7 @@ Although we have not provided any formal way to deal with temporal data, the iss
 
 dependencies
 
-• Armstrong’s axioms • Closure of attribute sets • Restriction of F to Ri
+• Armstrong’s axioms • Closure of attribute sets • Restriction of _F_ to _Ri_
 
 • Canonical cover • Extraneous attributes • BCNF decomposition algorithm • 3NF decomposition algorithm • Multivalued dependencies • Fourth normal form (4NF) • Restriction of a multivalued
 
@@ -3447,39 +3447,39 @@ dependency • Project-join normal form (PJNF) • Domain-key normal form (DKNF)
 
 **Practice Exercises**
 
-**8.1** Suppose that we decompose the schema r (A, B, C , D, E) into
+**8.1** Suppose that we decompose the schema _r_ (_A_, _B_, _C_ , _D_, _E_) into
 
-r1(A, B, C) r2(A, D, E)  
+_r_1(_A_, _B_, _C_) _r_2(_A_, _D_, _E_)  
 
 **Practice Exercises 369**
 
-Show that this decomposition is a lossless decomposition if the following set F of functional dependencies holds:
+Show that this decomposition is a lossless decomposition if the following set _F_ of functional dependencies holds:
 
-A → _BC CD_ → _E B_ → _D E_ → A
+_A_ → _BC CD_ → _E B_ → _D E_ → _A_
 
 **8.2** List all functional dependencies satisfied by the relation of Figure 8.17.
 
 **8.3** Explain how functional dependencies can be used to indicate the following:
 
-• A one-to-one relationship set exists between entity sets student and instructor.
+• A one-to-one relationship set exists between entity sets _student_ and _instructor_.
 
-• A many-to-one relationship set exists between entity sets student and instructor.
+• A many-to-one relationship set exists between entity sets _student_ and _instructor_.
 
-**8.4** Use Armstrong’s axioms to prove the soundness of the union rule. (Hint: Use the augmentation rule to show that, if  → , then  → . Apply the augmentation rule again, using  →  , and then apply the transitivity rule.)
+**8.4** Use Armstrong’s axioms to prove the soundness of the union rule. (_Hint_: Use the augmentation rule to show that, if  → , then  → . Apply the augmentation rule again, using  →  , and then apply the transitivity rule.)
 
 **8.5** Use Armstrong’s axioms to prove the soundness of the pseudotransitivity rule.
 
-**8.6** Compute the closure of the following set F of functional dependencies for relation schema r (_A, B, C, D, E_).
+**8.6** Compute the closure of the following set _F_ of functional dependencies for relation schema _r_ (_A, B, C, D, E_).
 
-A → _BC CD_ → _E B_ → _D E_ → A
+_A_ → _BC CD_ → _E B_ → _D E_ → _A_
 
-List the candidate keys for R.
+List the candidate keys for _R_.
 
-**8.7** Using the functional dependencies of Practice Exercise 8.6, compute the canonical cover Fc .
+**8.7** Using the functional dependencies of Practice Exercise 8.6, compute the canonical cover _Fc_ .
 
 _A B C_
 
-a1 b1 c1 a1 b1 c2 a2 b1 c1 a2 b1 c3
+_a_1 _b_1 _c_1 _a_1 _b_1 _c_2 _a_2 _b_1 _c_1 _a_2 _b_1 _c_3
 
 **Figure 8.17** Relation of Practice Exercise 8.2.  
 
@@ -3487,11 +3487,11 @@ a1 b1 c1 a1 b1 c2 a2 b1 c1 a2 b1 c3
 
 **8.8** Consider the algorithm in Figure 8.18 to compute +. Show that this algo- rithm is more efficient than the one presented in Figure 8.8 (Section 8.4.2) and that it computes + correctly.
 
-**8.9** Given the database schema R(_a , b, c_), and a relation r on the schema R, write an SQL query to test whether the functional dependency b → c holds on relation r . Also write an SQL assertion that enforces the functional de- pendency; assume that no null values are present. (Although part of the SQL standard, such assertions are not supported by any database imple- mentation currently.)
+**8.9** Given the database schema _R_(_a , b, c_), and a relation _r_ on the schema _R_, write an SQL query to test whether the functional dependency _b_ → _c_ holds on relation _r_ . Also write an SQL assertion that enforces the functional de- pendency; assume that no null values are present. (Although part of the SQL standard, such assertions are not supported by any database imple- mentation currently.)
 
 **8.10** Our discussion of lossless-join decomposition implicitly assumed that at- tributes on the left-hand side of a functional dependency cannot take on null values. What could go wrong on decomposition, if this property is violated?
 
-**8.11** In the BCNF decomposition algorithm, suppose you use a functional de- pendency  →  to decompose a relation schema r (_,_ _,_  ) into r1(_,_ ) and r2(_,_  ).
+**8.11** In the BCNF decomposition algorithm, suppose you use a functional de- pendency  →  to decompose a relation schema _r_ (_,_ _,_  ) into _r_1(_,_ ) and _r_2(_,_  ).
 
 a. What primary and foreign-key constraint do you expect to hold on the decomposed relations?
 
@@ -3499,49 +3499,49 @@ b. Give an example of an inconsistency that can arise due to an erro- neous upda
 
 c. When a relation is decomposed into 3NF using the algorithm in Sec- tion 8.5.2, what primary and foreign key dependencies would you expect will hold on the decomposed schema?
 
-**8.12** Let R1_, R_2_, . . . , Rn_ be a decomposition of schema U. Let u(U) be a relation, and let ri \= RI (u). Show that
+**8.12** Let _R_1_, R_2_, . . . , Rn_ be a decomposition of schema _U_. Let _u_(_U_) be a relation, and let _ri_ \= _RI_ (_u_). Show that
 
-u ⊆ r1 _ r_2  · · · _ rn_
+_u_ ⊆ _r_1 _ r_2  · · · _ rn_
 
 **8.13** Show that the decomposition in Practice Exercise 8.1 is not a dependency- preserving decomposition.
 
-**8.14** Show that it is possible to ensure that a dependency-preserving decom- position into 3NF is a lossless decomposition by guaranteeing that at least one schema contains a candidate key for the schema being decomposed. (Hint: Show that the join of all the projections onto the schemas of the decomposition cannot have more tuples than the original relation.)
+**8.14** Show that it is possible to ensure that a dependency-preserving decom- position into 3NF is a lossless decomposition by guaranteeing that at least one schema contains a candidate key for the schema being decomposed. (_Hint_: Show that the join of all the projections onto the schemas of the decomposition cannot have more tuples than the original relation.)
 
-**8.15** Give an example of a relation schema R′ and set F ′ of functional depen- dencies such that there are at least three distinct lossless decompositions of R′ into BCNF.  
+**8.15** Give an example of a relation schema _R_′ and set _F_ ′ of functional depen- dencies such that there are at least three distinct lossless decompositions of _R_′ into BCNF.  
 
 **Practice Exercises 371**
 
-result := ∅; /* fdcount is an array whose ith element contains the number
+_result_ := ∅; /\* _fdcount_ is an array whose _i_th element contains the number
 
-of attributes on the left side of the ith FD that are not yet known to be in + */
+of attributes on the left side of the _i_th _FD_ that are not yet known to be in + \*/
 
-**for** i := 1 to |F | **do begin**
+**for** _i_ := 1 to |_F_ | **do begin**
 
-let  →  denote the ith FD; fdcount [i] := ||;
+let  →  denote the _i_th _FD_; _fdcount_ [_i_] := ||;
 
-**end** /* appears is an array with one entry for each attribute. The
+**end** /\* _appears_ is an array with one entry for each attribute. The
 
-entry for attribute A is a list of integers. Each integer i on the list indicates that A appears on the left side of the ith FD */
+entry for attribute _A_ is a list of integers. Each integer _i_ on the list indicates that _A_ appears on the left side of the _i_th _FD_ \*/
 
-**for each** attribute A **do begin**
+**for each** attribute _A_ **do begin**
 
-appears [A] := _NI L_ ; **for** i := 1 to |F | **do**
+_appears_ [_A_] := _NI L_ ; **for** _i_ := 1 to |_F_ | **do**
 
-**begin** let  →  denote the ith FD; **if** A ∈  **then** add i to appears [A];
+**begin** let  →  denote the _i_th _FD_; **if** _A_ ∈  **then** add _i_ to _appears_ [_A_];
 
 **end end**
 
-**addin** (); **return** (result);
+**addin** (); **return** (_result_);
 
-**procedure addin** (); **for each** attribute A in  **do**
+**procedure addin** (); **for each** attribute _A_ in  **do**
 
-**begin if** A ∈ result **then**
+**begin if** _A_ ∈ _result_ **then**
 
-**begin** result := result ∪ {A}; **for each** element i of appears[A] **do**
+**begin** _result_ := _result_ ∪ {_A_}; **for each** element _i_ of _appears_[_A_] **do**
 
-**begin** fdcount [i] := fdcount [i] − 1; **if** fdcount [i] := 0 **then**
+**begin** _fdcount_ [_i_] := _fdcount_ [_i_] − 1; **if** _fdcount_ [_i_] := 0 **then**
 
-**begin** let  →  denote the ith FD; **addin** ( );
+**begin** let  →  denote the _i_th _FD_; **addin** ( );
 
 **end end**
 
@@ -3551,65 +3551,65 @@ appears [A] := _NI L_ ; **for** i := 1 to |F | **do**
 
 **372 Chapter 8 Relational Database Design**
 
-**8.16** Let a **prime** attribute be one that appears in at least one candidate key. Let  and  be sets of attributes such that  →  holds, but  →  does not hold. Let A be an attribute that is not in , is not in , and for which  → A holds. We say that A is **transitively dependent** on . We can restate our definition of 3NF as follows: _A relation schema R is in 3NF with respect to a set F of functional dependencies if there are no nonprime attributes A in R for which A is transitively dependent on a key for R_. Show that this new definition is equivalent to the original one.
+**8.16** Let a **prime** attribute be one that appears in at least one candidate key. Let  and  be sets of attributes such that  →  holds, but  →  does not hold. Let _A_ be an attribute that is not in , is not in , and for which  → _A_ holds. We say that _A_ is **transitively dependent** on . We can restate our definition of 3NF as follows: _A relation schema R is in 3NF with respect to a set F of functional dependencies if there are no nonprime attributes A in R for which A is transitively dependent on a key for R_. Show that this new definition is equivalent to the original one.
 
-**8.17** A functional dependency  →  is called a **partial dependency** if there is a proper subset  of  such that  → . We say that  is _partially dependent_ on . A relation schema R is in **second normal form** (2NF) if each attribute A in R meets one of the following criteria:
+**8.17** A functional dependency  →  is called a **partial dependency** if there is a proper subset  of  such that  → . We say that  is _partially dependent_ on . A relation schema _R_ is in **second normal form** (2NF) if each attribute _A_ in _R_ meets one of the following criteria:
 
 • It appears in a candidate key.
 
 • It is not partially dependent on a candidate key.
 
-Show that every 3NF schema is in 2NF. (Hint: Show that every partial dependency is a transitive dependency.)
+Show that every 3NF schema is in 2NF. (_Hint_: Show that every partial dependency is a transitive dependency.)
 
-**8.18** Give an example of a relation schema R and a set of dependencies such that R is in BCNF but is not in 4NF.
+**8.18** Give an example of a relation schema _R_ and a set of dependencies such that _R_ is in BCNF but is not in 4NF.
 
 **Exercises**
 
-**8.19** Give a lossless-join decomposition into BCNF of schema R of Practice Exer- cise 8.1.
+**8.19** Give a lossless-join decomposition into BCNF of schema _R_ of Practice Exer- cise 8.1.
 
-**8.20** Give a lossless-join, dependency-preserving decomposition into 3NF of schema R of Practice Exercise 8.1.
+**8.20** Give a lossless-join, dependency-preserving decomposition into 3NF of schema _R_ of Practice Exercise 8.1.
 
 **8.21** Normalize the following schema, with given constraints, to 4NF.
 
-books(accessionno, isbn, title, author, publisher) users(userid, name, deptid, deptname) accessionno → _isbn isbn_ → _title isbn_ → _publisher isbn_ →→ _author userid_ → _name userid_ → _deptid deptid_ → deptname
+_books_(_accessionno_, _isbn_, _title_, _author_, _publisher_) _users_(_userid_, _name_, _deptid_, _deptname_) _accessionno_ → _isbn isbn_ → _title isbn_ → _publisher isbn_ →→ _author userid_ → _name userid_ → _deptid deptid_ → _deptname_
 
 **8.22** Explain what is meant by _repetition of information_ and _inability to represent information_. Explain why each of these properties may indicate a bad rela- tional database design.  
 
 **Exercises 373**
 
-**8.23** Why are certain functional dependencies called trivial functional depen- dencies?
+**8.23** Why are certain functional dependencies called _trivial_ functional depen- dencies?
 
 **8.24** Use the definition of functional dependency to argue that each of Arm- strong’s axioms (reflexivity, augmentation, and transitivity) is sound.
 
-**8.25** Consider the following proposed rule for functional dependencies: If  →  and  → , then  →  . Prove that this rule is not sound by showing a relation r that satisfies  →  and  → , but does not satisfy  →  .
+**8.25** Consider the following proposed rule for functional dependencies: If  →  and  → , then  →  . Prove that this rule is _not_ sound by showing a relation _r_ that satisfies  →  and  → , but does not satisfy  →  .
 
 **8.26** Use Armstrong’s axioms to prove the soundness of the decomposition rule.
 
-**8.27** Using the functional dependencies of Practice Exercise 8.6, compute B+.
+**8.27** Using the functional dependencies of Practice Exercise 8.6, compute _B_+.
 
-**8.28** Show that the following decomposition of the schema R of Practice Exer- cise 8.1 is not a lossless decomposition:
+**8.28** Show that the following decomposition of the schema _R_ of Practice Exer- cise 8.1 is not a lossless decomposition:
 
-(A, B, C) (C , D, E)
+(_A_, _B_, _C_) (_C_ , _D_, _E_)
 
-Hint: Give an example of a relation r on schema R such that
+_Hint_: Give an example of a relation _r_ on schema _R_ such that
 
-_A, B, C_ (r ) _C, D, E_ (r ) = r
+_A, B, C_ (_r_ ) _C, D, E_ (_r_ ) = _r_
 
-**8.29** Consider the following set F of functional dependencies on the relation schema r (_A, B, C, D, E, F_ ):
+**8.29** Consider the following set _F_ of functional dependencies on the relation schema _r_ (_A, B, C, D, E, F_ ):
 
-A → _BCD BC_ → _DE B_ → _D D_ → A
+_A_ → _BCD BC_ → _DE B_ → _D D_ → _A_
 
-a. Compute B+.
+a. Compute _B_+.
 
-b. Prove (using Armstrong’s axioms) that AF is a superkey.
+b. Prove (using Armstrong’s axioms) that _AF_ is a superkey.
 
-c. Compute a canonical cover for the above set of functional dependen- cies F ; give each step of your derivation with an explanation.
+c. Compute a canonical cover for the above set of functional dependen- cies _F_ ; give each step of your derivation with an explanation.
 
-d. Give a 3NF decomposition of r based on the canonical cover.
+d. Give a 3NF decomposition of _r_ based on the canonical cover.
 
-e. Give a BCNF decomposition of r using the original set of functional dependencies.
+e. Give a BCNF decomposition of _r_ using the original set of functional dependencies.
 
-f. Can you get the same BCNF decomposition of r as above, using the canonical cover?
+f. Can you get the same BCNF decomposition of _r_ as above, using the canonical cover?
 
 **8.30** List the three design goals for relational databases, and explain why each is desirable.  
 
@@ -3619,7 +3619,7 @@ f. Can you get the same BCNF decomposition of r as above, using the canonical co
 
 **8.32** Given the three goals of relational database design, is there any reason to design a database schema that is in 2NF, but is in no higher-order normal form? (See Practice Exercise 8.17 for the definition of 2NF.)
 
-**8.33** Given a relational schema r (_A, B, C, D_), does A →→ BC logically imply A →→ B and A →→ C? If yes prove it, else give a counter example.
+**8.33** Given a relational schema _r_ (_A, B, C, D_), does _A_ →→ _BC_ logically imply _A_ →→ _B_ and _A_ →→ _C_? If yes prove it, else give a counter example.
 
 **8.34** Explain why 4NF is a normal form more desirable than BCNF.
 
@@ -3651,7 +3651,7 @@ As an example of an application, consider a university registration system. Like
 
 **375**  
 
-
+**376 Chapter 9 Application Design and Development**
 
 (a) Mainframe Era (b) Personal Computer Era (c) Web era
 
@@ -3711,15 +3711,15 @@ http://www.acm.org/sigmod
 
 The first part of the URL indicates how the document is to be accessed: “http” indicates that the document is to be accessed by the **HyperText Transfer Protocol**  
 
+**378 Chapter 9 Application Design and Development**
 
+_<_html_\> <_body_\>_
 
-_<html\> <body\>_
+_<_table border_\> <_tr_\> <_th_\>_ID_<_/th_\> <_th_\>_Name_<_/th_\> <_th_\>_Department_<_/th_\> <_/tr_\> <_tr_\> <_td_\>_00128_<_/td_\> <_td_\>_Zhang_<_/td_\> <_td_\>_Comp. Sci._<_/td_\> <_/tr_\> <_tr_\> <_td_\>_12345_<_/td_\> <_td_\>_Shankar_<_/td_\> <_td_\>_Comp. Sci._<_/td_\> <_/tr_\> <_tr_\> <_td_\>_19991_<_/td_\> <_td_\>_Brandt_<_/td_\> <_td_\>_History_<_/td_\> <_/tr_\> <_/table_\>_
 
-<table border_\> <tr\> <th\>ID<_/th_\> <th\>Name<_/th_\> <th\>Department<_/th_\> <_/tr_\> <tr\> <td\>_00128</td_\> <td\>Zhang<_/td_\> <td\>_Comp. Sci.</td_\> <_/tr_\> <tr\> <td\>_12345</td_\> <td\>Shankar<_/td_\> <td\>_Comp. Sci.</td_\> <_/tr_\> <tr\> <td\>_19991</td_\> <td\>Brandt<_/td_\> <td\>History<_/td_\> <_/tr_\> <_/table\>
+_<_/body_\>_
 
-</body\>
-
-</html\>
+_<_/html_\>_
 
 **Figure 9.2** Tabular data in HTML format.
 
@@ -3747,19 +3747,19 @@ Zhang Shankar Brandt
 
 **9.2 Web Fundamentals 379**
 
-_<html\> <body\>_
+_<_html_\> <_body_\>_
 
-<form action="PersonQuery" method=get\> Search for: <select name="persontype"\>
+_<_form action="PersonQuery" method=get_\>_ Search for: _<_select name="persontype"_\>_
 
-<option value="student" selected\>Student </option\>
+_<_option value="student" selected_\>_Student _<_/option_\>_
 
-<option value="instructor"\> Instructor </option\>
+_<_option value="instructor"_\>_ Instructor _<_/option_\>_
 
-</select_\> <br\>_ Name: <input type=text size=20 name="name"_\> <_input type=submit value="submit"_\> <_/form\>
+_<_/select_\> <_br_\>_ Name: _<_input type=text size=20 name="name"_\> <_input type=submit value="submit"_\> <_/form_\>_
 
-</body\>
+_<_/body_\>_
 
-</html\>
+_<_/html_\>_
 
 **Figure 9.4** An HTML form.
 
@@ -3779,13 +3779,13 @@ submit
 
 **Figure 9.5** Display of HTML source from Figure 9.4.  
 
-
+**380 Chapter 9 Application Design and Development**
 
 The post method would instead send a request for the URL http://www.google.com, and send the parameter values as part of the HTTP protocol exchange between the Web server and the browser. The form in Figure 9.4 specifies that the form uses the get method.
 
 Although HTML code can be created using a plain text editor, there are a number of editors that permit direct creation of HTML text by using a graphical interface. Such editors allow constructs such as forms, menus, and tables to be inserted into the HTML document from a menu of choices, instead of manually typing in the code to generate the constructs.
 
-HTML supports stylesheets, which can alter the default definitions of how an HTML formatting construct is displayed, as well as other display attributes such as background color of the page. The _cascading stylesheet_ (CSS) standard allows the same stylesheet to be used for multiple HTML documents, giving a distinctive but uniform look to all the pages on a Web site.
+HTML supports _stylesheets_, which can alter the default definitions of how an HTML formatting construct is displayed, as well as other display attributes such as background color of the page. The _cascading stylesheet_ (CSS) standard allows the same stylesheet to be used for multiple HTML documents, giving a distinctive but uniform look to all the pages on a Web site.
 
 **9.2.3 Web Servers and Sessions**
 
@@ -3841,7 +3841,7 @@ Most Web applications, however, need session information to allow mean- ingful u
 
 1For performance reasons, connections may be kept open for a short while, to allow subsequent requests to reuse the connection. However, there is no guarantee that the connection will be kept open, and applications must be designed assuming the connection may be closed as soon as a request is serviced.  
 
-
+**382 Chapter 9 Application Design and Development**
 
 done once per session, and further interactions in the session should not require reauthentication.
 
@@ -3861,7 +3861,7 @@ For applications that do not require high security, such as publicly available n
 
 **9.3 Servlets and JSP**
 
-In a two-layer Web architecture, an application runs as part of the Web server it- self. One way of implementing such an architecture is to load Java programs into the Web server. The Java **servlet** specification defines an application program- ming interface for communication between the Web server and the application program. The HttpServlet class in Java implements the servlet API specification; servlet classes used to implement specific functions are defined as subclasses of this class.3 Often the word servlet is used to refer to a Java program (and class) that implements the servlet interface. Figure 9.8 shows a servlet example; we explain it in detail shortly.
+In a two-layer Web architecture, an application runs as part of the Web server it- self. One way of implementing such an architecture is to load Java programs into the Web server. The Java **servlet** specification defines an application program- ming interface for communication between the Web server and the application program. The HttpServlet class in Java implements the servlet API specification; servlet classes used to implement specific functions are defined as subclasses of this class.3 Often the word _servlet_ is used to refer to a Java program (and class) that implements the servlet interface. Figure 9.8 shows a servlet example; we explain it in detail shortly.
 
 The code for a servlet is loaded into the Web server when the server is started, or when the server receives a remote HTTP request to execute a particular servlet. The task of a servlet is to process such a request, which may involve accessing a database to retrieve necessary information, and dynamically generate an HTML page to be returned to the client browser.
 
@@ -3877,35 +3877,35 @@ The doGet() method in the example extracts values of the parameter’s type and 
 
 3The servlet interface can also support non-HTTP requests, although our example uses only HTTP.  
 
+**384 Chapter 9 Application Design and Development**
 
-
-import java.io.*; import javax.servlet.*; import javax.servlet.http.*;
+import java.io.\*; import javax.servlet.\*; import javax.servlet.http.\*;
 
 public class PersonQueryServlet extends HttpServlet _{_ public void doGet(HttpServletRequest request,
 
 HttpServletResponse response) throws ServletException, IOException
 
-_{_ response.setContentType("text/html"); PrintWriter out = response.getWriter(); out.println("_<HEAD\><TITLE\>_ Query Result</TITLE_\><_/HEAD\>"); out.println("_<BODY\>_");
+_{_ response.setContentType("text/html"); PrintWriter out = response.getWriter(); out.println("_<_HEAD_\><_TITLE_\>_ Query Result_<_/TITLE_\><_/HEAD_\>_"); out.println("_<_BODY_\>_");
 
 String persontype = request.getParameter("persontype"); String number = request.getParameter("name"); if(persontype.equals("student")) _{_
 
 ... code to find students with the specified name ...
 
-... using JDBC to communicate with the database .. out.println("<table BORDER COLS=3\>"); out.println(" _<tr\> <td\>ID<_/td_\> <td\>_Name: </td\>" +
+... using JDBC to communicate with the database .. out.println("_<_table BORDER COLS=3_\>_"); out.println(" _<_tr_\> <_td_\>_ID_<_/td_\> <_td_\>_Name: _<_/td_\>_" +
 
-" _<td\>Department<_/td_\> <_/tr\>"); for(... each result ...)_{_
+" _<_td_\>_Department_<_/td_\> <_/tr_\>_"); for(... each result ...)_{_
 
-... retrieve ID, name and _dept name_
+... retrieve ID, _name_ and _dept name_
 
-... into variables ID, name and deptname out.println("_<tr\> <td\>_" + ID + "</td\>" +
+... into variables ID, name and deptname out.println("_<_tr_\> <_td_\>_" + ID + "_<_/td_\>_" +
 
-"_<td\>_" + name + "</td\>" + "_<td\>_" + deptname + "</td_\><_/tr\>");
+"_<_td_\>_" + name + "_<_/td_\>_" + "_<_td_\>_" + deptname + "_<_/td_\><_/tr_\>_");
 
-_}_; out.println("</table\>");
+_}_; out.println("_<_/table_\>_");
 
 _}_ else _{_
 
-... as above, but for instructors ... _}_ out.println("</BODY\>"); out.close();
+... as above, but for instructors ... _}_ out.println("_<_/BODY_\>_"); out.close();
 
 _} }_
 
@@ -3941,7 +3941,7 @@ on the session object returned above. If the attribute userid is not set, the fu
 
 The life cycle of a servlet is controlled by the Web server in which the servlet has been deployed. When there is a client request for a specific servlet, the server  
 
-
+**386 Chapter 9 Application Design and Development**
 
 first checks if an instance of the servlet exists or not. If not, the Web server loads the servlet class into the Java virtual machine (JVM), and creates an instance of the servlet class. In addition, the server calls the init() method to initialize the servlet instance. Notice that each servlet instance is initialized only once when it is loaded.
 
@@ -3963,17 +3963,17 @@ Writing even a simple Web application in a programming language such as Java or 
 
 **9.3 Servlets and JSP 387**
 
-_<html\> <head\> <title\>_ Hello </title_\> <_/head\>
+_<_html_\> <_head_\> <_title_\>_ Hello _<_/title_\> <_/head_\>_
 
-_<body\>_
+_<_body_\>_
 
-< % if (request.getParameter(“name”) == null) _{_ out.println(“Hello World”); _}_ else _{_ out.println(“Hello, ” + request.getParameter(“name”)); _}_
+_<_ % if (request.getParameter(“name”) == null) _{_ out.println(“Hello World”); _}_ else _{_ out.println(“Hello, ” + request.getParameter(“name”)); _}_
 
-%\>
+%_\>_
 
-</body\>
+_<_/body_\>_
 
-</html\>
+_<_/html_\>_
 
 **Figure 9.9** A JSP page with embedded Java code.
 
@@ -3983,29 +3983,29 @@ Some of the widely used scripting languages include Java Server Pages (JSP) from
 
 We briefly describe below **Java Server Pages** (**JSP**), a scripting language that allows HTML programmers to mix static HTML with dynamically generated HTML. The motivation is that, for many dynamic Web pages, most of their content is still static (that is, the same content is present whenever the page is generated). The dynamic content of the Web pages (which are generated, for example, on the basis of form parameters) is often a small part of the page. Creating such pages by writing servlet code results in a large amount of HTML being coded as Java strings. JSP instead allows Java code to be embedded in static HTML; the embedded Java code generates the dynamic part of the page. JSP scripts are actually translated into servlet code that is then compiled, but the application programmer is saved the trouble of writing much of the Java code to create the servlet.
 
-Figure 9.9 shows the source text of an JSP page that includes embedded Java code. The Java code in the script is distinguished from the surrounding HTML code by being enclosed in <% _. . ._ %\>. The code uses request.getParameter() to get the value of the attribute name.
+Figure 9.9 shows the source text of an JSP page that includes embedded Java code. The Java code in the script is distinguished from the surrounding HTML code by being enclosed in _<_% _. . ._ %_\>_. The code uses request.getParameter() to get the value of the attribute name.
 
-When a JSP page is requested by a browser, the application server generates HTML output from the page, which is sent back to the browser. The HTML part of the JSP page is output as is.4 Wherever Java code is embedded within <% _. . ._%\>,
+When a JSP page is requested by a browser, the application server generates HTML output from the page, which is sent back to the browser. The HTML part of the JSP page is output as is.4 Wherever Java code is embedded within _<_% _. . ._%_\>_,
 
 4JSP allows a more complex embedding, where HTML code is within a Java if-else statement, and gets output condi- tionally depending on whether the if condition evaluates to true or not. We omit details here.  
 
-
+**388 Chapter 9 Application Design and Development**
 
 **PHP**
 
-PHP is a scripting language that is widely used for server-side scripting. PHP code can be intermixed with HTML in a manner similar to JSP. The characters “<?php” indicate the start of PHP code, while the characters “?\>” indicate the end of PHP code. The following code performs the same actions as the JSP code in Figure 9.9.
+PHP is a scripting language that is widely used for server-side scripting. PHP code can be intermixed with HTML in a manner similar to JSP. The characters “_<_?php” indicate the start of PHP code, while the characters “?_\>_” indicate the end of PHP code. The following code performs the same actions as the JSP code in Figure 9.9.
 
-_<html\> <head\> <title\>_ Hello </title_\> <_/head\>
+_<_html_\> <_head_\> <_title_\>_ Hello _<_/title_\> <_/head_\>_
 
-_<body\>_
+_<_body_\>_
 
-<?php if (!isset($ REQUEST[’name’])) _{_ echo ’Hello World’; _}_ else _{_ echo ’Hello, ’ . $ REQUEST[’name’]; _}_
+_<_?php if (!isset($ REQUEST[’name’])) _{_ echo ’Hello World’; _}_ else _{_ echo ’Hello, ’ . $ REQUEST[’name’]; _}_
 
-?\>
+?_\>_
 
-</body\>
+_<_/body_\>_
 
-</html\>
+_<_/html_\>_
 
 The array $ REQUEST contains the request parameters. Note that the array is indexed by the parameter name; in PHP arrays can be indexed by arbitrary strings, not just numbers. The function isset checks if the element of the array has been initialized. The echo function prints its argument to the output HTML. The operator “.” between two strings concatenates the strings.
 
@@ -4031,13 +4031,13 @@ One of the reasons that the Java language became very popular is that it provide
 
 While Java is a full-fledged programming language, there are simpler lan- guages, called **scripting languages**, that can enrich user interaction, while pro- viding the same protection as Java. These languages provide constructs that can be embedded with an HTML document. **Client-side scripting languages** are lan- guages designed to be executed on the client’s Web browser.
 
-Of these, the JavaScript language is by far the most widely used. The current generation of Web interfaces uses the JavaScript scripting language extensively to construct sophisticated user interfaces. JavaScript is used for a variety of tasks. For example, functions written in JavaScript can be used to perform error checks (validation) on user input, such as a date string being properly formatted, or a value entered (such as age) being in an appropriate range. These checks are carried out on the browser as data is entered, even before the data are sent to the Web server.
+Of these, the _JavaScript_ language is by far the most widely used. The current generation of Web interfaces uses the JavaScript scripting language extensively to construct sophisticated user interfaces. JavaScript is used for a variety of tasks. For example, functions written in JavaScript can be used to perform error checks (validation) on user input, such as a date string being properly formatted, or a value entered (such as age) being in an appropriate range. These checks are carried out on the browser as data is entered, even before the data are sent to the Web server.
 
 Figure 9.10 shows an example of a JavaScript function used to validate a form input. The function is declared in the head section of the HTML document. The function checks that the credits entered for a course is a number greater than 0, and less than 16. The form tag specifies that the validation function is to be invoked when the form is submitted. If the validation fails, an alert box is shown to the user, and if it succeeds, the form is submitted to the server.
 
 JavaScript can be used to modify dynamically the HTML code being displayed. The browser parses HTML code into an in-memory tree structure defined by  
 
-
+**390 Chapter 9 Application Design and Development**
 
 <html> <head> <script type="text/javascript">
 
@@ -4073,7 +4073,7 @@ There are also special-purpose scripting languages for specialized tasks such as
 
 To handle their complexity, large applications are often broken into several layers:
 
-• The presentation or _user interface_ layer, which deals with user interaction. A single application may have several different versions of this layer, corre- sponding to distinct kinds of interfaces such as Web browsers, and user interfaces of mobile phones, which have much smaller screens.
+• The _presentation_ or _user interface_ layer, which deals with user interaction. A single application may have several different versions of this layer, corre- sponding to distinct kinds of interfaces such as Web browsers, and user interfaces of mobile phones, which have much smaller screens.
 
 In many implementations, the presentation/user-interface layer is it- self conceptually broken up into layers, based on the **model-view-controller** (MVC) architecture. The **model** corresponds to the business-logic layer, de- scribed below. The **view** defines the presentation of data; a single underlying model can have different views depending on the specific software/device used to access the application. The **controller** receives events (user actions), executes actions on the model, and returns a view to the user. The MVC ar- chitecture is used in a number of Web application frameworks, which are discussed later in Section 9.5.2.
 
@@ -4083,7 +4083,7 @@ In many implementations, the presentation/user-interface layer is it- self conce
 
 Figure 9.11 shows the above layers, along with a sequence of steps taken to process a request from the Web browser. The labels on the arrows in the figure indicate the order of the steps. When the request is received by the application server, the controller sends a request to the model. The model processes the  
 
-
+**392 Chapter 9 Application Design and Development**
 
 Web browser
 
@@ -4129,29 +4129,29 @@ In early implementations, programmers had to write code for creating objects by 
 
 An alternative approach is to use traditional relational databases to store data, but to automate the mapping of data in relations to in-memory objects, which are created on demand (since memory is usually not sufficient to store all data in the database), as well as the reverse mapping to store updated objects back as relations in the database.
 
-Several systems have been developed to implement such **object-relational mappings**. The **Hibernate** system is widely used for mapping from Java objects to relations. In Hibernate, the mapping from each Java class to one or more relations is specified in a mapping file. The mapping file can specify, for example, that a Java class called Student is mapped to the relation student, with the Java attribute ID mapped to the attribute student.ID, and so on. Information about the database, such as the host on which it is running, and user name and password for connecting to the database, etc., are specified in a properties file. The program has to open a session, which sets up the connection to the database. Once the session is set up, a Student object stud created in Java can be stored in the database by invoking session.save(stud). The Hibernate code generates the SQL commands required to store corresponding data in the student relation.
+Several systems have been developed to implement such **object-relational mappings**. The **Hibernate** system is widely used for mapping from Java objects to relations. In Hibernate, the mapping from each Java class to one or more relations is specified in a mapping file. The mapping file can specify, for example, that a Java class called _Student_ is mapped to the relation _student_, with the Java attribute ID mapped to the attribute _student_.ID, and so on. Information about the database, such as the host on which it is running, and user name and password for connecting to the database, etc., are specified in a _properties_ file. The program has to open a _session_, which sets up the connection to the database. Once the session is set up, a _Student_ object _stud_ created in Java can be stored in the database by invoking session.save(_stud_). The Hibernate code generates the SQL commands required to store corresponding data in the _student_ relation.
 
 A list of objects can be retrieved from the database by executing a query written in the Hibernate query language; this is similar to executing a query us- ing JDBC, which returns a ResultSet containing a set of tuples. Alternatively, a single object can be retrieved by providing its primary key. The retrieved objects can be updated in memory; when the transaction on the ongoing Hibernate ses- sion is committed, Hibernate automatically saves the updated objects by making corresponding updates on relations in the database.
 
-While entities in an E-R model naturally correspond to objects in an object- oriented language such as Java, relationships often do not. Hibernate supports the ability to map such relationships as sets associated with objects. For example, the takes relationship between student and section can be modeled by associating a set of sections with each student, and a set of students with each section. Once the appropriate mapping is specified, Hibernate populates these sets automatically from the database relation takes, and updates to the sets are reflected back to the database relation on commit.  
+While entities in an E-R model naturally correspond to objects in an object- oriented language such as Java, relationships often do not. Hibernate supports the ability to map such relationships as sets associated with objects. For example, the _takes_ relationship between _student_ and _section_ can be modeled by associating a set of _section_s with each _student_, and a set of _student_s with each _section_. Once the appropriate mapping is specified, Hibernate populates these sets automatically from the database relation _takes_, and updates to the sets are reflected back to the database relation on commit.  
 
-
+**394 Chapter 9 Application Design and Development**
 
 **HIBERNATE EXAMPLE**
 
-As an example of the use of Hibernate, we create a Java class corresponding to the student relation as follows.
+As an example of the use of Hibernate, we create a Java class corresponding to the _student_ relation as follows.
 
 public class Student _{_ String ID; String name; String department; int tot cred; Student(String id, String name, String dept, int totcreds); // constructor
 
 _}_ To be precise, the class attributes should be declared as private, and getter/setter methods should be provided to access the attributes, but we omit these details.
 
-The mapping of the class attributes of Student to attributes of the relation student is specified in a mapping file, in an XML format. Again, we omit details.
+The mapping of the class attributes of Student to attributes of the relation _student_ is specified in a mapping file, in an XML format. Again, we omit details.
 
 The following code snippet then creates a Student object and saves it to the database.
 
 Session session = getSessionFactory().openSession(); Transaction txn = session.beginTransaction(); Student stud = new Student("12328", "John Smith", "Comp. Sci.", 0); session.save(stud); txn.commit(); session.close();
 
-Hibernate automatically generates the required SQL **insert** statement to create a student tuple in the database.
+Hibernate automatically generates the required SQL **insert** statement to create a _student_ tuple in the database.
 
 To retrieve students, we can use the following code snippet
 
@@ -4183,7 +4183,11 @@ A more complex approach, sometimes referred to as “Big Web Services,” uses X
 
 **9.4.4 Disconnected Operation**
 
-Many applications wish to support some operations even when a client is dis- connected from the application server. For example, a student may wish to fill an application form even if her laptop is disconnected from the network, but have it saved back when the laptop is reconnected. As another example, if an email client is built as a Web application, a user may wish to compose an email even if her laptop is disconnected from the network, and have it sent when it is reconnected. Building such applications requires local storage, preferably in the form of a database, in the client machine. The **Gears** software (originally de- veloped by Google) is a browser plug-in that provides a database, a local Web server, and support for parallel execution of JavaScript at the client. The software works identically on multiple operating system/browser platforms, allowing ap- plications to support rich functionality without installation of any software (other than Gears itself). Adobe’s AIR software also provides similar functionality for building Internet applications that can run outside the Web browser.
+Many applications wish to support some operations even when a client is dis- connected from the application server. For example, a student may wish to fill  
+
+**396 Chapter 9 Application Design and Development**
+
+an application form even if her laptop is disconnected from the network, but have it saved back when the laptop is reconnected. As another example, if an email client is built as a Web application, a user may wish to compose an email even if her laptop is disconnected from the network, and have it sent when it is reconnected. Building such applications requires local storage, preferably in the form of a database, in the client machine. The **Gears** software (originally de- veloped by Google) is a browser plug-in that provides a database, a local Web server, and support for parallel execution of JavaScript at the client. The software works identically on multiple operating system/browser platforms, allowing ap- plications to support rich functionality without installation of any software (other than Gears itself). Adobe’s AIR software also provides similar functionality for building Internet applications that can run outside the Web browser.
 
 **9.5 Rapid Application Development**
 
@@ -4215,7 +4219,7 @@ Forms to input dates and times, or inputs that require validation, are similarly
 
 Displaying a set of results from a query is a common task for many database applications. It is possible to build a generic function that takes an SQL query (or ResultSet) as argument, and display the tuples in the query result (or ResultSet) in a tabular form. JDBC metadata calls can be used to find information such as the number of columns and the names and types of the columns in the query result; this information is then used to display the query result.
 
-To handle situations where the query result is very large, such a query result display function can provide for pagination of results. The function can display a fixed number of records in a page and provide controls to step to the next or previous page or jump to a particular page of the results.
+To handle situations where the query result is very large, such a query result display function can provide for _pagination_ of results. The function can display a fixed number of records in a page and provide controls to step to the next or previous page or jump to a particular page of the results.
 
 There is unfortunately no (widely used) standard Java API for functions to carry out the user-interface tasks described above. Building such a library can be an interesting programming project.
 
@@ -4223,7 +4227,7 @@ However, there are other tools, such as the JavaServer Faces (JSF) framework, th
 
 Microsoft’s Active Server Pages (ASP), and its more recent version, Active Server Pages.NET(ASP.NET), is a widely used alternative to JSP/Java. ASP.NET is similar to JSP, in that code in a language such as Visual Basic or C# can be embedded within HTML code. In addition, ASP.NET provides a variety of controls (scripting commands) that are interpreted at the server, and generate HTML that is then sent to the client. These controls can significantly simplify the construction of Web interfaces. We provide a brief overview of the benefits that these controls offer.  
 
-
+**398 Chapter 9 Application Design and Development**
 
 For example, controls such as drop-down menus and list boxes can be asso- ciated with a DataSet object. The DataSet object is similar to a JDBC ResultSet object, and is typically created by executing a query on the database. The HTML menu contents are then generated from the DataSet object’s contents; for exam- ple, a query may retrieve the names of all departments in an organization into the DataSet, and the associated menu would contain these names. Thus, menus that depend on database contents can be created in a convenient manner with very little programming.
 
@@ -4267,7 +4271,7 @@ Figure 9.12 is an example of a formatted report. The data in the report are gene
 
 Report-generation tools are available from a variety of vendors, such as Crys- tal Reports and Microsoft (SQL Server Reporting Services). Several application suites, such as Microsoft Office, provide a way of embedding formatted query results from a database directly into a document. Chart-generation facilities pro- vided by Crystal Reports, or by spreadsheets such as Excel can be used to access data from databases, and generate tabular depictions of data or graphical depic- tions using charts or graphs. Such charts can be embedded within text documents.  
 
-
+**400 Chapter 9 Application Design and Development**
 
 **Region Category Sales**
 
@@ -4323,7 +4327,7 @@ Cached query results and cached Web pages are forms of materialized views. If th
 
 A commonly used approach to handling such very heavy loads is to use a large number of application servers running in parallel, each handling a fraction of the  
 
-
+**402 Chapter 9 Application Design and Development**
 
 requests. A Web server or a network router can be used to route each client request to one of the application servers. All requests from a particular client session must go to the same application server, since the server maintains state for a client session. This property can be ensured, for example, by routing all requests from a particular IP address to the same application server. The underlying database is, however, shared by all the application servers, so that users see a consistent view of the database.
 
@@ -4341,15 +4345,15 @@ There are many ways in which an application’s security can be compromised, eve
 
 In **SQL injection** attacks, the attacker manages to get an application to execute an SQL query created by the attacker. In Section 5.1.1.4, we saw an example of an SQL injection vulnerability if user inputs are concatenated directly with an SQL query and submitted to the database. As another example of SQL injection vulnerability, consider the form source text shown in Figure 9.4. Suppose the corresponding servlet shown in Figure 9.8 creates an SQL query string using the following Java expression:
 
-String query = “select * from student where name like ’%” + name + “%’”
+String query = “select \* from student where name like ’%” + name + “%’”
 
 where name is a variable containing the string input by the user, and then executes the query on the database. A malicious attacker using the Web form can then type  
 
 **9.7 Application Security 403**
 
-a string such as “’;<some SQL statement\>; −− ”, where <some SQL statement\> denotes any SQL statement that the attacker desires, in place of a valid student name. The servlet would then execute the following string.
+a string such as “’;_<_some SQL statement_\>_; −− ”, where _<_some SQL statement_\>_ denotes any SQL statement that the attacker desires, in place of a valid student name. The servlet would then execute the following string.
 
-**select** _*_ **from** student **where** name **like** ’ ’; <some SQL statement\>; −− ’
+**select** _\*_ **from** _student_ **where** _name_ **like** ’ ’; _<_some SQL statement_\>_; −− ’
 
 The quote inserted by the attacker closes the string, the following semicolon ter- minates the query, and the following text inserted by the attacker gets interpreted as a second SQL query, while the closing quote has been commented out. Thus, the malicious user has managed to insert an arbitrary SQL statement that is executed by the application. The statement can cause significant damage, since it can per- form any action on the database, bypassing all security measures implemented in the application code.
 
@@ -4357,7 +4361,7 @@ As discussed in Section 5.1.1.4, to avoid such attacks, it is best to use prepar
 
 Another source of SQL-injection risk comes from applications that create queries dynamically, based on selection conditions and ordering attributes spec- ified in a form. For example, an application may allow a user to specify what attribute should be used for sorting the results of a query. An appropriate SQL query is constructed, based on the attribute specified. Suppose the application takes the attribute name from a form, in the variable orderAttribute, and creates a query string such as the following:
 
-String query = “select * from takes order by ” + orderAttribute;
+String query = “select \* from takes order by ” + orderAttribute;
 
 A malicious user can send an arbitrary string in place of a meaningful or- derAttribute value, even if the HTML form used to get the input tried to restrict the allowed values by providing a menu. To avoid this kind of SQL injection, the application should ensure that the orderAttribute variable value is one of the allowed values (in our example, attribute names), before appending it.
 
@@ -4365,7 +4369,13 @@ A malicious user can send an arbitrary string in place of a meaningful or- derAt
 
 A Web site that allows users to enter text, such as a comment or a name, and then stores it and later displays it to other users, is potentially vulnerable to a kind of attack called a **cross-site scripting** (**XSS**) attack. In such an attack, a malicious user enters code written in a client-side scripting language such as JavaScript or Flash instead of entering a valid name or comment. When a different user views the entered text, the browser would execute the script, which can carry out actions such as sending private cookie information back to the malicious user, or even executing an action on a different Web server that the user may be logged into.  
 
-For example, suppose the user happens to be logged into her bank account at the time the script executes. The script could send cookie information related to the bank account login back to the malicious user, who could use the information to connect to the bank’s Web server, fooling it into believing that the connection is from the original user. Or, the script could access appropriate pages on the bank’s Web site, with appropriately set parameters, to execute a money transfer. In fact this particular problem can occur even without scripting by simply using a line of code such as assuming that the URL mybank.com/transfermoney accepts the specified param- eters, and carries out a money transfer. This latter kind of vulnerability is also called **cross-site request forgery** or **XSRF** (sometimes also called **CSRF**).
+**404 Chapter 9 Application Design and Development**
+
+For example, suppose the user happens to be logged into her bank account at the time the script executes. The script could send cookie information related to the bank account login back to the malicious user, who could use the information to connect to the bank’s Web server, fooling it into believing that the connection is from the original user. Or, the script could access appropriate pages on the bank’s Web site, with appropriately set parameters, to execute a money transfer. In fact this particular problem can occur even without scripting by simply using a line of code such as
+
+_<_img src= "http://mybank.com/transfermoney?amount=1000&toaccount=14523"_\>_
+
+assuming that the URL mybank.com/transfermoney accepts the specified param- eters, and carries out a money transfer. This latter kind of vulnerability is also called **cross-site request forgery** or **XSRF** (sometimes also called **CSRF**).
 
 XSS can be done in other ways, such as luring a user into visiting a Web site that has malicious scripts embedded in its pages. There are other more complex kinds of XSS and XSRF attacks, which we shall not get into here. To protect against such attacks, two things need to be done:
 
@@ -4373,15 +4383,15 @@ XSS can be done in other ways, such as luring a user into visiting a Web site th
 
 • **Protect your Web site from XSS or XSRF attacks launched from other sites.** If the user has logged into your Web site, and visits a different Web site vulnerable to XSS, the malicious code executing on the user’s browser could execute actions on your Web site, or pass session information related to your Web site back to the malicious user who could try to exploit it. This cannot be prevented altogether, but you can take a few steps to minimize the risk.
 
-    ◦ The HTTP protocol allows a server to check the **referer** of a page access, that is, the URL of the page that had the link that the user clicked on to initiate the page access. By checking that the referer is valid, for example, that the referer URL is a page on the same Web site, XSS attacks that originated on a different Web page accessed by the user can be prevented.
+◦ The HTTP protocol allows a server to check the **referer** of a page access, that is, the URL of the page that had the link that the user clicked on to initiate the page access. By checking that the referer is valid, for example, that the referer URL is a page on the same Web site, XSS attacks that originated on a different Web page accessed by the user can be prevented.
 
-    ◦ Instead of using only the cookie to identify a session, the session could also be restricted to the IP address from which it was originally authenticated.  
+◦ Instead of using only the cookie to identify a session, the session could also be restricted to the IP address from which it was originally authenticated.  
 
 **9.7 Application Security 405**
 
 As a result, even if a malicious user gets a cookie, he may not be able to log in from a different computer.
 
-    ◦ Never use a GET method to perform any updates. This prevents attacks using <img src ..\> such as the one we saw earlier. In fact, the HTTP stan- dard recommends that GET methods should never perform any updates, for other reasons such as a page refresh repeating an action that should have happened only once.
+◦ Never use a GET method to perform any updates. This prevents attacks using _<_img src .._\>_ such as the one we saw earlier. In fact, the HTTP stan- dard recommends that GET methods should never perform any updates, for other reasons such as a page refresh repeating an action that should have happened only once.
 
 **9.7.3 Password Leakage**
 
@@ -4393,9 +4403,9 @@ As another measure against compromised database passwords, many data- base syste
 
 Authentication refers to the task of verifying the identity of a person/software connecting to an application. The simplest form of authentication consists of a secret password that must be presented when a user connects to the application. Unfortunately, passwords are easily compromised, for example, by guessing, or by sniffing of packets on the network if the passwords are not sent encrypted. More robust schemes are needed for critical applications, such as online bank accounts. Encryption is the basis for more robust authentication schemes. Au- thentication through encryption is addressed in Section 9.8.3.
 
-Many applications use **two-factor authentication**, where two independent factors (that is, pieces of information or processes) are used to identify a user. The two factors should not share a common vulnerability; for example, if a system merely required two passwords, both could be vulnerable to leakage in the same manner (by network sniffing, or by a virus on the computer used by the user, for example). While biometrics such as fingerprints or iris scanners can be used in situations where a user is physically present at the point of authentication, they are not very meaningful across a network.  
+Many applications use **two-factor authentication**, where two independent _factors_ (that is, pieces of information or processes) are used to identify a user. The two factors should not share a common vulnerability; for example, if a system merely required two passwords, both could be vulnerable to leakage in the same manner (by network sniffing, or by a virus on the computer used by the user, for example). While biometrics such as fingerprints or iris scanners can be used in situations where a user is physically present at the point of authentication, they are not very meaningful across a network.  
 
-
+**406 Chapter 9 Application Design and Development**
 
 Passwords are used as the first factor in most such two-factor authentication schemes. Smart cards or other encryption devices connected through the USB interface, which can be used for authentication based on encryption techniques (see Section 9.8.3), are widely used as second factors.
 
@@ -4423,23 +4433,23 @@ The **OpenID** standard is an alternative for single sign-on across organization
 
 Although the SQL standard supports a fairly flexible system of authorization based on roles (described in Section 4.6), the SQL authorization model plays a very limited role in managing user authorizations in a typical application. For instance, suppose you want all students to be able to see their own grades, but not the grades of anyone else. Such authorization cannot be specified in SQL for at least two reasons:
 
-**1. Lack of end-user information**. With the growth in the Web, database ac- cesses come primarily from Web application servers. The end users typically do not have individual user identifiers on the database itself, and indeed there may only be a single user identifier in the database corresponding to all users of an application server. Thus, authorization specification in SQL cannot be used in the above scenario.
+**1\. Lack of end-user information**. With the growth in the Web, database ac- cesses come primarily from Web application servers. The end users typically do not have individual user identifiers on the database itself, and indeed there may only be a single user identifier in the database corresponding to all users of an application server. Thus, authorization specification in SQL cannot be used in the above scenario.
 
 It is possible for an application server to authenticate end users, and then pass the authentication information on to the database. In this section we  
 
-
+**408 Chapter 9 Application Design and Development**
 
 will assume that the function _syscontext.user id_() returns the identifier of the application user on whose behalf a query is being executed.5
 
-**2. Lack of fine-grained authorization**. Authorization must be at the level of individual tuples, if we are to authorize students to see only their own grades. Such authorization is not possible in the current SQL standard, which permits authorization only on an entire relation or view, or on specified attributes of relations or views.
+**2\. Lack of fine-grained authorization**. Authorization must be at the level of individual tuples, if we are to authorize students to see only their own grades. Such authorization is not possible in the current SQL standard, which permits authorization only on an entire relation or view, or on specified attributes of relations or views.
 
-We could try to get around this limitation by creating for each student a view on the takes relation that shows only that student’s grades. While this would work in principle, it would be extremely cumbersome since we would have to create one such view for every single student enrolled in the university, which is completely impractical.6
+We could try to get around this limitation by creating for each student a view on the _takes_ relation that shows only that student’s grades. While this would work in principle, it would be extremely cumbersome since we would have to create one such view for every single student enrolled in the university, which is completely impractical.6
 
 An alternative is to create a view of the form
 
-**create view** studentTakes **as select** * **from** takes **where** takes.ID\= _syscontext.user id_()
+**create view** _studentTakes_ **as select** \* **from** _takes_ **where** _takes_._ID_\= _syscontext.user id_()
 
-Users are then given authorization to this view, rather than to the underlying takes relation. However, queries executed on behalf of students must now be written on the view studentTakes, rather than on the original takes relation, whereas queries executed on behalf of instructors may need to use a different view. The task of developing applications becomes more complex as a result.
+Users are then given authorization to this view, rather than to the underlying _takes_ relation. However, queries executed on behalf of students must now be written on the view _studentTakes_, rather than on the original _takes_ relation, whereas queries executed on behalf of instructors may need to use a different view. The task of developing applications becomes more complex as a result.
 
 The task of authorization is today typically carried out entirely in the applica- tion, bypassing the authorization facilities of SQL. At the application level, users are authorized to access specific interfaces, and may further be restricted to view or update certain data items only.
 
@@ -4457,13 +4467,13 @@ Verifying that all application programs make all required authorization checks i
 
 In contrast, if a database directly supported fine-grained authorization, au- thorization policies could be specified and enforced at the SQL-level, which has a much smaller surface area. Even if some of the application interfaces inad- vertently omit required authorization checks, the SQL-level authorization could prevent unauthorized actions from being executed.
 
-Some database systems provide mechanisms for fine-grained authorization. For example, the Oracle **Virtual Private Database** (**VPD**) allows a system admin- istrator to associate a function with a relation; the function returns a predicate that must be added to any query that uses the relation (different functions can be defined for relations that are being updated). For example, using our syntax for retrieving application user identifiers, the function for the takes relation can return a predicate such as:
+Some database systems provide mechanisms for fine-grained authorization. For example, the Oracle **Virtual Private Database** (**VPD**) allows a system admin- istrator to associate a function with a relation; the function returns a predicate that must be added to any query that uses the relation (different functions can be defined for relations that are being updated). For example, using our syntax for retrieving application user identifiers, the function for the _takes_ relation can return a predicate such as:
 
-ID \= _sys context.user id_()
+_ID_ \= _sys context.user id_()
 
-This predicate is added to the **where** clause of every query that uses the takes relation. As a result (assuming that the application program sets the _user id_ value to the student’s ID), each student can see only the tuples corresponding to courses that she took.
+This predicate is added to the **where** clause of every query that uses the _takes_ relation. As a result (assuming that the application program sets the _user id_ value to the student’s _ID_), each student can see only the tuples corresponding to courses that she took.
 
-Thus, VPD provides authorization at the level of specific tuples, or rows, of a relation, and is therefore said to be a _row-level authorization_ mechanism. A potential pitfall with adding a predicate as described above is that it may change the meaning of a query significantly. For example, if a user wrote a query to find the average grade over all courses, she would end up getting the average of her grades, not all grades. Although the system would give the “right” answer for the rewritten query, that answer would not correspond to the query the user may have thought she was submitting.
+Thus, VPD provides authorization at the level of specific tuples, or rows, of a relation, and is therefore said to be a _row-level authorization_ mechanism. A potential pitfall with adding a predicate as described above is that it may change the meaning of a query significantly. For example, if a user wrote a query to find the average grade over all courses, she would end up getting the average of _her_ grades, not all grades. Although the system would give the “right” answer for the rewritten query, that answer would not correspond to the query the user may have thought she was submitting.
 
 See the bibliographic notes for pointers to more information on Oracle VPD.
 
@@ -4473,7 +4483,7 @@ An **audit trail** is a log of all changes (inserts, deletes, and updates) to th
 
 For example, if a student’s grade is found to be incorrect, the audit log can be examined to locate when and how the grade was updated, as well as to find which user carried out the updates. The university could then also use the audit  
 
-
+**410 Chapter 9 Application Design and Development**
 
 trail to trace all the updates performed by this user, in order to find other incorrect or fraudulent updates, and then correct them.
 
@@ -4509,7 +4519,7 @@ Many databases today store sensitive customer information, such as credit- card 
 
 7For extremely old people, who are relatively rare, even the year of birth plus postal code may be enough to uniquely identify the individual, so a range of values, such as 80 years or older, may be provided instead of the actual age for people older than 80 years.  
 
-
+**412 Chapter 9 Application Design and Development**
 
 To reduce the chance of sensitive information being acquired by criminals, many countries and states today require by law that any database storing such sensitive information must store the information in an encrypted form. A business that does not protect its data thus could be held criminally liable in case of data theft. Thus, encryption is a critical component of any application that stores such sensitive information.
 
@@ -4523,7 +4533,7 @@ becomes
 
 Qfsszsjehf
 
-If an unauthorized user sees only “Qfsszsjehf,” she probably has insufficient information to break the code. However, if the intruder sees a large number of encrypted branch names, she could use statistical data regarding the relative frequency of characters to guess what substitution is being made (for example, E is the most common letter in English text, followed by _T, A, O, N, I_, and so on).
+If an unauthorized user sees only “Qfsszsjehf,” she probably has insufficient information to break the code. However, if the intruder sees a large number of encrypted branch names, she could use statistical data regarding the relative frequency of characters to guess what substitution is being made (for example, _E_ is the most common letter in English text, followed by _T, A, O, N, I_, and so on).
 
 A good encryption technique has the following properties:
 
@@ -4541,9 +4551,9 @@ The algorithm runs a series of steps to jumble up the bits in a data block in a 
 
 For any symmetric-key encryption scheme to work, authorized users must be provided with the encryption key via a secure mechanism. This requirement is a major weakness, since the scheme is no more secure than the security of the mechanism by which the encryption key is transmitted.
 
-**Public-key encryption** is an alternative scheme that avoids some of the prob- lems faced by symmetric-key encryption techniques. It is based on two keys: a _public key_ and a _private key_. Each user Ui has a public key Ei and a private key Di . All public keys are published: They can be seen by anyone. Each private key is known to only the one user to whom the key belongs. If user U1 wants to store encrypted data, U1 encrypts them using public key E1. Decryption requires the private key D1.
+**Public-key encryption** is an alternative scheme that avoids some of the prob- lems faced by symmetric-key encryption techniques. It is based on two keys: a _public key_ and a _private key_. Each user _Ui_ has a public key _Ei_ and a private key _Di_ . All public keys are published: They can be seen by anyone. Each private key is known to only the one user to whom the key belongs. If user _U_1 wants to store encrypted data, _U_1 encrypts them using public key _E_1\. Decryption requires the private key _D_1.
 
-Because the encryption key for each user is public, it is possible to exchange information securely by this scheme. If user U1 wants to share data with U2, U1 encrypts the data using E2, the public key of U2. Since only user U2 knows how to decrypt the data, information can be transferred securely.
+Because the encryption key for each user is public, it is possible to exchange information securely by this scheme. If user _U_1 wants to share data with _U_2, _U_1 encrypts the data using _E_2, the public key of _U_2\. Since only user _U_2 knows how to decrypt the data, information can be transferred securely.
 
 For public-key encryption to work, there must be a scheme for encryption such that it is infeasible (that is, extremely hard) to deduce the private key, given the public key. Such a scheme does exist and is based on these conditions:
 
@@ -4551,19 +4561,19 @@ For public-key encryption to work, there must be a scheme for encryption such th
 
 • No efficient algorithm is known for finding the prime factors of a number.
 
-For purposes of this scheme, data are treated as a collection of integers. We create a public key by computing the product of two large prime numbers: P1 and P2. The private key consists of the pair (P1_, P_2). The decryption algorithm cannot be used successfully if only the product P1 P2 is known; it needs the individual values P1 and P2. Since all that is published is the product P1 P2, an unauthorized user would need to be able to factor P1 P2 to steal data. By choosing P1 and P2 to be sufficiently large (over 100 digits), we can make the cost of factoring P1 P2 prohibitively high (on the order of years of computation time, on even the fastest computers).
+For purposes of this scheme, data are treated as a collection of integers. We create a public key by computing the product of two large prime numbers: _P_1 and _P_2\. The private key consists of the pair (_P_1_, P_2). The decryption algorithm cannot be used successfully if only the product _P_1 _P_2 is known; it needs the individual values _P_1 and _P_2\. Since all that is published is the product _P_1 _P_2, an unauthorized user would need to be able to factor _P_1 _P_2 to steal data. By choosing _P_1 and _P_2 to be sufficiently large (over 100 digits), we can make the cost of factoring _P_1 _P_2 prohibitively high (on the order of years of computation time, on even the fastest computers).
 
 The details of public-key encryption and the mathematical justification of this technique’s properties are referenced in the bibliographic notes.
 
 Although public-key encryption by this scheme is secure, it is also computa- tionally very expensive. A hybrid scheme widely used for secure communication is as follows: a symmetric encryption key (based, for example, on AES) is ran-  
 
-
+**414 Chapter 9 Application Design and Development**
 
 domly generated and exchanged in a secure manner using a public-key encryp- tion scheme, and symmetric-key encryption using that key is used on the data transmitted subsequently.
 
-Encryption of small values, such as identifiers or names, is made compli- cated by the possibility of **dictionary attacks**, particularly if the encryption key is publicly available. For example, if date-of-birth fields are encrypted, an attacker trying to decrypt a particular encrypted value e could try encrypting every possi- ble date of birth until he finds one whose encrypted value matches e. Even if the encryption key is not publicly available, statistical information about data distri- butions can be used to figure out what an encrypted value represents in some cases, such as age or zip code. For example, if the age 18 is the most common age in a database, the encrypted age value that occurs most often can be inferred to represent 18.
+Encryption of small values, such as identifiers or names, is made compli- cated by the possibility of **dictionary attacks**, particularly if the encryption key is publicly available. For example, if date-of-birth fields are encrypted, an attacker trying to decrypt a particular encrypted value _e_ could try encrypting every possi- ble date of birth until he finds one whose encrypted value matches _e_. Even if the encryption key is not publicly available, statistical information about data distri- butions can be used to figure out what an encrypted value represents in some cases, such as age or zip code. For example, if the age 18 is the most common age in a database, the encrypted age value that occurs most often can be inferred to represent 18.
 
-Dictionary attacks can be deterred by adding extra random bits to the end of the value before encryption (and removing them after decryption). Such extra bits, referred to as an **initialization vector** in AES, or as salt bits in other contexts, provide good protection against dictionary attack.
+Dictionary attacks can be deterred by adding extra random bits to the end of the value before encryption (and removing them after decryption). Such extra bits, referred to as an **initialization vector** in AES, or as _salt_ bits in other contexts, provide good protection against dictionary attack.
 
 **9.8.2 Encryption Support in Databases**
 
@@ -4583,7 +4593,7 @@ A connection to the database that needs to access encrypted attributes must then
 
 Encryption at the database level has the advantage of requiring relatively low time and space overhead, and does not require modification of applications. For example, if data in a laptop computer database need to be protected from theft of the computer itself, such encryption can be used. Similarly, someone who gets access to backup tapes of a database would not be able to access the data contained in the backups without knowing the decryption key.
 
-An alternative to performing encryption in the database is to perform it before the data are sent to the database. The application must then encrypt the data before sending it to the database, and decrypt the data when it is retrieved. This approach to data encryption requires significant modifications to be done to the application, unlike encryption performed in a database system.
+An alternative to performing encryption in the database is to perform it _before_ the data are sent to the database. The application must then encrypt the data before sending it to the database, and decrypt the data when it is retrieved. This approach to data encryption requires significant modifications to be done to the application, unlike encryption performed in a database system.
 
 **9.8.3 Encryption and Authentication**
 
@@ -4595,7 +4605,7 @@ Public-key systems can be used for encryption in challenge–response sys- tems.
 
 Storing the private key of a user on a computer (even a personal computer) has the risk that if the computer is compromised, the key may be revealed to an attacker who can then masquerade as the user. **Smart cards** provide a solution to this problem. In a smart card, the key can be stored on an embedded chip; the operating system of the smart card guarantees that the key can never be read, but  
 
-
+**416 Chapter 9 Application Design and Development**
 
 allows data to be sent to the card for encryption or decryption, using the private key.8
 
@@ -4613,15 +4623,15 @@ For a user to ensure that she is interacting with an authentic Web site, she mus
 
 A two-level system would place an excessive burden of creating certificates on the root certification authorities, so a multilevel system is used instead, with one or more root certification authorities and a tree of certification authorities below each root. Each authority (other than the root authorities) has a digital certificate issued by its parent.
 
-A digital certificate issued by a certification authority A consists of a public key _K A_ and an encrypted text E that can be decoded by using the public key
+A digital certificate issued by a certification authority _A_ consists of a public key _K A_ and an encrypted text _E_ that can be decoded by using the public key
 
 8Smart cards provide other functionality too, such as the ability to store cash digitally and make payments, which is not relevant in our context.  
 
 **9.9 Summary 417**
 
-_K A_. The encrypted text contains the name of the party to whom the certificate was issued and her public key Kc . In case the certification authority A is not a root certification authority, the encrypted text also contains the digital certificate issued to A by its parent certification authority; this certificate authenticates the key _K A_ itself. (That certificate may in turn contain a certificate from a further parent authority, and so on.)
+_K A_. The encrypted text contains the name of the party to whom the certificate was issued and her public key _Kc_ . In case the certification authority _A_ is not a root certification authority, the encrypted text also contains the digital certificate issued to _A_ by its parent certification authority; this certificate authenticates the key _K A_ itself. (That certificate may in turn contain a certificate from a further parent authority, and so on.)
 
-To verify a certificate, the encrypted text E is decrypted by using the public key _K A_ to retrieve the name of the party (that is, the name of the organization owning the Web site); additionally, if A is not a root authority whose public key is known to the verifier, the public key _K A_ is verified recursively by using the digital certificate contained within E ; recursion terminates when a certificate issued by the root authority is reached. Verifying the certificate establishes the chain through which a particular site was authenticated, and provides the name and authenticated public key for the site.
+To verify a certificate, the encrypted text _E_ is decrypted by using the public key _K A_ to retrieve the name of the party (that is, the name of the organization owning the Web site); additionally, if _A_ is not a root authority whose public key is known to the verifier, the public key _K A_ is verified recursively by using the digital certificate contained within _E_ ; recursion terminates when a certificate issued by the root authority is reached. Verifying the certificate establishes the chain through which a particular site was authenticated, and provides the name and authenticated public key for the site.
 
 Digital certificates are widely used to authenticate Web sites to users, to prevent malicious sites from masquerading as other Web sites. In the HTTPS protocol (the secure version of the HTTP protocol), the site provides its digital certificate to the browser, which then displays it to the user. If the user accepts the certificate, the browser then uses the provided public key to encrypt data. A malicious site will have access to the certificate, but not the private key, and will thus not be able to decrypt the data sent by the browser. Only the authentic site, which has the corresponding private key, can decrypt the data sent by the browser. We note that public-/private-key encryption and decryption costs are much higher than encryption/decryption costs using symmetric private keys. To reduce encryption costs, HTTPS actually creates a one-time symmetric key after authentication, and uses it to encrypt data for the rest of the session.
 
@@ -4635,7 +4645,7 @@ Digital certificates can also be used for authenticating users. The user must su
 
 • Web servers execute application programs to implement desired function- ality. Servlets are a widely used mechanism to write application programs  
 
-
+**418 Chapter 9 Application Design and Development**
 
 that run as part of the Web server process, in order to reduce overhead. There are also many server-side scripting languages that are interpreted by the Web server and provide application-program functionality as part of the Web server.
 
@@ -4689,7 +4699,7 @@ architecture • Business-logic layer • Data-access layer • Object-relationa
 
 **9.3** Consider a carelessly written Web application for an online-shopping site, which stores the price of each item as a hidden form variable in the Web page sent to the customer; when the customer submits the form, the in-  
 
-
+**420 Chapter 9 Application Design and Development**
 
 formation from the hidden form variable is used to compute the bill for the customer. What is the loophole in this scheme? (There was a real in- stance where the loophole was exploited by some customers of an online- shopping site, before the problem was detected and fixed.)
 
@@ -4719,11 +4729,11 @@ to test passwords supplied by users who are attempting to log into the system.
 
 **Exercises**
 
-**9.12** Write a servlet and associated HTML code for the following very simple application: A user is allowed to submit a form containing a value, say n, and should get a response containing n “*” symbols.
+**9.12** Write a servlet and associated HTML code for the following very simple application: A user is allowed to submit a form containing a value, say _n_, and should get a response containing _n_ “\*” symbols.
 
-**9.13** Write a servlet and associated HTML code for the following simple appli- cation: A user is allowed to submit a form containing a number, say n, and should get a response saying how many times the value n has been submitted previously. The number of times each value has been submitted previously should be stored in a database.
+**9.13** Write a servlet and associated HTML code for the following simple appli- cation: A user is allowed to submit a form containing a number, say _n_, and should get a response saying how many times the value _n_ has been submitted previously. The number of times each value has been submitted previously should be stored in a database.
 
-**9.14** Write a servlet that authenticates a user (based on user names and pass- words stored in a database relation), and sets a session variable called userid after authentication.
+**9.14** Write a servlet that authenticates a user (based on user names and pass- words stored in a database relation), and sets a session variable called _userid_ after authentication.
 
 **9.15** What is an SQL injection attack? Explain how it works, and what precau- tions must be taken to prevent SQL injection attacks.
 
@@ -4743,9 +4753,9 @@ b. How can the referer field be used to detect some XSS attacks?
 
 **9.21** Consider the Oracle **Virtual Private Database** (**VPD**) feature described in Section 9.7.5, and an application based on our university schema.
 
-a. What predicate (using a subquery) should be generated to allow each faculty member to see only takes tuples corresponding to course sections that they have taught?  
+a. What predicate (using a subquery) should be generated to allow each faculty member to see only _takes_ tuples corresponding to course sections that they have taught?  
 
-
+**422 Chapter 9 Application Design and Development**
 
 b. Give an SQL query such that the query with the predicate added gives a result that is a subset of the original query result without the added predicate.
 
@@ -4753,7 +4763,7 @@ c. Give an SQL query such that the query with the predicate added gives a result
 
 **9.22** What are two advantages of encrypting data stored in the database?
 
-**9.23** Suppose you wish to create an audit trail of changes to the takes relation.
+**9.23** Suppose you wish to create an audit trail of changes to the _takes_ relation.
 
 a. Define triggers to create an audit trail, logging the information into a relation called, for example, _takes trail_. The logged information should include the user-id (assume a function _user id_() provides this informa- tion) and a timestamp, in addition to old and new values. You must also provide the schema of the _takes trail_ relation.
 
@@ -4787,7 +4797,7 @@ Most of today’s popular Web sites make extensive use of Javascript to create r
 
 **Project 9.7** Design and implement a system that permits recording of course performance information—specifically, the marks given to each student in each assignment or exam of a course, and computation of a (weighted) sum of marks to get the total course marks. The number of assignments/exams should not be predefined; that is, more assignments/exams can be added at any time. The system should also support grading, permitting cutoffs to be specified for various grades.  
 
-
+**424 Chapter 9 Application Design and Development**
 
 You may also wish to integrate it with the student registration system of Project 9.6 (perhaps being implemented by another project team).
 
@@ -4819,7 +4829,7 @@ Create a system that will allow users to easily create information collection ev
 
 **Project 9.16** Create a library of functions to simplify creation of Web interfaces. You must implement at least the following functions: a function to display a JDBC result set (with tabular formatting), functions to create different types of text and numeric inputs (with validation criteria such as input type and optional range, enforced at the client by appropriate JavaScript code), functions to input date and time values (with default values), and functions to create menu items based on a result set. For extra credit, allow the user to set style parameters such as colors and fonts, and provide pagination support in the tables (hidden form parameters can be used to specify which page is to be displayed). Build a sample database application to illustrate the use of these functions.  
 
-
+**426 Chapter 9 Application Design and Development**
 
 **Project 9.17** Design and implement a Web-based multiuser calendar system. The system must track appointments for each person, including multioccurrence events, such as weekly meetings, and shared events (where an update made by the event creator gets reflected to all those who share the event). Provide interfaces to schedule multiuser events, where an event creator can add a number of users who are invited to the event. Provide email notification of events. For extra credits implement a Web service that can be used by a reminder program running on the client machine.
 
