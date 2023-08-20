@@ -88,20 +88,20 @@ To support bulk load operations, most database systems provide a **bulk im- port
 
 We now consider the case of tuning of bulk updates. Suppose we have a rela- tion _funds received_(_dept name_, _amount_) that stores funds received (say, by electronic funds transfer) for each of a set of departments. Suppose now that we want to add the amounts to the balances of the corresponding department budgets. In order to use the SQL update statement to carry out this task, we have to perform a look up on the _funds received_ relation for each tuple in the _department_ relation. We can use subqueries in the update clause to carry out this task, as follows: We assume for simplicity that the relation _funds received_ contains at most one tuple for each department.
 
-![Alt text](f1.png)
+![Alt text](f1.svg)
 
 Note that the condition in the **where** clause of the update ensures that only accounts with corresponding tuples in _funds received_ are updated, while the sub- query within the **set** clause computes the amount to be added to each such department.
 
 There are many applications that require updates such as that illustrated above. Typically, there is a table, which we shall call the **master table**, and updates to the master table are received as a batch. Now the master table has to be correspondingly updated. SQL:2003 provides a special construct, called the **merge** construct, to simplify the task of performing such merging of information. For example, the above update can be expressed using **merge** as follows:
 
-![Alt text](f2.png)
+![Alt text](f2.svg)
 
 
 When a record from the subquery in the **using** clause matches a record in the _department_ relation, the **when matched** clause is executed, which can execute an update on the relation; in this case, the matching record in the _department_ relation is updated as shown.
 
 The **merge** statement can also have a **when not matched then** clause, which permits insertion of new records into the relation. In the above example, when there is no matching department for a _funds received_ tuple, the insertion action could create a new department record (with a null _building_) using the following clause:
 
-![Alt text](f3.png)
+![Alt text](f3.svg)
 
 Although not very meaningful in this example,1 the **when not matched then** clause can be quite useful in other cases. For example, suppose the local rela- tion is a copy of a master relation, and we receive updated as well as newly in- serted records from the master relation. The **merge** statement can update matched records (these would be updated old records) and insert records that are not matched (these would be new records).
 
@@ -111,7 +111,7 @@ Not all SQL implementations support the **merge** statement currently; see the r
 
 The performance of most systems (at least before they are tuned) is usually limited primarily by the performance of one or a few components, called **bottlenecks**. For instance, a program may spend 80 percent of its time in a small loop deep in the code, and the remaining 20 percent of the time on the rest of the code; the small loop then is a bottleneck. Improving the performance of a component that is not a bottleneck does little to improve the overall speed of the system; in the example, improving the speed of the rest of the code cannot lead to more than a
 
-![Alt text](fBottlenecks.jpeg)
+![Alt text](fBottlenecks.svg)
 
 20 percent improvement overall, whereas improving the speed of the bottleneck loop could result in an improvement of nearly 80 percent overall, in the best case.
 
@@ -135,7 +135,7 @@ The three levels of tuning interact with one another; we must consider them toge
 
 ### 24.1.5 Tuning of Hardware
 
-Even in a well-designed transaction processing system, each transaction usually has to do at least a few I/O operations, if the data required by the transaction are on disk. An important factor in tuning a transaction processing system is to make sure that the disk subsystem can handle the rate at which I/O operations are required. For instance, consider a disk that supports an access time of about 10 milliseconds, and average transfer rate of 25 to 100 megabytes per second (a fairly typical disk today). Such a disk would support a little under 100 random-access I/O operations of 4 kilobytes each per second. If each transaction requires just 2 I/O operations, a single disk would support at most 50 transactions per second. The only way to support more transactions per second is to increase the number of disks. If the system needs to support _n_ transactions per second, each performing 2 I/O operations, data must be striped (or otherwise partitioned) across at least _n/_50 disks (ignoring skew).
+Even in a well-designed transaction processing system, each transaction usually has to do at least a few I/O operations, if the data required by the transaction are on disk. An important factor in tuning a transaction processing system is to make sure that the disk subsystem can handle the rate at which I/O operations are required. For instance, consider a disk that supports an access time of about 10 milliseconds, and average transfer rate of 25 to 100 megabytes per second (a fairly typical disk today). Such a disk would support a little under 100 random-access I/O operations of 4 kilobytes each per second. If each transaction requires just 2 I/O operations, a single disk would support at most 50 transactions per second. The only way to support more transactions per second is to increase the number of disks. If the system needs to support n transactions per second, each performing 2 I/O operations, data must be striped (or otherwise partitioned) across at least n/50 disks (ignoring skew).
 
 Notice here that the limiting factor is not the capacity of the disk, but the speed at which random data can be accessed (limited in turn by the speed at which the disk arm can move). The number of I/O operations per transaction can be reduced by storing more data in memory. If all data are in memory, there will be no disk I/O except for writes. Keeping frequently used data in memory reduces the number of disk I/Os, and is worth the extra cost of memory. Keeping very infrequently used data in memory would be a waste, since memory is much more expensive than disk.
 
@@ -144,7 +144,7 @@ The question is, for a given amount of money available for spending on disks or 
 ```c
 (price per disk drive)/(access per second per disk)
 ```
-Thus, if a particular page is accessed _n_ times per second, the saving due to keeping it in memory is _n_ times the above value. Storing a page in memory costs:
+Thus, if a particular page is accessed n times per second, the saving due to keeping it in memory is n times the above value. Storing a page in memory costs:
 
 ```c
 (price per megabyte of memory)/(pages per megabyte of memory)
@@ -152,9 +152,9 @@ Thus, if a particular page is accessed _n_ times per second, the saving due to k
 
 Thus, the break-even point is:
 
-![Alt text](f4.png)
+![Alt text](f4.svg)
 
-We can rearrange the equation and substitute current values for each of the above parameters to get a value for _n_; if a page is accessed more frequently than this, it is worth buying enough memory to store it. Current disk technology and memory and disk prices (which we assume to be about $50 per disk, and $0.020 per megabyte) give a value of _n_ around 1_/_6400 times per second (or equivalently, once in nearly 2 hours) for pages that are randomly accessed; with disk and memory cost and speeds as of some years ago, the corresponding value was in 5 minutes.
+We can rearrange the equation and substitute current values for each of the above parameters to get a value for n; if a page is accessed more frequently than this, it is worth buying enough memory to store it. Current disk technology and memory and disk prices (which we assume to be about $50 per disk, and $0.020 per megabyte) give a value of n around 1_6400 times per second (or equivalently, once in nearly 2 hours) for pages that are randomly accessed; with disk and memory cost and speeds as of some years ago, the corresponding value was in 5 minutes.
 
 This reasoning is captured by the rule of thumb that was originally called the **5-minute rule**: if a page is used more frequently than once in 5 minutes, it should be cached in memory. In other words, some years ago, the rule suggested buying enough memory to cache all pages that are accessed at least once in 5 minutes on average. Today, it is worth buying enough memory to cache all pages that are accessed at least once in 2 hours on average. For data that are accessed less frequently, buy enough disks to support the rate of I/O required for the data.
 
@@ -171,7 +171,7 @@ The flash-as-buffer approach requires changes in the database system itself. Eve
 The “5-minute” rule has been extended to the case where data can be stored on flash, in addition to main memory and disk. See the bibliographical notes for references to more information.
 
 Another aspect of tuning is whether to use RAID 1 or RAID 5. The answer depends on how frequently the data are updated, since RAID 5 is much slower than RAID 1 on random writes: RAID 5 requires 2 reads and 2 writes to execute a single random write request. If an application performs _r_ random reads and _w_ random writes per second to support a particular throughput rate, a RAID 5 implementation would require _r_ \+ 4_w_ I/O operations per second whereas a RAID 1 implementation would require _r_ \+ 2_w_ I/O operations per second. We can then calculate the number of disks required to support the required I/O operations per  
-second by dividing the result of the calculation by 100 I/O operations per second (for current-generation disks). For many applications, _r_ and _w_ are large enough that the (_r_ \+ _w_)_/_100 disks can easily hold two copies of all the data. For such applications, if RAID 1 is used, the required number of disks is actually less than the required number of disks if RAID 5 is used! Thus RAID 5 is useful only when the data storage requirements are very large, but the update rates, and particularly random update rates, are small, that is, for very large and very “cold” data.
+second by dividing the result of the calculation by 100 I/O operations per second (for current-generation disks). For many applications, _r_ and _w_ are large enough that the (_r_ \+ _w_)_100 disks can easily hold two copies of all the data. For such applications, if RAID 1 is used, the required number of disks is actually less than the required number of disks if RAID 5 is used! Thus RAID 5 is useful only when the data storage requirements are very large, but the update rates, and particularly random update rates, are small, that is, for very large and very “cold” data.
 
 ### 24.1.6 Tuning of the Schema
 
@@ -302,11 +302,11 @@ Combining the performance numbers from multiple tasks must be done with care. Su
 
 If we took the average of the two pairs of numbers (that is, 99 and 1, versus 50 and 50), it might appear that the two systems have equal performance. However, it is _wrong_ to take the averages in this fashion—if we ran 50 transactions of each type, system _A_ would take about 50.5 seconds to finish, whereas system _B_ would finish in just 2 seconds!
 
-The example shows that a simple measure of performance is misleading if there is more than one type of transaction. The right way to average out the numbers is to take the **time to completion** for the workload, rather than the average _throughput_ for each transaction type. We can then compute system per- formance accurately in transactions per second for a specified workload. Thus, system A takes 50.5/100, which is 0.505 seconds per transaction, whereas system B takes 0.02 seconds per transaction, on average. In terms of throughput, system A runs at an average of 1.98 transactions per second, whereas system B runs at 50 transactions per second. Assuming that transactions of all the types are equally likely, the correct way to average out the throughputs on different transaction types is to take the **harmonic mean** of the throughputs. The harmonic mean of _n_ throughputs t~1~, . . . , t~n~ is defined as:
+The example shows that a simple measure of performance is misleading if there is more than one type of transaction. The right way to average out the numbers is to take the **time to completion** for the workload, rather than the average _throughput_ for each transaction type. We can then compute system per- formance accurately in transactions per second for a specified workload. Thus, system A takes 50.5/100, which is 0.505 seconds per transaction, whereas system B takes 0.02 seconds per transaction, on average. In terms of throughput, system A runs at an average of 1.98 transactions per second, whereas system B runs at 50 transactions per second. Assuming that transactions of all the types are equally likely, the correct way to average out the throughputs on different transaction types is to take the **harmonic mean** of the throughputs. The harmonic mean of n throughputs t~1~, . . . , t~n~ is defined as:
 
-For our example, the harmonic mean for the throughputs in system A is 1_._98\. For system B, it is 50. Thus, system B is approximately 25 times faster than system A on a workload consisting of an equal mixture of the two example types of transactions.
+For our example, the harmonic mean for the throughputs in system A is 1_.98. For system B, it is 50. Thus, system B is approximately 25 times faster than system A on a workload consisting of an equal mixture of the two example types of transactions.
 
-![Alt text](f6.png)
+![Alt text](f6.svg)
 
 ### 24.2.2 Database-Application Classes
 
@@ -350,7 +350,7 @@ Testing of programs involves designing a **test suite**, that is, a collection o
 
 In the context of database applications, a test case consists of two parts: a database state, and an input to a specific interface of the application.
 
-SQL queries can have subtle bugs that can be difficult to catch. For example, a query may execute _r  s_, when it should have actually performed _r  s_. The difference between these two queries would be found only if the test database had an _r_ tuple with no matching _s_ tuple. Thus, it is important to create test databases that can catch commonly occurring errors. Such errors are referred to as **mutations**, since they are usually small changes to a query (or program). A test case that produces different outputs on an intended query and a mutant of the query is said to **kill the mutant**. A test suite should have test cases that kill (most) commonly occurring mutants.
+SQL queries can have subtle bugs that can be difficult to catch. For example, a query may execute _r  s_, when it should have actually performed _r  s_. The difference between these two queries would be found only if the test database had an _r_ tuple with no matching S tuple. Thus, it is important to create test databases that can catch commonly occurring errors. Such errors are referred to as **mutations**, since they are usually small changes to a query (or program). A test case that produces different outputs on an intended query and a mutant of the query is said to **kill the mutant**. A test suite should have test cases that kill (most) commonly occurring mutants.
 
 If a test case performs an update on the database, to check that it executed properly one must verify that the contents of the database match the expected contents. Thus, the expected output consists not only of data displayed on the user’s screen, but also (updates to) the database state.
 
@@ -698,7 +698,7 @@ List-based representations of polylines or polygons are often convenient for que
 
 The representation of points and line segments in three-dimensional space is similar to their representation in two-dimensional space, the only difference being that points have an extra _z_ component. Similarly, the representation of pla- nar figures—such as triangles, rectangles, and other polygons—does not change
 
-![Alt text](D1.png)
+![Alt text](D1.svg)
 
 much when we move to three dimensions. Tetrahedrons and cuboids can be rep- resented in the same way as triangles and rectangles. We can represent arbitrary polyhedra by dividing them into tetrahedrons, just as we triangulate polygons. We can also represent them by listing their faces, each of which is itself a polygon, along with an indication of which side of the face is inside the polyhedron.
 
@@ -714,7 +714,7 @@ Various spatial operations must be performed on a design. For instance, the desi
 
 Spatial-integrity constraints, such as “two pipes should not be in the same location,” are important in design databases to prevent interference errors. Such errors often occur if the design is performed manually, and are detected only when a prototype is being constructed. As a result, these errors can be expensive to fix. Database support for spatial-integrity constraints helps people to avoid design
 
-![Alt text](D2.png)
+![Alt text](D2.svg)
 
 errors, thereby keeping the design consistent. Implementing such integrity checks again depends on the availability of efficient multidimensional index structures.
 
@@ -785,7 +785,7 @@ Indices are required for efficient access to spatial data. Traditional index str
 
 To understand how to index spatial data consisting of two or more dimensions, we consider first the indexing of points in one-dimensional data. Tree structures, such as binary trees and B-trees, operate by successively dividing space into smaller parts. For instance, each internal node of a binary tree partitions a one-
 
-![Alt text](D3.png)
+![Alt text](D3.svg)
 
 dimensional interval in two. Points that lie in the left partition go into the left subtree; points that lie in the right partition go into the right subtree. In a balanced binary tree, the partition is chosen so that approximately one-half of the points stored in the subtree fall in each partition. Similarly, each level of a B-tree splits a one-dimensional interval into multiple parts.
 
@@ -797,7 +797,7 @@ The **k-d-B tree** extends the k-d tree to allow multiple child nodes for each i
 
 An alternative representation for two-dimensional data is a **quadtree**. An example of the division of space by a quadtree appears in Figure 25.5. The set of points
 
-![Alt text](D4.png)
+![Alt text](D4.svg)
 
 is the same as that in Figure 25.4. Each node of a quadtree is associated with a rectangular region of space. The top node is associated with the entire target space. Each nonleaf node in a quadtree divides its region into four equal-sized quadrants, and correspondingly each such node has four child nodes corresponding to the four quadrants. Leaf nodes have between zero and some fixed maximum number of points. Correspondingly, if the region corresponding to a node has more than the maximum number of points, child nodes are created for that node. In the example in Figure 25.5, the maximum number of points in a leaf node is set to 1.
 
@@ -817,7 +817,7 @@ The R-tree itself is at the right side of Figure 25.6. The figure refers to the 
 
 We shall now see how to implement search, insert, and delete operations on an R-tree.
 
-![Alt text](D5.png)
+![Alt text](D5.svg)
 
 - **Search**. As the figure shows, the bounding boxes associated with sibling nodes may overlap; in B+-trees, k-d trees, and quadtrees, in contrast, the ranges do not overlap. A search for objects containing a point therefore has to follow _all_ child nodes whose associated bounding boxes contain the point; as a result, multiple paths may have to be searched. Similarly, a query to find all objects that intersect a given object has to go down every node where the associated rectangle intersects the given object.
 
@@ -825,11 +825,11 @@ We shall now see how to implement search, insert, and delete operations on an R-
 
 Once the leaf node has been reached, if the node is already full, the algorithm performs node splitting (and propagates splitting upward if required) in a manner very similar to B+-tree insertion. Just as with B+-tree insertion, the R- tree insertion algorithm ensures that the tree remains balanced. Additionally, it ensures that the bounding boxes of leaf nodes, as well as internal nodes, remain consistent; that is, bounding boxes of leaves contain all the bounding boxes of the objects stored at the leaf, while the bounding boxes for internal nodes contain all the bounding boxes of the children nodes.
 
-The main difference of the insertion procedure from the B+-tree insertion procedure lies in how the node is split. In a B+-tree, it is possible to find a value such that half the entries are less than the midpoint and half are greater than the value. This property does not generalize beyond one dimension; that is, for more than one dimension, it is not always possible to split the entries into two sets so that their bounding boxes do not overlap. Instead, as a heuristic, the set of entries _S_ can be split into two disjoint sets _S_1 and _S_2 so that the bounding boxes of _S_1 and _S_2 have the minimum total area; another heuristic would be to split the entries into two sets _S_1 and _S_2 in such a way that _S_1 and _S_2 have minimum overlap. The two nodes resulting from the split would contain the entries in _S_1 and _S_2, respectively. The cost of finding splits with minimum total area or overlap can itself be large, so cheaper heuristics, such as the _quadratic split_ heuristic, are used. (The heuristic gets is name from the fact that it takes time quadratic in the number of entries.)
+The main difference of the insertion procedure from the B+-tree insertion procedure lies in how the node is split. In a B+-tree, it is possible to find a value such that half the entries are less than the midpoint and half are greater than the value. This property does not generalize beyond one dimension; that is, for more than one dimension, it is not always possible to split the entries into two sets so that their bounding boxes do not overlap. Instead, as a heuristic, the set of entries S can be split into two disjoint sets S1 and S2 so that the bounding boxes of S1 and S2 have the minimum total area; another heuristic would be to split the entries into two sets S1 and S2 in such a way that S1 and S2 have minimum overlap. The two nodes resulting from the split would contain the entries in S1 and S2, respectively. The cost of finding splits with minimum total area or overlap can itself be large, so cheaper heuristics, such as the _quadratic split_ heuristic, are used. (The heuristic gets is name from the fact that it takes time quadratic in the number of entries.)
 
-The **quadratic split** heuristic works this way: First, it picks a pair of entries _a_ and _b_ from _S_ such that putting them in the same node would result in a bounding box with the maximum wasted space; that is, the area of the minimum bounding box of _a_ and _b_ minus the sum of the areas of _a_ and _b_ is the largest. The heuristic places the entries _a_ and _b_ in sets _S_1 and _S_2, respectively.
+The **quadratic split** heuristic works this way: First, it picks a pair of entries _a_ and _b_ from S such that putting them in the same node would result in a bounding box with the maximum wasted space; that is, the area of the minimum bounding box of _a_ and _b_ minus the sum of the areas of _a_ and _b_ is the largest. The heuristic places the entries _a_ and _b_ in sets S1 and S2, respectively.
 
-It then iteratively adds the remaining entries, one entry per iteration, to one of the two sets _S_1 or _S_2\. At each iteration, for each remaining entry _e_, let _ie,_1 denote the increase in the size of the bounding box of _S_1 if _e_ is added to _S_1 and let _ie,_2 denote the corresponding increase for _S_2\. In each iteration, the heuristic chooses one of the entries with the maximum difference of _ie,_1 and _ie,_2 and adds it to _S_1 if _ie,_1 is less than _ie,_2, and to _S_2 otherwise. That is, an entry with “maximum preference” for one of _S_1 or _S_2 is chosen at each iteration. The iteration stops when all entries have been assigned, or when one of the sets _S_1 or _S_2 has enough entries that all remaining entries have to be added to the other set so the nodes constructed from _S_1 and _S_2 both have the required minimum occupancy. The heuristic then adds all unassigned entries to the set with fewer entries.
+It then iteratively adds the remaining entries, one entry per iteration, to one of the two sets S1 or S2. At each iteration, for each remaining entry e, let ie,1 denote the increase in the size of the bounding box of S1 if e is added to S1 and let ie,2 denote the corresponding increase for S2. In each iteration, the heuristic chooses one of the entries with the maximum difference of ie,1 and ie,2 and adds it to S1 if ie,1 is less than ie,2, and to S2 otherwise. That is, an entry with “maximum preference” for one of S1 or S2 is chosen at each iteration. The iteration stops when all entries have been assigned, or when one of the sets S1 or S2 has enough entries that all remaining entries have to be added to the other set so the nodes constructed from S1 and S2 both have the required minimum occupancy. The heuristic then adds all unassigned entries to the set with fewer entries.
 
 - **Deletion**. Deletion can be performed like a B+-tree deletion, borrowing en- tries from sibling nodes, or merging sibling nodes if a node becomes under- full. An alternative approach redistributes all the entries of underfull nodes to sibling nodes, with the aim of improving the clustering of entries in the R-tree.
 
@@ -868,7 +868,7 @@ The most important types of continuous-media data are video and audio data (for 
 
 - Synchronization among distinct data streams must be maintained. This need arises, for example, when the video of a person speaking must show lips moving synchronously with the audio of the person speaking.
 
-To supply data predictably at the right time to a large number of consumers of the data, the fetching of data from disk must be coordinated carefully. Usually, data are fetched in periodic cycles. In each cycle, say of _n_ seconds, _n_ seconds’ worth of data is fetched for each consumer and stored in memory buffers, while the data fetched in the previous cycle is being sent to the consumers from the memory buffers. The cycle period is a compromise: A short period uses less memory but requires more disk-arm movement, which is a waste of resources, while a long period reduces disk-arm movement but increases memory requirements and may delay initial delivery of data. When a new request arrives, **admission control** comes into play: That is, the system checks if the request can be satisfied with available resources (in each period); if so, it is admitted; otherwise it is rejected.
+To supply data predictably at the right time to a large number of consumers of the data, the fetching of data from disk must be coordinated carefully. Usually, data are fetched in periodic cycles. In each cycle, say of n seconds, n seconds’ worth of data is fetched for each consumer and stored in memory buffers, while the data fetched in the previous cycle is being sent to the consumers from the memory buffers. The cycle period is a compromise: A short period uses less memory but requires more disk-arm movement, which is a waste of resources, while a long period reduces disk-arm movement but increases memory requirements and may delay initial delivery of data. When a new request arrives, **admission control** comes into play: That is, the system checks if the request can be satisfied with available resources (in each period); if so, it is admitted; otherwise it is rejected.
 
 Extensive research on delivery of continuous-media data has dealt with such issues as handling arrays of disks and dealing with disk failure. See the biblio- graphical references for details.
 
@@ -975,16 +975,16 @@ If updates can occur at both the mobile host and elsewhere, detecting conflict- 
 
 The **version-vector scheme** detects inconsistencies when copies of a document are independently updated. This scheme allows copies of a _document_ to be stored at multiple hosts. Although we use the term _document_, the scheme can be applied to any other data items, such as tuples of a relation.
 
-The basic idea is for each host _i_ to store, with its copy of each document _d_, a **version vector**—that is, a set of version numbers { V~d~,~i~ [ j ] }, with one entry for each other host _j_ on which the document could potentially be updated. When a host _i_ updates a document _d_, it increments the version number V~d~,~i~ [ i ]  by one.
+The basic idea is for each host _i_ to store, with its copy of each document _d_, a **version vector**—that is, a set of version numbers { V~d~,~i~ [j] }, with one entry for each other host _j_ on which the document could potentially be updated. When a host _i_ updates a document _d_, it increments the version number V~d~,~i~ [i]  by one.
 
 Whenever two hosts _i_ and _j_ connect with each other, they exchange updated documents, so that both obtain new versions of the documents. However, be- fore exchanging documents, the hosts have to discover whether the copies are consistent:
 
-1. If the version vectors are the same on both hosts—that is, for each _k_, V~d~,~i~ [ K ] =V~d~,~i~ [ k ] —then the copies of document _d_ are identical.
+1. If the version vectors are the same on both hosts—that is, for each _k_, V~d~,~i~ [K] =V~d~,~i~ [k] —then the copies of document _d_ are identical.
 
-2. If, for each _k_, V~d~,~i~ [ k ] ≤ V~d~,~j~ [ k ] and the version vectors are not identical, then the copy of document _d_ at host _i_ is older than the one at host _j_ . That is, the copy of document _d_ at host _j_ was obtained by one or more modifications of the copy of the document at host _i_ . Host _i_ replaces its copy of _d_, as well as its copy of the version vector for _d_, with the copies from host _j_ .
+2. If, for each _k_, V~d~,~i~ [k] ≤ V~d~,~j~ [k] and the version vectors are not identical, then the copy of document _d_ at host _i_ is older than the one at host _j_ . That is, the copy of document _d_ at host _j_ was obtained by one or more modifications of the copy of the document at host _i_ . Host _i_ replaces its copy of _d_, as well as its copy of the version vector for _d_, with the copies from host _j_ .
 
-3. If there are a pair of hosts _k_ and _m_ such that  V~d~,~i~ [ k ] < V~d~,~j~ [ k ] and 
-V~d~,~i~ [ m ] > V~d~,~j~ [ m ], then the copies are _inconsistent_; that is, the copy of _d_ at _i_ contains updates performed by host _k_ that have not been propagated to host _j_ , and, similarly, the copy of _d_ at _j_ contains updates performed by host _m_ that have not been propagated to host _i_ . Then, the copies of _d_ are inconsistent, since two or more updates have been performed on _d_ independently. Manual intervention may be required to merge the updates.
+3. If there are a pair of hosts _k_ and _m_ such that  V~d~,~i~ [k] < V~d~,~j~ [k] and 
+V~d~,~i~ [m] > V~d~,~j~ [m], then the copies are _inconsistent_; that is, the copy of _d_ at _i_ contains updates performed by host _k_ that have not been propagated to host _j_ , and, similarly, the copy of _d_ at _j_ contains updates performed by host _m_ that have not been propagated to host _i_ . Then, the copies of _d_ are inconsistent, since two or more updates have been performed on _d_ independently. Manual intervention may be required to merge the updates.
 
 The version-vector scheme was initially designed to deal with failures in distributed file systems. The scheme gained importance because mobile comput- ers often store copies of files that are also present on server systems, in effect con- stituting a distributed file system that is often disconnected. Another application of the scheme is in groupware systems, where hosts are connected periodically, rather than continuously, and must exchange updated documents.
 
@@ -1171,7 +1171,7 @@ Large-scale transaction-processing systems are built around a client–server ar
 
 The above problems can be avoided by having a single-server process to which all remote clients connect; this model is called the **single-server model**,
 
-![Alt text](D6.png)
+![Alt text](D6.svg)
 
 illustrated in Figure 26.1b. Remote clients send requests to the server process, which then executes those requests. This model is also used in client–server en- vironments, where clients send requests to a single-server process. The server process handles tasks, such as user authentication, that would normally be han- dled by the operating system. To avoid blocking other clients when processing a long request for one client, the server process is **multithreaded**: The server process has a thread of control for each client, and, in effect, implements its own low-overhead multitasking. It executes code on behalf of one client for a while, then saves the internal context and switches to the code for another client. Unlike the overhead of full multitasking, the cost of switching between threads is low (typically only a few microseconds).
 
@@ -1185,7 +1185,7 @@ One way to solve these problems is to run multiple application-server pro- cesse
 
 The above architecture is also widely used in Web servers. A Web server has a main process that receives HTTP requests, and then assigns the task of handling each request to a separate process (chosen from among a pool of processes). Each of the processes is itself multithreaded, so that it can handle multiple requests. The use of safe programming languages, such as Java, C#, or Visual Basic, allows Web application servers to protect threads from errors in other threads. In contrast, with a language like C or C++, errors such as memory allocation errors in one thread can cause other threads to fail.
 
-![Alt text](D7.png)
+![Alt text](D7.svg)
 
 A more general architecture has multiple processes, rather than just one, to communicate with clients. The client communication processes interact with one or more router processes, which route their requests to the appropriate server. Later-generation TP monitors therefore have a different architecture, called the **many-server, many-router model**, illustrated in Figure 26.1d. A controller process starts up the other processes and supervises their functioning. Very high perfor- mance Web-server systems also adopt such an architecture. The router processes are often network routers that direct traffic addressed to the same Internet ad- dress to different server computers, depending on where the traffic comes from. What looks like a single server with a single address to the outside world may be a collection of servers.
 
@@ -1228,7 +1228,7 @@ In general, workflows may involve one or more humans. For instance, con- sider t
 
 **Figure 26.3** Examples of workflows.  
 
-![Alt text](image.png)
+![Alt text](image.svg)
 
 then have to be approved by one or more superior officers, after which the loan can be made. Each human here performs a task; in a bank that has not automated the task of loan processing, the coordination of the tasks is typically carried out by passing of the loan application, with attached notes and other information, from one employee to the next. Other examples of workflows include processing of expense vouchers, of purchase orders, and of credit-card transactions.
 
@@ -1286,7 +1286,7 @@ The simplest workflow-execution systems follow the fully distributed ap- proach 
 
 The centralized approach is used in workflow systems where the data are stored in a central database. The scheduler notifies various agents, such as humans or computer programs, that a task has to be carried out, and keeps track of task completion. It is easier to keep track of the state of a workflow with a centralized approach than it is with a fully distributed approach.
 
-The scheduler must guarantee that a workflow will terminate in one of the specified acceptable termination states. Ideally, before attempting to execute a workflow, the scheduler should examine that workflow to check whether the workflow may terminate in a nonacceptable state. If the scheduler cannot guar- antee that a workflow will terminate in an acceptable state, it should reject such specifications without attempting to execute the workflow. As an example, let us consider a workflow consisting of two tasks represented by subtransactions _S_1 and _S_2, with the failure-atomicity requirements indicating that either both or neither of the subtransactions should be committed. If _S_1 and _S_2 do not provide prepared-to-commit states (for a two-phase commit), and further do not have compensating transactions, then it is possible to reach a state where one subtrans- action is committed and the other aborted, and there is no way to bring both to the same state. Therefore, such a workflow specification is **unsafe**, and should be rejected.
+The scheduler must guarantee that a workflow will terminate in one of the specified acceptable termination states. Ideally, before attempting to execute a workflow, the scheduler should examine that workflow to check whether the workflow may terminate in a nonacceptable state. If the scheduler cannot guar- antee that a workflow will terminate in an acceptable state, it should reject such specifications without attempting to execute the workflow. As an example, let us consider a workflow consisting of two tasks represented by subtransactions S1 and S2, with the failure-atomicity requirements indicating that either both or neither of the subtransactions should be committed. If S1 and S2 do not provide prepared-to-commit states (for a two-phase commit), and further do not have compensating transactions, then it is possible to reach a state where one subtrans- action is committed and the other aborted, and there is no way to bring both to the same state. Therefore, such a workflow specification is **unsafe**, and should be rejected.
 
 Safety checks such as the one just described may be impossible or impractical to implement in the scheduler; it then becomes the responsibility of the person designing the workflow specification to ensure that the workflows are safe.
 
@@ -1514,13 +1514,13 @@ Similarly, we rewrite transaction _T_~2~_,_ using subtransactions T_~2~,~1~ and 
   
   ◦T~2~,~2~ which adds 10 to _A_.
 
-No ordering is specified on _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~\. Any execution of these sub- transactions will generate a correct result. The schedule of Figure 26.5 corresponds to the schedule _<  _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~\>_.
+No ordering is specified on _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~. Any execution of these sub- transactions will generate a correct result. The schedule of Figure 26.5 corresponds to the schedule _<  _T~1,1~, T_~1,2~_, T_~2,1~_,_ and _T~2,2~\>_.
 
 To reduce the frequency of long-duration waiting, we arrange for uncommit- ted updates to be exposed to other concurrently executing transactions. Indeed, multilevel transactions may allow this exposure. However, the exposure of un- committed data creates the potential for cascading rollbacks. The concept of **com- pensating transactions** helps us to deal with this problem.
 
 Let transaction _T_ be divided into several subtransactions _t_~1~_, t_~2~_, . . . , t~n~_. After a subtransaction _t~i~_ commits, it releases its locks. Now, if the outer-level transaction _T_ has to be aborted, the effect of its subtransactions must be undone. Suppose that subtransactions _t_~1~_, . . . , t~k~_ have committed, and that _t~k+1~ was executing when the decision to abort is made. We can undo the effects of _t~k+1~ by aborting that subtransaction. However, it is not possible to abort subtransactions _t_~1~_, . . . , t~k~_ , since they have committed already.
 
-Instead, we execute a new subtransaction _ct~i~_ , called a _compensating transaction_, to undo the effect of a subtransaction _t~i~_ . Each subtransaction _t~i~_ is required to have a compensating transaction _ct~i~_ . The compensating transactions must be executed in the inverse order _ct~k~, . . . , ct_~1~\. Here are several examples of compensation:
+Instead, we execute a new subtransaction _ct~i~_ , called a _compensating transaction_, to undo the effect of a subtransaction _t~i~_ . Each subtransaction _t~i~_ is required to have a compensating transaction _ct~i~_ . The compensating transactions must be executed in the inverse order _ct~k~, . . . , ct_~1~. Here are several examples of compensation:
 
 - Consider the schedule of Figure 26.5, which we have shown to be correct, although not conflict serializable. Each subtransaction releases its locks once it completes. Suppose that T~2~ fails just prior to termination, after T~2,2~ has re- leased its locks. We then run a compensating transaction for T~2,2~ that subtracts 10 from _A_ and a compensating transaction for T~2,1~ that adds 10 to _B_.
 
