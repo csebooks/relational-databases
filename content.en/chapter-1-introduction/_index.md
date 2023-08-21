@@ -604,8 +604,6 @@ The latter part of the decade has seen growth in specialized databases for data 
 
 - Database applications are typically broken up into a front-end part that runs at client machines and a part that runs at the back end. In two-tier architectures, the front end directly communicates with a database running at the back end. In three-tier architectures, the back end part is itself broken up into an application server and a database server.  
 
-**Practice Exercises 33**
-
 - Knowledge-discovery techniques attempt to discover automatically statisti- cal rules and patterns from data. The field of **data mining** combines knowledge- discovery techniques invented by artificial intelligence researchers and sta- tistical analysts, with efficient implementation techniques that enable them to be used on extremely large databases.
 
 - There are four different types of database-system users, differentiated by the way they expect to interact with the system. Different types of user interfaces have been designed for the different types of users.
