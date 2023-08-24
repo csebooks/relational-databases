@@ -22,7 +22,7 @@ Anastasia Ailamaki, Sailesh Krishnamurthy, Spiros Papadimitriou, Bianca Schroede
 
 PostgreSQL is an open-source object-relational database management system. It is a descendant of one of the earliest such systems, the POSTGRES system developed under Professor Michael Stonebraker at the University of California, Berkeley. The name “postgres” is derived from the name of a pioneering relational database sys- tem, Ingres, also developed under Stonebraker at Berkeley. Currently, PostgreSQL supports many aspects of SQL:2003 and offers features such as complex queries, foreign keys, triggers, views, transactional integrity, full-text searching, and lim- ited data replication. In addition, users can extend PostgreSQL with new data types, functions, operators, or index methods. PostgreSQL supports a variety of programming languages (including C, C++, Java, Perl, Tcl, and Python) as well as the database interfaces JDBC and ODBC. Another notable point of PostgreSQL is that it, along with MySQL, is one of the two most widely used open-source relational database systems. PostgreSQL is released under the BSD license, which grants permission to anyone for the use, modification, and distribution of the PostgreSQL code and documentation for any purpose without fee.
 
-# 27.1 Introduction
+## Introduction
 
 In the course of two decades, PostgreSQL has undergone several major releases. The first prototype system, under the name POSTGRES, was demonstrated at the 1988 ACM SIGMOD conference. The first version, distributed to users in 1989, pro- vided features such as extensible data types, a preliminary rule system, and a query language named POSTQUEL. After the subsequent versions added a new rule system, support for multiple storage managers, and an improved query ex- ecutor, the system developers focused on portability and performance until 1994, when an SQL language interpreter was added. Under a new name, Postgres95, the system was released to the Web and later commercialized by Illustra Information Technologies (later merged into Informix, which is now owned by IBM). By 1996, the name Postgres95 was replaced by PostgreSQL, to reflect the relationship between the original POSTGRES and the more recent versions with SQL capability.
 
@@ -30,11 +30,11 @@ PostgreSQL runs under virtually all Unix-like operating systems, including Linux
 
 Today, PostgreSQL is used to implement several different research and produc- tion applications (such as the PostGIS system for geographic information) and an educational tool at several universities. The system continues to evolve through the contributions of a community of about 1000 developers. In this chapter, we explain how PostgreSQL works, starting from user interfaces and languages and continuing into the heart of the system (the data structures and the concurrency- control mechanism).
 
-# 27.2 User Interfaces
+## User Interfaces
 
 The standard distribution of PostgreSQL comes with command-line tools for administering the database. However, there is a wide range of commercial and open-source graphical administration and design tools that support PostgreSQL. Software developers may also access PostgreSQL through a comprehensive set of programming interfaces.
 
-## 27.2.1 Interactive Terminal Interfaces
+### Interactive Terminal Interfaces
 
 Like most database systems, PostgreSQL offers command-line tools for database administration. The main interactive terminal client is psql, which is modeled after the Unix shell and allows execution of SQL commands on the server, as well as several other operations (such as client-side copying). Some of its features are:
 
@@ -46,7 +46,7 @@ Like most database systems, PostgreSQL offers command-line tools for database ad
 
 PostgreSQL may also be accessed from a Tcl/Tk shell, which provides a flexible scripting language commonly used for rapid prototyping. This functionality is enabled in Tcl/Tk by loading the pgtcl library, which is distributed as an optional extension to PostgreSQL.
 
-## 27.2.2 Graphical Interfaces
+### Graphical Interfaces
 
 The standard distribution of PostgreSQL does not contain any graphical tools. However, several graphical user interface tools exist, and users can choose among  
 
@@ -58,7 +58,7 @@ commercial and open-source alternatives. Many of these go through rapid release 
 
 There are graphical tools for administration, including pgAccess and pgAd- min, the latter of which is shown in Figure 27.1. Tools for database design include TORA and Data Architect, the latter of which is shown in Figure 27.2. PostgreSQL works with several commercial forms-design and report-generation tools. Open- source alternatives include Rekall (shown in Figures 27.3 and 27.4), GNU Report Generator, and a more comprehensive tool suite, GNU Enterprise.
 
-### 27.2.3 Programming Language Interfaces
+### Programming Language Interfaces
 
 PostgreSQL provides native interfaces for ODBC and JDBC, as well as bindings for most programming languages, including C, C++, PHP, Perl, Tcl/Tk, ECPG, Python, and Ruby.
 
@@ -70,11 +70,11 @@ The libpq library provides the C API for PostgreSQL; libpq is also the un- derly
 
 setting environment variables, placing settings in a local file, or creating entries on an LDAP server.
 
-# 27.3 SQL Variations and Extensions
+## SQL Variations and Extensions
 
 The current version of PostgreSQL supports almost all entry-level SQL-92 features, as well as many of the intermediate- and full-level features. It also supports many SQL:1999 and SQL:2003 features, including most object-relational features described in Chapter 22 and the SQL/XML features for parsed XML data described in Chapter 23. In fact, some features of the current SQL standard (such as arrays, functions, and inheritance) were pioneered by PostgreSQL or its ancestors. It lacks OLAP features (most notably, **cube** and **rollup**), but data from PostgreSQL can be easily loaded into open-source external OLAP servers (such as Mondrian) as well as commercial products.
 
-## 27.3.1 PostgreSQL Types
+### PostgreSQL Types
 
 PostgreSQL has support for several nonstandard types, useful for specific appli- cation domains. Furthermore, users can define new types with the **create type**  
 
@@ -118,7 +118,7 @@ PostgreSQL offers data types to store network addresses. These data types allow 
 
 The PostgreSQL _bit_ type can store both fixed- and variable-length strings of 1s and 0s. PostgreSQL supports bit-logical operators and string-manipulation functions for these values.  
 
-## 27.3.2 Rules and Other Active-Database Features
+### Rules and Other Active-Database Features
 
 PostgreSQL supports SQL constraints and triggers (and stored procedures; see Section 27.3.3). Furthermore, it features query-rewriting rules that can be declared on the server.
 
@@ -176,7 +176,7 @@ An important difference between triggers and views is that a trigger is exe- cut
 
 The implementation of triggers and constraints in PostgreSQL is outlined briefly in Section 27.6.4.  
 
-## 27.3.3 Extensibility
+### Extensibility
 
 Like most relational database systems, PostgreSQL stores information about data- bases, tables, columns, and so forth, in what are commonly known as **system catalogs**, which appear to the user as normal tables. Other relational database systems are typically extended by changing hard-coded procedures in the source code or by loading special extension modules written by the vendor.
 
@@ -303,11 +303,11 @@ The server programming interface (SPI) is an application programmer interface th
 
 **27.4 Transaction Management in PostgreSQL 1137**
 
-# 27.4 Transaction Management in PostgreSQL
+## Transaction Management in PostgreSQL
 
 Transaction management in PostgreSQL uses both both snapshot isolation and two-phase locking. Which one of the two protocols is used depends on the type of statement being executed. For DML statements1 the snapshot isolation technique presented in Section 15.7 is used; the snapshot isolation scheme is referred to as the multiversion concurrency control (MVCC) scheme in PostgreSQL. Concurrency control for DDL statements, on the other hand, is based on standard two-phase locking.
 
-## 27.4.1 PostgreSQL Concurrency Control
+### PostgreSQL Concurrency Control
 
 Since the concurrency control protocol used by PostgreSQL depends on the _isola- tion level_ requested by the application, we begin with an overview of the isolation levels offered by PostgreSQL. We then describe the key ideas behind the MVCC scheme, followed by a discussion of their implementation in PostgreSQL and some of the implications of MVCC. We conclude this section with an overview of locking for DDL statements and a discussion of concurrency control for indices.
 
@@ -475,7 +475,7 @@ Deadlock detection in PostgreSQL is based on time-outs. By default, deadlock det
 
 All current types of indices in PostgreSQL allow for concurrent access by multi- ple transactions. This is typically enabled by page-level locks, so that different transactions may access the index in parallel if they do not request conflicting locks on a page. These locks are usually held for a short time to avoid deadlock, with the exception of hash indices, which lock pages for longer periods and may participate in deadlock.
 
-## 27.4.2 Recovery
+### Recovery
 
 Historically, PostgreSQL did not use write-ahead logging (WAL) for recovery, and therefore was not able to guarantee consistency in the case of crash. A crash could  
 
@@ -487,7 +487,7 @@ First, under PostgreSQL, recovery doesn’t have to undo the effects of aborted 
 
 Second, recovery is simplified by the fact that PostgreSQL MVCC already keeps track of some of the information required by WAL logging. More precisely, there is no need for logging the start, commit, and abort of transactions, since MVCC logs the status of every transaction in the pg clog.
 
-# 27.5 Storage and Indexing
+## Storage and Indexing
 
 PostgreSQL’s approach to data layout and storage is aimed at the goals of (1) a simple and clean implementation and (2) ease of administration. As a step toward these goals, PostgreSQL relies on “cooked” file systems, instead of handling the physical layout of data on raw disk partitions by itself. PostgreSQL maintains a list of directories in the file hierarchy to use for storage, which are conventionally referred to as **tablespaces**. Each PostgreSQL installation is initialized with a default tablespace, and additional tablespaces may be added at any time. When creating a table, index, or entire database, the user may specify any existing tablespace in which to store the related files. It is particularly useful to create multiple tablespaces if they reside on different physical devices, so that the faster devices may be dedicated to data that are in higher demand. Moreover, data that are stored on separate disks may be accessed in parallel more efficiently.
 
@@ -502,7 +502,7 @@ the ability of PostgreSQL to store large tuples efficiently, while large blocks 
 
 On the other hand, modern enterprises increasingly use external storage sys- tems, such as network-attached storage and storage-area networks, instead of disks attached to servers. The philosophy here is that storage is a service that is easily administered and tuned for performance separately. One approach used by these systems is RAID, which offers both parallelism and redundant storage as explained in Section 10.3. PostgreSQL may directly leverage these technologies be- cause of its reliance on cooked file systems. Thus, the feeling of many PostgreSQL developers is that, for a vast majority of applications, and indeed PostgreSQL’s audience, the performance limitations are minimal and justified by the ease of administration and management, as well as simplicity of implementation.
 
-## 27.5.1 Tables
+### Tables
 
 The primary unit of storage in PostgreSQL is a table. In PostgreSQL, tables are stored in _heap files._ These files use a form of the standard _slotted-page_ format described in Section 10.5. The PostgreSQL format is shown in Figure 27.9. In each page, a header is followed by an array of “line pointers.” A line pointer holds the offset (relative to the start of the page) and length of a specific tuple in the page. The actual tuples are stored in reverse order of line pointers from the end of the page.
 
@@ -516,7 +516,7 @@ page. The indirection of accessing tuples through the line pointer array permits
 
 The length of a tuple is normally limited by the length of a data page. This makes it difficult to store very long tuples. When PostgreSQL encounters such a large tuple, it tries to “_toast_” individual large attributes. In some cases, toasting an attribute may be accomplished by compressing the value. If this does not shrink the tuple enough to fit in the page (often the case), the data in the toasted attribute is replaced with a reference to a copy that is stored outside the page.
 
-## 27.5.2 Indices
+### Indices
 
 A PostgreSQL index is a data structure that provides a dynamic mapping from search predicates to sequences of tuple IDs from a particular table. The returned tuples are intended to match the search predicate, although in some cases the predicate must be rechecked in the heap file. PostgreSQL supports several different index types, including those that are based on user-extensible access methods. Although an access method may use a different page format, all the indices available in PostgreSQL use the same slotted-page format described above in Section 27.5.1.
 
@@ -570,11 +570,11 @@ The lock acquired by the **create index** command may present a major in- conven
 
 scan will be added to the index by the updating transaction. Hence, the index is ready to use after the second table scan. Since this two-pass approach can be expensive, the plain **create index** command is preferred if it is easy to suspend table updates temporarily.
 
-# 27.6 Query Processing and Optimization
+## Query Processing and Optimization
 
 When PostgreSQL receives a query, it is first parsed into an internal representation, which goes through a series of transformations, resulting in a query plan that is used by the **executor** to process the query.
 
-## 27.6.1 Query Rewrite
+### Query Rewrite
 
 The first stage of a query’s transformation is **rewrite** and it is this stage that is responsible for the PostgreSQL **rules** system. As explained in Section 27.3, in PostgreSQL, users can create **rules** that are fired on different events such as **update**, **delete**, **insert**, and **select** statements. A view is implemented by the system by converting a view definition into a **select** rule. When a query involving a **select** statement on the view is received, the **select** rule for the view is fired, and the query is rewritten using the definition of the view.
 
@@ -584,7 +584,7 @@ The rewrite phase first deals with all **update**, **delete**, and **insert** st
 
 There exist no default rules in PostgreSQL—only those defined explicitly by users and implicitly by the definition of views.
 
-## 27.6.2 Query Planning and Optimization
+### Query Planning and Optimization
 
 Once the query has been rewritten, it is subject to the planning and optimization phase. Here, each query block is treated in isolation and a plan is generated for it. This planning begins bottom-up from the rewritten query’s innermost subquery, proceeding to its outermost query block.
 
@@ -604,7 +604,7 @@ The query-optimization phase results in a query plan that is a tree of relationa
 
 Crucial to the cost model is an accurate estimate of the total number of tuples that will be processed at each operator in the plan. This is inferred by the optimizer on the basis of statistics that are maintained on each relation in the system. These indicate the total number of tuples for each relation and specific information on each column of a relation, such as the column cardinality, a list of most common values in the table and the number of occurrences, and a histogram that divides the column’s values into groups of equal population (that is, an equi-depth histogram, described in Section 13.3.1). In addition, PostgreSQL also maintains a statistical correlation between the physical and logical row orderings of a column’s values —this indicates the cost of an index scan to retrieve tuples that pass predicates on the column. The DBA must ensure that these statistics are current by running the **analyze** command periodically.
 
-## 27.6.3 Query Executor
+### Query Executor
 
 The executor module is responsible for processing a query plan produced by the optimizer. The executor follows the **iterator** model with a set of four functions implemented for each operator (open, next, rescan, and close). Iterators are also discussed as part of demand-driven pipelining in Section 12.7.2.1. PostgreSQL iterators have an extra function, rescan, which is used to reset a subplan (say for an inner loop of a join) with parameters such as index key ranges.  
 
@@ -626,7 +626,7 @@ Some of the important operators of the executor can be categorized as follows:
 
 **4. Aggregation.** Grouped aggregation in PostgreSQL can be either sort-based or hash-based. When the estimated number of distinct groups is very large the former is used and otherwise the hash-based approach is preferred.
 
-## 27.6.4 Triggers and Constraints
+### Triggers and Constraints
 
 In PostgreSQL (unlike some commercial systems) active-database features such as triggers and constraints are not implemented in the rewrite phase. Instead they are implemented as part of the query executor. When the triggers and constraints  
 
@@ -634,7 +634,7 @@ In PostgreSQL (unlike some commercial systems) active-database features such as 
 
 are registered by the user, the details are associated with the catalog informa- tion for each appropriate relation and index. The executor processes an **update**, **delete**, and **insert** statement by repeatedly generating tuple changes for a relation. For each row modification, the executor explicitly identifies, fires, and enforces candidate triggers and constraints, before or after the change as required.
 
-# 27.7 System Architecture
+## System Architecture
 
 The PostgreSQL system architecture follows the process-per-transaction model. A running PostgreSQL site is managed by a central coordinating process, called the **postmaster.** The postmaster process is responsible for initializing and shutting down the server and also for handling connection requests from new clients. The postmaster assigns each new connecting client to a back-end server process that is responsible for executing the queries on behalf of the client and for returning the results to the client. This architecture is depicted in Figure 27.10.
 
@@ -1449,11 +1449,11 @@ DB2 provides support for many logical and physical database features using SQL. 
 
 The DB2 Control Center includes a variety of design- and administration- related tools. For design, the Control Center provides a tree view of a server, its databases, tables, views, and all other objects. It also allows users to define new objects, create ad hoc SQL queries, and view query results. Design tools for ETL, OLAP, replication, and federation also integrate into the Control Center. The entire DB2 family supports the Control Center for database definition as well as related tools. DB2 also provides plug-in modules for application development in the IBM Rational Application Developer product as well as in the Microsoft Visual Studio product.
 
-# 29.3 SQL Variations and Extensions
+## SQL Variations and Extensions
 
 DB2 provides support for a rich set of SQL features for various aspects of database processing. Many of the DB2 features and syntax have provided the basis for standards in SQL-92, or SQL:1999. In this section, we highlight the XML object- relational and application-integration features in DB2 UDB version 8, along with some new features from version 9.
 
-## 29.3.1 XML Features
+### XML Features
 
 A rich set of XML functions have been included in DB2. The following is a list of several important XML functions that can be used in SQL, as part of the SQL/XML extension to SQL (described earlier in Section 23.6.3):
 
@@ -1487,7 +1487,7 @@ The XML functions can be incorporated into SQL effectively to provide ex- tensiv
 
 Version 9 of DB2 supports native storage of XML data as an **xml** type. and native support for the XQuery language. Specialized storage, indexing, query processing and optimization techniques have been introduced for efficient processing of XML data and queries in the XQuery language, and APIs have been extended to deal with XML data and XQuery.
 
-## 29.3.2 Support for Data Types
+### Support for Data Types
 
 DB2 provides support for user-defined data types (UDTs). Users can define _distinct_ or _structured_ data types. Distinct data types are based on DB2 built-in data types.
 ```
@@ -2503,19 +2503,19 @@ The allocation system manages these extents through various bitmaps. These bitma
 
 If there is more than one file in a filegroup, the allocation system allocates extents for any object on that filegroup by using a “proportional fill” algorithm. Each file is filled up in the proportion of the amount of free space in that file compared to other files. This fills all the files in a filegroup at roughly the same rate and allows the system to utilize all the files in the filegroup evenly. Files can also be configured to grow automatically if the filegroup is running out of space. SQL Server allows files to shrink. In order to shrink a data file, SQL Server moves all the data from the physical end of the file to a point closer to the beginning of the file and then actually shrinks the file, releasing space back to the operating system.
 
-## 30.3.3 Tables
+### Tables
 
 SQL Server supports heap and clustered organizations for tables. In a heap- organized table, the location of every row of the table is determined entirely by the system and is not specified in any way by the user. The rows of a heap have a fixed identifier known as the row (RID), and this value never changes un- less the file is shrunk and the row is moved. If the row becomes large enough that it cannot fit in the page in which it was originally inserted, the record is moved to a different place but a forwarding stub is left in the original place so that the record can still be found by using its original RID.
 
 In a clustered-index organization for a table, the rows of the table are stored in a B+-tree sorted by the clustering key of the index. The clustered-index key also serves as the unique identifier for each row. The key for a clustered index can be defined to be nonunique, in which case SQL Server adds an additional hidden column to make the key unique. The clustered index also serves as a search structure to identify a row of the table with a particular key or scan a set of rows of the table with keys within a certain range. A clustered index is the most common type of table organization.
 
-## 30.3.4 Indices
+### Indices
 
 SQL Server also supports secondary (nonclustered) B+-tree indices. Queries that refer only to columns that are available through secondary indices are processed by retrieving pages from the leaf level of the indices without having to retrieve data from the clustered index or heap. Nonclustered indices over a table with a clustered index contain the key columns of the clustered index. Thus, the clustered index rows can move to a different page (via splits, defragmentation, or even index rebuilds) without requiring changes to the nonclustered indices.
 
 SQL Server supports the addition of computed columns to a table. A computed column is a column whose value is an expression, usually based on the value of other columns in that row. SQL Server allows the user to build secondary indices on computed columns.
 
-## 30.3.5 Partitions
+### Partitions
 
 SQL Server supports range partitioning on tables and nonclustered indices. A partitioned index is made up of multiple B+-trees, one per partition. A partitioned table without an index (a heap) is made up of multiple heaps, one per partition. For brevity, we refer only to partitioned indices (clustered or nonclustered) and ignore heaps for the rest of this discussion.
 
@@ -2527,21 +2527,21 @@ The partitioning for an index is specified by providing both a partitioning func
 
 Building new indices and rebuilding existing indices on a table can be performed online, i.e., while **select**, **insert**, **delete**, and **update** operations are being per- formed on the table. The creation of a new index happens in three phases. The first phase is simply creating an empty B+-tree for the new index with the catalog showing the new index is available for maintenance operations. That is, the new index must be maintained by all subsequent **insert**, **delete**, and **update** opera- tions, but it is not available for queries. The second phase consists of scanning the table to retrieve the index columns for each row, sorting the rows and inserting them into the new B+-tree. These inserts must be careful to interact with the other rows in the new B+-tree placed there by index maintenance operations from up- dates on the base table. The scan is a snapshot scan that, without locking, ensures the scan sees the entire table with only the results of committed transactions as of the start of the scan. This is achieved by using the snapshot isolation technique described in Section 30.5.1. The final phase of the index build involves updating the catalog to indicate the index build is complete and the index is available for queries.
 
-## 30.3.7 Scans and Read-ahead
+### Scans and Read-ahead
 
 Execution of queries in SQL Server can involve a variety of different scan modes on the underlying tables and indices. These include ordered versus unordered scans,serial versus parallel scans, unidirectional versus bidirectional scans, forward versus backward scans, and entire table or index scans versus range or filtered scans.
 
 Each of the scan modes has a read-ahead mechanism that tries to keep the scan ahead of the needs of the query execution, in order to reduce seek and latency overheads and utilize disk idle time. The SQL Server read-ahead algorithm uses the knowledge from the query-execution plan in order to drive the read-ahead and make sure that only data that are actually needed by the query are read. Also, the amount of read-ahead is automatically scaled according to the size of the buffer pool, the amount of I/O the disk subsystem can sustain, and the rate at which the data are being consumed by query execution.
 
-## 30.3.8 Compression
+### Compression
 
 SQL Server supports both _row_ and _page_ compression for tables and indices. Row compression uses a variable-length format for data types such as integers that are traditionally considered fixed-length. Page compression removes common prefixes on columns and builds a per-page dictionary for common values.
 
-# 30.4 Query Processing and Optimization
+## Query Processing and Optimization
 
 The query processor of SQL Server is based on an extensible framework that allows rapid incorporation of new execution and optimization techniques. Any SQL query can be expressed as a tree of operators in an extended relational algebra. Abstracting operators of this algebra into **iterators**, query execution encapsulates data-processing algorithms as logical units that communicate with each other by using a GetNextRow() interface. Starting out with an initial query tree, the query optimizer generates alternatives by using tree transformations and estimates their execution cost by taking into account iterator behavior and statistical models to estimate the number of rows to process.
 
-## 30.4.1 Overview of Compilation Process
+### Overview of Compilation Process
 
 Complex queries present significant optimization opportunities that require re- ordering operators across query block boundaries and selecting plans solely on the basis of estimated costs. To go after these opportunities, the query optimizer deviates from traditional query-optimization approaches used in other commer- cial systems in favor of a more general, purely algebraic framework that is based on the Cascades optimizer prototype. Query optimization is part of the query- compilation process, which consists of four steps:
 

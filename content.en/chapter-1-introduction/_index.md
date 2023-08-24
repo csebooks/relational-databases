@@ -1,6 +1,6 @@
 ---
 title: 'Introduction'
-weight: 5
+weight: 1
 ---
 
 # Introduction
@@ -11,7 +11,7 @@ Database systems are designed to manage large bodies of information. Man- agemen
 
 Because information is so important in most organizations, computer scien- tists have developed a large body of concepts and techniques for managing data. These concepts and techniques form the focus of this book. This chapter briefly introduces the principles of database systems.
 
-## 1.1 Database-System Applications
+## Database-System Applications
 
 Databases are widely used. Here are some representative applications:
 
@@ -35,11 +35,11 @@ Databases are widely used. Here are some representative applications:
 
     - Finance: For storing information about holdings, sales, and purchases of financial instruments such as stocks and bonds; also for storing real-time market data to enable online trading by customers and automated trading by the firm.
 
-- Universities: For student information, course registrations, and grades (in addition to standard enterprise information such as human resources and accounting).
+- **Universities**: For student information, course registrations, and grades (in addition to standard enterprise information such as human resources and accounting).
 
-- Airlines: For reservations and schedule information. Airlines were among the first to use databases in a geographically distributed manner.
+- **Airlines**: For reservations and schedule information. Airlines were among the first to use databases in a geographically distributed manner.
 
-- Telecommunication: For keeping records of calls made, generating monthly bills, maintaining balances on prepaid calling cards, and storing information about the communication networks.
+- **Telecommunication**: For keeping records of calls made, generating monthly bills, maintaining balances on prepaid calling cards, and storing information about the communication networks.
 
 As the list illustrates, databases form an essential part of every enterprise today, storing not only types of information that are common to most enterprises, but also information that is specific to the category of the enterprise.
 
@@ -89,11 +89,11 @@ As another example, suppose a registration program maintains a count of students
 
 These difficulties, among others, prompted the development of database sys- tems. In what follows, we shall see the concepts and algorithms that enable database systems to solve the problems with file-processing systems. In most of this book, we use a university organization as a running example of a typical data-processing application.
 
-# 1.3 View of Data
+## View of Data
 
 A database system is a collection of interrelated data and a set of programs that allow users to access and modify these data. A major purpose of a database system is to provide users with an abstract view of the data. That is, the system hides certain details of how the data are stored and maintained.
 
-## 1.3.1 Data Abstraction
+### Data Abstraction
 
 For the system to be usable, it must retrieve data efficiently. The need for efficiency has led designers to use complex data structures to represent data in the database. Since many database-system users are not computer trained, developers hide the complexity from users through several levels of abstraction, to simplify users’ interactions with the system:
 
@@ -107,7 +107,6 @@ Figure 1.1 shows the relationship among the three levels of abstraction. An anal
 
 clarify the distinction among levels of abstraction. Many high-level programming  
 
-## View of Data 7
 
 view 1 view 2
 

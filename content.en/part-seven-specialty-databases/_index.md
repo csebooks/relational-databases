@@ -24,7 +24,7 @@ A
 
 Traditional database applications consist of data-processing tasks, such as bank- ing and payroll management, with relatively simple data types that are well suited to the relational data model. As database systems were applied to a wider range of applications, such as computer-aided design and geographical informa- tion systems, limitations imposed by the relational model emerged as an obstacle. The solution was the introduction of object-based databases, which allow one to deal with complex data types.
 
-## 22.1 Overview
+## Overview
 
 The first obstacle faced by programmers using the relational data model was the limited type system supported by the relational model. Complex applica- tion domains require correspondingly complex data types, such as nested record structures, multivalued attributes, and inheritance, which are supported by tradi- tional programming languages. Such features are in fact supported in the E-R and extended E-R notations, but had to be translated to simpler SQL data types. The **object-relational data model** extends the relational data model by providing a richer type system including complex data types and object orientation. Relational query languages, in particular SQL, need to be correspondingly extended to deal with the richer type system. Such extensions attempt to preserve the relational foundations—in particular, the declarative access to data—while extending the modeling power. **Object-relational database systems**, that is, database systems based on the object-relation model, provide a convenient migration path for users of relational databases who wish to use object-oriented features.
 
@@ -48,7 +48,7 @@ We provide a brief introduction to both these approaches. Finally, we outline si
 
 ter than the object-oriented approach, and vice versa, and mention criteria for choosing between them.
 
-## 22.2 Complex Data Types
+## Complex Data Types
 
 Traditional database applications have conceptually simple data types. The basic data items are records that are fairly small and whose fields are atomic—that is, they are not further structured, and first normal form holds (see Chapter 8). Further, there are only a few record types.
 
@@ -140,11 +140,11 @@ conceivably store a set of sections with each student, or a set of students with
 
 The ability to use complex data types such as sets and arrays can be useful in many applications but should be used with care.
 
-## 22.3 Structured Types and Inheritance in SQL
+## Structured Types and Inheritance in SQL
 
 Before SQL:1999, the SQL type system consisted of a fairly simple set of predefined types. SQL:1999 added an extensive type system to SQL, allowing structured types and type inheritance.
 
-### 22.3.1 Structured Types
+### Structured Types
 
 Structured types allow composite attributes of E-R designs to be represented directly. For instance, we can define the following structured type to represent a composite attribute name with component attribute firstname and lastname:
 ```sql
@@ -274,7 +274,7 @@ Both Student and Teacher inherit the attributes of Person—namely, name and add
 
 Methods of a structured type are inherited by its subtypes, just as attributes are. However, a subtype can redefine the effect of a method by declaring the method again, using **overriding method** in place of **method** in the method dec- laration.  
 
-### 22.3.3 Structured Types and Inheritance in SQL 953
+### Structured Types and Inheritance in SQL 953
 
 The SQL standard requires an extra field at the end of the type definition, whose value is either **final** or **not final.** The keyword **final** says that subtypes may not be created from the given type, while **not final** says that subtypes may be created.
 
@@ -294,7 +294,7 @@ Teacher **with** (department **as** teacher dept);
 
 In SQL, as in most other languages, a value of a structured type must have ex- actly one most-specific type._ That is, each value must be associated with one specific type, called its **most-specific type**, when it is created. By means of inheritance, it is also associated with each of the supertypes of its most-specific type. For example, suppose that an entity has the type Person, as well as the type Student. Then, the most-specific type of the entity is Student, since Student is a subtype of Person. However, an entity cannot have the type Student as well as the type Teacher unless it has a type, such as TeachingAssistant, that is a subtype of Teacher, as well as of Student (which is not possible in SQL since multiple inheritance is not supported by SQL). 
 
-## 22.4 Table Inheritance
+## Table Inheritance
 
 Subtables in SQL correspond to the E-R notion of specialization/generalization. For instance, suppose we define the people table as follows:
 
@@ -358,7 +358,7 @@ In other words, we can create our own improved implementation of the subtable me
 
 We note that SQL defines a privilege called **under**, which is required in order to create a subtype or subtable under another type or table. The motivation for this privilege is similar to that for the **references** privilege.
 
-## 22.5 Array and Multiset Types in SQL
+## Array and Multiset Types in SQL
 
 SQL supports two collection types: arrays and multisets; array types were added in SQL:1999, while multiset types were added in SQL:2003. Recall that a multiset is an unordered collection, where an element may occur multiple times. Multisets are like sets, except that a set allows each element to occur at most once.
 
@@ -382,7 +382,7 @@ Note that we used an array, instead of a multiset, to store the names of authors
 
 In general, multivalued attributes from an E-R schema can be mapped to multiset-valued attributes in SQL; if ordering is important, SQL arrays can be used instead of multisets.
 
-### 22.5.1 Creating and Accessing Collection Values
+### Creating and Accessing Collection Values
 
 An array of values can be created in SQL:1999 in this way:
 
@@ -409,7 +409,7 @@ new Publisher(’McGraw-Hill’, ’New York’), multiset[’parsing’, ’ana
 ```
 We can access or update elements of an array by specifying the array index, for example author array[1].
 
-### 22.5.2 Querying Collection-Valued Attributes
+### Querying Collection-Valued Attributes
 
 We now consider how to handle collection-valued attributes in queries. An ex- pression evaluating to a collection can appear anywhere that a relation name may appear, such as in a **from** clause, as the following paragraphs illustrate. We use the table books that we defined earlier.
 
@@ -450,7 +450,7 @@ unnest(B.author array) with ordinality as A(author, position);
 ```
 The **with ordinality** clause generates an extra attribute which records the po- sition of the element in the array. A similar query, but without the **with ordinality** clause, can be used to generate the keyword relation.
 
-### 22.5.3 Nesting and Unnesting
+### Nesting and Unnesting
 
 The transformation of a nested relation into a form with fewer (or no) relationvalued attributes is called **unnesting**. The books relation has two attributes, author array and keyword set, that are collections, and two attributes, title and publisher,
 
@@ -499,7 +499,7 @@ The system executes the nested subqueries in the **select** clause for each tupl
 
 SQL:2003 provides a variety of operators on multisets, including a function **set**(M) that returns a duplicate-free version of a multiset M, an **intersection** aggregate operation, which returns the intersection of all the multisets in a group, a **fusion** aggregate operation, which returns the union of all multisets in a group, and a **submultiset** predicate, which checks if a multiset is contained in another multiset.  
 
-## 22.6 Object-Identity and Reference Types in SQL
+## Object-Identity and Reference Types in SQL
 
 The SQL standard does not provide any way to update multiset attributes except by assigning a new value. For example, to delete a value v from a multiset attribute A, we would have to set it to (A **except all multiset**[v]).
 
@@ -573,7 +573,7 @@ We can use the operation **deref** to return the tuple pointed to by a reference
 
 **select deref**(head).name **from** departments;
 
-## 22.7 Implementing O-R Features
+## Implementing O-R Features
 
 Object-relational database systems are basically extensions of existing relational database systems. Changes are clearly required at many levels of the database system. However, to minimize changes to the storage-system code (relation stor- age, indices, etc.), the complex data types supported by object-relational systems can be translated to the simpler type system of relational databases.
 
@@ -595,7 +595,7 @@ Implementations may choose to represent array and multiset types directly, or ma
 
 The ODBC and JDBC application program interfaces have been extended to retrieve and store structured types. JDBC provides a method getObject() that is similar to getString() but returns a Java Struct object, from which the components of the structured type can be extracted. It is also possible to associate a Java class with an SQL structured type, and JDBC will then convert between the types. See the ODBC or JDBC reference manuals for details.
 
-## 22.8 Persistent Programming Languages
+## Persistent Programming Languages
 
 Database languages differ from traditional programming languages in that they directly manipulate data that are persistent—that is, data that continue to exist even after the program that created it has terminated. A relation in a database and tuples in a relation are examples of persistent data. In contrast, the only persistent data that traditional programming languages directly manipulate are files.
 
@@ -625,7 +625,7 @@ In this section, we describe a number of conceptual issues that must be ad- dres
 
 address language-independent issues, and in subsequent sections we discuss is- sues that are specific to the C++ language and to the Java language. However, we do not cover details of language extensions; although several standards have been proposed, none has met universal acceptance. See the references in the bib- liographical notes to learn more about specific language extensions and further details of implementations.
 
-### 22.8.1 Persistence of Objects
+### Persistence of Objects
 
 Object-oriented programming languages already have a concept of objects, a type system to define object types, and constructs to create objects. However, these objects are transient—they vanish when the program terminates, just as variables in a Java or C program vanish when the program terminates. If we wish to turn such a language into a database programming language, the first step is to provide a way to make objects persistent. Several approaches have been proposed.
 
@@ -645,7 +645,7 @@ A benefit of this scheme is that it is easy to make entire data structures persi
 
 ever, the database system has the burden of following chains of references to detect which objects are persistent, and that can be expensive.
 
-### 22.8.2 Object Identity and Pointers
+### Object Identity and Pointers
 
 In an object-oriented programming language that has not been extended to handle persistence, when an object is created, the system returns a transient object identifier. Transient object identifiers are valid only when the program that cre- ated them is executing; after that program terminates, the objects are deleted, and the identifier is meaningless. When a persistent object is created, it is assigned a persistent object identifier.
 
@@ -663,7 +663,7 @@ However, the association of an object with a physical location in storage may ch
 
 In persistent extensions of languages such as C++, object identifiers for per- sistent objects are implemented as “persistent pointers.” A persistent pointer is a type of pointer that, unlike in-memory pointers, remains valid even after the end of a program execution, and across some forms of data reorganization. A programmer may use a persistent pointer in the same ways that she may use an in-memory pointer in a programming language. Conceptually, we may think of a persistent pointer as a pointer to an object in the database.
 
-### 22.8.3 Storage and Access of Persistent Objects
+### Storage and Access of Persistent Objects
 
 What does it mean to store an object in a database? Clearly, the data part of an object has to be stored individually for each object. Logically, the code that  
 
@@ -675,7 +675,7 @@ A third way is to store collections of objects, and to allow programs to iterate
 
 Most object-oriented database systems support all three ways of accessing persistent objects. They give identifiers to all objects. They usually give names only to class extents and other collection objects, and perhaps to other selected objects, but not to most objects. They usually maintain class extents for all classes that can have persistent objects, but, in many of the implementations, the class extents contain only persistent objects of the class.
 
-### 22.8.4 Persistent C++ Systems
+### Persistent C++ Systems
 
 There are several object-oriented databases based on persistent extensions to C++ (see the bibliographical notes). There are differences among them in terms of the system architecture, yet they have many common features in terms of the programming language.
 
@@ -721,7 +721,7 @@ Although object-oriented database systems did not find the commercial suc- cess 
 
 database. A new generation of object-oriented database systems using object- relational databases as a backend may yet emerge.
 
-### 22.8.5 Persistent Java Systems
+### Persistent Java Systems
 
 The Java language has seen an enormous growth in usage in recent years. Demand for support for persistence of data in Java programs has grown correspondingly. Initial attempts at creating a standard for persistence in Java were led by the ODMG consortium; the consortium wound up its efforts later, but transferred its design to the **Java Database Objects** (**JDO**) effort, which is coordinated by Sun Microsystems.
 
@@ -757,7 +757,7 @@ An in-memory index structure mapping persistent pointers to in-memory references
 
 5The technique using hollow objects described above is closely related to the hardware swizzling technique (mentioned earlier in Section 22.8.4). Hardware swizzling is used by some persistent C++ implementations to provide a single pointer type for persistent and in-memory pointers. Hardware swizzling uses virtual-memory protection techniques provided by the operating system to detect accesses to pages, and fetches the pages from the database when required. In contrast, the Java version modifies byte code to check for hollow objects, instead of using memory protection, and fetches objects when required, instead of fetching whole pages from the database.  
 
-## 22.9 Object-Relational Mapping
+## Object-Relational Mapping
 
 So far we have seen two approaches to integrating object-oriented data models and programming languages with database systems. **Object-relational mapping** systems provide a third approach to integration of object-oriented programming languages and databases.
 
@@ -773,7 +773,7 @@ Object-relational mapping systems also provide query languages that allow progra
 
 On the negative side, object-relational mapping systems can suffer from sig- nificant overheads for bulk database updates, and may provide only limited querying capabilities. However, it is possible to directly update the database, bypassing the object-relational mapping system, and to write complex queries directly in SQL. The benefits or object-relational models exceed the drawbacks for many applications, and object-relational mapping systems have seen widespread adoption in recent years.
 
-## 22.10 Object-Oriented versus Object-Relational
+## Object-Oriented versus Object-Relational
 
 We have now studied object-relational databases, which are object-oriented data- bases built on top of the relation model, as well as object-oriented databases, which are built around persistent programming languages, and object-relational  
 
@@ -801,7 +801,7 @@ These descriptions hold in general, but keep in mind that some database systems 
 
 
 
-## 22.11 Summary
+## Summary
 
 - The object-relational data model extends the relational data model by pro- viding a richer type system including collection types and object orientation.
 
@@ -969,7 +969,7 @@ A number of object-oriented database systems were developed in the late 1980s an
 
 The **Extensible Markup Language** (**XML**) was not designed for database appli- cations. In fact, like the Hyper-Text Markup Language (HTML) on which the World Wide Web is based, XML has its roots in document management, and is derived from a language for structuring large documents known as the Standard General- ized Markup Language (SGML). However, unlike SGML and HTML, XML is designed to represent data. It is particularly useful as a data format when an applica- tion must communicate with another application, or integrate information from several other applications. When XML is used in these contexts, many database issues arise, including how to organize, manipulate, and query the XML data. In this chapter, we introduce XML and discuss both the management of XML data with database techniques and the exchange of data formatted as XML documents.
 
-## 23.1 Motivation
+## Motivation
 
 To understand XML, it is important to understand its roots as a document markup language. The term **markup** refers to anything in a document that is not intended to be part of the printed output. For example, a writer creating text that will eventually be typeset in a magazine may want to make notes about how the typesetting should be done. It would be important to type these notes in a way so that they could be distinguished from the actual content, so that a note like “set this word in large size, bold font” or “insert a line break here” does not end up printed in the magazine. Such notes convey extra information about the text. In electronic document processing, a **markup language** is a formal description of what part of the document is content, what part is markup, and what the markup means.
 
@@ -1157,7 +1157,7 @@ We describe several applications for XML data later, in Section 23.7. Just as SQ
 
 
 
-## 23.2 Structure of XML Data
+## Structure of XML Data
 
 The fundamental construct in an XML document is the **element**. An element is simply a pair of matching start- and end-tags and all the text that appears between them.
 
@@ -1374,13 +1374,13 @@ _. . ._
 
 Because it is enclosed within CDATA, the text <course> is treated as normal text data, not as a tag. The term CDATA stands for character data.
 
-## 23.3 XML Document Schema
+## XML Document Schema
 
 Databases have schemas, which are used to constrain what information can be stored in the database and to constrain the data types of the stored information. In contrast, by default, XML documents can be created without any associated schema: an element may then have any subelement or attribute. While such freedom may occasionally be acceptable given the self-describing nature of the data format, it is not generally useful when XML documents must be processed automatically as part of an application, or even when large amounts of related data are to be formatted in XML.
 
 Here, we describe the first schema-definition language included as part of the XML standard, the Document Type Definition,_ as well as its more recently defined replacement, XML Schema. Another XML schema-definition language called Relax NG is also in use, but we do not cover it here; for more information on Relax NG see the references in the bibliographical notes section.
 
-### 23.3.1 Document Type Definition
+### Document Type Definition
 
 The **document type definition** (**DTD**) is an optional part of an XML document. The main purpose of a DTD is much like that of a schema: to constrain and type the information present in the document. However, the DTD does not in fact constrain types in the sense of basic types like integer or string. Instead, it constrains only the appearance of subelements and attributes within an element. The DTD is primarily a list of rules for what pattern of subelements may appear within an element. Figure 23.9 shows a part of an example DTD for a university information document; the XML document in Figure 23.1 conforms to this DTD.
 
@@ -1491,7 +1491,7 @@ Document type definitions are strongly connected to the document formatting heri
 
 - There is a lack of typing in IDs and IDREFSs. Thus, there is no way to specify the type of element to which an IDREF or IDREFS attribute should refer. As a result, the DTD in Figure 23.10 does not prevent the “dept name” attribute of a course element from referring to other courses, even though this makes no sense.
 
-### 23.3.2 XML Schema
+### XML Schema
 
 An effort to redress the deficiencies of the DTD mechanism resulted in the devel- opment of a more sophisticated schema language, **XML Schema**. We provide a brief overview of XML Schema, and then we list some areas in which it improves DTDs.
 
@@ -1632,7 +1632,7 @@ In addition to the features we have seen, XML Schema supports several other feat
 
 Our description of XML Schema is just an overview; to learn more about XML Schema, see the references in the bibliographical notes.
 
-## 23.4 Querying and Transformation
+## Querying and Transformation
 
 Given the increasing number of applications that use XML to exchange, mediate, and store data, tools for effective management of XML data are becoming increas- ingly important. In particular, tools for querying and transformation of XML data are essential to extract information from large bodies of XML data, and to convert data between different representations (schemas) in XML. Just as the output of a relational query is a relation, the output of an XML query can be an XML document. As a result, querying and transformation can be combined into a single tool.
 
@@ -1646,7 +1646,7 @@ The XSLT language is another language designed for transforming XML. How- ever, 
 
 The tools section at the end of this chapter provides references to software that can be used to execute queries written in XPath and XQuery.
 
-### 23.4.1 Tree Model of XML
+### Tree Model of XML
 
 A **tree model** of XML data is used in all these languages. An XML document is modeled as a **tree**, with **nodes** corresponding to elements and attributes. Element nodes can have child nodes, which can be subelements or attributes of the element. Correspondingly, each node (whether attribute or element), other than the root element, has a parent node, which is an element. The order of elements and attributes in the XML document is modeled by the ordering of children of nodes of the tree. The terms parent, child, ancestor, descendant, and siblings are used in the tree model of XML data.
 
@@ -1654,7 +1654,7 @@ The text content of an element can be modeled as a text-node child of the elemen
 
 
 
-### 23.4.2 XPath
+### XPath
 
 XPath addresses parts of an XML document by means of path expressions. The language can be viewed as an extension of the simple path expressions in object- oriented and object-relational databases (see Section 22.6). The current version of the XPath standard is XPath 2.0, and our description is based on this version.
 
@@ -1762,7 +1762,7 @@ The function collection(name) is similar to doc, but returns a collection of doc
 
 In most of our examples, we assume that the expressions are evaluated in the context of a database, which implicitly provides a collection of “documents” on which XPath expressions are evaluated. In such cases, we do not need to use the functions doc and collection.
 
-### 23.4.3 XQuery
+### XQuery
 
 The World Wide Web Consortium (W3C) has developed XQuery as the standard query language for XML. Our discussion is based on XQuery 1.0, which was released as a W3C recommendation on 23 January 2007.
 
@@ -1939,7 +1939,7 @@ can be used to ensure that there is at least one instructor in the department. T
 
 The **XQJ** standard provides an API to submit XQuery queries to an XML database system and to retrieve the XML results. Its functionality is similar to the JDBC API.
 
-## 23.5 Application Program Interfaces to XML
+## Application Program Interfaces to XML
 
 With the wide acceptance of XML as a data representation and exchange format, software tools are widely available for manipulation of XML data. There are two standard models for programmatic manipulation of XML, each available for use with a number of popular programming languages. Both these APIs can be used to parse an XML document and create an in-memory representation of the document. They are used for applications that deal with individual XML documents. Note, however, that they are not suitable for querying large collections of XML data; declarative querying mechanisms such as XPath and XQuery are better suited to this task.
 
@@ -1959,7 +1959,7 @@ DOM libraries are available for most common programming languages and are even p
 
 DOM also provides a variety of functions for updating the document by adding and deleting attribute and element children of a node, setting node values, and so on.  
 
-## 23.6 Storage of XML Data 
+## Storage of XML Data 
 
 Many more details are required for writing an actual DOM program; see the bibliographical notes for references to further information.
 
@@ -1975,7 +1975,7 @@ SAX generally requires more programming effort than DOM, but it helps avoid the 
 
 Many applications require storage of XML data. One way to store XML data is to store it as documents in a file system, while a second is to build a special-purpose database to store XML data. Another approach is to convert the XML data to a relational representation and store it in a relational database. Several alternatives for storing XML data are briefly outlined in this section.
 
-### 23.6.1 Nonrelational Data Stores
+### Nonrelational Data Stores
 
 There are several alternatives for storing XML data in nonrelational data-storage systems:
 
@@ -1989,7 +1989,7 @@ in Chapter 1, of using file systems as the basis for database applications. In p
 
 Although several databases designed specifically to store XML data have been built, building a full-featured database system from ground up is a very complex task. Such a database must support not only XML data storage and querying but also other database features such as transactions, security, support for data access from clients, and a variety of administration facilities. It makes sense to instead use an existing database system to provide these facilities and implement XML data storage and querying either on top of the relational abstraction, or as a layer parallel to the relational abstraction. We study these approaches in Section 23.6.2.
 
-### 23.6.2 Relational Databases
+### Relational Databases
 
 Since relational databases are widely used in existing applications, there is a great benefit to be had in storing XML data in relational databases, so that the data can be accessed from existing applications.
 
@@ -2121,7 +2121,7 @@ Several database systems provide native support for XML data. They provide an **
 
 **Figure 23.15** SQL/XML representation of (part of) university information.
 
-### 23.6.3 SQL/XML
+### SQL/XML
 
 While XML is used widely for data interchange, structured data is still widely stored in relational databases. There is often a need to convert relational data to XML representation. The SQL/XML standard, developed to meet this need, defines a standard extension of SQL, allowing the creation of nested XML output. The standard has several parts, including a standard way of mapping SQL types to XML Schema types, and a standard way to map relational schemas to XML schemas, as well as SQL query language extensions.
 
@@ -2149,11 +2149,11 @@ SQL/XML allows the sequence created by **xmlagg** to be ordered, as illustrated 
 
 
 
-## 23.7 XML Applications
+## XML Applications
 
 We now outline several applications of XML for storing and communicating (ex- changing) data and for accessing Web services (information resources).
 
-### 23.7.1 Storing Data with Complex Structure
+### Storing Data with Complex Structure
 
 Many applications need to store data that are structured, but are not easily mod- eled as relations. Consider, for example, user preferences that must be stored by an application such as a browser. There are usually a large number of fields, such as home page, security settings, language settings, and display settings, that must be recorded. Some of the fields are multivalued, for example, a list of trusted sites, or maybe ordered lists, for example, a list of bookmarks. Applications traditionally used some type of textual representation to store such data. Today, a majority of such applications prefer to store such configuration information in XML format. The ad hoc textual representations used earlier require effort to design and effort to create parsers that can read the file and convert the data into a form that a program can use. The XML representation avoids both these steps.
 
@@ -2161,7 +2161,7 @@ XML-based representations are now widely used for storing documents, spre- adshe
 
 XML is also used to represent data with complex structure that must be ex- changed between different parts of an application. For example, a database system may represent a query execution plan (a relational-algebra expression with extra information on how to execute operations) by using XML. This allows one part of the system to generate the query execution plan and another part to display it, without using a shared data structure. For example, the data may be generated at a server system and sent to a client system where the data are displayed.
 
-### 23.7.2 Standardized Data Exchange Formats
+### Standardized Data Exchange Formats
 
 XML-based standards for representation of data have been developed for a variety of specialized applications, ranging from business applications such as banking and shipping to scientific applications such as chemistry and molecular biology. Some examples:
 
@@ -2177,7 +2177,7 @@ whom and to where they were sent, to whom and to where they are being shipped, t
 
 Using normalized relational schemas to model such complex data require- ments would result in a large number of relations that do not correspond directly to the objects that are being modeled. The relations would often have large num- bers of attributes; explicit representation of attribute/element names along with values in XML helps avoid confusion between attributes. Nested element repre- sentations help reduce the number of relations that must be represented, as well as the number of joins required to get required information, at the possible cost of redundancy. For instance, in our university example, listing departments with course elements nested within department elements, as in Figure 23.5, results in a format that is more natural for some applications—in particular, for humans to read—than is the normalized representation in Figure 23.1.
 
-### 23.7.3 Web Services
+### Web Services
 
 Applications often require data from outside of the organization, or from another department in the same organization that uses a different database. In many such situations, the outside organization or department is not willing to allow direct access to its database using SQL, but is willing to provide limited forms of information through predefined interfaces.
 
@@ -2201,13 +2201,13 @@ To invoke a Web service, a client must prepare an appropriate SOAP XML message a
 
 See the bibliographical notes for references to more information on Web ser- vices.
 
-### 23.7.4 Data Mediation
+### Data Mediation
 
 Comparison shopping is an example of a mediation application, in which data about items, inventory, pricing, and shipping costs are extracted from a variety of Web sites offering a particular item for sale. The resulting aggregated information is significantly more valuable than the individual information offered by a single site.
 
 A personal financial manager is a similar application in the context of bank- ing. Consider a consumer with a variety of accounts to manage, such as bank accounts, credit-card accounts, and retirement accounts. Suppose that these ac- counts may be held at different institutions. Providing centralized management  
 
-## 23.8 Summary 
+## Summary 
 
 for all accounts of a customer is a major challenge. XML-based mediation ad- dresses the problem by extracting an XML representation of account information from the respective Web sites of the financial institutions where the individual holds accounts. This information may be extracted easily if the institution exports it in a standard XML format, for example, as a Web service. For those that do not, wrapper software is used to generate XML data from HTML Web pages returned by the Web site. Wrapper applications need constant maintenance, since they depend on formatting details of Web pages, which change often. Nevertheless, the value provided by mediation often justifies the effort required to develop and maintain wrappers.
 

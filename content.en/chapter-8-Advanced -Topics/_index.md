@@ -3,21 +3,18 @@ title: 'PART EIGHT: ADVANCED TOPICS'
 weight: 13
 ---
 
-  
-
-## PART 8
 
 # ADVANCED TOPICS
- Chapter 24 covers a number of advanced topics in application development, starting with performance tuning to improve application speed. It then discusses standard benchmarks that are used as measures of commercial database-system performance. Issues in application development, such as application testing and application migration are discussed next. The chapter concludes with an overview of the standardization process and existing database-language standards.
+
+Chapter 24 covers a number of advanced topics in application development, starting with performance tuning to improve application speed. It then discusses standard benchmarks that are used as measures of commercial database-system performance. Issues in application development, such as application testing and application migration are discussed next. The chapter concludes with an overview of the standardization process and existing database-language standards.
 
 Chapter 25 describes spatial and temporal data types, and multimedia data, and the issues in storing such data in databases. Database issues related to mobile computing systems are also described in this chapter.
 
 Finally, Chapter 26 describes several advanced transaction-processing tech- niques, including transaction-processing monitors, transactional workflows, and transaction processing issues in electronic commerce. The chapter then discusses main-memory database systems and real-time transaction systems, and concludes with a discussion of long-duration transactions.
 
-# C H A P T E R  24 
 # Advanced Application Development
 
-There are a number of tasks in application development. We saw earlier in Chap- ters 7 to 9 how to design and build an application. One of the aspects of application design is the performance one expects out of the application. In fact, it is common to find that once an application has been built, it runs slower than the designers wanted, or handles fewer transactions per second than they required. An appli- cation that takes an excessive amount of time to perform requested actions can cause user dissatisfaction at best and be completely unusable at worst.
+There are a number of tasks in application development. We saw earlier in Chapters 7 to 9 how to design and build an application. One of the aspects of application design is the performance one expects out of the application. In fact, it is common to find that once an application has been built, it runs slower than the designers wanted, or handles fewer transactions per second than they required. An appli- cation that takes an excessive amount of time to perform requested actions can cause user dissatisfaction at best and be completely unusable at worst.
 
 Applications can be made to run significantly faster by performance tuning, which consists of finding and eliminating bottlenecks and adding appropriate hardware such as memory or disks. There are many things an application devel- oper can do to tune the application, and there are things that a database-system administrator can do to speed up processing for an application.
 
@@ -27,21 +24,21 @@ Applications must be tested as they are being developed. Testing requires genera
 
 Standards are very important for application development, especially in the age of the Internet, since applications need to communicate with each other to perform useful tasks. A variety of standards have been proposed that affect database-application development.
 
-## 24.1 Performance Tuning
+## Performance Tuning
 
 Tuning the performance of a system involves adjusting various parameters and design choices to improve its performance for a specific application. Various aspects of a database-system design—ranging from high-level aspects such as the schema and transaction design to database parameters such as buffer sizes, down to hardware issues such as number of disks—affect the performance of an application. Each of these aspects can be adjusted so that performance is improved.
 
-### 24.1.1 Improving Set Orientation
+### Improving Set Orientation
 
 When SQL queries are executed from an application program, it is often the case that a query is executed frequently, but with different values for a parameter. Each call has an overhead of communication with the server, in addition to processing overheads at the server.
 
 For example, consider a program that steps through each department, in- voking an embedded SQL query to find the total salary of all instructors in the department:
 
-
+```java
 >**select sum**(_salary_) 
 **from** _instructor_ 
 **where** _dept name_\= ?
-
+```
 
 If the _instructor_ relation does not have a clustered index on _dept name_, each such query will result in a scan of the relation. Even if there is such an index, a random I/O operation will be required for each _dept name_ value.
 
@@ -81,7 +78,7 @@ Another aspect of improving set orientation lies in rewriting queries with **nes
 
 We saw techniques for nested subquery decorrelation in Section 13.4.4. If a subquery is not decorrelated, it gets executed repeatedly, potentially resulting in a great deal of random I/O. In contrast, decorrelation allows efficient set-oriented operations such as joins to be used, minimizing random I/O. Most database query optimizers incorporate some forms of decorrelation, but some can handle only very simple nested subqueries. The execution plan chosen by the optimizer can be found as described earlier in Chapter 13. If the optimizer has not succeeded in decorrelating a nested subquery, the query can be decorrelated by rewriting it manually.
 
-### 24.1.2 Tuning of Bulk Loads and Updates
+### Tuning of Bulk Loads and Updates
 
 When loading a large volume of data into a database (called a **bulk load** oper- ation), performance is usually very poor if the inserts are carried out a separate SQL insert statements. One reason is the overhead of parsing each SQL query; a more important reason is that performing integrity constraint checks and index updates separately for each inserted tuple results in a large number of random I/O operations. If the inserts were done as a large batch, integrity-constraint check- ing and index update can be done in a much more set-oriented fashion, reducing overheads greatly; performance improvements of an order-of-magnitude or more are not uncommon.
 To support bulk load operations, most database systems provide a **bulk im- port** utility, and a corresponding **bulk export** utility. The bulk-import utility reads data from a file, and performs integrity constraint checking as well as index maintenance in a very efficient manner. Common input and output file format supported by such bulk import/export utilities include text files with characters such as commas or tabs separating attribute values, with each record in a line of its own (such file formats are referred to as _comma-separated values_ or _tab-separated values_ formats). Database specific binary formats, as well as XML formats are also supported by bulk import/export utilities. The names of the bulk import/export utilities differ by database. In PostgreSQL, the utilities are called pg dump and pg restore (PostgreSQL also provides an SQL command **copy** which provides similar functionality). The bulk import/export utility in Oracle is called **SQL\*Loader**, the utility in DB2 is called load, and the utility in SQL Server is called bcp (SQL Server also provides an SQL command called **bulk insert**).
@@ -107,7 +104,7 @@ Although not very meaningful in this example,1 the **when not matched then** cla
 
 Not all SQL implementations support the **merge** statement currently; see the respective system manuals for further details.
 
-### 24.1.3 Location of Bottlenecks
+### Location of Bottlenecks
 
 The performance of most systems (at least before they are tuned) is usually limited primarily by the performance of one or a few components, called **bottlenecks**. For instance, a program may spend 80 percent of its time in a small loop deep in the code, and the remaining 20 percent of the time on the rest of the code; the small loop then is a bottleneck. Improving the performance of a component that is not a bottleneck does little to improve the overall speed of the system; in the example, improving the speed of the rest of the code cannot lead to more than a
 
@@ -123,7 +120,7 @@ As a result of the numerous queues in the database, bottlenecks in a database sy
 
 If a resource, such as a disk, has a low utilization, then, when a request is made, the resource is likely to be idle, in which case the waiting time for the request will be 0. Assuming uniformly randomly distributed arrivals, the length of the queue (and correspondingly the waiting time) go up exponentially with utilization; as utilization approaches 100 percent, the queue length increases sharply, resulting in excessively long waiting times. The utilization of a resource should be kept low enough that queue length is short. As a rule of the thumb, utilizations of around 70 percent are considered to be good, and utilizations above 90 percent are considered excessive, since they will result in significant delays. To learn more about the theory of queueing systems, generally referred to as **queueing theory**, you can consult the references cited in the bibliographical notes.
 
-### 24.1.4 Tunable Parameters
+### Tunable Parameters
 
 Database administrators can tune a database system at three levels. The lowest level is at the hardware level. Options for tuning systems at this level include adding disks or using a RAID system if disk I/O is a bottleneck, adding more memory if the disk buffer size is a bottleneck, or moving to a faster processor if CPU use is a bottleneck.
 
@@ -133,7 +130,7 @@ The third level is the highest level. It includes the schema and transactions. T
 
 The three levels of tuning interact with one another; we must consider them together when tuning a system. For example, tuning at a higher level may result in the hardware bottleneck changing from the disk system to the CPU, or vice versa.
 
-### 24.1.5 Tuning of Hardware
+### Tuning of Hardware
 
 Even in a well-designed transaction processing system, each transaction usually has to do at least a few I/O operations, if the data required by the transaction are on disk. An important factor in tuning a transaction processing system is to make sure that the disk subsystem can handle the rate at which I/O operations are required. For instance, consider a disk that supports an access time of about 10 milliseconds, and average transfer rate of 25 to 100 megabytes per second (a fairly typical disk today). Such a disk would support a little under 100 random-access I/O operations of 4 kilobytes each per second. If each transaction requires just 2 I/O operations, a single disk would support at most 50 transactions per second. The only way to support more transactions per second is to increase the number of disks. If the system needs to support n transactions per second, each performing 2 I/O operations, data must be striped (or otherwise partitioned) across at least n/50 disks (ignoring skew).
 
@@ -173,7 +170,7 @@ The “5-minute” rule has been extended to the case where data can be stored o
 Another aspect of tuning is whether to use RAID 1 or RAID 5. The answer depends on how frequently the data are updated, since RAID 5 is much slower than RAID 1 on random writes: RAID 5 requires 2 reads and 2 writes to execute a single random write request. If an application performs _r_ random reads and _w_ random writes per second to support a particular throughput rate, a RAID 5 implementation would require _r_ \+ 4_w_ I/O operations per second whereas a RAID 1 implementation would require _r_ \+ 2_w_ I/O operations per second. We can then calculate the number of disks required to support the required I/O operations per  
 second by dividing the result of the calculation by 100 I/O operations per second (for current-generation disks). For many applications, _r_ and _w_ are large enough that the (_r_ \+ _w_)_100 disks can easily hold two copies of all the data. For such applications, if RAID 1 is used, the required number of disks is actually less than the required number of disks if RAID 5 is used! Thus RAID 5 is useful only when the data storage requirements are very large, but the update rates, and particularly random update rates, are small, that is, for very large and very “cold” data.
 
-### 24.1.6 Tuning of the Schema
+### Tuning of the Schema
 
 Within the constraints of the chosen normal form, it is possible to partition rela- tions vertically. For example, consider the _course_ relation, with the schema:
 
@@ -204,7 +201,7 @@ Materialized views can provide the benefits that denormalized relations pro- vid
 
 Another approach to speed up the computation of the join without material- izing it, is to cluster records that would match in the join on the same disk page. We saw such clustered file organizations in Section 10.6.2.
 
-### 24.1.7 Tuning of Indices
+### Tuning of Indices
 
 We can tune the indices in a database system to improve performance. If queries are the bottleneck, we can often speed them up by creating appropriate indices on relations. If updates are the bottleneck, there may be too many indices, which have to be updated when the relations are updated. Removing indices may speed up certain updates.
 
@@ -212,7 +209,7 @@ The choice of the type of index also is important. Some database systems support
 
 To help identify what indices to create, and which index (if any) on each relation should be clustered, most commercial database systems provide _tuning wizards_; these are described in more detail in Section 24.1.9. These tools use the past history of queries and updates (called the _workload_) to estimate the effects of various indices on the execution time of the queries and updates in the workload. Recommendations on what indices to create are based on these estimates.
 
-### 24.1.8 Using Materialized Views
+### Using Materialized Views
 
 Maintaining materialized views can greatly speed up certain types of queries, in particular aggregate queries. Recall the example from Section 13.5 where the total salary for each department (obtained by summing the salary of each instructor in the department) is required frequently. As we saw in that section, creating a materialized view storing the total salary for each department can greatly speed up such queries.
 
@@ -224,7 +221,7 @@ However, manual choice is tedious for even moderately large sets of query types,
 
 A better alternative is to provide support for selecting materialized views within the database system itself, integrated with the query optimizer. This ap- proach is described in more detail in Section 24.1.9.
 
-### 24.1.9 Automated Tuning of Physical Design
+### Automated Tuning of Physical Design
 
 Most commercial database systems today provide tools to help the database administrator with index and materialized view selection, and other tasks related to physical database design such as how to partition data in a parallel database system.
 
@@ -242,7 +239,7 @@ Greedy heuristics for index and materialized view selection operate as fol- lows
 
 Real-world index and materialized-view selection tools usually incorporate some elements of greedy selection, but use other techniques to get better results. They also support other aspects of physical database design, such as deciding how to partition a relation in a parallel database, or what physical storage mechanism to use for a relation.
 
-### 24.1.10 Tuning of Concurrent Transactions
+### Tuning of Concurrent Transactions
 
 Concurrent execution of different types of transactions can sometimes lead to poor performance because of contention on locks. We first consider the case of read-write contention, which is more common, and then consider the case of write-write contention.
 
@@ -282,7 +279,7 @@ Long transactions, whether read-only or update, can also result in the lock tabl
 
 To avoid this problem, some databases provide for automatic **lock escalation**; with this technique, if a transaction has acquired a large number of tuple locks, tuple locks are upgraded to page locks, or even full relation locks. Recall that with multiple-granularity locking (Section 15.3), once a coarser level lock is obtained, there is no need to record finer-level locks, so tuple lock entries can be removed from the lock table, freeing up space. On databases that do not support lock escalation, it is possible for the transaction to explicitly acquire a relation lock, thereby avoiding the acquisition of tuple locks.
 
-### 24.1.11 Performance Simulation
+### Performance Simulation
 
 To test the performance of a database system even before it is installed, we can create a performance-simulation model of the database system. Each service shown in Figure 24.2, such as the CPU, each disk, the buffer, and the concurrency control, is modeled in the simulation. Instead of modeling details of a service, the simulation model may capture only some aspects of each service, such as the **service time**—that is, the time taken to finish processing a request once processing has begun. Thus, the simulation can model a disk access from just the average disk-access time.
 
@@ -290,11 +287,11 @@ Since requests for a service generally have to wait their turn, each service has
 
 Once the simulation model for transaction processing is built, the system administrator can run a number of experiments on it. The administrator can use experiments with simulated transactions arriving at different rates to find how the system would behave under various load conditions. The administrator could run other experiments that vary the service times for each service to find out how sensitive the performance is to each of them. System parameters, too, can be varied, so that performance tuning can be done on the simulation model.
 
-## 24.2 Performance Benchmarks
+## Performance Benchmarks
 
 As database servers become more standardized, the differentiating factor among the products of different vendors is those products’ performance. **Performance benchmarks** are suites of tasks that are used to quantify the performance of software systems.
 
-### 24.2.1 Suites of Tasks
+### Suites of Tasks
 
 Since most software systems, such as databases, are complex, there is a good deal of variation in their implementation by different vendors. As a result, there is a significant amount of variation in their performance on different tasks. One system may be the most efficient on a particular task; another may be the most efficient on a different task. Hence, a single task is usually insufficient to quantify the performance of the system. Instead, the performance of a system is measured by suites of standardized tasks, called _performance benchmarks_.
 
@@ -308,7 +305,7 @@ For our example, the harmonic mean for the throughputs in system A is 1_.98. For
 
 ![Alt text](f6.svg)
 
-### 24.2.2 Database-Application Classes
+### Database-Application Classes
 
 **Online transaction processing** (**OLTP**) and **decision support**, including **online analytical processing** (**OLAP**), are two broad classes of applications handled by database systems. These two classes of tasks have different requirements. High concurrency and clever techniques to speed up commit processing are required for supporting a high rate of update transactions. On the other hand, good query- evaluation algorithms and query optimization are required for decision support. The architecture of some database systems has been tuned to transaction process- ing; that of others, such as the Teradata series of parallel database systems, has been tuned to decision support. Other vendors try to strike a balance between the two tasks.
 
@@ -316,7 +313,7 @@ Applications usually have a mixture of transaction-processing and decision- supp
 
 Suppose that we have throughput numbers for the two classes of applications separately, and the application at hand has a mix of transactions in the two classes. We must be careful even about taking the harmonic mean of the throughput numbers, because of **interference** between the transactions. For example, a long- running decision-support transaction may acquire a number of locks, which may prevent all progress of update transactions. The harmonic mean of throughputs should be used only if the transactions do not interfere with one another.
 
-### 24.2.3 The TPC Benchmarks-
+### The TPC Benchmarks-
 
 The **Transaction Processing Performance Council** (**TPC**) has defined a series of benchmark standards for database systems.
 
@@ -340,11 +337,11 @@ The **composite query per hour metric**, which is the overall metric, is then ob
 
 The **TPC-W Web commerce benchmark** is an end-to-end benchmark that models Web sites having static content (primarily images) and dynamic content generated from a database. Caching of dynamic content is specifically permitted, since it is very useful for speeding up Web sites. The benchmark models an electronic bookstore, and like other TPC benchmarks, provides for different scale factors. The primary performance metrics are **Web interactions per second (WIPS)** and price per WIPS. However, the TPC-W benchmark is no longer in use.
 
-## 24.3 Other Issues in Application Development
+## Other Issues in Application Development
 
 In this section, we discuss two issues in application development: testing of applications, and migration of applications.
 
-### 24.3.1 Testing Applications
+### Testing Applications
 
 Testing of programs involves designing a **test suite**, that is, a collection of test cases. Testing is not a one-time process, since programs evolve continuously, and bugs may appear as an unintended consequence of a change in the program; such a bug is referred to as program **regression**. Thus, after every change to a program, the program must be tested again. It is usually infeasible to have a human perform tests after every change to a program. Instead, expected test outputs are stored with each test case in a test suite. **Regression testing** involves running the program on each test case in a test suite, and checking that the program generates the expected test output. 
 
@@ -360,7 +357,7 @@ Testing can also be used to ensure that an application meets performance require
 
 Even if there is an existing database, organizations usually do not want to reveal sensitive data to an external organization that may be carrying out the performance tests. In such a situation, a copy of the real database may be made, and the values in the copy may be modified in such a way that any sensitive data, such as credit-card numbers, social-security numbers, or dates of birth, are **obfuscated**. Obfuscation is done in most cases by replacing a real value with a randomly generated value (taking care to also update all references to that value, in case the value is a primary key). On the other hand, if the application execution depends on the value, such as the date of birth in an application that performs different actions based on the date of birth, obfuscation may make small random changes in the value instead of replacing it completely.
 
-### 24.3.2 Application Migration
+### Application Migration
 
 **Legacy systems** are older-generation application systems that are in use by an organization, but that the organization wishes to replace with a different applica- tion. For example, many organizations developed applications in house, but may decide to replace them with a commercial product. In some cases, a legacy system may use old technology that is incompatible with current-generation standards and systems. Some legacy systems in operation today are several decades old and are based on technologies such as databases that use the network or hierarchical data models, or use Cobol and file systems without a database. Such systems may still contain valuable data, and may support critical applications.
 
@@ -374,7 +371,7 @@ When a new system has been built and tested, the system must be populated with d
 
 An alternative approach, called the **chicken-little approach**, incrementally replaces the functionality of the legacy system. For example, the new user inter- faces may be used with the old system in the back end, or vice versa. Another option is to use the new system only for some functionality that can be decou- pled from the legacy system. In either case, the legacy and new systems coexist for some time. There is therefore a need for developing and using wrappers on the legacy system to provide required functionality to interoperate with the new system. This approach therefore has a higher development cost associated with it.
 
-## 24.4 Standardization
+## Standardization
 
 **Standards** define the interface of a software system; for example, standards define the syntax and semantics of a programming language, or the functions in an application-program interface, or even a data model (such as the object-oriented database standards). Today, database systems are complex, and are often made up of multiple independently created parts that need to interact. For example, client programs may be created independently of back-end systems, but the two must be able to interact with each other. A company that has multiple heterogeneous database systems may need to exchange data between the databases. Given such a scenario, standards play an important role.
 
@@ -386,7 +383,7 @@ The DBTG CODASYL standard for network databases, formulated by the Data- base Ta
 
 This section gives a very high-level overview of different standards, concen- trating on the goals of the standard. The bibliographical notes at the end of the chapter provide references to detailed descriptions of the standards mentioned in this section.
 
-### 24.4.1 SQL Standards
+### SQL Standards
 
 Since SQL is the most widely used query language, much work has been done on standardizing it. ANSI and ISO, with the various database vendors, have played a leading role in this work. The SQL-86 standard was the initial version. The IBM Systems Application Architecture (SAA) standard for SQL was released in 1987. As people identified the need for more features, updated versions of the formal SQL standard were developed, called SQL-89 and SQL-92.
 
@@ -416,7 +413,7 @@ The missing numbers cover features such as temporal data, distributed trans- act
 
 The latest versions of the SQL standard are SQL:2006, which added several features related to XML, and SQL:2008, which introduces a number of extensions to the SQL language.
 
-### 24.4.2 Database Connectivity Standards
+### Database Connectivity Standards
 
 The **ODBC** standard is a widely used standard for communication between client applications and database systems. ODBC is based on the SQL **Call Level Interface (CLI)** standards developed by the **X/Open** industry consortium and the SQL Access Group, but it has several extensions. The ODBC API defines a CLI, an SQL syntax definition, and rules about permissible sequences of CLI calls. The standard also defines conformance levels for the CLI and the SQL syntax. For example, the core level of the CLI has commands to connect to a database, to prepare and execute SQL statements, to get back results or status values, and to manage transactions. The next level of conformance (level 1) requires support for catalog information retrieval and some other features over and above the core-level CLI; level 2 requires further features, such as ability to send and retrieve arrays of parameter values and to retrieve more detailed catalog information.
 
@@ -430,7 +427,7 @@ However, OLE-DB differs from ODBC in several ways. To support data sources with 
 
 The **Active Data Objects (ADO)** API, also created by Microsoft, provides an easy-to-use interface to the OLE-DB functionality, which can be called from scripting languages, such as VBScript and JScript. The newer **ADO.NET** API is designed for applications written in the .NET languages such as C# and Visual Basic.NET. In addition to providing simplified interfaces, it provides an abstraction called the _DataSet_ that permits disconnected data access.
 
-### 24.4.3 Object Database Standards
+### Object Database Standards
 
 Standards in the area of object-oriented databases have so far been driven pri- marily by OODB vendors. The **Object Database Management Group** (ODMG) was a group formed by OODB vendors to standardize the data model and language interfaces to OODBs. The C++ language interface specified by ODMG was briefly outlined in Chapter 22. ODMG is no longer active. JDO is a standard for adding persistence to Java.
 
@@ -438,7 +435,7 @@ The **Object Management Group** (OMG) is a consortium of companies, formed with 
 
 Microsoft introduced the **Entity data model**, which incorporates ideas from the entity-relationship and object-oriented data models, and an approach to inte- grating querying with the programming language, called **Language Integrated Querying** or **LINQ**. These are likely to become de facto standards.
 
-### 24.4.4 XML-Based Standards
+### XML-Based Standards
 
 A wide variety of standards based on XML (see Chapter 23) have been de- fined for a wide variety of applications. Many of these standards are related to e-commerce. They include standards promulgated by nonprofit consortia and corporate-backed efforts to create de facto standards.
 
@@ -620,7 +617,7 @@ Another major trend has created its own set of issues: the growth of mobile comp
 
 In this chapter, we study several data types and other database issues dealing with these applications.
 
-## 25.1 Motivation
+## Motivation
 
 Before we address each of the topics in detail, we summarize the motivation for, and some important issues in dealing with, each of these types of data.
 
@@ -634,7 +631,7 @@ Spatial-data applications require facilities offered by a database system— in 
 
 - **Mobile databases**. In Section 25.5, we study the database requirements of mo- bile computing systems, such as laptop and netbook computers and high-end cell phones that are connected to base stations via wireless digital commu- nication networks. Such computers may need to be able to operate while disconnected from the network, unlike the distributed database systems dis- cussed in Chapter 19. They also have limited storage capacity, and thus require special techniques for memory management.
 
-## 25.2 Time in Databases
+## Time in Databases
 
 A database models the state of some aspect of the real world outside itself. Typi- cally, databases model only one state—the current state—of the real world, and do not store information about past states, except perhaps as audit trails. When the state of the real world changes, the database gets updated, and information about the old state gets lost. However, in many applications, it is important to store and retrieve information about past states. For example, a patient database must store information about the medical history of a patient. A factory monitor- ing system may store information about current and past readings of sensors in the factory, for analysis. Databases that store information about states of the real world across time are called **temporal databases**.
 
@@ -654,7 +651,7 @@ A **temporal relation** is one where each tuple has an associated time when it i
 
 to be a **bitemporal relation**. Figure 25.1 shows an example of a temporal relation. To simplify the representation, each tuple has only one time interval associated with it; thus, a tuple is represented once for every disjoint time interval in which it is true. Intervals are shown here as a pair of attributes _from_ and _to_; an actual implementation would have a structured type, perhaps called _Interval_, that con- tains both fields. Note that some of the tuples have a “\*” in the _to_ time column; these asterisks indicate that the tuple is true until the value in the _to_ time column is changed; thus, the tuple is true at the current time. Although times are shown in textual form, they are stored internally in a more compact form, such as the number of seconds since some fixed time on a fixed date (such as 12:00 A.M., January 1, 1900) that can be translated back to the normal textual form.
 
-### 25.2.1 Time Specification in SQL
+### Time Specification in SQL
 
 The SQL standard defines the types **date**, **time**, and **timestamp** as we saw in Chapter 4. The type **date** contains four digits for the year (1–9999), two digits for the month (1–12), and two digits for the date (1–31). The type **time** contains two digits for the hour, two digits for the minute, and two digits for the second, plus optional fractional digits. The seconds field can go beyond 60, to allow for leap seconds that are added during some years to correct for small variations in the speed of rotation of Earth. The type **timestamp** contains the fields of **date** and **time**, with six fractional digits for the seconds field.
 
@@ -662,7 +659,7 @@ Since different places in the world have different local times, there is often a
 
 SQL supports a type called **interval**, which allows us to refer to a period of time such as “1 day” or “2 days and 5 hours,” without specifying a particular time when this period starts. This notion differs from the notion of interval we used previously, which refers to an interval of time with specific starting and ending times.^1^
 
-### 25.2.2 Temporal Query Languages
+### Temporal Query Languages
 
 A database relation without temporal information is sometimes called a **snapshot relation**, since it reflects the state in a snapshot of the real world. Thus, a snapshot of a temporal relation at a point in time _t_ is the set of tuples in the relation that are true at time _t_, with the time-interval attributes projected out. The snapshot operation on a temporal relation gives the snapshot of the relation at a specified time (or the current time, if the time is not specified).
 
@@ -674,7 +671,7 @@ Functional dependencies must be used with care in a temporal relation, as we saw
 
 Several proposals have been made for extending SQL to improve its support of temporal data, but at least until SQL:2008, SQL has not provided any special support for temporal data beyond the time-related data types and operations.
 
-## 25.3 Spatial and Geographic Data
+## Spatial and Geographic Data
 
 Spatial data support in databases is important for efficiently storing, indexing, and querying of data on the basis of spatial locations. For example, suppose that we want to store a set of polygons in a database and to query the database to find all polygons that intersect a given polygon. We cannot use standard index structures, such as B-trees or hash indices, to answer such a query efficiently. Efficient processing of the above query would require special-purpose index structures, such as R-trees (which we study later) for the task.
 
@@ -686,7 +683,7 @@ Two types of spatial data are particularly important:
 
 Support for geographic data has been added to many database systems, such as the IBM DB2 Spatial Extender, e Informix Spatial Datablade, and Oracle Spati.
 
-### 25.3.1 Representation of Geometric Information
+### Representation of Geometric Information
 
 Figure 25.2 illustrates how various geometric constructs can be represented in a database, in a normalized fashion. We stress here that geometric information can be represented in several different ways, only some of which we describe.
 
@@ -702,7 +699,7 @@ The representation of points and line segments in three-dimensional space is sim
 
 much when we move to three dimensions. Tetrahedrons and cuboids can be rep- resented in the same way as triangles and rectangles. We can represent arbitrary polyhedra by dividing them into tetrahedrons, just as we triangulate polygons. We can also represent them by listing their faces, each of which is itself a polygon, along with an indication of which side of the face is inside the polyhedron.
 
-### 25.3.2 Design Databases
+### Design Databases
 
 **Computer-aided-design** (**CAD**) systems traditionally stored data in memory dur- ing editing or other processing, and wrote the data back to a file at the end of a session of editing. The drawbacks of such a scheme include the cost (program- ming complexity, as well as time cost) of transforming data from one form to another, and the need to read in an entire file even if only parts of it are required. For large designs, such as the design of a large-scale integrated circuit or the design of an entire airplane, it may be impossible to hold the complete design in memory. Designers of object-oriented databases were motivated in large part by the database requirements of CAD systems. Object-oriented databases represent components of the design as objects, and the connections between the objects indicate how the design is structured.
 
@@ -718,7 +715,7 @@ Spatial-integrity constraints, such as “two pipes should not be in the same lo
 
 errors, thereby keeping the design consistent. Implementing such integrity checks again depends on the availability of efficient multidimensional index structures.
 
-### 25.3.3 Geographic Data
+### Geographic Data
 
 Geographic data are spatial in nature, but differ from design data in certain ways. Maps and satellite images are typical examples of geographic data. Maps may provide not only location information—about boundaries, rivers, and roads, for example—but also much more detailed information associated with locations, such as elevation, soil type, land usage, and annual rainfall.
 
@@ -759,7 +756,7 @@ It is also interesting to note that even information that is actually stored in 
 
 Map services such as Google Maps and Yahoo! Maps provide APIs that allow users to create specialized map displays, containing application specific data overlaid on top of standard map data. For example, a Web site may show a map of an area with information about restaurants overlaid on the map. The overlays can be constructed dynamically, displaying only restaurants with a specific cuisine, for example, or allowing users to change the zoom level, or pan the display. The maps APIs for a specific language (typically JavaScript or Flash) are built on top of a Web service that provides the underlying map data.
 
-### 25.3.4 Spatial Queries
+### Spatial Queries
 
 There are a number of types of queries that involve spatial locations.
 
@@ -777,7 +774,7 @@ In general, queries on spatial data may have a combination of spatial and nonspa
 
 Since spatial data are inherently graphical, we usually query them by using a graphical query language. Results of such queries are also displayed graphically, rather than in tables. The user can invoke various operations on the interface, such as choosing an area to be viewed (for example, by pointing and clicking on suburbs west of Manhattan), zooming in and out, choosing what to display on the basis of selection conditions (for example, houses with more than three bedrooms), overlay of multiple maps (for example, houses with more than three bedrooms overlaid on a map showing areas with low crime rates), and so on. The graphical interface constitutes the front end. Extensions of SQL have been proposed to permit relational databases to store and retrieve spatial information efficiently, and also to allow queries to mix spatial and nonspatial conditions. Extensions include allowing abstract data types, such as lines, polygons, and bit maps, and allowing spatial conditions, such as _contains_ or _overlaps_.
 
-### 25.3.5 Indexing of Spatial Data
+### Indexing of Spatial Data
 
 Indices are required for efficient access to spatial data. Traditional index struc- tures, such as hash indices and B-trees, are not suitable, since they deal only with one-dimensional data, whereas spatial data are typically of two or more dimensions.
 
@@ -837,7 +834,7 @@ See the bibliographical references for more details on insertion and deletion op
 
 The storage efficiency of R-trees is better than that of k-d trees or quadtrees, since an object is stored only once, and we can ensure easily that each node is at least half full. However, querying may be slower, since multiple paths have to be searched. Spatial joins are simpler with quadtrees than with R-trees, since all quadtrees on a region are partitioned in the same manner. However, because of their better storage efficiency, and their similarity to B-trees, R-trees and their variants have proved popular in database systems that support spatial data.
 
-## 25.4 Multimedia Databases
+## Multimedia Databases
 
 Multimedia data, such as images, audio, and video—an increasingly popular form of data—are today almost always stored outside the database, in file sys- tems. This kind of storage is not a problem when the number of multimedia objects is relatively small, since features provided by databases are usually not important.
 
@@ -853,12 +850,12 @@ Several issues must be addressed if multimedia data are to be stored in a databa
 
 - Similarity-based retrieval is needed in many multimedia database applica- tions. For example, in a database that stores fingerprint images, a query fingerprint image is provided, and fingerprints in the database that are sim- ilar to the query fingerprint must be retrieved. Index structures such as B+- trees and R-trees cannot be used for this purpose; special index structures need to be created. We discuss similarity-based retrieval in Section 25.4.3.
 
-### 25.4.1 Multimedia Data Formats
+### Multimedia Data Formats
 
 Because of the large number of bytes required to represent multimedia data, it is essential that multimedia data be stored and transmitted in compressed form. For image data, the most widely used format is _JPEG_, named after the standards body that created it, the _Joint Picture Experts Group_. We can store video data by encoding each frame of video in JPEG format, but such an encoding is wasteful, since successive frames of a video are often nearly the same. The _Moving Picture Experts Group_ has developed the _MPEG_ series of standards for encoding video and audio data; these encodings exploit commonalities among a sequence of frames to achieve a greater degree of compression. The _MPEG-1_ standard stores a minute of 30-frame-per-second video and audio in approximately 12.5 megabytes (com- pared to approximately 75 megabytes for video in only JPEG). However, MPEG-1 encoding introduces some loss of video quality, to a level roughly comparable
 to that of VHS videotape. The _MPEG-2_ standard is designed for digital broadcast systems and digital video disks (DVDs); it introduces only a negligible loss of video quality. MPEG-2 compresses 1 minute of video and audio to approximately 17 megabytes. MPEG-4 provides techniques for further compression of video, with variable bandwidth to support delivery of video data over networks with a wide range of bandwidths. Several competing standards are used for audio encoding, including _MP3_, which stands for MPEG-1 Layer 3, RealAudio, Windows Media Audio, and other formats. High-definition video with audio is encoded in several variants of MPEG-4 that include MPEG-4 AVC and AVCHD.
 
-### 25.4.2 Continuous-Media Data
+### Continuous-Media Data
 
 The most important types of continuous-media data are video and audio data (for example, a database of movies). Continuous-media systems are characterized by their real-time information-delivery requirements:
 
@@ -881,7 +878,7 @@ Several vendors offer video-on-demand servers. Current systems are based on file
 
 Video-on-demand service over cable networks is widely available.
 
-### 25.4.3 Similarity-Based Retrieval
+### Similarity-Based Retrieval
 
 In many multimedia applications, data are described only approximately in the database. An example is the fingerprint data in Section 25.4. Other examples are:
 
@@ -895,7 +892,7 @@ The notion of similarity is often subjective and user specific. However, sim- il
 
 Several algorithms exist for finding the best matches to a given input by sim- ilarity testing. Many voice-activated systems have been deployed commercially, particularly for phone applications and in-vehicle controls. See the bibliographi- cal notes for references.
 
-## 25.5 Mobility and Personal Databases
+## Mobility and Personal Databases
 
 Large-scale, commercial databases have traditionally been stored in central com- puting facilities. In distributed database applications, there has usually been strong central database and network administration. Several technology trends have combined to create applications in which this assumption of central control and administration is not entirely correct:
 
@@ -917,7 +914,7 @@ A user is likely to use more than one mobile device. Such users need to be able 
 
 In Sections 25.5.1 through 25.5.4, we discuss techniques in use and under development to deal with the problems of mobility and personal computing.
 
-### 25.5.1 A Model of Mobile Computing
+### A Model of Mobile Computing
 
 The mobile-computing environment consists of mobile computers, referred to as **mobile hosts**, and a wired network of computers. Mobile hosts communicate with the wired network via computers referred to as **mobile support stations**. Each mobile support station manages those mobile hosts within its **cell**—that is, the geographical area that it covers. Mobile hosts may move between cells, thus necessitating a **handoff** of control from one mobile support station to another. Since mobile hosts may, at times, be powered down, a host may leave one cell and rematerialize later at some distant cell. Therefore, moves between cells are not necessarily between adjacent cells. Within a small area, such as a building, mobile hosts may be connected by a wireless local-area network (LAN) that provides lower-cost connectivity than would a wide-area cellular network, and that reduces the overhead of handoffs.
 
@@ -931,7 +928,7 @@ Bluetooth, wireless LANs, and 2.5G and 3G cellular networks make it possible for
 
 The size and power limitations of many mobile computers have led to al- ternative memory hierarchies. Instead of, or in addition to, disk storage, flash memory, which we discussed in Section 10.1, may be included. If the mobile host includes a hard disk, the disk may be allowed to spin down when it is not in use, to save energy. The same considerations of size and energy limit the type and size of the display used in a mobile device. Designers of mobile devices often create special-purpose user interfaces to work within these constraints. However, the need to present Web-based data has necessitated the creation of presentation stan- dards. **Wireless application protocol** (WAP) is a standard for wireless Internet access. WAP-based browsers access special Web pages that use **wireless markup language** (WML), an XML-based language designed for the constraints of mobile and wireless Web browsing.
 
-### 25.5.2 Routing and Query Processing
+### Routing and Query Processing
 
 The route between a pair of hosts may change over time if one of the two hosts is mobile. This simple fact has a dramatic effect at the network level, since location- based network addresses are no longer constants within the system.
 
@@ -947,7 +944,7 @@ Mobility also directly affects database query processing. As we saw in Chap- ter
 
 - **Energy** is limited. Often, battery power is a scarce resource whose use must be optimized. A basic principle of radio communication is that it requires less energy to receive than to transmit radio signals. Thus, transmission and reception of data impose different power demands on the mobile host.
 
-### 25.5.3 Broadcast Data
+### Broadcast Data
 
 It is often desirable for frequently requested data to be broadcast in a contin- uous cycle by mobile support stations, rather than transmitted to mobile hosts on demand. A typical application of such **broadcast data** is stock-market price information. There are two reasons for using broadcast data. First, the mobile host avoids the energy cost for transmitting data requests. Second, the broadcast data can be received by a large number of mobile hosts at once, at no extra cost. Thus, the available transmission bandwidth is utilized more effectively.
 
@@ -957,7 +954,7 @@ Broadcast data may be transmitted according to a fixed schedule or a change- abl
 
 In effect, the broadcast medium can be modeled as a disk with a high latency. Requests for data can be thought of as being serviced when the requested data are broadcast. The transmission schedules behave like indices on the disk. The bibliographical notes list recent research papers in the area of broadcast data management.
 
-### 25.5.4 Disconnectivity and Consistency
+### Disconnectivity and Consistency
 
 Since wireless communication may be paid for on the basis of connection time, there is an incentive for certain mobile hosts to be disconnected for substantial periods. Mobile computers without wireless connectivity are disconnected most of the time when they are being used, except periodically when they are connected to their host computers, either physically or through a computer network.
 
@@ -996,7 +993,7 @@ Another weakness is that the version-vector scheme requires substantial com- mun
 
 The potential for disconnection and the cost of wireless communication limit the practicality of transaction-processing techniques discussed in Chapter 19 for distributed systems. Often, it is preferable to let users prepare transactions on mobile hosts, but to require that, instead of executing the transactions locally, they submit transactions to a server for execution. Transactions that span more than one computer and that include a mobile host face long-term blocking during transaction commit, unless disconnectivity is rare or predictable.
 
-## 25.6 Summary
+## Summary
 
 - Time plays an important role in database systems. Databases are models of the real world. Whereas most databases model the state of the real world at a point in time (at the current time), temporal databases model the states of the real world across time.
 
@@ -1153,7 +1150,7 @@ In Chapters 14, 15, and 16, we introduced the concept of a transaction, a progra
 
 In this chapter, we go beyond the basic schemes discussed previously, and cover advanced transaction-processing concepts, including transaction-processing monitors, transactional workflows, and transaction processing in the context of electronic commerce. We also cover main-memory databases, real-time databases, long-duration transactions, and nested transactions.
 
-## 26.1 Transaction-Processing Monitors
+## Transaction-Processing Monitors
 
 **Transaction-processing monitors** (**TP monitors**) are systems that were developed in the 1970s and 1980s, initially in response to a need to support a large number of remote terminals (such as airline-reservation terminals) from a single computer. The term _TP monitor_ initially stood for _teleprocessing monitor_.
 
@@ -1161,7 +1158,7 @@ TP monitors have since evolved to provide the core support for distributed trans
 
 Web application server architectures, including servlets, which we studied earlier in Section 9.3, support many of the features of TP monitors and are some- times referred to as “TP lite.” Web application servers are in widespread use, and have supplanted traditional TP monitors for many applications. However, the concepts underlying them, which we study in this section, are essentially the same.
 
-### 26.1.1 TP-Monitor Architectures
+### TP-Monitor Architectures
 
 Large-scale transaction-processing systems are built around a client–server archi- tecture. One way of building such systems is to have a server process for each client; the server performs authentication, and then executes actions requested by the client. This **process-per-client model** is illustrated in Figure 26.1a. This model presents several problems with respect to memory utilization and processing speed:
 
@@ -1196,7 +1193,7 @@ Finally, TP monitors also provide support for persistent messaging. Recall that 
 In addition to these facilities, many TP monitors also provided _presentation facilities_ to create menus/forms interfaces for dumb clients such as terminals;  
 these facilities are no longer important since dumb clients are no longer widely used.
 
-### 26.1.2 Application Coordination Using TP monitors
+### Application Coordination Using TP monitors
 
 Applications today often have to interact with multiple databases. They may also have to interact with legacy systems, such as special-purpose data-storage systems built directly on file systems. Finally, they may have to communicate with users or other applications at remote sites. Hence, they also have to interact with communication subsystems. It is important to be able to coordinate data accesses, and to implement ACID properties for transactions across such systems.
 
@@ -1212,7 +1209,7 @@ TP monitors can be used to hide database failures in replicated systems; remote 
 
 In client–server systems, clients often interact with servers via a **remote- procedure-call** (**RPC**) mechanism, where a client invokes a procedure call, which is actually executed at the server, with the results sent back to the client. As far as the client code that invokes the RPC is concerned, the call looks like a local procedure-call invocation. TP monitor systems provide a **transactional RPC** interface to their services. In such an interface, the RPC mechanism provides calls that can be used to enclose a series of RPC calls within a transaction. Thus, updates performed by an RPC are carried out within the scope of the transaction, and can be rolled back if there is any failure.
 
-## 26.2 Transactional Workflows
+## Transactional Workflows
 
 A **workflow** is an activity in which multiple tasks are executed in a coordinated way by different processing entities. A **task** defines some work to be done and can be specified in a number of ways, including a textual description in a file or electronic-mail message, a form, a message, or a computer program. The **pro- cessing entity** that performs the tasks may be a person or a software system (for example, a mailer, an application program, or a database-management system).
 
@@ -1244,7 +1241,7 @@ Both activities are complicated by the fact that many organizations use several 
 
 A number of workflow systems have been developed in recent years. Here, we study properties of workflow systems at a relatively abstract level, without going into the details of any particular system.
 
-### 26.2.1 Workflow Specification
+### Workflow Specification
 
 Internal aspects of a task do not need to be modeled for the purpose of specification and management of a workflow. In an abstract view of a task, a task may use parameters stored in its input variables, may retrieve and update data in the local system, may store its results in its output variables, and may be queried about its execution state. At any time during the execution, the **workflow state** consists of the collection of states of the workflow’s constituent tasks, and the states (values) of all variables in the workflow specification.
 
@@ -1262,7 +1259,7 @@ We can combine the dependencies by the regular logical connectors (**or**, **and
 
 An example of dynamic scheduling of tasks is an electronic-mail routing system. The next task to be scheduled for a given mail message depends on what the destination address of the message is, and on which intermediate routers are functioning.
 
-### 26.2.2 Failure-Atomicity Requirements of a Workflow
+### Failure-Atomicity Requirements of a Workflow
 
 The workflow designer may specify the **failure-atomicity** requirements of a work- flow according to the semantics of the workflow. The traditional notion of failure atomicity would require that a failure of any task result in the failure of the work- flow. However, a workflow can, in many cases, survive the failure of one of its tasks—for example, by executing a functionally equivalent task at another site. Therefore, we should allow the designer to define failure-atomicity requirements of a workflow. The system must guarantee that every execution of a workflow will terminate in a state that satisfies the failure-atomicity requirements defined by the designer. We call those states **acceptable termination states** of a work- flow. All other execution states of a workflow constitute a set of **nonacceptable termination states**, in which the failure-atomicity requirements may be violated.
 
@@ -1276,7 +1273,7 @@ In general, a task can commit and release its resources before the workflow reac
 
 In an expense-voucher-processing workflow, for example, a department- budget balance may be reduced on the basis of an initial approval of a voucher by the manager. If the voucher is later rejected, whether because of failure or for other reasons, the budget may have to be restored by a compensating transaction.
 
-### 26.2.3 Execution of Workflows
+### Execution of Workflows
 
 The execution of the tasks may be controlled by a human coordinator or by a soft- ware system called a **workflow-management system**. A workflow-management system consists of a scheduler, task agents, and a mechanism to query the state of the workflow system. A task agent controls the execution of a task by a processing entity. A scheduler is a program that processes workflows by submitting various tasks for execution, monitoring various events, and evaluating conditions related to intertask dependencies. A scheduler may submit a task for execution (to a task agent), or may request that a previously submitted task be aborted. In the case of multidatabase transactions, the tasks are subtransactions, and the processing entities are local database-management systems. In accordance with the work- flow specifications, the scheduler enforces the scheduling dependencies and is responsible for ensuring that tasks reach acceptable termination states.
 
@@ -1290,7 +1287,7 @@ The scheduler must guarantee that a workflow will terminate in one of the specif
 
 Safety checks such as the one just described may be impossible or impractical to implement in the scheduler; it then becomes the responsibility of the person designing the workflow specification to ensure that the workflows are safe.
 
-### 26.2.4 Recovery of a Workflow
+### Recovery of a Workflow
 
 The objective of **workflow recovery** is to enforce the failure atomicity of the work- flows. The recovery procedures must make sure that, if a failure occurs in any of the workflow-processing components (including the scheduler), the workflow will eventually reach an acceptable termination state (whether aborted or com- mitted). For example, the scheduler could continue processing after failure and recovery, as though nothing happened, thus providing forward recoverability. Otherwise, the scheduler could abort the whole workflow (that is, reach one of the global abort states). In either case, some subtransactions may need to be committed or even submitted for execution (for example, compensating subtrans- actions).
 
@@ -1298,7 +1295,7 @@ We assume that the processing entities involved in the workflow have their own r
 
 We also need to consider the contents of the message queues. When one agent hands off a task to another, the handoff should be carried out exactly once: If the handoff happens twice a task may get executed twice; if the handoff does not occur, the task may get lost. Persistent messaging (Section 19.4.3) provides exactly the features to ensure positive, single handoff.
 
-### 26.2.5 Workflow-Management Systems
+### Workflow-Management Systems
 
 Workflows are often hand coded as part of application systems. For instance, en- terprise resource planning (ERP) systems, which help coordinate activities across an entire enterprise, have numerous workflows built into them.
 
@@ -1312,7 +1309,7 @@ Business process management systems based on the SOA architecture include Micros
 
 The **Web Services Business Process Execution Language** (**WS-BPEL**) is an XML based standard for specifying Web services and business processes (workflows) based on the Web services, which can be executed by a business process manage- ment system. The **Business Process Modeling Notation** (**BPMN**), is a standard for graphical modeling of business processes in a workflow, and **XML Process Definition Language** (**XPDL**) is an XML based representation of business process definitions, based on BPMN diagrams.
 
-## 26.3 E-Commerce
+## E-Commerce
 
 E-commerce refers to the process of carrying out various activities related to commerce, through electronic means, primarily through the Internet. The types of activities include:
 
@@ -1329,7 +1326,7 @@ E-commerce refers to the process of carrying out various activities related to c
 
 Databases are used extensively to support these activities. For some of the activities, the use of databases is straightforward, but there are interesting appli- cation development issues for the other activities.
 
-### 26.3.1 E-Catalogs
+### E-Catalogs
 
 Any e-commerce site provides users with a catalog of the products and services that the site supplies. The services provided by an e-catalog may vary consider- ably.
 
@@ -1339,7 +1336,7 @@ E-catalogs can be customized for the customer. For instance, a retailer may have
 
 Supporting such customization requires customer information as well as spe- cial pricing/discount information and sales restriction information to be stored in a database. There are also challenges in supporting very high transaction rates, which are often tackled by caching of query results or generated Web pages.
 
-### 26.3.2 Marketplaces
+### Marketplaces
 
 When there are multiple sellers or multiple buyers (or both) for a product, a marketplace helps in negotiating the price to be paid for the product. There are several different types of marketplaces:
 
@@ -1359,7 +1356,7 @@ There are other more complex types of marketplaces. Among the database issues in
 
 - The volumes of trades may be extremely large at times of stock market volatil- ity, or toward the end of auctions. Thus, very high performance databases with large degrees of parallelism are used for such systems.
 
-### 26.3.3 Order Settlement
+### Order Settlement
 
 After items have been selected (perhaps through an electronic catalog) and the price determined (perhaps by an electronic marketplace), the order has to be settled. Settlement involves payment for goods and the delivery of the goods.
 
@@ -1375,7 +1372,7 @@ Today, many banks provide **secure payment gateways** which allow a pur- chaser 
 
 An alternative approach which is used by the PayPal system is for both the purchaser and the merchant to have an account on a common platform, and the money transfer happens entirely within the common platform. The purchaser first loads her account with money using a credit card, and can then transfer money to the merchants account. This approach has been very successful with small merchants, since it does not require either the purchaser or the merchant to run any software.
 
-## 26.4 Main-Memory Databases
+## Main-Memory Databases
 
 To allow a high rate of transaction processing (hundreds or thousands of trans- actions per second), we must use high-performance hardware, and must exploit parallelism. These techniques alone, however, are insufficient to obtain very low response times, since disk I/O remains a bottleneck—about 10 milliseconds are required for each I/O, and this number has not decreased at a rate comparable to the increase in processor speeds. Disk I/O is often the bottleneck for reads, as well as for transaction commits. The long disk latency increases not only the time to access a data item, but also limits the number of accesses per second.1
 
@@ -1413,7 +1410,7 @@ Although group commit reduces the overhead imposed by logging, it results in a s
 
 Note that group commit is useful even in databases with disk-resident data, not just for main-memory databases. If flash storage is used instead of magnetic disk for storing log records, the commit delay is significantly reduced. However, group commit can still be useful since it minimizes the number of pages written; this translates to performance benefits in flash storage, since pages cannot be overwritten, and the erase operation is expensive. (Flash storage systems remap logical pages to a pre-erased physical page, avoiding delay at the time a page is written, but the erase operation must be performed eventually as part of garbage collection of old versions of pages.)
 
-## 26.5 Real-Time Transaction Systems
+## Real-Time Transaction Systems
 
 The integrity constraints that we have considered thus far pertain to the values stored in the database. In certain applications, the constraints include **deadlines** by which a task must be completed. Examples of such applications include plant management, traffic control, and scheduling. When deadlines are included, cor- rectness of an execution is no longer solely an issue of database consistency. Rather, we are concerned with how many deadlines are missed, and by how much time they are missed. Deadlines are characterized as follows:
 
@@ -1433,7 +1430,7 @@ However, even if data are resident in main memory, variances in execution time a
 
 In real-time systems, deadlines, rather than absolute speed, are the most important issue. Designing a real-time system involves ensuring that there is enough processing power to meet deadlines without requiring excessive hard- ware resources. Achieving this objective, despite the variance in execution time resulting from transaction management, remains a challenging problem.
 
-## 26.6 Long-Duration Transactions
+## Long-Duration Transactions
 
 The transaction concept developed initially in the context of data-processing applications, in which most transactions are noninteractive and of short duration. Although the techniques presented here and earlier in Chapters 14, 15, and 16 work well in those applications, serious problems arise when this concept is applied to database systems that involve human interaction. Such transactions have these key properties:
 
@@ -1448,7 +1445,7 @@ The transaction concept developed initially in the context of data-processing ap
 
 In Sections 26.6.1 through 26.6.5, we shall see why these five properties are in- compatible with the techniques presented thus far and shall discuss how those techniques can be modified to accommodate long-duration interactive transac- tions.
 
-### 26.6.1 Nonserializable Executions
+### Nonserializable Executions
 
 The properties that we discussed make it impractical to enforce the requirement used in earlier chapters that only serializable schedules be permitted. Each of the concurrency-control protocols of Chapter 15 has adverse effects on long-duration transactions:
 
@@ -1469,7 +1466,7 @@ Snapshot isolation, described in Section 15.7, can provide a partial solution to
 
 However, when transactions are of long duration, conflicting updates are more likely, resulting in additional waits or aborts. These considerations are the basis for the alternative concepts of correctness of concurrent executions and transaction recovery that we consider in the remainder of this section.
 
-### 26.6.2 Concurrency Control
+### Concurrency Control
 
 The fundamental goal of database concurrency control is to ensure that concur- rent execution of transactions does not result in a loss of database consistency. The concept of serializability can be used to achieve this goal, since all serializable schedules preserve consistency of the database. However, not all schedules that preserve consistency of the database are serializable. For an example, consider again a bank database consisting of two accounts _A_ and _B_, with the consistency requirement that the sum _A_ \+ _B_ be preserved. Although the schedule of Fig- ure 26.5 is not conflict serializable, it nevertheless preserves the sum of _A + B_. It also illustrates two important points about the concept of correctness without serializability.
 
@@ -1488,7 +1485,7 @@ In general it is not possible to perform an automatic analysis of low-level oper
 
 The bibliographical notes reference other techniques for ensuring consistency without requiring serializability. Many of these techniques exploit variants of multiversion concurrency control (see Section 15.6). For older data-processing applications that need only one version, multiversion protocols impose a high space overhead to store the extra versions. Since many of the new database applications require the maintenance of versions of data, concurrency-control techniques that exploit multiple versions are practical.
 
-### 26.6.3 Nested and Multilevel Transactions
+### Nested and Multilevel Transactions
 
 A long-duration transaction can be viewed as a collection of related subtasks or subtransactions. By structuring a transaction as a set of subtransactions, we are able to enhance parallelism, since it may be possible to run several subtransactions in parallel. Furthermore, it is possible to deal with failure of a subtransaction (due to abort, system crash, and so on) without having to roll back the entire long-duration transaction.
 
@@ -1531,7 +1528,7 @@ If the system crashes in the middle of executing an outer-level transaction, its
 
 Compensation for the failure of a transaction requires that the semantics of the failed transaction be used. For certain operations, such as incrementation or insertion into a B+-tree, the corresponding compensation is easily defined. For more complex transactions, the application programmers may have to define the correct form of compensation at the time that the transaction is coded. For complex interactive transactions, it may be necessary for the system to interact with the user to determine the proper form of compensation.
 
-### 26.6.5 Implementation Issues
+### Implementation Issues
 
 The transaction concepts discussed in this section create serious difficulties for implementation. We present a few of them here, and discuss how we can address these problems.
 
@@ -1547,7 +1544,7 @@ There are two approaches to reducing the overhead of ensuring the recover- abili
 
 Regardless of the technique used, the complexities introduced by long-duration transactions and large data items complicate the recovery process. Thus, it is desirable to allow certain noncritical data to be exempt from logging, and to rely instead on offline backups and human intervention.
 
-## 26.7 Summary
+## Summary
 
 - Workflows are activities that involve the coordinated execution of multiple tasks performed by different processing entities. They exist not just in com- puter applications, but also in almost all organizational activities. With the growth of networks, and the existence of multiple autonomous database sys- tems, workflows provide a convenient way of carrying out tasks that involve multiple systems.
 
