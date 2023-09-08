@@ -4,48 +4,48 @@ weight: 6
 ---
 
   
+# RELATIONAL DATABASES
 
-**PART 1**
-
-**RELATIONAL DATABASES**
-
-A data model is a collection of conceptual tools for describing data, data relation- ships, data semantics, and consistency constraints. In this part, we focus on the relational model.
+A data model is a collection of conceptual tools for describing data, data relationships, data semantics, and consistency constraints. In this part, we focus on the relational model.
 
 The relational model, which is covered in Chapter 2, uses a collection of tables to represent both data and the relationships among those data. Its conceptual simplicity has led to its widespread adoption; today a vast majority of database products are based on the relational model. The relational model describes data at the logical and view levels, abstracting away low-level details of data storage. The entity-relationship model, discussed later in Chapter 7 (in Part 2), is a higher-level data model which is widely used for database design.
 
-To make data from a relational database available to users, we have to ad- dress several issues. The most important issue is how users specify requests for retrieving and updating data; several query languages have been developed for this task. A second, but still important, issue is data integrity and protection; databases need to protect data from damage by user actions, whether uninten- tional or intentional.
+To make data from a relational database available to users, we have to address several issues. The most important issue is how users specify requests for retrieving and updating data; several query languages have been developed for this task. A second, but still important, issue is data integrity and protection; databases need to protect data from damage by user actions, whether unintentional or intentional.
 
 Chapters 3, 4 and 5 cover the SQL language, which is the most widely used query language today. Chapters 3 and 4 provide introductory and intermediate level descriptions of SQL. Chapter 4 also covers integrity constraints which are enforced by the database, and authorization mechanisms, which control what access and update actions can be carried out by a user. Chapter 5 covers more advanced topics, including access to SQL from programming languages, and the use of SQL for data analysis.
 
 Chapter 6 covers three formal query languages, the relational algebra, the tuple relational calculus and the domain relational calculus, which are declarative query languages based on mathematical logic. These formal languages form the basis for SQL, and for two other user-friendly languages, QBE and Datalog, which are described in Appendix B (available online at db-book.com).
 
-**37**  
 
-_This page intentionally left blank_  
+# CHAPTER 2 
+# Introduction to the Relational Model
 
-**_C H A P T E R_2 Introduction to the Relational Model**
-
-The relational model is today the primary data model for commercial data- processing applications. It attained its primary position because of its simplicity, which eases the job of the programmer, compared to earlier data models such as the network model or the hierarchical model.
+The relational model is today the primary data model for commercial dataprocessing applications. It attained its primary position because of its simplicity, which eases the job of the programmer, compared to earlier data models such as the network model or the hierarchical model.
 
 In this chapter, we first study the fundamentals of the relational model. A substantial theory exists for relational databases. We study the part of this theory dealing with queries in Chapter 6. In Chapters 7 through 8, we shall examine aspects of database theory that help in the design of relational database schemas, while in Chapters 12 and 13 we discuss aspects of the theory dealing with efficient processing of queries.
 
-**2.1 Structure of Relational Databases**
+## Structure of Relational Databases
 
-A relational database consists of a collection of **tables**, each of which is assigned a unique name. For example, consider the _instructor_ table of Figure 2.1, which stores information about instructors. The table has four column headers: _ID_, _name_, _dept name_, and _salary_. Each row of this table records information about an instructor,
-
-consisting of the instructor’s _ID_, _name_, _dept name_, and _salary_. Similarly, the _course_ table of Figure 2.2 stores information about courses, consisting of a _course id_, _title_, _dept name_, and _credits_, for each course. Note that each instructor is identified by the value of the column _ID_, while each course is identified by the value of the column _course id_.
+A relational database consists of a collection of **tables**, each of which is assigned a unique name. For example, consider the _instructor_ table of Figure 2.1, which stores information about instructors. The table has four column headers: _ID_, _name_, _dept name_, and _salary_. Each row of this table records information about an instructor, consisting of the instructor’s _ID_, _name_, _dept name_, and _salary_. Similarly, the _course_ table of Figure 2.2 stores information about courses, consisting of a _course id_, _title_, _dept name_, and _credits_, for each course. Note that each instructor is identified by the value of the column _ID_, while each course is identified by the value of the column _course id_.
 
 Figure 2.3 shows a third table, _prereq_, which stores the prerequisite courses for each course. The table has two columns, _course id_ and _prereq id_. Each row consists of a pair of course identifiers such that the second course is a prerequisite for the first course.
 
 Thus, a row in the _prereq_ table indicates that two courses are _related_ in the sense that one course is a prerequisite for the other. As another example, we consider the table _instructor_, a row in the table can be thought of as representing
 
-**39**  
-
-**40 Chapter 2 Introduction to the Relational Model**
-
-_ID name dept name salary_
-
-10101 Srinivasan Comp. Sci. 65000 12121 Wu Finance 90000 15151 Mozart Music 40000 22222 Einstein Physics 95000 32343 El Said History 60000 33456 Gold Physics 87000 45565 Katz Comp. Sci. 75000 58583 Califieri History 62000 76543 Singh Finance 80000 76766 Crick Biology 72000 83821 Brandt Comp. Sci. 92000 98345 Kim Elec. Eng. 80000
+| _ID_ | _name_ | _dept name_ | _salary_ |
+| --- | ---- | ---- | ---- | 
+| 10101 | Srinivasan | Comp. Sci. | 65000 |
+| 12121  | Wu |Finance |90000 |
+|15151 |Mozart |Music |40000 |
+|22222 |Einstein |Physics |95000 |
+|32343 |El Said |History |60000 |
+|33456|Gold |Physics |87000| 
+|45565| Katz |Comp. Sci. |75000 |
+|58583 |Califieri |History |62000 |
+|76543 |Singh |Finance |80000 |
+|76766|Crick |Biology |72000| 
+|83821| Brandt |Comp. Sci. |92000 |
+|98345 |Kim |Elec. Eng. |80000|
 
 **Figure 2.1** The _instructor_ relation.
 
@@ -53,17 +53,34 @@ the relationship between a specified _ID_ and the corresponding values for _name
 
 In general, a row in a table represents a _relationship_ among a set of values. Since a table is a collection of such relationships, there is a close correspondence between the concept of _table_ and the mathematical concept of _relation_, from which the relational data model takes its name. In mathematical terminology, a _tuple_ is simply a sequence (or list) of values. A relationship between _n_ values is repre- sented mathematically by an _n-tuple_ of values, i.e., a tuple with _n_ values, which corresponds to a row in a table.
 
-_course id title dept name credits_
-
-BIO-101 Intro. to Biology Biology 4 BIO-301 Genetics Biology 4 BIO-399 Computational Biology Biology 3 CS-101 Intro. to Computer Science Comp. Sci. 4 CS-190 Game Design Comp. Sci. 4 CS-315 Robotics Comp. Sci. 3 CS-319 Image Processing Comp. Sci. 3 CS-347 Database System Concepts Comp. Sci. 3 EE-181 Intro. to Digital Systems Elec. Eng. 3 FIN-201 Investment Banking Finance 3 HIS-351 World History History 3 MU-199 Music Video Production Music 3 PHY-101 Physical Principles Physics 4
+|_-course id_ |_title_ |_dept name_ |_credits_|
+| ---- | ---- | ---- | ---- |
+|BIO-101 |Intro. to Biology |Biology |4 |
+|BIO-301 |Genetics |Biology |4| 
+|BIO-399 |Computational Biology|Biology| 3 |
+|CS-101|Intro. to Computer Science |Comp. Sci. |4| 
+|CS-190| Game Design |Comp. Sci. |4| 
+|CS-315| Robotics |Comp. Sci. |3| 
+|CS-319| Image Processing |Comp. Sci. |3| 
+|CS-347 |Database System Concepts |Comp. Sci. |3| 
+|EE-181 |Intro. to Digital Systems |Elec. Eng. |3| 
+|FIN-201 |Investment Banking |Finance|3| 
+|HIS-351 |World History |History| 3| 
+|MU-199 |Music Video Production |Music |3| 
+|PHY-101 |Physical Principles |Physics |4|
 
 **Figure 2.2** The _course_ relation.  
 
-**2.1 Structure of Relational Databases 41**
 
-_course id prereq id_
-
-BIO-301 BIO-101 BIO-399 BIO-101 CS-190 CS-101 CS-315 CS-101 CS-319 CS-101 CS-347 CS-101 EE-181 PHY-101
+|_course id_ |_prereq id_|
+| --- | --- |
+|BIO-301 |BIO-101 |
+|BIO-399 |BIO-101 |
+|CS-190 |CS-101 |
+|CS-315 |CS-101 |
+|CS-319 |CS-101 |
+|CS-347 |CS-101 |
+|EE-181 |PHY-101|
 
 **Figure 2.3** The _prereq_ relation.
 
@@ -77,13 +94,22 @@ In this chapter, we shall be using a number of different relations to illustrate
 
 The order in which tuples appear in a relation is irrelevant, since a relation is a _set_ of tuples. Thus, whether the tuples of a relation are listed in sorted order, as in Figure 2.1, or are unsorted, as in Figure 2.4, does not matter; the relations in
 
-_ID name dept name salary_
-
-22222 Einstein Physics 95000 12121 Wu Finance 90000 32343 El Said History 60000 45565 Katz Comp. Sci. 75000 98345 Kim Elec. Eng. 80000 76766 Crick Biology 72000 10101 Srinivasan Comp. Sci. 65000 58583 Califieri History 62000 83821 Brandt Comp. Sci. 92000 15151 Mozart Music 40000 33456 Gold Physics 87000 76543 Singh Finance 80000
+|_ID_| _name_| _dept name_| _salary_|
+| --- | ---- | --- | ---- |
+|22222 |Einstein |Physics |95000 |
+|12121 |Wu |Finance |90000 |
+|32343 |El Said |History |60000 |
+|45565 |Katz |Comp. Sci. |75000 |
+|98345 |Kim |Elec. Eng. |80000 |
+|76766 |Crick |Biology |72000 |
+|10101 |Srinivasan |Comp. Sci. |65000 |
+|58583 |Califieri |History |62000 |
+|83821 |Brandt |Comp. Sci. |92000 |
+|15151 |Mozart |Music |40000 |
+|33456 |Gold |Physics |87000 |
+|76543 |Singh |Finance |80000|
 
 **Figure 2.4** Unsorted display of the _instructor_ relation.  
-
-**42 Chapter 2 Introduction to the Relational Model**
 
 the two figures are the same, since both contain the same set of tuples. For ease of exposition, we will mostly show the relations sorted by their first attribute.
 
@@ -95,25 +121,28 @@ The important issue is not what the domain itself is, but rather how we use doma
 
 In this chapter, as well as in Chapters 3 through 6, we assume that all attributes have atomic domains. In Chapter 22, we shall discuss extensions to the relational data model to permit nonatomic domains.
 
-The **null** value is a special value that signifies that the value is unknown or does not exist. For example, suppose as before that we include the attribute _phone number_ in the _instructor_ relation. It may be that an instructor does not have a
+The **null** value is a special value that signifies that the value is unknown or does not exist. For example, suppose as before that we include the attribute _phone number_ in the _instructor_ relation. It may be that an instructor does not have a phone number at all, or that the telephone number is unlisted. We would then have to use the null value to signify that the value is unknown or does not exist. We shall see later that null values cause a number of difficulties when we access or update the database, and thus should be eliminated if at all possible. We shall assume null values are absent initially, and in Section 3.6 we describe the effect of nulls on different operations.
 
-phone number at all, or that the telephone number is unlisted. We would then have to use the null value to signify that the value is unknown or does not exist. We shall see later that null values cause a number of difficulties when we access or update the database, and thus should be eliminated if at all possible. We shall assume null values are absent initially, and in Section 3.6 we describe the effect of nulls on different operations.
-
-**2.2 Database Schema**
+## Database Schema
 
 When we talk about a database, we must differentiate between the **database schema**, which is the logical design of the database, and the **database instance**, which is a snapshot of the data in the database at a given instant in time.
 
-The concept of a relation corresponds to the programming-language no- tion of a variable, while the concept of a **relation schema** corresponds to the programming-language notion of type definition.
+The concept of a relation corresponds to the programming-language notion of a variable, while the concept of a **relation schema** corresponds to the programming-language notion of type definition.
 
-In general, a relation schema consists of a list of attributes and their corre- sponding domains. We shall not be concerned about the precise definition of the domain of each attribute until we discuss the SQL language in Chapter 3.
+In general, a relation schema consists of a list of attributes and their corresponding domains. We shall not be concerned about the precise definition of the domain of each attribute until we discuss the SQL language in Chapter 3.
 
 The concept of a relation instance corresponds to the programming-language notion of a value of a variable. The value of a given variable may change with time;  
 
-**2.2 Database Schema 43**
 
-_dept name building budget_
-
-Biology Watson 90000 Comp. Sci. Taylor 100000 Elec. Eng. Taylor 85000 Finance Painter 120000 History Painter 50000 Music Packard 80000 Physics Watson 70000
+|_dept name_| _building_| _budget_|
+| --- | ---- | --- |
+|Biology |Watson |90000 |
+|Comp. Sci. |Taylor |100000 |
+|Elec. Eng. |Taylor |85000 |
+|Finance |Painter |120000 |
+|History |Painter |50000 |
+|Music |Packard |80000 |
+|Physics| Watson |70000|
 
 **Figure 2.5** The _department_ relation.
 
@@ -129,7 +158,7 @@ Note that the attribute _dept name_ appears in both the _instructor_ schema and 
 
 Let us continue with our university database example. Each course in a university may be offered multiple times, across different
 
-semesters, or even within a semester. We need a relation to describe each individ- ual offering, or section, of the class. The schema is
+semesters, or even within a semester. We need a relation to describe each individual offering, or section, of the class. The schema is
 
 _section_ (_course id_, _sec id_, _semester_, _year_, _building_, _room number_, _time slot id_)
 
@@ -139,43 +168,66 @@ class sections that they teach. The relation schema to describe this association
 
 _teaches_ (_ID_, _course id_, _sec id_, _semester_, _year_)  
 
-**44 Chapter 2 Introduction to the Relational Model**
 
-_course id sec id semester year building room number time slot id_
-
-BIO-101 1 Summer 2009 Painter 514 B BIO-301 1 Summer 2010 Painter 514 A CS-101 1 Fall 2009 Packard 101 H CS-101 1 Spring 2010 Packard 101 F CS-190 1 Spring 2009 Taylor 3128 E CS-190 2 Spring 2009 Taylor 3128 A CS-315 1 Spring 2010 Watson 120 D CS-319 1 Spring 2010 Watson 100 B CS-319 2 Spring 2010 Taylor 3128 C CS-347 1 Fall 2009 Taylor 3128 A EE-181 1 Spring 2009 Taylor 3128 C FIN-201 1 Spring 2010 Packard 101 B HIS-351 1 Spring 2010 Painter 514 C MU-199 1 Spring 2010 Packard 101 D PHY-101 1 Fall 2009 Watson 100 A
+|_course id_| _sec-id_|_semester_| _year_|_building_ |_room number_|_time-slot-id_|
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|BIO-101| 1 |Summer| 2009 |Painter |514 |B |
+|BIO-301| 1 |Summer |2010 |Painter |514 |A |
+|CS-101 |1 |Fall |2009 |Packard |101| H |
+|CS-101 |1 |Spring |2010 |Packard |101 |F |
+|CS-190 |1| Spring |2009 |Taylor |3128 |E |
+|CS-190 |2 |Spring |2009 |Taylor |3128 |A |
+|CS-315 |1 |Spring |2010 |Watson |120 |D |
+|CS-319 |1 |Spring |2010 |Watson |100 |B |
+|CS-319 |2 |Spring |2010 |Taylor |3128 |C |
+|CS-347 |1 |Fall |2009 |Taylor |3128 |A |
+|EE-181 |1 |Spring |2009 |Taylor |3128 |C |
+|FIN-201 |1 |Spring |2010 |Packard |101 |B |
+|HIS-351 |1 |Spring |2010 |Painter |514 |C |
+|MU-199 |1 |Spring |2010 |Packard |101 |D |
+|PHY-101 |1 |Fall |2009 |Watson |100 |A|
 
 **Figure 2.6** The _section_ relation.
 
-Figure 2.7 shows a sample instance of the _teaches_ relation. As you can imagine, there are many more relations maintained in a real uni-
+Figure 2.7 shows a sample instance of the _teaches_ relation. As you can imagine, there are many more relations maintained in a real university database. In addition to those relations we have listed already, _instructor_, _department_, _course_, _section_, _prereq_, and _teaches_, we use the following relations in this text:
 
-versity database. In addition to those relations we have listed already, _instructor_, _department_, _course_, _section_, _prereq_, and _teaches_, we use the following relations in this text:
-
-_ID course id sec id semester year_
-
-10101 CS-101 1 Fall 2009 10101 CS-315 1 Spring 2010 10101 CS-347 1 Fall 2009 12121 FIN-201 1 Spring 2010 15151 MU-199 1 Spring 2010 22222 PHY-101 1 Fall 2009 32343 HIS-351 1 Spring 2010 45565 CS-101 1 Spring 2010 45565 CS-319 1 Spring 2010 76766 BIO-101 1 Summer 2009 76766 BIO-301 1 Summer 2010 83821 CS-190 1 Spring 2009 83821 CS-190 2 Spring 2009 83821 CS-319 2 Spring 2010 98345 EE-181 1 Spring 2009
+|_ID_| _course id_| _sec id_| _semester_| _year_|
+| ---- | ---- | ---- | ---- | ---- | 
+|10101 |CS-101 |1 |Fall |2009 |
+|10101 |CS-315 |1 |Spring| 2010| 
+|10101 |CS-347 |1 |Fall |2009 |
+|12121 |FIN-201 |1 |Spring| 2010| 
+|15151 |MU-199 |1 |Spring |2010 |
+|22222 |PHY-101 |1 |Fall |2009 |
+|32343 |HIS-351 |1 |Spring| 2010| 
+|45565 |CS-101 |1 |Spring |2010 |
+|45565 |CS-319 |1 |Spring |2010 |
+|76766 |BIO-101 |1| Summer |2009 |
+|76766 |BIO-301 |1| Summer |2010 |
+|83821 |CS-190 |1| Spring |2009 |
+|83821 |CS-190 |2| Spring |2009|
+|83821 |CS-319 |2| Spring |2010 |
+|98345 |EE-181 |1| Spring |2009|
 
 **Figure 2.7** The _teaches_ relation.  
 
-**2.3 Keys 45**
+-_student_ (_ID_, _name_, _dept name_, _tot cred_)
 
-• _student_ (_ID_, _name_, _dept name_, _tot cred_)
+- _advisor_ (_s id_, _i id_)
 
-• _advisor_ (_s id_, _i id_)
+- _takes_ (_ID_, _course id_, _sec id_, _semester_, _year_, _grade_)
 
-• _takes_ (_ID_, _course id_, _sec id_, _semester_, _year_, _grade_)
+- _classroom_ (_building_, _room number_, _capacity_)
 
-• _classroom_ (_building_, _room number_, _capacity_)
+- _time slot_ (_time slot id_, _day_, _start time_, _end time_)
 
-• _time slot_ (_time slot id_, _day_, _start time_, _end time_)
+## Keys
 
-**2.3 Keys**
-
-We must have a way to specify how tuples within a given relation are distin- guished. This is expressed in terms of their attributes. That is, the values of the attribute values of a tuple must be such that they can _uniquely identify_ the tuple. In other words, no two tuples in a relation are allowed to have exactly the same value for all attributes.
+We must have a way to specify how tuples within a given relation are distinguished. This is expressed in terms of their attributes. That is, the values of the attribute values of a tuple must be such that they can _uniquely identify_ the tuple. In other words, no two tuples in a relation are allowed to have exactly the same value for all attributes.
 
 A **superkey** is a set of one or more attributes that, taken collectively, allow us to identify uniquely a tuple in the relation. For example, the _ID_ attribute of the relation _instructor_ is sufficient to distinguish one instructor tuple from another. Thus, _ID_ is a superkey. The _name_ attribute of _instructor_, on the other hand, is not a superkey, because several instructors might have the same name.
 
-Formally, let _R_ denote the set of attributes in the schema of relation _r_ . If we say that a subset _K_ of _R_ is a _superkey_ for _r_ , we are restricting consideration to instances of relations _r_ in which no two distinct tuples have the same values on all attributes in _K_. That is, if _t_1 and _t_2 are in _r_ and _t_1 = _t_2, then _t_1_.K_ = _t_2_.K_ .
+Formally, let _R_ denote the set of attributes in the schema of relation _r_ . If we say that a subset _K_ of _R_ is a _superkey_ for _r_ , we are restricting consideration to instances of relations _r_ in which no two distinct tuples have the same values on all attributes in _K_. That is, if _t_~1~ and _t_~2~ are in _r_ and _t_~1~ ≠= _t_~2~ , then _t_~1~_.K_ ≠= _t_~2~ _.K_ .
 
 A superkey may contain extraneous attributes. For example, the combination of _ID_ and _name_ is a superkey for the relation _instructor_. If _K_ is a superkey, then so is any superset of _K_. We are often interested in superkeys for which no proper subset is a superkey. Such minimal superkeys are called **candidate keys**.
 
@@ -183,75 +235,31 @@ It is possible that several distinct sets of attributes could serve as a candida
 
 We shall use the term **primary key** to denote a candidate key that is chosen by the database designer as the principal means of identifying tuples within a relation. A key (whether primary, candidate, or super) is a property of the entire relation, rather than of the individual tuples. Any two individual tuples in the relation are prohibited from having the same value on the key attributes at the same time. The designation of a key represents a constraint in the real-world enterprise being modeled.
 
-Primary keys must be chosen with care. As we noted, the name of a person is obviously not sufficient, because there may be many people with the same name. In the United States, the social-security number attribute of a person would be a candidate key. Since non-U.S. residents usually do not have social-security  
-
-**46 Chapter 2 Introduction to the Relational Model**
-
-numbers, international enterprises must generate their own unique identifiers. An alternative is to use some unique combination of other attributes as a key.
+Primary keys must be chosen with care. As we noted, the name of a person is obviously not sufficient, because there may be many people with the same name. In the United States, the social-security number attribute of a person would be a candidate key. Since non-U.S. residents usually do not have social-security numbers, international enterprises must generate their own unique identifiers. An alternative is to use some unique combination of other attributes as a key.
 
 The primary key should be chosen such that its attribute values are never, or very rarely, changed. For instance, the address field of a person should not be part of the primary key, since it is likely to change. Social-security numbers, on the other hand, are guaranteed never to change. Unique identifiers generated by enterprises generally do not change, except if two enterprises merge; in such a case the same identifier may have been issued by both enterprises, and a reallocation of identifiers may be required to make sure they are unique.
 
 It is customary to list the primary key attributes of a relation schema before the other attributes; for example, the _dept name_ attribute of _department_ is listed first, since it is the primary key. Primary key attributes are also underlined.
 
-A relation, say _r_1, may include among its attributes the primary key of an- other relation, say _r_2\. This attribute is called a **foreign key** from _r_1, referencing _r_2\. The relation _r_1 is also called the **referencing relation** of the foreign key depen- dency, and _r_2 is called the **referenced relation** of the foreign key. For example, the attribute _dept name_ in _instructor_ is a foreign key from _instructor_, referencing _depart- ment_, since _dept name_ is the primary key of _department_. In any database instance, given any tuple, say _ta_ , from the _instructor_ relation, there must be some tuple, say _tb_ , in the _department_ relation such that the value of the _dept name_ attribute of _ta_ is the same as the value of the primary key, _dept name_, of _tb_ .
+A relation, say _r_~1~, may include among its attributes the primary key of another relation, say _r_~2~\. This attribute is called a **foreign key** from _r_~1~, referencing _r_~2~\. The relation _r_~1~ is also called the **referencing relation** of the foreign key dependency, and _r_~2~ is called the **referenced relation** of the foreign key. For example, the attribute _dept name_ in _instructor_ is a foreign key from _instructor_, referencing _department_, since _dept name_ is the primary key of _department_. In any database instance, given any tuple, say _t~a~_ , from the _instructor_ relation, there must be some tuple, say _t~b~_ , in the _department_ relation such that the value of the _dept name_ attribute of _t~a~_ is the same as the value of the primary key, _dept name_, of _t~b~_ .
 
 Now consider the _section_ and _teaches_ relations. It would be reasonable to require that if a section exists for a course, it must be taught by at least one instructor; however, it could possibly be taught by more than one instructor. To enforce this constraint, we would require that if a particular (_course id_, _sec id_, _semester_, _year_) combination appears in _section_, then the same combination must appear in _teaches_. However, this set of values does not form a primary key for _teaches_, since more than one instructor may teach one such section. As a result, we cannot declare a foreign key constraint from _section_ to _teaches_ (although we can define a foreign key constraint in the other direction, from _teaches_ to _section_).
 
 The constraint from _section_ to _teaches_ is an example of a **referential integrity constraint**; a referential integrity constraint requires that the values appearing in specified attributes of any tuple in the referencing relation also appear in specified attributes of at least one tuple in the referenced relation.
 
-**2.4 Schema Diagrams**
+## Schema Diagrams
 
 A database schema, along with primary key and foreign key dependencies, can be depicted by **schema diagrams**. Figure 2.8 shows the schema diagram for our university organization. Each relation appears as a box, with the relation name at the top in blue, and the attributes listed inside the box. Primary key attributes are shown underlined. Foreign key dependencies appear as arrows from the foreign key attributes of the referencing relation to the primary key of the referenced relation.  
 
-**2.5 Relational Query Languages 47**
+![Alt text](image/figure-2.8.png)
 
-_ID course\_id sec\_id semester year grade_
-
-_ID name dept\_name tot\_cred_
-
-_building room\_no capacity_
-
-_s\_id i\_id_
-
-_ID course\_id sec\_id semester year_
-
-_takes_
-
-_section_
-
-_classroom_
-
-_teaches_
-
-_prereq course\_id prereq\_id_
-
-_course\_id title dept\_name credits_
-
-_course_
-
-_student_
-
-_dept\_name building budget_
-
-_department_
-
-_instructor ID name dept\_name salary_
-
-_advisor_
-
-_time\_slot time\_slot\_id day start\_time end\_time_
-
-_course\_id sec\_id semester year building room\_no time\_slot\_id_
-
-**Figure 2.8** Schema diagram for the university database.
-
-Referential integrity constraints other than foreign key constraints are not shown explicitly in schema diagrams. We will study a different diagrammatic representation called the entity-relationship diagram later, in Chapter 7. Entity- relationship diagrams let us represent several kinds of constraints, including general referential integrity constraints.
+Referential integrity constraints other than foreign key constraints are not shown explicitly in schema diagrams. We will study a different diagrammatic representation called the entity-relationship diagram later, in Chapter 7. Entityrelationship diagrams let us represent several kinds of constraints, including general referential integrity constraints.
 
 Many database systems provide design tools with a graphical user interface for creating schema diagrams. We shall discuss diagrammatic representation of schemas at length in Chapter 7.
 
-The enterprise that we use in the examples in later chapters is a university. Figure 2.9 gives the relational schema that we use in our examples, with primary- key attributes underlined. As we shall see in Chapter 3, this corresponds to the approach to defining relations in the SQL data-definition language.
+The enterprise that we use in the examples in later chapters is a university. Figure 2.9 gives the relational schema that we use in our examples, with primarykey attributes underlined. As we shall see in Chapter 3, this corresponds to the approach to defining relations in the SQL data-definition language.
 
-**2.5 Relational Query Languages**
+## Relational Query Languages
 
 A **query language** is a language in which a user requests information from the database. These languages are usually on a level higher than that of a standard programming language. Query languages can be categorized as either procedural or nonprocedural. In a **procedural language**, the user instructs the system to perform a sequence of operations on the database to compute the desired result. In a **nonprocedural language**, the user describes the desired information without giving a specific procedure for obtaining that information.  
 
@@ -263,7 +271,7 @@ _classroom_(_building_, _room number_, _capacity_) _department_(_dept name_, _bu
 
 Query languages used in practice include elements of both the procedural and the nonprocedural approaches. We study the very widely used query language SQL in Chapters 3 through 5.
 
-There are a number of “pure” query languages: The relational algebra is pro- cedural, whereas the tuple relational calculus and domain relational calculus are nonprocedural. These query languages are terse and formal, lacking the “syntactic sugar” of commercial languages, but they illustrate the fundamental techniques for extracting data from the database. In Chapter 6, we examine in detail the rela- tional algebra and the two versions of the relational calculus, the tuple relational calculus and domain relational calculus. The relational algebra consists of a set of operations that take one or two relations as input and produce a new relation as their result. The relational calculus uses predicate logic to define the result desired without giving any specific algebraic procedure for obtaining that result.
+There are a number of “pure” query languages: The relational algebra is procedural, whereas the tuple relational calculus and domain relational calculus are nonprocedural. These query languages are terse and formal, lacking the “syntactic sugar” of commercial languages, but they illustrate the fundamental techniques for extracting data from the database. In Chapter 6, we examine in detail the relational algebra and the two versions of the relational calculus, the tuple relational calculus and domain relational calculus. The relational algebra consists of a set of operations that take one or two relations as input and produce a new relation as their result. The relational calculus uses predicate logic to define the result desired without giving any specific algebraic procedure for obtaining that result.
 
 **2.6 Relational Operations**
 
@@ -271,7 +279,7 @@ All procedural relational query languages provide a set of operations that can b
 
 The specific relational operations are expressed differently depending on the language, but fit the general framework we describe in this section. In Chapter 3, we show the specific way the operations are expressed in SQL.
 
-The most frequent operation is the selection of specific tuples from a sin- gle relation (say _instructor_) that satisfies some particular predicate (say _salary >_
+The most frequent operation is the selection of specific tuples from a single relation (say _instructor_) that satisfies some particular predicate (say _salary >_
 
 $85,000). The result is a new relation that is a subset of the original relation (_in-_  
 
@@ -323,7 +331,7 @@ _ID salary_
 
 **RELATIONAL ALGEBRA**
 
-The relational algebra defines a set of operations on relations, paralleling the usual algebraic operations such as addition, subtraction or multiplication, which operate on numbers. Just as algebraic operations on numbers take one or more numbers as input and return a number as output, the relational algebra op- erations typically take one or two relations as input and return a relation as output.
+The relational algebra defines a set of operations on relations, paralleling the usual algebraic operations such as addition, subtraction or multiplication, which operate on numbers. Just as algebraic operations on numbers take one or more numbers as input and return a number as output, the relational algebra operations typically take one or two relations as input and return a relation as output.
 
 Relational algebra is covered in detail in Chapter 6, but we outline a few of the operations below.
 
@@ -349,7 +357,7 @@ relations.
 
 and _salary_. In this example, we could have performed the operations in either order, but that is not the case for all situations, as we shall see.
 
-Sometimes, the result of a query contains duplicate tuples. For example, if we select the _dept name_ attribute from the _instructor_ relation, there are several cases of duplication, including “Comp. Sci.”, which shows up three times. Certain rela- tional languages adhere strictly to the mathematical definition of a set and remove duplicates. Others, in consideration of the relatively large amount of processing required to remove duplicates from large result relations, retain duplicates. In these latter cases, the relations are not truly relations in the pure mathematical sense of the term.
+Sometimes, the result of a query contains duplicate tuples. For example, if we select the _dept name_ attribute from the _instructor_ relation, there are several cases of duplication, including “Comp. Sci.”, which shows up three times. Certain relational languages adhere strictly to the mathematical definition of a set and remove duplicates. Others, in consideration of the relatively large amount of processing required to remove duplicates from large result relations, retain duplicates. In these latter cases, the relations are not truly relations in the pure mathematical sense of the term.
 
 Of course, data in a database must be changed over time. A relation can be updated by inserting new tuples, deleting existing tuples, or modifying tuples by  
 
@@ -363,7 +371,7 @@ We shall discuss relational queries and updates using the SQL language in Chapte
 
 • The **relational data model** is based on a collection of tables. The user of the database system may query these tables, insert new tuples, delete tuples, and update (modify) tuples. There are several languages for expressing these operations.
 
-• The **schema** of a relation refers to its logical design, while an **instance** of the relation refers to its contents at a point in time. The schema of a database and an instance of a database are similarly defined. The schema of a relation in- cludes its attributes, and optionally the types of the attributes and constraints on the relation such as primary and foreign key constraints.
+• The **schema** of a relation refers to its logical design, while an **instance** of the relation refers to its contents at a point in time. The schema of a database and an instance of a database are similarly defined. The schema of a relation includes its attributes, and optionally the types of the attributes and constraints on the relation such as primary and foreign key constraints.
 
 • A **superkey** of a relation is a set of one or more attributes whose values are guaranteed to identify tuples in the relation uniquely. A candidate key is a minimal superkey, that is, a set of attributes that forms a superkey, but none of whose subsets is a superkey. One of the candidate keys of a relation is chosen as its **primary key**.
 
@@ -455,11 +463,11 @@ b. Find the names of all employees whose salary is greater than $100,000.
 
 c. Find the names of all employees who live in “Miami” and whose salary is greater than $100,000.
 
-**2.8** Consider the bank database of Figure 2.15. Give an expression in the rela- tional algebra for each of the following queries.
+**2.8** Consider the bank database of Figure 2.15. Give an expression in the relational algebra for each of the following queries.
 
 a. Find the names of all branches located in “Chicago”.
 
-b. Find the names of all borrowers who have a loan in branch “Down- town”.
+b. Find the names of all borrowers who have a loan in branch “Downtown”.
 
 **Exercises**
 
@@ -477,13 +485,13 @@ b. Given your choice of primary keys, identify appropriate foreign keys.
 
 **2.12** Consider the relational database of Figure 2.14. Give an expression in the relational algebra to express each of the following queries:
 
-a. Find the names of all employees who work for “First Bank Corpora- tion”.
+a. Find the names of all employees who work for “First Bank Corporation”.
 
 b. Find the names and cities of residence of all employees who work for “First Bank Corporation”.
 
 c. Find the names, street address, and cities of residence of all employees who work for “First Bank Corporation” and earn more than $10,000.
 
-**2.13** Consider the bank database of Figure 2.15. Give an expression in the rela- tional algebra for each of the following queries:
+**2.13** Consider the bank database of Figure 2.15. Give an expression in the relational algebra for each of the following queries:
 
 a. Find all loan numbers with a loan value greater than $10,000.
 
@@ -519,11 +527,11 @@ It is not our intention to provide a complete users’ guide for SQL. Rather, we
 
 IBM developed the original version of SQL, originally called Sequel, as part of the System R project in the early 1970s. The Sequel language has evolved since then, and its name has changed to SQL (Structured Query Language). Many products now support the SQL language. SQL has clearly established itself as _the_ standard relational database language.
 
-In 1986, the American National Standards Institute (ANSI) and the Interna- tional Organization for Standardization (ISO) published an SQL standard, called SQL-86. ANSI published an extended standard for SQL, SQL-89, in 1989. The next ver- sion of the standard was SQL-92 standard, followed by SQL:1999, SQL:2003, SQL:2006, and most recently SQL:2008. The bibliographic notes provide references to these standards.
+In 1986, the American National Standards Institute (ANSI) and the International Organization for Standardization (ISO) published an SQL standard, called SQL-86. ANSI published an extended standard for SQL, SQL-89, in 1989. The next version of the standard was SQL-92 standard, followed by SQL:1999, SQL:2003, SQL:2006, and most recently SQL:2008. The bibliographic notes provide references to these standards.
 
 The SQL language has several parts:
 
-• **Data-definition language** (DDL). The SQL DDL provides commands for defin- ing relation schemas, deleting relations, and modifying relation schemas.
+• **Data-definition language** (DDL). The SQL DDL provides commands for defining relation schemas, deleting relations, and modifying relation schemas.
 
 • **Data-manipulation language** (DML). The SQL DML provides the ability to query information from the database and to insert tuples into, delete tuples from, and modify tuples in the database.
 
@@ -531,13 +539,13 @@ The SQL language has several parts:
 
 **58 Chapter 3 Introduction to SQL**
 
-• **Integrity**. The SQL DDL includes commands for specifying integrity con- straints that the data stored in the database must satisfy. Updates that violate integrity constraints are disallowed.
+• **Integrity**. The SQL DDL includes commands for specifying integrity constraints that the data stored in the database must satisfy. Updates that violate integrity constraints are disallowed.
 
 • **View definition.** The SQL DDL includes commands for defining views.
 
 • **Transaction control**. SQL includes commands for specifying the beginning and ending of transactions.
 
-• **Embedded SQL** and **dynamic SQL**. Embedded and dynamic SQL define how SQL statements can be embedded within general-purpose programming lan- guages, such as C, C++, and Java.
+• **Embedded SQL** and **dynamic SQL**. Embedded and dynamic SQL define how SQL statements can be embedded within general-purpose programming languages, such as C, C++, and Java.
 
 • **Authorization**. The SQL DDL includes commands for specifying access rights to relations and views.
 
@@ -545,9 +553,9 @@ In this chapter, we present a survey of basic DML and the DDL features of SQL. F
 
 In Chapter 4, we provide a more detailed coverage of the SQL query language, including (a) various join expressions; (b) views; (c) transactions; (d) integrity constraints; (e) type system; and (f) authorization.
 
-In Chapter 5, we cover more advanced features of the SQL language, including (a) mechanisms to allow accessing SQL from a programming language; (b) SQL functions and procedures; (c) triggers; (d) recursive queries; (e) advanced aggre- gation features; and (f) several features designed for data analysis, which were introduced in SQL:1999, and subsequent versions of SQL. Later, in Chapter 22, we outline object-oriented extensions to SQL, which were introduced in SQL:1999.
+In Chapter 5, we cover more advanced features of the SQL language, including (a) mechanisms to allow accessing SQL from a programming language; (b) SQL functions and procedures; (c) triggers; (d) recursive queries; (e) advanced aggregation features; and (f) several features designed for data analysis, which were introduced in SQL:1999, and subsequent versions of SQL. Later, in Chapter 22, we outline object-oriented extensions to SQL, which were introduced in SQL:1999.
 
-Although most SQL implementations support the standard features we de- scribe here, you should be aware that there are differences between implementa- tions. Most implementations support some nonstandard features, while omitting support for some of the more advanced features. In case you find that some lan- guage features described here do not work on the database system that you use, consult the user manuals for your database system to find exactly what features it supports.
+Although most SQL implementations support the standard features we describe here, you should be aware that there are differences between implementations. Most implementations support some nonstandard features, while omitting support for some of the more advanced features. In case you find that some language features described here do not work on the database system that you use, consult the user manuals for your database system to find exactly what features it supports.
 
 **3.2 SQL Data Definition**
 
@@ -581,7 +589,7 @@ The SQL standard supports a variety of built-in types, including:
 
 • **smallint**: A small integer (a machine-dependent subset of the integer type).
 
-• **numeric**(_p, d_): A fixed-point number with user-specified precision. The num- ber consists of _p_ digits (plus a sign), and _d_ of the _p_ digits are to the right of the decimal point. Thus, **numeric**(3,1) allows 44_._5 to be stored exactly, but neither 444_._5 or 0_._32 can be stored exactly in a field of this type.
+• **numeric**(_p, d_): A fixed-point number with user-specified precision. The number consists of _p_ digits (plus a sign), and _d_ of the _p_ digits are to the right of the decimal point. Thus, **numeric**(3,1) allows 44_._5 to be stored exactly, but neither 444_._5 or 0_._32 can be stored exactly in a field of this type.
 
 • **real, double precision**: Floating-point and double-precision floating-point numbers with machine-dependent precision.
 
@@ -619,7 +627,7 @@ The semicolon shown at the end of the **create table** statements, as well as at
 
 SQL supports a number of different integrity constraints. In this section, we discuss only a few of them:
 
-• **primary key** (_Aj_1 _, Aj_2_, . . . , Ajm_ ): The **primary-key** specification says that at- tributes _Aj_1 _, Aj_2 _, . . . , Ajm_ form the primary key for the relation. The primary- key attributes are required to be _nonnull_ and _unique_; that is, no tuple can have a null value for a primary-key attribute, and no two tuples in the relation can be equal on all the primary-key attributes. Although the primary-key  
+• **primary key** (_Aj_1 _, Aj_2_, . . . , Ajm_ ): The **primary-key** specification says that attributes _Aj_1 _, Aj_2 _, . . . , Ajm_ form the primary key for the relation. The primarykey attributes are required to be _nonnull_ and _unique_; that is, no tuple can have a null value for a primary-key attribute, and no two tuples in the relation can be equal on all the primary-key attributes. Although the primary-key  
 
 **3.2 SQL Data Definition 61**
 
@@ -661,7 +669,7 @@ We can use the **delete** command to delete tuples from a relation. The command
 
 **3.3 Basic Structure of SQL Queries 63**
 
-would delete all tuples from the _student_ relation. Other forms of the delete com- mand allow specific tuples to be deleted; the delete command is covered in more detail later, in Section 3.9.1.
+would delete all tuples from the _student_ relation. Other forms of the delete command allow specific tuples to be deleted; the delete command is covered in more detail later, in Section 3.9.1.
 
 To remove a relation from an SQL database, we use the **drop table** command. The **drop table** command deletes all information about the dropped relation from the database. The command
 
@@ -733,7 +741,7 @@ SQL allows us to use the keyword **all** to specify explicitly that duplicates a
 
 Since duplicate retention is the default, we shall not use **all** in our examples. To ensure the elimination of duplicates in the results of our example queries, we shall use **distinct** whenever it is necessary.
 
-The **select** clause may also contain arithmetic expressions involving the op- erators +, −, ∗, and / operating on constants or attributes of tuples. For example, the query:
+The **select** clause may also contain arithmetic expressions involving the operators +, −, ∗, and / operating on constants or attributes of tuples. For example, the query:
 
 **select** _ID_, _name_, _dept name_, _salary_ \* 1.1 **from** _instructor_;
 
@@ -797,7 +805,7 @@ We now consider the general case of SQL queries involving multiple relations. As
 
 A typical SQL query has the form
 
-**select** _A_1_, A_2_, . . . , An_ **from** _r_1_, r_2_, . . . , rm_ **where** _P_;
+**select** _A_1_, A_2_, . . . , An_ **from** _r_~1~_, r_2_, . . . , rm_ **where** _P_;
 
 Each _Ai_ represents an attribute, and each _ri_ a relation. _P_ is a predicate. If the **where** clause is omitted, the predicate _P_ is **true**.  
 
@@ -807,19 +815,19 @@ Although the clauses must be written in the order **select**, **from**, **where*
 
 The **from** clause by itself defines a Cartesian product of the relations listed in the clause. It is defined formally in terms of set theory, but is perhaps best understood as an iterative process that generates tuples for the result relation of the **from** clause.
 
-**for each** tuple _t_1 **in** relation _r_1 **for each** tuple _t_2 **in** relation _r_2
+**for each** tuple _t_~1~ **in** relation _r_~1~ **for each** tuple _t_~2~  **in** relation _r_~2~
 
 _. . ._
 
-**for each** tuple _tm_ **in** relation _rm_ Concatenate _t_1_, t_2_, . . . , tm_ into a single tuple _t_ Add _t_ into the result relation
+**for each** tuple _tm_ **in** relation _rm_ Concatenate _t_~1~_, t_2_, . . . , tm_ into a single tuple _t_ Add _t_ into the result relation
 
 The result relation has all attributes from all the relations in the **from** clause. Since the same attribute name may appear in both _ri_ and _r j_ , as we saw earlier, we prefix the the name of the relation from which the attribute originally came, before the attribute name.
 
-For example, the relation schema for the Cartesian product of relations _in- structor_ and _teaches_ is:
+For example, the relation schema for the Cartesian product of relations _instructor_ and _teaches_ is:
 
 (_instructor_._ID_, _instructor_._name_, _instructor_._dept name_, _instructor_._salary teaches_._ID_, _teaches_._course id_, _teaches_._sec id_, _teaches_._semester_, _teaches_._year_)
 
-With this schema, we can distinguish _instructor_._ID_ from _teaches_._ID_. For those at- tributes that appear in only one of the two schemas, we shall usually drop the relation-name prefix. This simplification does not lead to any ambiguity. We can then write the relation schema as:
+With this schema, we can distinguish _instructor_._ID_ from _teaches_._ID_. For those attributes that appear in only one of the two schemas, we shall usually drop the relation-name prefix. This simplification does not lead to any ambiguity. We can then write the relation schema as:
 
 (_instructor_._ID_, _name_, _dept name_, _salary teaches_._ID_, _course id_, _sec id_, _semester_, _year_)
 
@@ -863,7 +871,7 @@ Note that the above query outputs only instructors who have taught some course. 
 
 If the _instructor_ relation is as shown in Figure 2.1 and the _teaches_ relation is as shown in Figure 2.7, then the relation that results from the preceding query is shown in Figure 3.7. Observe that instructors Gold, Califieri, and Singh, who have not taught any course, do not appear in the above result.
 
-If we only wished to find instructor names and course identifiers for instruc- tors in the Computer Science department, we could add an extra predicate to the **where** clause, as shown below.
+If we only wished to find instructor names and course identifiers for instructors in the Computer Science department, we could add an extra predicate to the **where** clause, as shown below.
 
 **select** _name_, _course id_ **from** _instructor_, _teaches_ **where** _instructor_._ID_\= _teaches_._ID_ **and** _instructor_._dept name_ \= ’Comp. Sci.’;
 
@@ -925,7 +933,7 @@ by the relation obtained by evaluating the natural join.3 The **where** and **se
 
 A **from** clause in an SQL query can have multiple relations combined using natural join, as shown here:
 
-**select** _A_1_, A_2_, . . . , An_ **from** _r_1 **natural join** _r_2 **natural join** . . . **natural join** _rm_ **where** _P_;
+**select** _A_1_, A_2_, . . . , An_ **from** _r_~1~ **natural join** _r_~2~ **natural join** . . . **natural join** _rm_ **where** _P_;
 
 More generally, a **from** clause can be of the form
 
@@ -943,7 +951,7 @@ In contrast the following SQL query does _not_ compute the same result:
 
 To see why, note that the natural join of _instructor_ and _teaches_ contains the attributes (_ID_, _name_, _dept name_, _salary_, _course id_, _sec id_), while the _course_ relation contains the attributes (_course id_, _title_, _dept name_, _credits_). As a result, the natural join of these two would require that the _dept name_ attribute values from the two inputs be the same, in addition to requiring that the _course id_ values be the same. This query would then omit all (instructor name, course title) pairs where the instructor teaches a course in a department other than the instructor’s own department. The previous query, on the other hand, correctly outputs such pairs.
 
-3As a consequence, it is not possible to use attribute names containing the original relation names, for instance _instruc- tor_._name_or _teaches_._course id_, to refer to attributes in the natural join result; we can, however, use attribute names such as _name_ and _course id_, without the relation names.  
+3As a consequence, it is not possible to use attribute names containing the original relation names, for instance _instructor_._name_or _teaches_._course id_, to refer to attributes in the natural join result; we can, however, use attribute names such as _name_ and _course id_, without the relation names.  
 
 **74 Chapter 3 Introduction to SQL**
 
@@ -951,7 +959,7 @@ To provide the benefit of natural join while avoiding the danger of equating att
 
 **select** _name_, _title_ **from** (_instructor_ **natural join** _teaches_) **join** _course_ **using** (_course id_);
 
-The operation **join** _. . ._ **using** requires a list of attribute names to be specified. Both inputs must have attributes with the specified names. Consider the operation _r_1 **join** _r_2 **using**(_A_1_, A_2). The operation is similar to _r_1 **natural join** _r_2, except that a pair of tuples _t_1 from _r_1 and _t_2 from _r_2 match if _t_1_.A_1 = _t_2_.A_1 and _t_1_.A_2 = _t_2_.A_2; even if _r_1 and _r_2 both have an attribute named _A_3, it is _not_ required that _t_1_.A_3 = _t_2_.A_3.
+The operation **join** _. . ._ **using** requires a list of attribute names to be specified. Both inputs must have attributes with the specified names. Consider the operation _r_~1~ **join** _r_~2~ **using**(_A_1_, A_2). The operation is similar to _r_~1~ **natural join** _r_~2~, except that a pair of tuples _t_~1~ from _r_~1~ and _t_~2~  from _r_~2~ match if _t_~1~_.A_1 = _t_~2~ _.A_1 and _t_~1~_.A_2 = _t_~2~ _.A_2; even if _r_~1~ and _r_~2~ both have an attribute named _A_3, it is _not_ required that _t_~1~_.A_3 = _t_~2~ _.A_3.
 
 Thus, in the preceding SQL query, the **join** construct permits _teaches_._dept name_ and _course_._dept name_ to differ, and the SQL query gives the correct answer.
 
@@ -1005,9 +1013,9 @@ Note that a better way to phrase the previous query in English would be “Find 
 
 SQL specifies strings by enclosing them in single quotes, for example, ’Computer’. A single quote character that is part of a string can be specified by using two single quote characters; for example, the string “It’s right” can be specified by “It”s right”.
 
-The SQL standard specifies that the equality operation on strings is case sen- sitive; as a result the expression “’comp. sci.’ = ’Comp. Sci.’” evaluates to false. However, some database systems, such as MySQL and SQL Server, do not distin- guish uppercase from lowercase when matching strings; as a result “’comp. sci.’ = ’Comp. Sci.’” would evaluate to true on these databases. This default behavior can, however, be changed, either at the database level or at the level of specific attributes.
+The SQL standard specifies that the equality operation on strings is case sensitive; as a result the expression “’comp. sci.’ = ’Comp. Sci.’” evaluates to false. However, some database systems, such as MySQL and SQL Server, do not distinguish uppercase from lowercase when matching strings; as a result “’comp. sci.’ = ’Comp. Sci.’” would evaluate to true on these databases. This default behavior can, however, be changed, either at the database level or at the level of specific attributes.
 
-SQL also permits a variety of functions on character strings, such as concate- nating (using “‖”), extracting substrings, finding the length of strings, converting strings to uppercase (using the function **upper**(_s_) where _s_ is a string) and low- ercase (using the function **lower**(_s_)), removing spaces at the end of the string (using **trim**(_s_)) and so on. There are variations on the exact set of string functions supported by different database systems. See your database system’s manual for more details on exactly what string functions it supports.
+SQL also permits a variety of functions on character strings, such as concatenating (using “‖”), extracting substrings, finding the length of strings, converting strings to uppercase (using the function **upper**(_s_) where _s_ is a string) and lowercase (using the function **lower**(_s_)), removing spaces at the end of the string (using **trim**(_s_)) and so on. There are variations on the exact set of string functions supported by different database systems. See your database system’s manual for more details on exactly what string functions it supports.
 
 Pattern matching can be performed on strings, using the operator **like**. We describe patterns by using two special characters:
 
@@ -1019,7 +1027,7 @@ Patterns are case sensitive; that is, uppercase characters do not match lowercas
 
 • ’Intro%’ matches any string beginning with “Intro”.
 
-• ’%Comp%’ matches any string containing “Comp” as a substring, for exam- ple, ’Intro. to Computer Science’, and ’Computational Biology’.
+• ’%Comp%’ matches any string containing “Comp” as a substring, for example, ’Intro. to Computer Science’, and ’Computational Biology’.
 
 • ’ ’ matches any string of exactly three characters.
 
@@ -1095,7 +1103,7 @@ is true if _a_1 _<_\= _b_1 **and** _a_2 _<_\= _b_2; similarly, the two tuples ar
 
 **3.5 Set Operations**
 
-The SQL operations **union**, **intersect**, and **except** operate on relations and cor- respond to the mathematical set-theory operations ∪, ∩, and −. We shall now construct queries involving the **union**, **intersect**, and **except** operations over two sets.
+The SQL operations **union**, **intersect**, and **except** operate on relations and correspond to the mathematical set-theory operations ∪, ∩, and −. We shall now construct queries involving the **union**, **intersect**, and **except** operations over two sets.
 
 • The set of all courses taught in the Fall 2009 semester:
 
@@ -1191,7 +1199,7 @@ The number of duplicate copies of a tuple in the result is equal to the number o
 
 **3.6 Null Values**
 
-Null values present special problems in relational operations, including arith- metic operations, comparison operations, and set operations.
+Null values present special problems in relational operations, including arithmetic operations, comparison operations, and set operations.
 
 The result of an arithmetic expression (involving, for example +, −, ∗, or _/_) is null if any of the input values is null. For example, if a query has an expression _r.A_\+ 5, and _r.A_ is null for a particular tuple, then the expression result must also be null for that tuple.
 
@@ -1219,7 +1227,7 @@ The predicate **is not null** succeeds if the value on which it is applied is no
 
 parison is unknown, rather than true or false, by using the clauses **is unknown** and **is not unknown**.
 
-When a query uses the **select distinct** clause, duplicate tuples must be elim- inated. For this purpose, when comparing values of corresponding attributes from two tuples, the values are treated as identical if either both are non-null and equal in value, or both are null. Thus two copies of a tuple, such as _{_(’A’,null), (’A’,null)_}_, are treated as being identical, even if some of the attributes have a null value. Using the **distinct** clause then retains only one copy of such identical tuples. Note that the treatment of null above is different from the way nulls are treated in predicates, where a comparison “null=null” would return unknown, rather than true.
+When a query uses the **select distinct** clause, duplicate tuples must be eliminated. For this purpose, when comparing values of corresponding attributes from two tuples, the values are treated as identical if either both are non-null and equal in value, or both are null. Thus two copies of a tuple, such as _{_(’A’,null), (’A’,null)_}_, are treated as being identical, even if some of the attributes have a null value. Using the **distinct** clause then retains only one copy of such identical tuples. Note that the treatment of null above is different from the way nulls are treated in predicates, where a comparison “null=null” would return unknown, rather than true.
 
 The above approach of treating tuples as identical if they have the same values for all attributes, even if some of the values are null, is also used for the set operations union, intersection and except.
 
@@ -1243,7 +1251,7 @@ The input to **sum** and **avg** must be a collection of numbers, but the other 
 
 **3.7.1 Basic Aggregation**
 
-Consider the query “Find the average salary of instructors in the Computer Sci- ence department.” We write this query as follows:
+Consider the query “Find the average salary of instructors in the Computer Science department.” We write this query as follows:
 
 **select avg** (_salary_) **from** _instructor_ **where** _dept name_\= ’Comp. Sci.’;
 
@@ -1279,7 +1287,7 @@ SQL does not allow the use of **distinct** with **count** (\*). It is legal to u
 
 There are circumstances where we would like to apply the aggregate function not only to a single set of tuples, but also to a group of sets of tuples; we specify this wish in SQL using the **group by** clause. The attribute or attributes given in the **group by** clause are used to form groups. Tuples with the same value on all attributes in the **group by** clause are placed in one group.
 
-As an illustration, consider the query “Find the average salary in each depart- ment.” We write this query as follows:
+As an illustration, consider the query “Find the average salary in each department.” We write this query as follows:
 
 **select** _dept name_, **avg** (_salary_) **as** _avg salary_ **from** _instructor_ **group by** _dept name_;
 
@@ -1301,7 +1309,7 @@ Biology 72000 Comp. Sci. 77333 Elec. Eng. 80000 Finance 85000 History 61000 Musi
 
 In this case the **group by** clause has been omitted, so the entire relation is treated as a single group.
 
-As another example of aggregation on groups of tuples, consider the query “Find the number of instructors in each department who teach a course in the Spring 2010 semester.” Information about which instructors teach which course sections in which semester is available in the _teaches_ relation. However, this in- formation has to be joined with information from the _instructor_ relation to get the department name of each instructor. Thus, we write this query as follows:
+As another example of aggregation on groups of tuples, consider the query “Find the number of instructors in each department who teach a course in the Spring 2010 semester.” Information about which instructors teach which course sections in which semester is available in the _teaches_ relation. However, this information has to be joined with information from the _instructor_ relation to get the department name of each instructor. Thus, we write this query as follows:
 
 **select** _dept name_, **count** (**distinct** _ID_) **as** _instr count_ **from** _instructor_ **natural join** _teaches_ **where** _semester_ \= ’Spring’ **and** _year_ \= 2010 **group by** _dept name_;
 
@@ -1375,7 +1383,7 @@ A **Boolean** data type that can take values **true**, **false**, and **unknown*
 
 **3.8 Nested Subqueries**
 
-SQL provides a mechanism for nesting subqueries. A subquery is a **select**\-**from**\- **where** expression that is nested within another query. A common use of sub- queries is to perform tests for set membership, make set comparisons, and deter- mine set cardinality, by nesting subqueries in the **where** clause. We study such uses of nested subqueries in the **where** clause in Sections 3.8.1 through 3.8.4. In Section 3.8.5, we study nesting of subqueries in the **from** clause. In Section 3.8.7, we see how a class of subqueries called scalar subqueries can appear wherever an expression returning a value can occur.
+SQL provides a mechanism for nesting subqueries. A subquery is a **select**\-**from**\**where** expression that is nested within another query. A common use of subqueries is to perform tests for set membership, make set comparisons, and determine set cardinality, by nesting subqueries in the **where** clause. We study such uses of nested subqueries in the **where** clause in Sections 3.8.1 through 3.8.4. In Section 3.8.5, we study nesting of subqueries in the **from** clause. In Section 3.8.7, we see how a class of subqueries called scalar subqueries can appear wherever an expression returning a value can occur.
 
 **3.8.1 Set Membership**
 
@@ -1401,7 +1409,7 @@ We use the **not in** construct in a way similar to the **in** construct. For ex
 
 **from** _section_ **where** _semester_ \= ’Spring’ **and** _year_\= 2010);
 
-The **in** and **not in** operators can also be used on enumerated sets. The follow- ing query selects the names of instructors whose names are neither “Mozart” nor “Einstein”.
+The **in** and **not in** operators can also be used on enumerated sets. The following query selects the names of instructors whose names are neither “Mozart” nor “Einstein”.
 
 **select distinct** _name_ **from** _instructor_ **where** _name_ **not in** (’Mozart’, ’Einstein’);
 
@@ -1431,9 +1439,9 @@ The subquery:
 
 generates the set of all salary values of all instructors in the Biology department. The _\>_ **some** comparison in the **where** clause of the outer **select** is true if the _salary_ value of the tuple is greater than at least one member of the set of all salary values for instructors in Biology.
 
-SQL also allows _<_ **some**, _<_\= **some**, _\>_\= **some**, = **some**, and _<>_ **some** com- parisons. As an exercise, verify that = **some** is identical to **in**, whereas _<>_ **some** is _not_ the same as **not in**.8
+SQL also allows _<_ **some**, _<_\= **some**, _\>_\= **some**, = **some**, and _<>_ **some** comparisons. As an exercise, verify that = **some** is identical to **in**, whereas _<>_ **some** is _not_ the same as **not in**.8
 
-Now we modify our query slightly. Let us find the names of all instructors that have a salary value greater than that of each instructor in the Biology depart- ment. The construct _\>_ **all** corresponds to the phrase “greater than all.” Using this construct, we write the query as follows:
+Now we modify our query slightly. Let us find the names of all instructors that have a salary value greater than that of each instructor in the Biology department. The construct _\>_ **all** corresponds to the phrase “greater than all.” Using this construct, we write the query as follows:
 
 **select** _name_ **from** _instructor_ **where** _salary >_ **all** (**select** _salary_
 
@@ -1441,7 +1449,7 @@ Now we modify our query slightly. Let us find the names of all instructors that 
 
 As it does for **some**, SQL also allows _<_ **all**, _<_\= **all**, _\>_\= **all**, = **all**, and _<>_ **all** comparisons. As an exercise, verify that _<>_ **all** is identical to **not in**, whereas = **all** is _not_ the same as **in**.
 
-As another example of set comparisons, consider the query “Find the depart- ments that have the highest average salary.” We begin by writing a query to find all average salaries, and then nest it as a subquery of a larger query that finds
+As another example of set comparisons, consider the query “Find the departments that have the highest average salary.” We begin by writing a query to find all average salaries, and then nest it as a subquery of a larger query that finds
 
 8The keyword **any** is synonymous to **some** in SQL. Early versions of SQL allowed only **any**. Later versions added the alternative **some** to avoid the linguistic ambiguity of the word _any_ in English.  
 
@@ -1517,13 +1525,13 @@ We can test for the existence of duplicate tuples in a subquery by using the **n
 
 _R_._year_ \= 2009);
 
-Formally, the **unique** test on a relation is defined to fail if and only if the relation contains two tuples _t_1 and _t_2 such that _t_1 = _t_2\. Since the test _t_1 = _t_2 fails if any of the fields of _t_1 or _t_2 are null, it is possible for **unique** to be true even if there are multiple copies of a tuple, as long as at least one of the attributes of the tuple is null.
+Formally, the **unique** test on a relation is defined to fail if and only if the relation contains two tuples _t_~1~ and _t_~2~  such that _t_~1~ = _t_~2~ \. Since the test _t_~1~ = _t_~2~  fails if any of the fields of _t_~1~ or _t_~2~  are null, it is possible for **unique** to be true even if there are multiple copies of a tuple, as long as at least one of the attributes of the tuple is null.
 
 **3.8.5 Subqueries in the From Clause**
 
 SQL allows a subquery expression to be used in the **from** clause. The key concept applied here is that any **select**\-**from**\-**where** expression returns a relation as a result and, therefore, can be inserted into another **select**\-**from**\-**where** anywhere that a relation can appear.
 
-Consider the query “Find the average instructors’ salaries of those depart- ments where the average salary is greater than $42,000.” We wrote this query in Section 3.7 by using the **having** clause. We can now rewrite this query, without using the **having** clause, by using a subquery in the **from** clause, as follows:
+Consider the query “Find the average instructors’ salaries of those departments where the average salary is greater than $42,000.” We wrote this query in Section 3.7 by using the **having** clause. We can now rewrite this query, without using the **having** clause, by using a subquery in the **from** clause, as follows:
 
 **select** _dept name_, _avg salary_ **from** (**select** _dept name_, **avg** (_salary_) **as** _avg salary_
 
@@ -1549,7 +1557,7 @@ The subquery result relation is named _dept avg_, with the attributes _dept name
 
 Nested subqueries in the **from** clause are supported by most but not all SQL implementations. However, some SQL implementations, notably Oracle, do not support renaming of the result relation in the **from** clause.
 
-As another example, suppose we wish to find the maximum across all de- partments of the total salary at each department. The **having** clause does not help us in this task, but we can write this query easily by using a subquery in the **from** clause, as follows:
+As another example, suppose we wish to find the maximum across all departments of the total salary at each department. The **having** clause does not help us in this task, but we can write this query easily by using a subquery in the **from** clause, as follows:
 
 **select max** (_tot salary_) **from** (**select** _dept name_, **sum**(_salary_)
 
@@ -1601,7 +1609,7 @@ can be used in the **select** clause as illustrated in the following example tha
 
 The subquery in the above example is guaranteed to return only a single value since it has a **count**(\*) aggregate without a **group by**. The example also illustrates the usage of correlation variables, that is, attributes of relations in the **from** clause of the outer query, such as _department_._dept name_ in the above example.
 
-Scalar subqueries can occur in **select**, **where**, and **having** clauses. Scalar sub- queries may also be defined without aggregates. It is not always possible to figure out at compile time if a subquery can return more than one tuple in its result; if the result has more than one tuple when the subquery is executed, a run-time error occurs.
+Scalar subqueries can occur in **select**, **where**, and **having** clauses. Scalar subqueries may also be defined without aggregates. It is not always possible to figure out at compile time if a subquery can return more than one tuple in its result; if the result has more than one tuple when the subquery is executed, a run-time error occurs.
 
 Note that technically the type of a scalar subquery result is still a relation, even if it contains a single tuple. However, when a scalar subquery is used in an expression where a value is expected, SQL implicitly extracts the value from the single attribute of the single tuple in the relation, and returns that value.
 
@@ -1649,7 +1657,7 @@ Note that, although we may delete tuples from only one relation at a time, we ma
 
 **from** _instructor_);
 
-The **delete** statement first tests each tuple in the relation _instructor_ to check whether the salary is less than the average salary of instructors in the univer- sity. Then, all tuples that fail the test—that is, represent an instructor with a lower-than-average salary—are deleted. Performing all the tests before perform- ing any deletion is important—if some tuples are deleted before other tuples  
+The **delete** statement first tests each tuple in the relation _instructor_ to check whether the salary is less than the average salary of instructors in the university. Then, all tuples that fail the test—that is, represent an instructor with a lower-than-average salary—are deleted. Performing all the tests before performing any deletion is important—if some tuples are deleted before other tuples  
 
 **100 Chapter 3 Introduction to SQL**
 
@@ -1699,7 +1707,7 @@ Most relational database products have special “bulk loader” utilities to in
 
 In certain situations, we may wish to change a value in a tuple without changing _all_ values in the tuple. For this purpose, the **update** statement can be used. As we could for **insert** and **delete**, we can choose the tuples to be updated by using a query.
 
-Suppose that annual salary increases are being made, and salaries of all in- structors are to be increased by 5 percent. We write:  
+Suppose that annual salary increases are being made, and salaries of all instructors are to be increased by 5 percent. We write:  
 
 **102 Chapter 3 Introduction to SQL**
 
@@ -1841,7 +1849,7 @@ able, tuple variable) • Set operations
 
 **Practice Exercises**
 
-**3.1** Write the following queries in SQL, using the university schema. (We sug- gest you actually run these queries on a database, using the sample data that we provide on the Web site of the book, db-book.com. Instructions for setting up a database, and loading sample data, are provided on the above Web site.)
+**3.1** Write the following queries in SQL, using the university schema. (We suggest you actually run these queries on a database, using the sample data that we provide on the Web site of the book, db-book.com. Instructions for setting up a database, and loading sample data, are provided on the above Web site.)
 
 a. Find the titles of courses in the Comp. Sci. department that have 3 credits.
 
@@ -1905,11 +1913,11 @@ b. Find the number of students with each grade.
 
 **3.7** Consider the SQL query
 
-**select distinct** _p.a_1 **from** _p_, _r_1, _r_2 **where** _p.a_1 = _r_1._a_1 **or** _p.a_1 = _r_2._a_1
+**select distinct** _p.a_1 **from** _p_, _r_~1~, _r_~2~ **where** _p.a_1 = _r_~1~._a_1 **or** _p.a_1 = _r_~2~._a_1
 
-Under what conditions does the preceding query select values of _p.a_1 that are either in _r_1 or in _r_2? Examine carefully the cases where one of _r_1 or _r_2 may be empty.
+Under what conditions does the preceding query select values of _p.a_1 that are either in _r_~1~ or in _r_~2~? Examine carefully the cases where one of _r_~1~ or _r_~2~ may be empty.
 
-**3.8** Consider the bank database of Figure 3.19, where the primary keys are un- derlined. Construct the following SQL queries for this relational database.
+**3.8** Consider the bank database of Figure 3.19, where the primary keys are underlined. Construct the following SQL queries for this relational database.
 
 a. Find all customers of the bank who have an account but not a loan.
 
@@ -1927,7 +1935,7 @@ _employee_ (_employee name_, _street_, _city_) _works_ (_employee name_, _compan
 
 **Figure 3.20** Employee database for Exercises 3.9, 3.10, 3.16, 3.17, and 3.20.
 
-b. Find the names, street addresses, and cities of residence of all em- ployees who work for “First Bank Corporation” and earn more than $10,000.
+b. Find the names, street addresses, and cities of residence of all employees who work for “First Bank Corporation” and earn more than $10,000.
 
 c. Find all employees in the database who do not work for “First Bank Corporation”.
 
@@ -1937,7 +1945,7 @@ e. Assume that the companies may be located in several cities. Find all companie
 
 f. Find the company that has the most employees.
 
-g. Find those companies whose employees earn a higher salary, on av- erage, than the average salary at “First Bank Corporation”.
+g. Find those companies whose employees earn a higher salary, on average, than the average salary at “First Bank Corporation”.
 
 **3.10** Consider the relational database of Figure 3.20. Give an expression in SQL for each of the following queries.
 
@@ -1955,7 +1963,7 @@ b. Find the IDs and names of all students who have not taken any course offering
 
 c. For each department, find the maximum salary of instructors in that department. You may assume that every department has at least one instructor.
 
-d. Find the lowest, across all departments, of the per-department maxi- mum salary computed by the preceding query.  
+d. Find the lowest, across all departments, of the per-department maximum salary computed by the preceding query.  
 
 **Exercises 109**
 
@@ -1965,7 +1973,7 @@ a. Create a new course “CS-001”, titled “Weekly Seminar”, with 0 credits
 
 b. Create a section of this course in Autumn 2009, with _sec id_ of 1.
 
-c. Enroll every student in the Comp. Sci. department in the above sec- tion.
+c. Enroll every student in the Comp. Sci. department in the above section.
 
 d. Delete enrollments in the above section where the student’s name is Chavez.
 
@@ -1981,7 +1989,7 @@ a. Find the number of accidents in which the cars belonging to “John Smith” 
 
 b. Update the damage amount for the car with the license number “AABB2000” in the accident with report number “AR2197” to $3000.
 
-**3.15** Consider the bank database of Figure 3.19, where the primary keys are un- derlined. Construct the following SQL queries for this relational database.
+**3.15** Consider the bank database of Figure 3.19, where the primary keys are underlined. Construct the following SQL queries for this relational database.
 
 a. Find all customers who have an account at _all_ the branches located in “Brooklyn”.
 
@@ -1991,7 +1999,7 @@ c. Find the names of all branches that have assets greater than those of at leas
 
 **3.16** Consider the employee database of Figure 3.20, where the primary keys are underlined. Give an expression in SQL for each of the following queries.
 
-a. Find the names of all employees who work for “First Bank Corpora- tion”.
+a. Find the names of all employees who work for “First Bank Corporation”.
 
 b. Find all employees in the database who live in the same cities as the companies for which they work.
 
@@ -2015,7 +2023,7 @@ c. Delete all tuples in the _works_ relation for employees of “Small Bank Corp
 
 **3.19** Show that, in SQL, _<>_ **all** is identical to **not in**.
 
-**3.20** Give an SQL schema definition for the employee database of Figure 3.20. Choose an appropriate domain for each attribute and an appropriate pri- mary key for each relation schema.
+**3.20** Give an SQL schema definition for the employee database of Figure 3.20. Choose an appropriate domain for each attribute and an appropriate primary key for each relation schema.
 
 **3.21** Consider the library database of Figure 3.21. Write the following queries in SQL.
 
@@ -2061,17 +2069,17 @@ A number of relational database systems are available commercially, including IB
 
 Most database systems provide a command line interface for submitting SQL commands. In addition, most databases also provide graphical user interfaces (GUIs), which simplify the task of browsing the database, creating and submitting queries, and administering the database. Commercial IDEs for SQLthat work across multiple database platforms, include Embarcadero’s RAD Studio and Aqua Data Studio.
 
-For PostgreSQL, the pgAdmin tool provides GUI functionality, while for MySQL, phpMyAdmin provides GUI functionality. The NetBeans IDE provides a GUI front end that works with a number of different databases, but with limited functional- ity, while the Eclipse IDE supports similar functionality through several different plugins such as the Data Tools Platform (DTP) and JBuilder.
+For PostgreSQL, the pgAdmin tool provides GUI functionality, while for MySQL, phpMyAdmin provides GUI functionality. The NetBeans IDE provides a GUI front end that works with a number of different databases, but with limited functionality, while the Eclipse IDE supports similar functionality through several different plugins such as the Data Tools Platform (DTP) and JBuilder.
 
-SQL schema definitions and sample data for the university schema are pro- vided on the Web site for this book, db-book.com. The Web site also contains  
+SQL schema definitions and sample data for the university schema are provided on the Web site for this book, db-book.com. The Web site also contains  
 
 **112 Chapter 3 Introduction to SQL**
 
-instructions on how to set up and access some popular database systems. The SQL constructs discussed in this chapter are part of the SQL standard, but certain features are not supported by some databases. The Web site lists these incom- patibilities, which you will need to take into account when executing queries on those databases.
+instructions on how to set up and access some popular database systems. The SQL constructs discussed in this chapter are part of the SQL standard, but certain features are not supported by some databases. The Web site lists these incompatibilities, which you will need to take into account when executing queries on those databases.
 
 **Bibliographical Notes**
 
-The original version of SQL, called Sequel 2, is described by Chamberlin et al. \[1976\]. Sequel 2 was derived from the language Square (Boyce et al. \[1975\] and Chamberlin and Boyce \[1974\]). The American National Standard SQL-86 is de- scribed in ANSI \[1986\]. The IBM Systems Application Architecture definition of SQL is defined by IBM \[1987\]. The official standards for SQL-89 and SQL-92 are available as ANSI \[1989\] and ANSI \[1992\], respectively.
+The original version of SQL, called Sequel 2, is described by Chamberlin et al. \[1976\]. Sequel 2 was derived from the language Square (Boyce et al. \[1975\] and Chamberlin and Boyce \[1974\]). The American National Standard SQL-86 is described in ANSI \[1986\]. The IBM Systems Application Architecture definition of SQL is defined by IBM \[1987\]. The official standards for SQL-89 and SQL-92 are available as ANSI \[1989\] and ANSI \[1992\], respectively.
 
 Textbook descriptions of the SQL-92 language include Date and Darwen \[1997\], Melton and Simon \[1993\], and Cannan and Otten \[1993\]. Date and Darwen \[1997\] and Date \[1993a\] include a critique of SQL-92 from a programming-languages perspective.
 
@@ -2089,7 +2097,7 @@ In this chapter, we continue our study of SQL. We consider more complex forms of
 
 **4.1 Join Expressions**
 
-In Section 3.3.3, we introduced the **natural join** operation. SQL provides other forms of the join operation, including the ability to specify an explicit **join pred- icate**, and the ability to include in the result tuples that are excluded by **natural join**. We shall discuss these forms of join in this section.
+In Section 3.3.3, we introduced the **natural join** operation. SQL provides other forms of the join operation, including the ability to specify an explicit **join predicate**, and the ability to include in the result tuples that are excluded by **natural join**. We shall discuss these forms of join in this section.
 
 The examples in this section involve the two relations _student_ and _takes_, shown in Figures 4.1 and 4.2, respectively. Observe that the attribute _grade_ has a value null for the student with _ID_ 98988, for the course BIO-301, section 1, taken in Summer 2010. The null value indicates that the grade has not been awarded yet.
 
@@ -2105,7 +2113,7 @@ _ID name dept name tot cred_
 
 _ID course id sec id semester year grade_
 
-00128 CS-101 1 Fall 2009 A 00128 CS-347 1 Fall 2009 A- 12345 CS-101 1 Fall 2009 C 12345 CS-190 2 Spring 2009 A 12345 CS-315 1 Spring 2010 A 12345 CS-347 1 Fall 2009 A 19991 HIS-351 1 Spring 2010 B 23121 FIN-201 1 Spring 2010 C+ 44553 PHY-101 1 Fall 2009 B- 45678 CS-101 1 Fall 2009 F 45678 CS-101 1 Spring 2010 B+ 45678 CS-319 1 Spring 2010 B 54321 CS-101 1 Fall 2009 A- 54321 CS-190 2 Spring 2009 B+ 55739 MU-199 1 Spring 2010 A- 76543 CS-101 1 Fall 2009 A 76543 CS-319 2 Spring 2010 A 76653 EE-181 1 Spring 2009 C 98765 CS-101 1 Fall 2009 C- 98765 CS-315 1 Spring 2010 B 98988 BIO-101 1 Summer 2009 A 98988 BIO-301 1 Summer 2010 _null_
+00128 CS-101 1 Fall 2009 A 00128 CS-347 1 Fall 2009 A12345 CS-101 1 Fall 2009 C 12345 CS-190 2 Spring 2009 A 12345 CS-315 1 Spring 2010 A 12345 CS-347 1 Fall 2009 A 19991 HIS-351 1 Spring 2010 B 23121 FIN-201 1 Spring 2010 C+ 44553 PHY-101 1 Fall 2009 B45678 CS-101 1 Fall 2009 F 45678 CS-101 1 Spring 2010 B+ 45678 CS-319 1 Spring 2010 B 54321 CS-101 1 Fall 2009 A54321 CS-190 2 Spring 2009 B+ 55739 MU-199 1 Spring 2010 A76543 CS-101 1 Fall 2009 A 76543 CS-319 2 Spring 2010 A 76653 EE-181 1 Spring 2009 C 98765 CS-101 1 Fall 2009 C98765 CS-315 1 Spring 2010 B 98988 BIO-101 1 Summer 2009 A 98988 BIO-301 1 Summer 2010 _null_
 
 **Figure 4.2** The _takes_ relation.
 
@@ -2153,7 +2161,7 @@ Unfortunately, the above query does not work quite as intended. Suppose that the
 
 **116 Chapter 4 Intermediate SQL**
 
-_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A- 12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B- 45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A- 54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A- 76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C- 98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
+_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
 
 **Figure 4.3** The result of _student_ **join** _takes_ **on** _student_._ID_\= _takes_._ID_ with second occurrence of _ID_ omitted.
 
@@ -2191,7 +2199,7 @@ As another example of the use of the outer-join operation, we can write the quer
 
 **select** _ID_ **from** _student_ **natural left outer join** _takes_ **where** _course id_ **is** _null_;
 
-The **right outer join** is symmetric to the **left outer join**. Tuples from the right- hand-side relation that do not match any tuple in the left-hand-side relation are padded with nulls and are added to the result of the right outer join. Thus, if we rewrite our above query using a right outer join and swapping the order in which we list the relations as follows:
+The **right outer join** is symmetric to the **left outer join**. Tuples from the righthand-side relation that do not match any tuple in the left-hand-side relation are padded with nulls and are added to the result of the right outer join. Thus, if we rewrite our above query using a right outer join and swapping the order in which we list the relations as follows:
 
 **select** \* **from** _takes_ **natural right outer join** _student_;
 
@@ -2201,7 +2209,7 @@ The **full outer join** is a combination of the left and right outer-join types.
 
 **118 Chapter 4 Intermediate SQL**
 
-_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A- 12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B- 45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A- 54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A- 70557 Snow Physics 0 _null null null null null_ 76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C- 98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
+_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A70557 Snow Physics 0 _null null null null null_ 76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C- 98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
 
 **Figure 4.4** Result of _student_ **natural left outer join** _takes_.
 
@@ -2259,7 +2267,7 @@ In our examples up to this point, we have operated at the logical-model level. T
 
 **4.2 Views 121**
 
-It is not desirable for all users to see the entire logical model. Security con- siderations may require that certain data be hidden from users. Consider a clerk who needs to know an instructor’s ID, name and department name, but does not have authorization to see the instructor’s salary amount. This person should see a relation described in SQL, by:
+It is not desirable for all users to see the entire logical model. Security considerations may require that certain data be hidden from users. Consider a clerk who needs to know an instructor’s ID, name and department name, but does not have authorization to see the instructor’s salary amount. This person should see a relation described in SQL, by:
 
 **select** _ID_, _name_, _dept name_ **from** _instructor_;
 
@@ -2271,7 +2279,7 @@ Aside from security concerns, we may wish to create a personalized collection of
 
 It is possible to compute and store the results of the above queries and then make the stored relations available to users. However, if we did so, and the underlying data in the relations _instructor_, _course_, or _section_ changes, the stored query results would then no longer match the result of reexecuting the query on the relations. In general, it is a bad idea to compute and store query results such as those in the above examples (although there are some exceptions, which we study later).
 
-Instead, SQL allows a “virtual relation” to be defined by a query, and the relation conceptually contains the result of the query. The virtual relation is not precomputed and stored, but instead is computed by executing the query when- ever the virtual relation is used.
+Instead, SQL allows a “virtual relation” to be defined by a query, and the relation conceptually contains the result of the query. The virtual relation is not precomputed and stored, but instead is computed by executing the query whenever the virtual relation is used.
 
 Any such relation that is not part of the logical model, but is made visible to a user as a virtual relation, is called a **view**. It is possible to support a large number of views on top of any given set of actual relations.
 
@@ -2335,11 +2343,11 @@ For example, consider the view _departments total salary_. If the above view is 
 
 **124 Chapter 4 Intermediate SQL**
 
-The process of keeping the materialized view up-to-date is called **material- ized view maintenance** (or often, just **view maintenance**) and is covered in Sec- tion 13.5. View maintenance can be done immediately when any of the relations on which the view is defined is updated. Some database systems, however, per- form view maintenance lazily, when the view is accessed. Some systems update materialized views only periodically; in this case, the contents of the materialized view may be stale, that is, not up-to-date, when it is used, and should not be used if the application needs up-to-date data. And some database systems permit the database administrator to control which of the above methods is used for each materialized view.
+The process of keeping the materialized view up-to-date is called **materialized view maintenance** (or often, just **view maintenance**) and is covered in Section 13.5. View maintenance can be done immediately when any of the relations on which the view is defined is updated. Some database systems, however, perform view maintenance lazily, when the view is accessed. Some systems update materialized views only periodically; in this case, the contents of the materialized view may be stale, that is, not up-to-date, when it is used, and should not be used if the application needs up-to-date data. And some database systems permit the database administrator to control which of the above methods is used for each materialized view.
 
-Applications that use a view frequently may benefit if the view is materi- alized. Applications that demand fast response to certain queries that compute aggregates over large relations can also benefit greatly by creating materialized views corresponding to the queries. In this case, the aggregated result is likely to be much smaller than the large relations on which the view is defined; as a result the materialized view can be used to answer the query very quickly, avoiding reading the large underlying relations. Of course, the benefits to queries from the materialization of a view must be weighed against the storage costs and the added overhead for updates.
+Applications that use a view frequently may benefit if the view is materialized. Applications that demand fast response to certain queries that compute aggregates over large relations can also benefit greatly by creating materialized views corresponding to the queries. In this case, the aggregated result is likely to be much smaller than the large relations on which the view is defined; as a result the materialized view can be used to answer the query very quickly, avoiding reading the large underlying relations. Of course, the benefits to queries from the materialization of a view must be weighed against the storage costs and the added overhead for updates.
 
-SQL does not define a standard way of specifying that a view is material- ized, but many database systems provide their own SQL extensions for this task. Some database systems always keep materialized views up-to-date when the un- derlying relations change, while others permit them to become out of date, and periodically recompute them.
+SQL does not define a standard way of specifying that a view is materialized, but many database systems provide their own SQL extensions for this task. Some database systems always keep materialized views up-to-date when the underlying relations change, while others permit them to become out of date, and periodically recompute them.
 
 **4.2.4 Update of a View**
 
@@ -2367,7 +2375,7 @@ This view lists the _ID_, _name_, and building-name of each instructor in the un
 
 Suppose there is no instructor with ID 69987, and no department in the Taylor building. Then the only possible method of inserting tuples into the _instructor_ and _department_ relations is to insert (’69987’, ’White’, _null_, _null_) into _instructor_ and (_null_, ’Taylor’, _null_) into _department_. Then, we obtain the relations shown in Figure 4.7. However, this update does not have the desired effect, since the view relation _instructor info_ still does _not_ include the tuple (’69987’, ’White’, ’Taylor’). Thus, there is no way to update the relations _instructor_ and _department_ by using nulls to get the desired update on _instructor info_.
 
-Because of problems such as these, modifications are generally not permit- ted on view relations, except in limited cases. Different database systems specify different conditions under which they permit updates on view relations; see the database system manuals for details. The general problem of database modifica- tion through views has been the subject of substantial research, and the biblio- graphic notes provide pointers to some of this research.
+Because of problems such as these, modifications are generally not permitted on view relations, except in limited cases. Different database systems specify different conditions under which they permit updates on view relations; see the database system manuals for details. The general problem of database modification through views has been the subject of substantial research, and the bibliographic notes provide pointers to some of this research.
 
 In general, an SQL view is said to be **updatable** (that is, inserts, updates or deletes can be applied on the view) if the following conditions are all satisfied by the query defining the view:
 
@@ -2413,13 +2421,13 @@ A **transaction** consists of a sequence of query and/or update statements. The 
 
 The keyword **work** is optional in both the statements. Transaction rollback is useful if some error condition is detected during ex-
 
-ecution of a transaction. Commit is similar, in a sense, to saving changes to a document that is being edited, while rollback is similar to quitting the edit ses- sion without saving changes. Once a transaction has executed **commit work**, its effects can no longer be undone by **rollback work**. The database system guaran- tees that in the event of some failure, such as an error in one of the SQL statements, a power outage, or a system crash, a transaction’s effects will be rolled back if it has not yet executed **commit work**. In the case of power outage or other system crash, the rollback occurs when the system restarts.
+ecution of a transaction. Commit is similar, in a sense, to saving changes to a document that is being edited, while rollback is similar to quitting the edit session without saving changes. Once a transaction has executed **commit work**, its effects can no longer be undone by **rollback work**. The database system guarantees that in the event of some failure, such as an error in one of the SQL statements, a power outage, or a system crash, a transaction’s effects will be rolled back if it has not yet executed **commit work**. In the case of power outage or other system crash, the rollback occurs when the system restarts.
 
 For instance, consider a banking application, where we need to transfer money from one bank account to another in the same bank. To do so, we need to update two account balances, subtracting the amount transferred from one, and adding it to the other. If the system crashes after subtracting the amount from the first account, but before adding it to the second account, the bank balances would be inconsistent. A similar problem would occur, if the second account is credited before subtracting the amount from the first account, and the system crashes just after crediting the amount.
 
-As another example, consider our running example of a university applica- tion. We assume that the attribute _tot cred_ of each tuple in the _student_ relation is kept up-to-date by modifying it whenever the student successfully completes a course. To do so, whenever the _takes_ relation is updated to record successful completion of a course by a student (by assigning an appropriate grade) the corre- sponding _student_ tuple must also be updated. If the application performing these two updates crashes after one update is performed, but before the second one is performed, the data in the database would be inconsistent.
+As another example, consider our running example of a university application. We assume that the attribute _tot cred_ of each tuple in the _student_ relation is kept up-to-date by modifying it whenever the student successfully completes a course. To do so, whenever the _takes_ relation is updated to record successful completion of a course by a student (by assigning an appropriate grade) the corresponding _student_ tuple must also be updated. If the application performing these two updates crashes after one update is performed, but before the second one is performed, the data in the database would be inconsistent.
 
-By either committing the actions of a transaction after all its steps are com- pleted, or rolling back all its actions in case the transaction could not complete all its actions successfully, the database provides an abstraction of a transaction as being **atomic**, that is, indivisible. Either all the effects of the transaction are reflected in the database, or none are (after rollback).  
+By either committing the actions of a transaction after all its steps are completed, or rolling back all its actions in case the transaction could not complete all its actions successfully, the database provides an abstraction of a transaction as being **atomic**, that is, indivisible. Either all the effects of the transaction are reflected in the database, or none are (after rollback).  
 
 **128 Chapter 4 Intermediate SQL**
 
@@ -2431,7 +2439,7 @@ In many SQL implementations, by default each SQL statement is taken to be a tran
 
 A better alternative, which is part of the SQL:1999 standard (but supported by only some SQL implementations currently), is to allow multiple SQL statements to be enclosed between the keywords **begin atomic** _. . ._ **end**. All the statements between the keywords then form a single transaction.
 
-We study further properties of transactions in Chapter 14; issues in imple- menting transactions in a single database are addressed in Chapters 15 and 16, while Chapter 19 addresses issues in implementing transactions across multiple databases, to deal with problems such as transfer of money across accounts in different banks, which have different databases.
+We study further properties of transactions in Chapter 14; issues in implementing transactions in a single database are addressed in Chapters 15 and 16, while Chapter 19 addresses issues in implementing transactions across multiple databases, to deal with problems such as transfer of money across accounts in different banks, which have different databases.
 
 **4.4 Integrity Constraints**
 
@@ -2443,7 +2451,7 @@ Examples of integrity constraints are:
 
 • No two instructors can have the same instructor ID.
 
-• Every department name in the _course_ relation must have a matching depart- ment name in the _department_ relation.
+• Every department name in the _course_ relation must have a matching department name in the _department_ relation.
 
 • The budget of a department must be greater than $0.00.
 
@@ -2513,9 +2521,9 @@ Often, we wish to ensure that a value that appears in one relation for a given s
 
 Foreign keys can be specified as part of the SQL **create table** statement by using the **foreign key** clause, as we saw earlier in Section 3.2.2. We illustrate foreign-key declarations by using the SQL DDL definition of part of our university database, shown in Figure 4.8. The definition of the _course_ table has a declaration “**foreign key** (_dept name_) **references** _department_”. This foreign-key declaration specifies that for each course tuple, the department name specified in the tuple must exist in the _department_ relation. Without this constraint, it is possible for a course to specify a nonexistent department name.
 
-More generally, let _r_1 and _r_2 be relations whose set of attributes are _R_1 and _R_2, respectively, with primary keys _K_1 and _K_2\. We say that a subset  of _R_2 is a **foreign key** referencing _K_1 in relation _r_1 if it is required that, for every tuple _t_2 in _r_2, there must be a tuple _t_1 in _r_1 such that _t_1_.K_1 = _t_2_._.
+More generally, let _r_~1~ and _r_~2~ be relations whose set of attributes are _r_~1~ and _r_~2~, respectively, with primary keys _K_1 and _K_2\. We say that a subset  of _r_~2~ is a **foreign key** referencing _K_1 in relation _r_~1~ if it is required that, for every tuple _t_~2~  in _r_~2~, there must be a tuple _t_~1~ in _r_~1~ such that _t_~1~_.K_1 = _t_~2~ _._.
 
-Requirements of this form are called **referential-integrity constraints**, or **subset dependencies**. The latter term arises because the preceding referential- integrity constraint can be stated as a requirement that the set of values on  in _r_2 must be a subset of the values on _K_1 in _r_1\. Note that, for a referential-integrity constraint to make sense,  and _K_1 must be compatible sets of attributes; that is, either  must be equal to _K_1, or they must contain the same number of attributes, and the types of corresponding attributes must be compatible (we assume here that  and _K_1 are ordered). Unlike foreign-key constraints, in general a referential integrity constraint does not require _K_1 to be a primary key of _r_1; as a result, more than one tuple in _r_1 can have the same value for attributes _K_1.
+Requirements of this form are called **referential-integrity constraints**, or **subset dependencies**. The latter term arises because the preceding referentialintegrity constraint can be stated as a requirement that the set of values on  in _r_~2~ must be a subset of the values on _K_1 in _r_~1~\. Note that, for a referential-integrity constraint to make sense,  and _K_1 must be compatible sets of attributes; that is, either  must be equal to _K_1, or they must contain the same number of attributes, and the types of corresponding attributes must be compatible (we assume here that  and _K_1 are ordered). Unlike foreign-key constraints, in general a referential integrity constraint does not require _K_1 to be a primary key of _r_~1~; as a result, more than one tuple in _r_~1~ can have the same value for attributes _K_1.
 
 By default, in SQL a foreign key references the primary-key attributes of the referenced table. SQL also supports a version of the **references** clause where a list of attributes of the referenced relation can be specified explicitly. The specified list of attributes must, however, be declared as a candidate key of the referenced relation, using either a **primary key** constraint, or a **unique** constraint. A more general form of a referential-integrity constraint, where the referenced columns need not be a candidate key, cannot be directly specified in SQL. The SQL standard specifies other constructs that can be used to implement such constraints; they are described in Section 4.4.7.
 
@@ -2551,7 +2559,7 @@ instead of rejecting the action, the system must take steps to change the tuple 
 
 _. . ._ );
 
-Because of the clause **on delete cascade** associated with the foreign-key dec- laration, if a delete of a tuple in _department_ results in this referential-integrity constraint being violated, the system does not reject the delete. Instead, the delete “cascades” to the _course_ relation, deleting the tuple that refers to the department that was deleted. Similarly, the system does not reject an update to a field refer- enced by the constraint if it violates the constraint; instead, the system updates the field _dept name_ in the referencing tuples in _course_ to the new value as well. SQL also allows the **foreign key** clause to specify actions other than **cascade**, if the constraint is violated: The referencing field (here, _dept name_) can be set to _null_ (by using **set null** in place of **cascade**), or to the default value for the domain (by using **set default**).
+Because of the clause **on delete cascade** associated with the foreign-key declaration, if a delete of a tuple in _department_ results in this referential-integrity constraint being violated, the system does not reject the delete. Instead, the delete “cascades” to the _course_ relation, deleting the tuple that refers to the department that was deleted. Similarly, the system does not reject an update to a field referenced by the constraint if it violates the constraint; instead, the system updates the field _dept name_ in the referencing tuples in _course_ to the new value as well. SQL also allows the **foreign key** clause to specify actions other than **cascade**, if the constraint is violated: The referencing field (here, _dept name_) can be set to _null_ (by using **set null** in place of **cascade**), or to the default value for the domain (by using **set default**).
 
 If there is a chain of foreign-key dependencies across multiple relations, a deletion or update at one end of the chain can propagate across the entire chain. An interesting case where the **foreign key** constraint on a relation references the same relation appears in Practice Exercises 4.9. If a cascading update or delete causes a constraint violation that cannot be handled by a further cascading operation, the system aborts the transaction. As a result, all the changes caused by the transaction and its cascading actions are undone.
 
@@ -2561,23 +2569,23 @@ This definition may not always be the right choice, so SQL also provides constru
 
 **4.4.6 Integrity Constraint Violation During a Transaction**
 
-Transactions may consist of several steps, and integrity constraints may be vio- lated temporarily after one step, but a later step may remove the violation. For instance, suppose we have a relation _person_ with primary key _name_, and an at- tribute _spouse_, and suppose that _spouse_ is a foreign key on _person_. That is, the constraint says that the _spouse_ attribute must contain a name that is present in the _person_ table. Suppose we wish to note the fact that John and Mary are married to each other by inserting two tuples, one for John and one for Mary, in the above re- lation, with the spouse attributes set to Mary and John, respectively. The insertion of the first tuple would violate the foreign-key constraint, regardless of which of  
+Transactions may consist of several steps, and integrity constraints may be violated temporarily after one step, but a later step may remove the violation. For instance, suppose we have a relation _person_ with primary key _name_, and an attribute _spouse_, and suppose that _spouse_ is a foreign key on _person_. That is, the constraint says that the _spouse_ attribute must contain a name that is present in the _person_ table. Suppose we wish to note the fact that John and Mary are married to each other by inserting two tuples, one for John and one for Mary, in the above relation, with the spouse attributes set to Mary and John, respectively. The insertion of the first tuple would violate the foreign-key constraint, regardless of which of  
 
 **134 Chapter 4 Intermediate SQL**
 
 the two tuples is inserted first. After the second tuple is inserted the foreign-key constraint would hold again.
 
-To handle such situations, the SQL standard allows a clause **initially deferred** to be added to a constraint specification; the constraint would then be checked at the end of a transaction, and not at intermediate steps. A constraint can alter- natively be specified as **deferrable**, which means it is checked immediately by default, but can be deferred when desired. For constraints declared as deferrable, executing a statement **set constraints** _constraint-list_ **deferred** as part of a transac- tion causes the checking of the specified constraints to be deferred to the end of that transaction.
+To handle such situations, the SQL standard allows a clause **initially deferred** to be added to a constraint specification; the constraint would then be checked at the end of a transaction, and not at intermediate steps. A constraint can alternatively be specified as **deferrable**, which means it is checked immediately by default, but can be deferred when desired. For constraints declared as deferrable, executing a statement **set constraints** _constraint-list_ **deferred** as part of a transaction causes the checking of the specified constraints to be deferred to the end of that transaction.
 
-However, you should be aware that the default behavior is to check constraints immediately, and many database implementations do not support deferred con- straint checking.
+However, you should be aware that the default behavior is to check constraints immediately, and many database implementations do not support deferred constraint checking.
 
 We can work around the problem in the above example in another way, if the _spouse_ attribute can be set to _null_: We set the spouse attributes to _null_ when inserting the tuples for John and Mary, and we update them later. However, this technique requires more programming effort, and does not work if the attributes cannot be set to _null_.
 
 **4.4.7 Complex Check Conditions and Assertions**
 
-The SQL standard supports additional constructs for specifying integrity con- straints that are described in this section. However, you should be aware that these constructs are not currently supported by most database systems.
+The SQL standard supports additional constructs for specifying integrity constraints that are described in this section. However, you should be aware that these constructs are not currently supported by most database systems.
 
-As defined by the SQL standard, the predicate in the **check** clause can be an arbitrary predicate, which can include a subquery. If a database implemen- tation supports subqueries in the **check** clause, we could specify the following referential-integrity constraint on the relation _section_:
+As defined by the SQL standard, the predicate in the **check** clause can be an arbitrary predicate, which can include a subquery. If a database implementation supports subqueries in the **check** clause, we could specify the following referential-integrity constraint on the relation _section_:
 
 **check** (_time slot id_ **in** (**select** _time slot id_ **from** _time slot_))
 
@@ -2601,7 +2609,7 @@ would not only have to be evaluated when a modification is made to the _section_
 
 An **assertion** is a predicate expressing a condition that we wish the database always to satisfy. Domain constraints and referential-integrity constraints are special forms of assertions. We have paid substantial attention to these forms of assertions because they are easily tested and apply to a wide range of database applications. However, there are many constraints that we cannot express by using only these special forms. Two examples of such constraints are:
 
-• For each tuple in the _student_ relation, the value of the attribute _tot cred_ must equal the sum of credits of courses that the student has completed success- fully.
+• For each tuple in the _student_ relation, the value of the attribute _tot cred_ must equal the sum of credits of courses that the student has completed successfully.
 
 • An instructor cannot teach in two different classrooms in a semester in the same time slot.1
 
@@ -2619,7 +2627,7 @@ is valid, then any future modification to the database is allowed only if it doe
 
 **136 Chapter 4 Intermediate SQL**
 
-Currently, none of the widely used database systems supports either sub- queries in the **check** clause predicate, or the **create assertion** construct. However, equivalent functionality can be implemented using triggers, which are described in Section 5.3, if they are supported by the database system. Section 5.3 also de- scribes how the referential integrity constraint on _time slot id_ can be implemented using triggers.
+Currently, none of the widely used database systems supports either subqueries in the **check** clause predicate, or the **create assertion** construct. However, equivalent functionality can be implemented using triggers, which are described in Section 5.3, if they are supported by the database system. Section 5.3 also describes how the referential integrity constraint on _time slot id_ can be implemented using triggers.
 
 **4.5 SQL Data Types and Schemas**
 
@@ -2643,7 +2651,7 @@ Dates must be specified in the format year followed by month followed by day, as
 
 We can use an expression of the form **cast** _e_ **as** _t_ to convert a character string (or string valued expression) _e_ to the type _t_, where _t_ is one of **date, time**, or **timestamp**. The string must be in the appropriate format as illustrated at the beginning of this paragraph. When required, time-zone information is inferred from the system settings.
 
-To extract individual fields of a **date** or **time** value _d_, we can use **extract** (field **from** _d_), where _field_ can be one of **year, month, day, hour, minute**, or **second**. Time- zone information can be extracted using **timezone hour** and **timezone minute**.  
+To extract individual fields of a **date** or **time** value _d_, we can use **extract** (field **from** _d_), where _field_ can be one of **year, month, day, hour, minute**, or **second**. Timezone information can be extracted using **timezone hour** and **timezone minute**.  
 
 **4.5 SQL Data Types and Schemas 137**
 
@@ -2663,7 +2671,7 @@ The default value of the _tot cred_ attribute is declared to be 0. As a result, 
 
 **4.5.3 Index Creation**
 
-Many queries reference only a small proportion of the records in a file. For exam- ple, a query like “Find all instructors in the Physics department” or “Find the _tot cred_ value of the student with _ID_ 22201” references only a fraction of the student
+Many queries reference only a small proportion of the records in a file. For example, a query like “Find all instructors in the Physics department” or “Find the _tot cred_ value of the student with _ID_ 22201” references only a fraction of the student
 
 records. It is inefficient for the system to read every record and to check _ID_ field for the _ID_ “32556,” or the _building_ field for the value “Physics”.
 
@@ -2673,7 +2681,7 @@ An **index** on an attribute of a relation is a data structure that allows the d
 
 be created on a list of attributes, for example on attributes _name_, and _dept name_ of _student_.
 
-We study later, in Chapter 11, how indices are actually implemented, includ- ing a particularly widely used kind of index called a B+-tree index.
+We study later, in Chapter 11, how indices are actually implemented, including a particularly widely used kind of index called a B+-tree index.
 
 Although the SQL language does not formally define any syntax for creating indices, many databases support index creation using the syntax illustrated below.
 
@@ -2701,7 +2709,7 @@ and multisets. We do not cover structured data types in this chapter, but descri
 
 It is possible for several attributes to have the same data type. For example, the _name_ attributes for student name and instructor name might have the same domain: the set of all person names. However, the domains of _budget_ and _dept name_ certainly ought to be distinct. It is perhaps less clear whether _name_ and _dept name_ should have the same domain. At the implementation level, both instructor names and department names are character strings. However, we would normally not consider the query “Find all instructors who have the same name as a department” to be a meaningful query. Thus, if we view the database at the conceptual, rather than the physical, level, _name_ and _dept name_ should have distinct domains.
 
-More importantly, at a practical level, assigning an instructor’s name to a department name is probably a programming error; similarly, comparing a mon- etary value expressed in dollars directly with a monetary value expressed in pounds is also almost surely a programming error. A good type system should be able to detect such assignments or comparisons. To support such checks, SQL provides the notion of **distinct types**.
+More importantly, at a practical level, assigning an instructor’s name to a department name is probably a programming error; similarly, comparing a monetary value expressed in dollars directly with a monetary value expressed in pounds is also almost surely a programming error. A good type system should be able to detect such assignments or comparisons. To support such checks, SQL provides the notion of **distinct types**.
 
 The **create type** clause can be used to define new types. For example, the statements:
 
@@ -2713,7 +2721,7 @@ define the user-defined types _Dollars_ and _Pounds_ to be decimal numbers with 
 
 An attempt to assign a value of type _Dollars_ to a variable of type _Pounds_ results in a compile-time error, although both are of the same numeric type. Such an assignment is likely to be due to a programmer error, where the programmer forgot about the differences in currency. Declaring different types for different currencies helps catch such errors.
 
-As a result of strong type checking, the expression (_department.budget_+20) would not be accepted since the attribute and the integer constant 20 have differ- ent types. Values of one type can be _cast_ (that is, converted) to another domain, as illustrated below:
+As a result of strong type checking, the expression (_department.budget_+20) would not be accepted since the attribute and the integer constant 20 have different types. Values of one type can be _cast_ (that is, converted) to another domain, as illustrated below:
 
 **cast** (_department.budget_ **to** _numeric_(12,2))  
 
@@ -2727,9 +2735,9 @@ Even before user-defined types were added to SQL (in SQL:1999), SQL had a simila
 
 **create domain** _DDollars_ **as numeric**(12,2) **not null**;
 
-The domain _DDollars_ can be used as an attribute type, just as we used the type _Dollars_. However, there are two significant differences between types and do- mains:
+The domain _DDollars_ can be used as an attribute type, just as we used the type _Dollars_. However, there are two significant differences between types and domains:
 
-**1\.** Domains can have constraints, such as **not null**, specified on them, and can have default values defined for variables of the domain type, whereas user- defined types cannot have constraints or default values specified on them. User-defined types are designed to be used not just for specifying attribute types, but also in procedural extensions to SQL where it may not be possible to enforce constraints.
+**1\.** Domains can have constraints, such as **not null**, specified on them, and can have default values defined for variables of the domain type, whereas userdefined types cannot have constraints or default values specified on them. User-defined types are designed to be used not just for specifying attribute types, but also in procedural extensions to SQL where it may not be possible to enforce constraints.
 
 **2\.** Domains are not strongly typed. As a result, values of one domain type can be assigned to values of another domain type as long as the underlying types are compatible.
 
@@ -2737,7 +2745,7 @@ When applied to a domain, the **check** clause permits the schema designer to sp
 
 **create domain** _YearlySalary_ **numeric**(8,2) **constraint** _salary value test_ **check**(**value** _\>_\= 29000.00);
 
-The domain _YearlySalary_ has a constraint that ensures that the YearlySalary is greater than or equal to $29,000.00. The clause **constraint** _salary value test_ is op- tional, and is used to give the name _salary value test_ to the constraint. The name is used by the system to indicate the constraint that an update violated.
+The domain _YearlySalary_ has a constraint that ensures that the YearlySalary is greater than or equal to $29,000.00. The clause **constraint** _salary value test_ is optional, and is used to give the name _salary value test_ to the constraint. The name is used by the system to indicate the constraint that an update violated.
 
 As another example, a domain can be restricted to contain only a specified set of values by using the **in** clause:
 
@@ -2751,9 +2759,9 @@ As another example, a domain can be restricted to contain only a specified set o
 
 Although the **create type** and **create domain** constructs described in this section are part of the SQL standard, the forms of these constructs described here are not fully supported by most database implementations. PostgreSQL supports the **create domain** construct, but its **create type** construct has a different syntax and interpretation.
 
-IBM DB2 supports a version of the **create type** that uses the syntax **create distinct type**, but does not support **create domain**. Microsoft SQL Server im- plements a version of **create type** construct that supports domain constraints, similar to the SQL **create domain** construct.
+IBM DB2 supports a version of the **create type** that uses the syntax **create distinct type**, but does not support **create domain**. Microsoft SQL Server implements a version of **create type** construct that supports domain constraints, similar to the SQL **create domain** construct.
 
-Oracle does not support either construct as described here. However, SQL also defines a more complex object-oriented type system, which we study later in Chapter 22. Oracle, IBM DB2, PostgreSQL, and SQL Server all support object- oriented type systems using different forms of the **create type** construct.
+Oracle does not support either construct as described here. However, SQL also defines a more complex object-oriented type system, which we study later in Chapter 22. Oracle, IBM DB2, PostgreSQL, and SQL Server all support objectoriented type systems using different forms of the **create type** construct.
 
 **4.5.6 Create Table Extensions**
 
@@ -2783,7 +2791,7 @@ The above **create table** _. . ._ **as** statement closely resembles the **crea
 
 **4.5.7 Schemas, Catalogs, and Environments**
 
-To understand the motivation for schemas and catalogs, consider how files are named in a file system. Early file systems were flat; that is, all files were stored in a single directory. Current file systems, of course, have a directory (or, syn- onymously, folder) structure, with files stored within subdirectories. To name a file uniquely, we must specify the full path name of the file, for example, /users/avi/db-book/chapter3.tex.
+To understand the motivation for schemas and catalogs, consider how files are named in a file system. Early file systems were flat; that is, all files were stored in a single directory. Current file systems, of course, have a directory (or, synonymously, folder) structure, with files stored within subdirectories. To name a file uniquely, we must specify the full path name of the file, for example, /users/avi/db-book/chapter3.tex.
 
 Like early file systems, early database systems also had a single name space for all relations. Users had to coordinate to make sure they did not try to use the same name for different relations. Contemporary database systems provide a three-level hierarchy for naming relations. The top level of the hierarchy consists of **catalogs**, each of which can contain **schemas**. SQL objects such as relations and views are contained within a **schema**. (Some database implementations use the term “database” in place of the term catalog.)
 
@@ -2801,7 +2809,7 @@ With multiple catalogs and schemas available, different applications and differe
 
 **4.6 Authorization 143**
 
-The default catalog and schema are part of an **SQL environment** that is set up for each connection. The environment additionally contains the user identi- fier (also referred to as the _authorization identifier)._ All the usual SQL statements, including the DDL and DML statements, operate in the context of a schema.
+The default catalog and schema are part of an **SQL environment** that is set up for each connection. The environment additionally contains the user identifier (also referred to as the _authorization identifier)._ All the usual SQL statements, including the DDL and DML statements, operate in the context of a schema.
 
 We can create and drop schemas by means of **create schema** and **drop schema** statements. In most database systems, schemas are also created automatically when user accounts are created, with the schema name set to the user account name. The schema is created in either a default catalog, or a catalog specified in creating the user account. The newly created schema becomes the default schema for the user account.
 
@@ -2823,13 +2831,13 @@ Each of these types of authorizations is called a **privilege**. We may authoriz
 
 When a user submits a query or an update, the SQL implementation first checks if the query or update is authorized, based on the authorizations that the user has been granted. If the query or update is not authorized, it is rejected.
 
-In addition to authorizations on data, users may also be granted authoriza- tions on the database schema, allowing them, for example, to create, modify, or drop relations. A user who has some form of authorization may be allowed to pass on (grant) this authorization to other users, or to withdraw (revoke) an au- thorization that was granted earlier. In this section, we see how each of these authorizations can be specified in SQL.
+In addition to authorizations on data, users may also be granted authorizations on the database schema, allowing them, for example, to create, modify, or drop relations. A user who has some form of authorization may be allowed to pass on (grant) this authorization to other users, or to withdraw (revoke) an authorization that was granted earlier. In this section, we see how each of these authorizations can be specified in SQL.
 
 The ultimate form of authority is that given to the database administrator. The database administrator may authorize new users, restructure the database, and so on. This form of authorization is analogous to that of a **superuser**, administrator, or operator for an operating system.
 
 **4.6.1 Granting and Revoking of Privileges**
 
-The SQL standard includes the privileges **select**, **insert**, **update**, and **delete**. The privilege **all privileges** can be used as a short form for all the allowable privi-  
+The SQL standard includes the privileges **select**, **insert**, **update**, and **delete**. The privilege **all privileges** can be used as a short form for all the allowable privi 
 
 **144 Chapter 4 Intermediate SQL**
 
@@ -2951,9 +2959,9 @@ However, SQL includes a **references** privilege that permits a user to declare 
 
 **grant references** (_dept name_) **on** _department_ **to** Mariano;
 
-Initially, it may appear that there is no reason ever to prevent users from creating foreign keys referencing another relation. However, recall that foreign- key constraints restrict deletion and update operations on the referenced relation. Suppose Mariano creates a foreign key in a relation _r_ referencing the _dept name_ attribute of the _department_ relation and then inserts a tuple into _r_ pertaining to the Geology department. It is no longer possible to delete the Geology department from the _department_ relation without also modifying relation _r_ . Thus, the definition of a foreign key by Mariano restricts future activity by other users; therefore, there is a need for the **references** privilege.
+Initially, it may appear that there is no reason ever to prevent users from creating foreign keys referencing another relation. However, recall that foreignkey constraints restrict deletion and update operations on the referenced relation. Suppose Mariano creates a foreign key in a relation _r_ referencing the _dept name_ attribute of the _department_ relation and then inserts a tuple into _r_ pertaining to the Geology department. It is no longer possible to delete the Geology department from the _department_ relation without also modifying relation _r_ . Thus, the definition of a foreign key by Mariano restricts future activity by other users; therefore, there is a need for the **references** privilege.
 
-Continuing to use the example of the _department_ relation, the references priv- ilege on _department_ is also required to create a **check** constraint on a relation _r_ if the constraint has a subquery referencing _department_. This is reasonable for the same reason as the one we gave for foreign-key constraints; a check constraint that references a relation limits potential updates to that relation.
+Continuing to use the example of the _department_ relation, the references privilege on _department_ is also required to create a **check** constraint on a relation _r_ if the constraint has a subquery referencing _department_. This is reasonable for the same reason as the one we gave for foreign-key constraints; a check constraint that references a relation limits potential updates to that relation.
 
 **4.6.5 Transfer of Privileges**
 
@@ -2963,7 +2971,7 @@ A user who has been granted some form of authorization may be allowed to pass on
 
 The creator of an object (relation/view/role) holds all privileges on the object, including the privilege to grant privileges to others.
 
-Consider, as an example, the granting of update authorization on the _teaches_ relation of the university database. Assume that, initially, the database adminis- trator grants update authorization on _teaches_ to users _U_1, _U_2, and _U_3, who may in turn pass on this authorization to other users. The passing of a specific authoriza- tion from one user to another can be represented by an **authorization graph**. The nodes of this graph are the users.
+Consider, as an example, the granting of update authorization on the _teaches_ relation of the university database. Assume that, initially, the database administrator grants update authorization on _teaches_ to users _U_1, _U_2, and _U_3, who may in turn pass on this authorization to other users. The passing of a specific authorization from one user to another can be represented by an **authorization graph**. The nodes of this graph are the users.
 
 Consider the graph for update authorization on _teaches_. The graph includes an edge _Ui_ → _Uj_ if user _Ui_ grants update authorization on _teaches_ to _Uj_ . The root of the graph is the database administrator. In the sample graph in Figure 4.10,  
 
@@ -3005,7 +3013,7 @@ The following **revoke** statement revokes only the grant option, rather than th
 
 **revoke grant option for select on** _department_ **from** Amit;
 
-Note that some database implementations do not support the above syntax; in- stead, the privilege itself can be revoked, and then granted again without the grant option.
+Note that some database implementations do not support the above syntax; instead, the privilege itself can be revoked, and then granted again without the grant option.
 
 Cascading revocation is inappropriate in many situations. Suppose Satoshi has the role of _dean_, grants _instructor_ to Amit, and later the role _dean_ is revoked from Satoshi (perhaps because Satoshi leaves the university); Amit continues to be employed on the faculty, and should retain the _instructor_ role.
 
@@ -3031,13 +3039,13 @@ done using the **granted by current role** clause, with the current role set to 
 
 • Integrity constraints ensure that changes made to the database by authorized users do not result in a loss of data consistency.
 
-• Referential-integrity constraints ensure that a value that appears in one rela- tion for a given set of attributes also appears for a certain set of attributes in another relation.
+• Referential-integrity constraints ensure that a value that appears in one relation for a given set of attributes also appears for a certain set of attributes in another relation.
 
 • Domain constraints specify the set of possible values that may be associated with an attribute. Such constraints may also prohibit the use of null values for particular attributes.
 
 • Assertions are declarative expressions that state predicates that we require always to be true.
 
-• The SQL data-definition language provides support for defining built-in do- main types such as **date** and **time**, as well as user-defined domain types.
+• The SQL data-definition language provides support for defining built-in domain types such as **date** and **time**, as well as user-defined domain types.
 
 • SQL authorization mechanisms allow one to differentiate among the users of the database as far as the type of access they are permitted on various data values in the database.
 
@@ -3095,7 +3103,7 @@ done using the **granted by current role** clause, with the current role set to 
 
 **4.1** Write the following queries in SQL:
 
-a. Display a list of all instructors, showing their ID, name, and the num- ber of sections that they have taught. Make sure to show the number of sections as 0 for instructors who have not taught any section. Your query should use an outerjoin, and should not use scalar subqueries.
+a. Display a list of all instructors, showing their ID, name, and the number of sections that they have taught. Make sure to show the number of sections as 0 for instructors who have not taught any section. Your query should use an outerjoin, and should not use scalar subqueries.
 
 b. Write the same query as above, but using a scalar subquery, without outerjoin.
 
@@ -3121,17 +3129,17 @@ a. Give instances of relations _r_ , _s_ and _t_ such that in the result of the 
 
 b. Is the above pattern, with _C_ null and _D_ not null possible in the result of the first expression? Explain why or why not.
 
-**4.4 Testing SQL queries**: To test if a query specified in English has been cor- rectly written in SQL, the SQL query is typically executed on multiple test databases, and a human checks if the SQL query result on each test database matches the intention of the specification in English.
+**4.4 Testing SQL queries**: To test if a query specified in English has been correctly written in SQL, the SQL query is typically executed on multiple test databases, and a human checks if the SQL query result on each test database matches the intention of the specification in English.
 
-a. In Section 3.3.3 we saw an example of an erroneous SQL query which was intended to find which courses had been taught by each instruc- tor; the query computed the natural join of _instructor_, _teaches_, and _course_, and as a result unintentionally equated the _dept name_ attribute of _instructor_ and _course_. Give an example of a dataset that would help catch this particular error.
+a. In Section 3.3.3 we saw an example of an erroneous SQL query which was intended to find which courses had been taught by each instructor; the query computed the natural join of _instructor_, _teaches_, and _course_, and as a result unintentionally equated the _dept name_ attribute of _instructor_ and _course_. Give an example of a dataset that would help catch this particular error.
 
-b. When creating test databases, it is important to create tuples in refer- enced relations that do not have any matching tuple in the referencing relation, for each foreign key. Explain why, using an example query on the university database.
+b. When creating test databases, it is important to create tuples in referenced relations that do not have any matching tuple in the referencing relation, for each foreign key. Explain why, using an example query on the university database.
 
 c. When creating test databases, it is important to create tuples with null values for foreign key attributes, provided the attribute is nullable (SQL allows foreign key attributes to take on null values, as long as they are not part of the primary key, and have not been declared as **not null**). Explain why, using an example query on the university database.
 
 _Hint_: use the queries from Exercise 4.1.
 
-**4.5** Show how to define the view _student grades_ (_ID, GPA_) giving the grade- point average of each student, based on the query in Exercise 3.2; recall that we used a relation _grade points_(_grade_, _points_) to get the numeric points associated with a letter grade. Make sure your view definition correctly handles the case of _null_ values for the _grade_ attribute of the _takes_ relation.
+**4.5** Show how to define the view _student grades_ (_ID, GPA_) giving the gradepoint average of each student, based on the query in Exercise 3.2; recall that we used a relation _grade points_(_grade_, _points_) to get the numeric points associated with a letter grade. Make sure your view definition correctly handles the case of _null_ values for the _grade_ attribute of the _takes_ relation.
 
 **4.6** Complete the SQL DDL definition of the university database of Figure 4.8 to include the relations _student_, _takes_, _advisor_, and _prereq_.  
 
@@ -3155,7 +3163,7 @@ b. Write an SQL assertion to enforce this constraint (as discussed in Section 4.
 
 **on delete cascade** )
 
-Here, _employee name_ is a key to the table _manager_, meaning that each em- ployee has at most one manager. The foreign-key clause requires that every manager also be an employee. Explain exactly what happens when a tuple in the relation _manager_ is deleted.
+Here, _employee name_ is a key to the table _manager_, meaning that each employee has at most one manager. The foreign-key clause requires that every manager also be an employee. Explain exactly what happens when a tuple in the relation _manager_ is deleted.
 
 **4.10** SQL provides an _n_\-ary operation called **coalesce**, which is defined as follows: **coalesce**(_A_1_, A_2_, . . . , An_) returns the first nonnull _Ai_ in the list _A_1_, A_2_, . . . , An_, and returns _null_ if all of _A_1_, A_2_, . . . , An_ are _null_.
 
@@ -3209,7 +3217,7 @@ In Chapters 3 and 4, we provided detailed coverage of the basic structure of SQL
 
 **5.1 Accessing SQL From a Programming Language**
 
-SQL provides a powerful declarative query language. Writing queries in SQL is usually much easier than coding the same queries in a general-purpose pro- gramming language. However, a database programmer must have access to a general-purpose programming language for at least two reasons:
+SQL provides a powerful declarative query language. Writing queries in SQL is usually much easier than coding the same queries in a general-purpose programming language. However, a database programmer must have access to a general-purpose programming language for at least two reasons:
 
 **1\.** Not all queries can be expressed in SQL, since SQL does not provide the full expressive power of a general-purpose language. That is, there exist queries that can be expressed in a language such as C, Java, or Cobol that cannot be expressed in SQL. To write such queries, we can embed SQL within a more powerful language.
 
@@ -3221,13 +3229,13 @@ SQL provides a powerful declarative query language. Writing queries in SQL is us
 
 **2\.** Nondeclarative actions—such as printing a report, interacting with a user, or sending the results of a query to a graphical user interface—cannot be done from within SQL. Applications usually have several components, and querying or updating data is only one component; other components are written in general-purpose programming languages. For an integrated application, there must be a means to combine SQL with a general-purpose programming language.
 
-There are two approaches to accessing SQL from a general-purpose program- ming language:
+There are two approaches to accessing SQL from a general-purpose programming language:
 
-• **Dynamic SQL**: A general-purpose program can connect to and communicate with a database server using a collection of functions (for procedural lan- guages) or methods (for object-oriented languages). Dynamic SQL allows the program to construct an SQL query as a character string at runtime, submit the query, and then retrieve the result into program variables a tuple at a time. The _dynamic SQL_ component of SQL allows programs to construct and submit SQL queries at runtime.
+• **Dynamic SQL**: A general-purpose program can connect to and communicate with a database server using a collection of functions (for procedural languages) or methods (for object-oriented languages). Dynamic SQL allows the program to construct an SQL query as a character string at runtime, submit the query, and then retrieve the result into program variables a tuple at a time. The _dynamic SQL_ component of SQL allows programs to construct and submit SQL queries at runtime.
 
-In this chapter, we look at two standards for connecting to an SQL database and performing queries and updates. One, JDBC (Section 5.1.1), is an applica- tion program interface for the Java language. The other, ODBC (Section 5.1.2), is an application program interface originally developed for the C language, and subsequently extended to other languages such as C++, C#, and Visual Basic.
+In this chapter, we look at two standards for connecting to an SQL database and performing queries and updates. One, JDBC (Section 5.1.1), is an application program interface for the Java language. The other, ODBC (Section 5.1.2), is an application program interface originally developed for the C language, and subsequently extended to other languages such as C++, C#, and Visual Basic.
 
-• **Embedded SQL**: Like dynamic SQL, embedded SQL provides a means by which a program can interact with a database server. However, under em- bedded SQL, the SQL statements are identified at compile time using a prepro- cessor. The preprocessor submits the SQL statements to the database system for precompilation and optimization; then it replaces the SQL statements in the application program with appropriate code and function calls before in- voking the programming-language compiler. Section 5.1.3 covers embedded SQL.
+• **Embedded SQL**: Like dynamic SQL, embedded SQL provides a means by which a program can interact with a database server. However, under embedded SQL, the SQL statements are identified at compile time using a preprocessor. The preprocessor submits the SQL statements to the database system for precompilation and optimization; then it replaces the SQL statements in the application program with appropriate code and function calls before invoking the programming-language compiler. Section 5.1.3 covers embedded SQL.
 
 A major challenge in mixing SQL with a general-purpose language is the mismatch in the ways these languages manipulate data. In SQL, the primary type of data is the relation. SQL statements operate on relations and return relations as a result. Programming languages normally operate on a variable at a time, and those variables correspond roughly to the value of an attribute in a tuple in a relation. Thus, integrating these two types of languages into a single application requires providing a mechanism to return the result of a query in a manner that the program can handle.
 
@@ -3279,7 +3287,7 @@ The first step in accessing a database from a Java program is to open a connecti
 
 an instance of Oracle running on your machine, or a PostgreSQL database running on another machine. Only after opening a connection can a Java program execute SQL statements.
 
-A connection is opened using the getConnection method of the Driver- Manager class (within java.sql). This method takes three parameters.2
+A connection is opened using the getConnection method of the DriverManager class (within java.sql). This method takes three parameters.2
 
 • The first parameter to the getConnection call is a string that specifies the URL, or machine name, where the server runs (in our example, db.yale.edu), along with possibly some other information such as the protocol to be used to communicate with the database (in our example, jdbc:oracle:thin:; we shall shortly see why this is required), the port number the database system uses for communication (in our example, 2000), and the specific database on the server to be used (in our example, univdb). Note that JDBC specifies only the API, not the communication protocol. A JDBC driver may support multiple protocols, and we must specify one supported by both the database and the driver. The protocol details are vendor specific.
 
@@ -3291,21 +3299,21 @@ In our example in the figure, we have created a Connection object whose handle i
 
 Each database product that supports JDBC (all the major database vendors do) provides a JDBC driver that must be dynamically loaded in order to access the database from Java. In fact, loading the driver must be done first, before connecting to the database.
 
-This is done by invoking Class.forName with one argument specifying a concrete class implementing the java.sql.Driver interface, in the first line of the program in Figure 5.1. This interface provides for the translation of product- independent JDBC calls into the product-specific calls needed by the specific database management system being used. The example in the figure shows the Oracle driver, oracle.jdbc.driver.OracleDriver.3 The driver is available in a .jar file at vendor Web sites and should be placed within the classpath so that the Java compiler can access it.
+This is done by invoking Class.forName with one argument specifying a concrete class implementing the java.sql.Driver interface, in the first line of the program in Figure 5.1. This interface provides for the translation of productindependent JDBC calls into the product-specific calls needed by the specific database management system being used. The example in the figure shows the Oracle driver, oracle.jdbc.driver.OracleDriver.3 The driver is available in a .jar file at vendor Web sites and should be placed within the classpath so that the Java compiler can access it.
 
-The actual protocol used to exchange information with the database de- pends on the driver that is used, and is not defined by the JDBC standard. Some
+The actual protocol used to exchange information with the database depends on the driver that is used, and is not defined by the JDBC standard. Some
 
-2There are multiple versions of the getConnection method, which differ in the parameters that they accept. We present the most commonly used version. 3The equivalent driver names for other products are as follows: IBM DB2: com.ibm.db2.jdbc.app.DB2Driver; Mi- crosoft SQL Server: com.microsoft.sqlserver.jdbc.SQLServerDriver; PostgreSQL: org.postgresql.Driver; and MySQL: com.mysql.jdbc.Driver. Sun also offers a “bridge driver” that converts JDBC calls to ODBC. This should be used only for vendors that support ODBC but not JDBC.  
+2There are multiple versions of the getConnection method, which differ in the parameters that they accept. We present the most commonly used version. 3The equivalent driver names for other products are as follows: IBM DB2: com.ibm.db2.jdbc.app.DB2Driver; Microsoft SQL Server: com.microsoft.sqlserver.jdbc.SQLServerDriver; PostgreSQL: org.postgresql.Driver; and MySQL: com.mysql.jdbc.Driver. Sun also offers a “bridge driver” that converts JDBC calls to ODBC. This should be used only for vendors that support ODBC but not JDBC.  
 
 **5.1 Accessing SQL From a Programming Language 161**
 
-drivers support more than one protocol, and a suitable protocol must be cho- sen depending on what protocol the database that you are connecting to sup- ports. In our example, when opening a connection with the database, the string jdbc:oracle:thin: specifies a particular protocol supported by Oracle.
+drivers support more than one protocol, and a suitable protocol must be chosen depending on what protocol the database that you are connecting to supports. In our example, when opening a connection with the database, the string jdbc:oracle:thin: specifies a particular protocol supported by Oracle.
 
 **5.1.1.2 Shipping SQL Statements to the Database System**
 
 Once a database connection is open, the program can use it to send SQL statements to the database system for execution. This is done via an instance of the class Statement. A Statement object is not the SQL statement itself, but rather an object that allows the Java program to invoke methods that ship an SQL statement given as an argument for execution by the database system. Our example creates a Statement handle (stmt) on the connection conn.
 
-To execute a statement, we invoke either the executeQuery method or the executeUpdate method, depending on whether the SQL statement is a query (and, thus, returns a result set) or nonquery statement such as **update**, **insert**, **delete**, **create table**, etc. In our example, stmt.executeUpdate executes an up- date statement that inserts into the _instructor_ relation. It returns an integer giving the number of tuples inserted, updated, or deleted. For DDL statements, the return value is zero. The try _{ . . . }_ catch _{ . . . }_ construct permits us to catch any exceptions (error conditions) that arise when JDBC calls are made, and print an appropriate message to the user.
+To execute a statement, we invoke either the executeQuery method or the executeUpdate method, depending on whether the SQL statement is a query (and, thus, returns a result set) or nonquery statement such as **update**, **insert**, **delete**, **create table**, etc. In our example, stmt.executeUpdate executes an update statement that inserts into the _instructor_ relation. It returns an integer giving the number of tuples inserted, updated, or deleted. For DDL statements, the return value is zero. The try _{ . . . }_ catch _{ . . . }_ construct permits us to catch any exceptions (error conditions) that arise when JDBC calls are made, and print an appropriate message to the user.
 
 **5.1.1.3 Retrieving the Result of a Query**
 
@@ -3325,11 +3333,11 @@ pStmt.setString(1, "88877"); pStmt.setString(2, "Perry"); pStmt.setString(3, "Fi
 
 We can create a prepared statement in which some values are replaced by “?”, thereby specifying that actual values will be provided later. The database system compiles the query when it is prepared. Each time the query is executed (with new values to replace the “?”s), the database system can reuse the previously compiled form of the query and apply the new values. The code fragment in Figure 5.2 shows how prepared statements can be used.
 
-The prepareStatement method of the Connection class submits an SQL statement for compilation. It returns an object of class PreparedStatement. At this point, no SQL statement has been executed. The executeQuery and execu- teUpdate methods of PreparedStatement class do that. But before they can be invoked, we must use methods of class PreparedStatement that assign values for the “?” parameters. The setStringmethod and other similar methods such as setInt for other basic SQL types allow us to specify the values for the parameters. The first argument specifies the “?” parameter for which we are assigning a value (the first parameter is 1, unlike most other Java constructs, which start with 0). The second argument specifies the value to be assigned.
+The prepareStatement method of the Connection class submits an SQL statement for compilation. It returns an object of class PreparedStatement. At this point, no SQL statement has been executed. The executeQuery and executeUpdate methods of PreparedStatement class do that. But before they can be invoked, we must use methods of class PreparedStatement that assign values for the “?” parameters. The setStringmethod and other similar methods such as setInt for other basic SQL types allow us to specify the values for the parameters. The first argument specifies the “?” parameter for which we are assigning a value (the first parameter is 1, unlike most other Java constructs, which start with 0). The second argument specifies the value to be assigned.
 
-In the example in the figure, we prepare an **insert** statement, set the “?” pa- rameters, and then invoke executeUpdate. The final two lines of our example show that parameter assignments remain unchanged until we specifically reas- sign them. Thus, the final statement, which invokes executeUpdate, inserts the tuple (“88878”, “Perry”, “Finance”, 125000).
+In the example in the figure, we prepare an **insert** statement, set the “?” parameters, and then invoke executeUpdate. The final two lines of our example show that parameter assignments remain unchanged until we specifically reassign them. Thus, the final statement, which invokes executeUpdate, inserts the tuple (“88878”, “Perry”, “Finance”, 125000).
 
-Prepared statements allow for more efficient execution in cases where the same query can be compiled once and then run multiple times with different parameter values. However, there is an even more significant advantage to pre- pared statements that makes them the preferred method of executing SQL queries whenever a user-entered value is used, even if the query is to be run only once. Suppose that we read in a user-entered value and then use Java string manipu- lation to construct the SQL statement. If the user enters certain special characters, such as a single quote, the resulting SQL statement may be syntactically incorrect unless we take extraordinary care in checking the input. The setString method does this for us automatically and inserts the needed escape characters to ensure syntactic correctness.  
+Prepared statements allow for more efficient execution in cases where the same query can be compiled once and then run multiple times with different parameter values. However, there is an even more significant advantage to prepared statements that makes them the preferred method of executing SQL queries whenever a user-entered value is used, even if the query is to be run only once. Suppose that we read in a user-entered value and then use Java string manipulation to construct the SQL statement. If the user enters certain special characters, such as a single quote, the resulting SQL statement may be syntactically incorrect unless we take extraordinary care in checking the input. The setString method does this for us automatically and inserts the needed escape characters to ensure syntactic correctness.  
 
 **5.1 Accessing SQL From a Programming Language 163**
 
@@ -3337,7 +3345,7 @@ In our example, suppose that the values for the variables _ID_, _name_, _dept na
 
 "insert into instructor values(’ " + ID + " ’, ’ " + name + " ’, " + " ’ + dept name + " ’, " ’ balance + ")"
 
-and the query is executed directly using the executeQuery method of a State- ment object. Now, if the user typed a single quote in the ID or name fields, the query string would have a syntax error. It is quite possible that an instructor name may have a quotation mark in its name (for example, “O’Henry”).
+and the query is executed directly using the executeQuery method of a Statement object. Now, if the user typed a single quote in the ID or name fields, the query string would have a syntax error. It is quite possible that an instructor name may have a quotation mark in its name (for example, “O’Henry”).
 
 While the above example might be considered an annoyance, the situation can be much worse. A technique called **SQL injection** can be used by malicious hackers to steal data or damage the database.
 
@@ -3413,7 +3421,7 @@ For example, there are methods that return the product name and version number o
 
 Still other methods return information about the database itself. The code in Figure 5.3 illustrates how to find information about columns (attributes) of relations in a database. The variable conn is assumed to be a handle for an already opened database connection. The method getColumns takes four arguments: a catalog name (null signifies that the catalog name is to be ignored), a schema name pattern, a table name pattern, and a column name pattern. The schema name, table name, and column name patterns can be used to specify a name or a pattern. Patterns can use the SQL string matching special characters “%” and “ ”; for instance, the pattern “%” matches all names. Only columns of tables of schemas satisfying the specified name or pattern are retrieved. Each row in the result set contains information about one column. The rows have a number of columns such as the name of the catalog, schema, table and column, the type of the column, and so on.
 
-Examples of other methods provided by DatabaseMetaData that provide information about the database include those for retrieval of metadata about relations (getTables()), foreign-key references (getCrossReference()), au- thorizations, database limits such as maximum number of connections, and so on.
+Examples of other methods provided by DatabaseMetaData that provide information about the database include those for retrieval of metadata about relations (getTables()), foreign-key references (getCrossReference()), authorizations, database limits such as maximum number of connections, and so on.
 
 The metadata interfaces can be used for a variety of tasks. For example, they can be used to write a database browser that allows a user to find the tables in a database, examine their schema, examine rows in a table, apply selections to see desired rows, and so on. The metadata information can be used to make code  
 
@@ -3427,17 +3435,17 @@ JDBC provides a number of other features, such as **updatable result sets**. It 
 
 Recall from Section 4.3 that a transaction allows multiple actions to be treated as a single atomic unit which can be committed or rolled back.
 
-By default, each SQL statement is treated as a separate transaction that is com- mitted automatically. The method setAutoCommit() in the JDBC Connection interface allows this behavior to be turned on or off. Thus, if conn is an open con- nection, conn.setAutoCommit(false) turns off automatic commit. Transactions must then be committed or rolled back explicitly using either conn.commit() or conn.rollback(). conn.setAutoCommit(true) turns on automatic commit.
+By default, each SQL statement is treated as a separate transaction that is committed automatically. The method setAutoCommit() in the JDBC Connection interface allows this behavior to be turned on or off. Thus, if conn is an open connection, conn.setAutoCommit(false) turns off automatic commit. Transactions must then be committed or rolled back explicitly using either conn.commit() or conn.rollback(). conn.setAutoCommit(true) turns on automatic commit.
 
-JDBC provides interfaces to deal with large objects without requiring an en- tire large object to be created in memory. To fetch large objects, the ResultSet interface provides methods getBlob() and getClob() that are similar to the getString() method, but return objects of type Blob and Clob, respectively. These objects do not store the entire large object, but instead store “locators” for the large objects, that is, logical pointers to the actual large object in the database. Fetching data from these objects is very much like fetching data from a file or an input stream, and can be performed using methods such as getBytes and getSubString.
+JDBC provides interfaces to deal with large objects without requiring an entire large object to be created in memory. To fetch large objects, the ResultSet interface provides methods getBlob() and getClob() that are similar to the getString() method, but return objects of type Blob and Clob, respectively. These objects do not store the entire large object, but instead store “locators” for the large objects, that is, logical pointers to the actual large object in the database. Fetching data from these objects is very much like fetching data from a file or an input stream, and can be performed using methods such as getBytes and getSubString.
 
 Conversely, to store large objects in the database, the PreparedStatement class permits a database column whose type is **blob** to be linked to an input stream (such as a file that has been opened) using the method setBlob(int parameterIndex, InputStream inputStream). When the prepared statement is executed, data are read from the input stream, and written to the **blob** in the database. Similarly, a **clob** column can be set using the setClob method, which takes as arguments a parameter index and a character stream.
 
-JDBC includes a _row set_ feature that allows result sets to be collected and shipped to other applications. Row sets can be scanned both backward and for- ward and can be modified. Because row sets are not part of the database itself once they are downloaded, we do not cover details of their use here.
+JDBC includes a _row set_ feature that allows result sets to be collected and shipped to other applications. Row sets can be scanned both backward and forward and can be modified. Because row sets are not part of the database itself once they are downloaded, we do not cover details of their use here.
 
 **5.1.2 ODBC**
 
-The **Open Database Connectivity** (ODBC) standard defines an API that applica- tions can use to open a connection with a database, send queries and updates, and get back results. Applications such as graphical user interfaces, statistics pack-  
+The **Open Database Connectivity** (ODBC) standard defines an API that applications can use to open a connection with a database, send queries and updates, and get back results. Applications such as graphical user interfaces, statistics pack 
 
 **5.1 Accessing SQL From a Programming Language 167**
 
@@ -3495,7 +3503,7 @@ The ODBC standard defines _conformance levels_, which specify subsets of the fun
 
 **ADO.NET**
 
-The ADO.NET API, designed for the Visual Basic .NET and C# languages, pro- vides functions to access data, which at a high level are not dissimilar to the JDBC functions, although details differ. Like JDBC and ODBC, the ADO.NET API allows access to results of SQL queries, as well as to metadata, but is considerably sim- pler to use than ODBC. A database that supports ODBC can be accessed using the ADO.NET API, and the ADO.NET calls are translated into ODBC calls. The ADO.NET API can also be used with some kinds of nonrelational data sources such as Microsoft’s OLE-DB, XML (covered in Chapter 23), and more recently, the Entity Framework developed by Microsoft. See the bibliographic notes for more information on ADO.NET.
+The ADO.NET API, designed for the Visual Basic .NET and C# languages, provides functions to access data, which at a high level are not dissimilar to the JDBC functions, although details differ. Like JDBC and ODBC, the ADO.NET API allows access to results of SQL queries, as well as to metadata, but is considerably simpler to use than ODBC. A database that supports ODBC can be accessed using the ADO.NET API, and the ADO.NET calls are translated into ODBC calls. The ADO.NET API can also be used with some kinds of nonrelational data sources such as Microsoft’s OLE-DB, XML (covered in Chapter 23), and more recently, the Entity Framework developed by Microsoft. See the bibliographic notes for more information on ADO.NET.
 
 Level 2 requires further features, such as the ability to send and retrieve arrays of parameter values and to retrieve more detailed catalog information.
 
@@ -3503,7 +3511,7 @@ The SQL standard defines a **call level interface (CLI)** that is similar to the
 
 **5.1.3 Embedded SQL**
 
-The SQL standard defines embeddings of SQL in a variety of programming lan- guages, such as C, C++, Cobol, Pascal, Java, PL/I, and Fortran. A language in which SQL queries are embedded is referred to as a _host_ language, and the SQL structures permitted in the host language constitute _embedded_ SQL.
+The SQL standard defines embeddings of SQL in a variety of programming languages, such as C, C++, Cobol, Pascal, Java, PL/I, and Fortran. A language in which SQL queries are embedded is referred to as a _host_ language, and the SQL structures permitted in the host language constitute _embedded_ SQL.
 
 Programs written in the host language can use the embedded SQL syntax to access and update data stored in a database. An embedded SQL program must be processed by a special preprocessor prior to compilation. The preprocessor replaces embedded SQL requests with host-language declarations and procedure calls that allow runtime execution of the database accesses. Then, the resulting program is compiled by the host-language compiler. This is the main distinction between embedded SQL and JDBC or ODBC.
 
@@ -3517,7 +3525,7 @@ The exact syntax for embedded SQL requests depends on the language in which SQL 
 
 **170 Chapter 5 Advanced SQL**
 
-We place the statement SQL INCLUDE SQLCA in the program to identify the place where the preprocessor should insert the special variables used for com- munication between the program and the database system.
+We place the statement SQL INCLUDE SQLCA in the program to identify the place where the preprocessor should insert the special variables used for communication between the program and the database system.
 
 Before executing any SQL statements, the program must first connect to the database. This is done using:
 
@@ -3535,7 +3543,7 @@ Embedded SQL statements are similar in form to regular SQL statements. There are
 
 To write a relational query, we use the **declare cursor** statement. The result of the query is not yet computed. Rather, the program must use the **open** and **fetch** commands (discussed later in this section) to obtain the result tuples. As we shall see, use of a cursor is analogous to iterating through a result set in JDBC.
 
-Consider the university schema. Assume that we have a host-language vari- able _credit amount_ in our program, declared as we saw earlier, and that we wish to find the names of all students who have taken more than _credit amount_ credit hours. We can write this query as follows:
+Consider the university schema. Assume that we have a host-language variable _credit amount_ in our program, declared as we saw earlier, and that we wish to find the names of all students who have taken more than _credit amount_ credit hours. We can write this query as follows:
 
 EXEC SQL **declare** _c_ **cursor for select** _ID_, _name_ **from** _student_ **where** _tot cred >_ :_credit amount_;
 
@@ -3549,7 +3557,7 @@ This statement causes the database system to execute the query and to save the r
 
 **5.1 Accessing SQL From a Programming Language 171**
 
-If the SQL query results in an error, the database system stores an error diag- nostic in the SQL communication-area (SQLCA) variables.
+If the SQL query results in an error, the database system stores an error diagnostic in the SQL communication-area (SQLCA) variables.
 
 We then use a series of **fetch** statements, each of which causes the values of one tuple to be placed in host-language variables. The **fetch** statement requires one host-language variable for each attribute of the result relation. For our example query, we need one variable to hold the _ID_ value and another to hold the _name_ value. Suppose that those variables are _si_ and _sn_, respectively, and have been declared within a DECLARE section. Then the statement:
 
@@ -3559,7 +3567,7 @@ produces a tuple of the result relation. The program can then manipulate the var
 
 A single **fetch** request returns only one tuple. To obtain all tuples of the result, the program must contain a loop to iterate over all tuples. Embedded SQL assists the programmer in managing this iteration. Although a relation is conceptually a set, the tuples of the result of a query are in some fixed physical order. When the program executes an **open** statement on a cursor, the cursor is set to point to the first tuple of the result. Each time it executes a **fetch** statement, the cursor is updated to point to the next tuple of the result. When no further tuples remain to be processed, the character array variable SQLSTATE in the SQLCA is set to ’02000’ (meaning “no more data”); the exact syntax for accessing this variable depends on the specific database system you use. Thus, we can use a **while** loop (or equivalent loop) to process each tuple of the result.
 
-We must use the **close** statement to tell the database system to delete the tem- porary relation that held the result of the query. For our example, this statement takes the form
+We must use the **close** statement to tell the database system to delete the temporary relation that held the result of the query. For our example, this statement takes the form
 
 EXEC SQL **close** _c_;
 
@@ -3567,7 +3575,7 @@ Embedded SQL expressions for database modification (**update**, **insert**, and 
 
 EXEC SQL _<_ any valid **update, insert,** or **delete**_\>_;
 
-Host-language variables, preceded by a colon, may appear in the SQL database- modification expression. If an error condition arises in the execution of the state- ment, a diagnostic is set in the SQLCA.
+Host-language variables, preceded by a colon, may appear in the SQL databasemodification expression. If an error condition arises in the execution of the statement, a diagnostic is set in the SQLCA.
 
 Database relations can also be updated through cursors. For example, if we want to add 100 to the _salary_ attribute of every instructor in the Music department, we could declare a cursor as follows.  
 
@@ -3607,11 +3615,11 @@ FROM :_<_variable_\>_, and a cursor can be opened on the query name.
 
 We have already seen several functions that are built into the SQL language. In this section, we show how developers can write their own functions and procedures, store them in the database, and then invoke them from SQL statements. Functions are particularly useful with specialized data types such as images and geometric objects. For instance, a line-segment data type used in a map database may have an associated function that checks whether two line segments overlap, and an image data type may have associated functions to compare two images for similarity.
 
-Procedures and functions allow “business logic” to be stored in the database, and executed from SQL statements. For example, universities usually have many rules about how many courses a student can take in a given semester, the mini- mum number of courses a full-time instructor must teach in a year, the maximum number of majors a student can be enrolled in, and so on. While such business logic can be encoded as programming-language procedures stored entirely out- side the database, defining them as stored procedures in the database has several advantages. For example, it allows multiple applications to access the procedures, and it allows a single point of change in case the business rules change, without changing other parts of the application. Application code can then call the stored procedures, instead of directly updating database relations.
+Procedures and functions allow “business logic” to be stored in the database, and executed from SQL statements. For example, universities usually have many rules about how many courses a student can take in a given semester, the minimum number of courses a full-time instructor must teach in a year, the maximum number of majors a student can be enrolled in, and so on. While such business logic can be encoded as programming-language procedures stored entirely outside the database, defining them as stored procedures in the database has several advantages. For example, it allows multiple applications to access the procedures, and it allows a single point of change in case the business rules change, without changing other parts of the application. Application code can then call the stored procedures, instead of directly updating database relations.
 
-SQL allows the definition of functions, procedures, and methods. These can be defined either by the procedural component of SQL, or by an external program- ming language such as Java, C, or C++. We look at definitions in SQL first, and then see how to use definitions in external languages in Section 5.2.3.
+SQL allows the definition of functions, procedures, and methods. These can be defined either by the procedural component of SQL, or by an external programming language such as Java, C, or C++. We look at definitions in SQL first, and then see how to use definitions in external languages in Section 5.2.3.
 
-Although the syntax we present here is defined by the SQL standard, most databases implement nonstandard versions of this syntax. For example, the pro- cedural languages supported by Oracle (PL/SQL), Microsoft SQL Server (Trans- actSQL), and PostgreSQL (PL/pgSQL) all differ from the standard syntax we present  
+Although the syntax we present here is defined by the SQL standard, most databases implement nonstandard versions of this syntax. For example, the procedural languages supported by Oracle (PL/SQL), Microsoft SQL Server (TransactSQL), and PostgreSQL (PL/pgSQL) all differ from the standard syntax we present  
 
 **174 Chapter 5 Advanced SQL**
 
@@ -3623,7 +3631,7 @@ Although the syntax we present here is defined by the SQL standard, most databas
 
 **Figure 5.5** Function defined in SQL.
 
-here. We illustrate some of the differences, for the case of Oracle, later (page 178). See the respective system manuals for further details. Although parts of the syn- tax we present here may not be supported on such systems, the concepts we describe are applicable across implementations, although with a different syntax.
+here. We illustrate some of the differences, for the case of Oracle, later (page 178). See the respective system manuals for further details. Although parts of the syntax we present here may not be supported on such systems, the concepts we describe are applicable across implementations, although with a different syntax.
 
 **5.2.1 Declaring and Invoking SQL Functions and Procedures**
 
@@ -3631,7 +3639,7 @@ Suppose that we want a function that, given the name of a department, returns th
 
 **select** _dept name_, _budget_ **from** _instructor_ **where** _dept count_(_dept name_) _\>_ 12;
 
-The SQL standard supports functions that can return tables as results; such functions are called **table functions**.5 Consider the function defined in Figure 5.6. The function returns a table containing all the instructors of a particular depart- ment. Note that the function’s parameter is referenced by prefixing it with the name of the function (_instructor of.dept name_).
+The SQL standard supports functions that can return tables as results; such functions are called **table functions**.5 Consider the function defined in Figure 5.6. The function returns a table containing all the instructors of a particular department. Note that the function’s parameter is referenced by prefixing it with the name of the function (_instructor of.dept name_).
 
 The function can be used in a query as follows:
 
@@ -3667,13 +3675,13 @@ Procedures can be invoked either from an SQL procedure or from embedded SQL by t
 
 Procedures and functions can be invoked from dynamic SQL, as illustrated by the JDBC syntax in Section 5.1.1.4.
 
-SQL permits more than one procedure of the same name, so long as the num- ber of arguments of the procedures with the same name is different. The name, along with the number of arguments, is used to identify the procedure. SQL also permits more than one function with the same name, so long as the different functions with the same name either have different numbers of arguments, or for functions with the same number of arguments, they differ in the type of at least one argument.  
+SQL permits more than one procedure of the same name, so long as the number of arguments of the procedures with the same name is different. The name, along with the number of arguments, is used to identify the procedure. SQL also permits more than one function with the same name, so long as the different functions with the same name either have different numbers of arguments, or for functions with the same number of arguments, they differ in the type of at least one argument.  
 
 **176 Chapter 5 Advanced SQL**
 
 **5.2.2 Language Constructs for Procedures and Functions**
 
-SQL supports constructs that give it almost all the power of a general-purpose pro- gramming language. The part of the SQL standard that deals with these constructs is called the **Persistent Storage Module (PSM)**.
+SQL supports constructs that give it almost all the power of a general-purpose programming language. The part of the SQL standard that deals with these constructs is called the **Persistent Storage Module (PSM)**.
 
 Variables are declared using a **declare** statement and can have any valid SQL data type. Assignments are performed using a **set** statement.
 
@@ -3739,7 +3747,7 @@ The conditional statements supported by SQL include if-then-else statements by u
 
 **Figure 5.7** Procedure to register a student for a course section.
 
-SQL also supports a case statement similar to the C/C++ language case state- ment (in addition to case expressions, which we saw in Chapter 3).
+SQL also supports a case statement similar to the C/C++ language case statement (in addition to case expressions, which we saw in Chapter 3).
 
 Figure 5.7 provides a larger example of the use of procedural constructs in SQL. The function _registerStudent_ defined in the figure, registers a student in a course section, after verifying that the number of students in the section does not exceed the capacity of the room allocated to the section. The function returns an error code, with a value greater than or equal to 0 signifying success, and a negative value signifying an error condition, and a message indicating the reason for the failure is returned as an **out** parameter.  
 
@@ -3747,7 +3755,7 @@ Figure 5.7 provides a larger example of the use of procedural constructs in SQL.
 
 **NONSTANDARD SYNTAX FOR PROCEDURES AND FUNCTIONS**
 
-Although the SQL standard defines the syntax for procedures and functions, most databases do not follow the standard strictly, and there is considerable variation in the syntax supported. One of the reasons for this situation is that these databases typically introduced support for procedures and functions be- fore the syntax was standardized, and they continue to support their original syntax. It is not possible to list the syntax supported by each database here, but we illustrate a few of the differences in the case of Oracle’s PL/SQL, by show- ing below a version of the function from Figure 5.5, as it would be defined in PL/SQL.
+Although the SQL standard defines the syntax for procedures and functions, most databases do not follow the standard strictly, and there is considerable variation in the syntax supported. One of the reasons for this situation is that these databases typically introduced support for procedures and functions before the syntax was standardized, and they continue to support their original syntax. It is not possible to list the syntax supported by each database here, but we illustrate a few of the differences in the case of Oracle’s PL/SQL, by showing below a version of the function from Figure 5.5, as it would be defined in PL/SQL.
 
 **create or replace function** _dept count_(_dept name_ **in** _instructor.dept name%type_) **return integer as**
 
@@ -3757,11 +3765,11 @@ _d count_ **integer**; **begin**
 
 **end**;
 
-While the two versions are similar in concept, there are a number of minor syn- tactic differences, some of which are evident when comparing the two versions of the function. Although not shown here, the syntax for control flow in PL/SQL also has several differences from the syntax presented here.
+While the two versions are similar in concept, there are a number of minor syntactic differences, some of which are evident when comparing the two versions of the function. Although not shown here, the syntax for control flow in PL/SQL also has several differences from the syntax presented here.
 
-Observe that PL/SQL allows a type to be specified as the type of an attribute of a relation, by adding the suffix _%type_. On the other hand, PL/SQL does not directly support the ability to return a table, although there is an indirect way of implementing this functionality by creating a table type. The procedural languages supported by other databases also have a number of syntactic and semantic differences. See the respective language references for more informa- tion.
+Observe that PL/SQL allows a type to be specified as the type of an attribute of a relation, by adding the suffix _%type_. On the other hand, PL/SQL does not directly support the ability to return a table, although there is an indirect way of implementing this functionality by creating a table type. The procedural languages supported by other databases also have a number of syntactic and semantic differences. See the respective language references for more information.
 
-The SQL procedural language also supports the signaling of **exception condi- tions**, and declaring of **handlers** that can handle the exception, as in this code:
+The SQL procedural language also supports the signaling of **exception conditions**, and declaring of **handlers** that can handle the exception, as in this code:
 
 **declare** _out of classroom seats_ **condition declare exit handler for** _out of classroom seats_ **begin** _sequence of statements_ **end**  
 
@@ -3771,7 +3779,7 @@ The statements between the **begin** and the **end** can raise an exception by e
 
 **5.2.3 External Language Routines**
 
-Although the procedural extensions to SQL can be very useful, they are unfortu- nately not supported in a standard way across databases. Even the most basic features have different syntax or semantics in different database products. As a result, programmers have to essentially learn a new language for each database product. An alternative that is gaining in support is to define procedures in an im- perative programming language, but allow them to be invoked from SQL queries and trigger definitions.
+Although the procedural extensions to SQL can be very useful, they are unfortunately not supported in a standard way across databases. Even the most basic features have different syntax or semantics in different database products. As a result, programmers have to essentially learn a new language for each database product. An alternative that is gaining in support is to define procedures in an imperative programming language, but allow them to be invoked from SQL queries and trigger definitions.
 
 SQL allows us to define functions in a programming language such as Java, C#, C or C++. Functions defined in this fashion can be more efficient than functions defined in SQL, and computations that cannot be carried out in SQL can be executed by these functions.
 
@@ -3783,13 +3791,13 @@ External procedures and functions can be specified in this way (note that the ex
 
 **create function** dept count (_dept name_ **varchar**(20)) **returns** integer **language** C **external name** ’/usr/avi/bin/dept count’
 
-In general, the external language procedures need to deal with null values in parameters (both **in** and **out**) and return values. They also need to communicate failure/success status, to deal with exceptions. This information can be commu- nicated by extra parameters: an **sqlstate** value to indicate failure/success status, a parameter to store the return value of the function, and indicator variables for each parameter/function result to indicate if the value is null. Other mechanisms are possible to handle null values, for example by passing pointers instead of values. The exact mechanisms depend on the database. However, if a function does not deal with these situations, an extra line **parameter style general** can be added to the declaration to indicate that the external procedures/functions take only the arguments shown and do not handle null values or exceptions.
+In general, the external language procedures need to deal with null values in parameters (both **in** and **out**) and return values. They also need to communicate failure/success status, to deal with exceptions. This information can be communicated by extra parameters: an **sqlstate** value to indicate failure/success status, a parameter to store the return value of the function, and indicator variables for each parameter/function result to indicate if the value is null. Other mechanisms are possible to handle null values, for example by passing pointers instead of values. The exact mechanisms depend on the database. However, if a function does not deal with these situations, an extra line **parameter style general** can be added to the declaration to indicate that the external procedures/functions take only the arguments shown and do not handle null values or exceptions.
 
 Functions defined in a programming language and compiled outside the database system may be loaded and executed with the database-system code.  
 
 **180 Chapter 5 Advanced SQL**
 
-However, doing so carries the risk that a bug in the program can corrupt the database internal structures, and can bypass the access-control functionality of the database system. Database systems that are concerned more about efficient per- formance than about security may execute procedures in such a fashion. Database systems that are concerned about security may execute such code as part of a sep- arate process, communicate the parameter values to it, and fetch results back, via interprocess communication. However, the time overhead of interprocess communication is quite high; on typical CPU architectures, tens to hundreds of thousands of instructions can execute in the time taken for one interprocess com- munication.
+However, doing so carries the risk that a bug in the program can corrupt the database internal structures, and can bypass the access-control functionality of the database system. Database systems that are concerned more about efficient performance than about security may execute procedures in such a fashion. Database systems that are concerned about security may execute such code as part of a separate process, communicate the parameter values to it, and fetch results back, via interprocess communication. However, the time overhead of interprocess communication is quite high; on typical CPU architectures, tens to hundreds of thousands of instructions can execute in the time taken for one interprocess communication.
 
 If the code is written in a “safe” language such as Java or C#, there is another possibility: executing the code in a **sandbox** within the database query execution process itself. The sandbox allows the Java or C# code to access its own memory area, but prevents the code from reading or updating the memory of the query execution process, or accessing files in the file system. (Creating a sandbox is not possible for a language such as C, which allows unrestricted access to memory through pointers.) Avoiding interprocess communication reduces function call overhead greatly.
 
@@ -3803,17 +3811,17 @@ A **trigger** is a statement that the system executes automatically as a side ef
 
 **2\.** Specify the _actions_ to be taken when the trigger executes.
 
-Once we enter a trigger into the database, the database system takes on the respon- sibility of executing it whenever the specified event occurs and the corresponding condition is satisfied.
+Once we enter a trigger into the database, the database system takes on the responsibility of executing it whenever the specified event occurs and the corresponding condition is satisfied.
 
 **5.3.1 Need for Triggers**
 
-Triggers can be used to implement certain integrity constraints that cannot be specified using the constraint mechanism of SQL. Triggers are also useful mecha-  
+Triggers can be used to implement certain integrity constraints that cannot be specified using the constraint mechanism of SQL. Triggers are also useful mecha 
 
 **5.3 Triggers 181**
 
 nisms for alerting humans or for starting certain tasks automatically when certain conditions are met. As an illustration, we could design a trigger that, whenever a tuple is inserted into the _takes_ relation, updates the tuple in the _student_ relation for the student taking the course by adding the number of credits for the course to the student’s total credits. As another example, suppose a warehouse wishes to maintain a minimum inventory of each item; when the inventory level of an item falls below the minimum level, an order can be placed automatically. On an update of the inventory level of an item, the trigger compares the current inventory level with the minimum inventory level for the item, and if the level is at or below the minimum, a new order is created.
 
-Note that trigger systems cannot usually perform updates outside the database, and hence, in the inventory replenishment example, we cannot use a trigger to place an order in the external world. Instead, we add an order to a relation hold- ing reorders. We must create a separate permanently running system process that periodically scans that relation and places orders. Some database systems provide built-in support for sending email from SQL queries and triggers, using the above approach.
+Note that trigger systems cannot usually perform updates outside the database, and hence, in the inventory replenishment example, we cannot use a trigger to place an order in the external world. Instead, we add an order to a relation holding reorders. We must create a separate permanently running system process that periodically scans that relation and places orders. Some database systems provide built-in support for sending email from SQL queries and triggers, using the above approach.
 
 **5.3.2 Triggers in SQL**
 
@@ -3873,7 +3881,7 @@ Figure 5.9 shows how a trigger can be used to keep the _tot cred_ attribute valu
 
 **Figure 5.9** Using a trigger to maintain _credits earned_ values.
 
-A more realistic implementation of this example trigger would also handle grade corrections that change a successful completion grade to a fail grade, and handle insertions into the _takes_ relation where the _grade_ indicates successful com- pletion. We leave these as an exercise for the reader.
+A more realistic implementation of this example trigger would also handle grade corrections that change a successful completion grade to a fail grade, and handle insertions into the _takes_ relation where the _grade_ indicates successful completion. We leave these as an exercise for the reader.
 
 As another example of the use of a trigger, the action on **delete** of a _student_ tuple could be to check if the student has any entries in the _takes_ relation, and if so, to delete them.
 
@@ -3897,7 +3905,7 @@ used with **after** triggers, regardless of whether they are statement triggers 
 
 Although the trigger syntax we describe here is part of the SQL standard, and is supported by IBM DB2, most other database systems have nonstandard syntax for specifying triggers, and may not implement all features in the SQL standard. We outline a few of the differences below; see the respective system manuals for further details.
 
-For example, in the Oracle syntax, unlike the SQL standard syntax, the key- word **row** does not appear in the **referencing** statement. The keyword **atomic** does not appear after **begin**. The reference to _nrow_ in the **select** statement nested in the **update** statement must begin with a colon (:) to inform the system that the variable _nrow_ is defined externally from the SQL statement. Further, sub- queries are not allowed in the **when** and **if** clauses. It is possible to work around this problem by moving complex predicates from the **when** clause into a sep- arate query that saves the result into a local variable, and then reference that variable in an **if** clause, and the body of the trigger then moves into the cor- responding **then** clause. Further, in Oracle, triggers are not allowed to execute a transaction rollback directly; however, they can instead use a function called raise application error to not only roll back the transaction, but also return an error message to the user/application that performed the update.
+For example, in the Oracle syntax, unlike the SQL standard syntax, the keyword **row** does not appear in the **referencing** statement. The keyword **atomic** does not appear after **begin**. The reference to _nrow_ in the **select** statement nested in the **update** statement must begin with a colon (:) to inform the system that the variable _nrow_ is defined externally from the SQL statement. Further, subqueries are not allowed in the **when** and **if** clauses. It is possible to work around this problem by moving complex predicates from the **when** clause into a separate query that saves the result into a local variable, and then reference that variable in an **if** clause, and the body of the trigger then moves into the corresponding **then** clause. Further, in Oracle, triggers are not allowed to execute a transaction rollback directly; however, they can instead use a function called raise application error to not only roll back the transaction, but also return an error message to the user/application that performed the update.
 
 As another example, in Microsoft SQL Server the keyword **on** is used instead of **after**. The **referencing** clause is omitted, and old and new rows are referenced by the tuple variables **deleted** and **inserted**. Further, the **for each row** clause is omitted, and **when** is replaced by **if**. The **before** specification is not supported, but an **instead of** specification is supported.
 
@@ -3921,7 +3929,7 @@ In PostgreSQL, triggers do not have a body, but instead invoke a procedure for e
 
 Triggers can be disabled or enabled; by default they are enabled when they are created, but can be disabled by using **alter trigger** _trigger name_ **disable** (some databases use alternative syntax such as **disable trigger** _trigger name_). A trigger that has been disabled can be enabled again. A trigger can instead be dropped, which removes it permanently, by using the command **drop trigger** _trigger name_.
 
-Returning to our warehouse inventory example, suppose we have the follow- ing relations:
+Returning to our warehouse inventory example, suppose we have the following relations:
 
 • _inventory_ (_item, level_), which notes the current amount of the item in the warehouse.
 
@@ -3939,7 +3947,7 @@ SQL-based database systems use triggers widely, although before SQL:1999 they we
 
 **5.3.3 When Not to Use Triggers**
 
-There are many good uses for triggers, such as those we have just seen in Sec- tion 5.3.2, but some uses are best handled by alternative techniques. For example, we could implement the **on delete cascade** feature of a foreign-key constraint by using a trigger, instead of using the cascade feature. Not only would this be more work to implement, but also, it would be much harder for a database user to understand the set of constraints implemented in the database.
+There are many good uses for triggers, such as those we have just seen in Section 5.3.2, but some uses are best handled by alternative techniques. For example, we could implement the **on delete cascade** feature of a foreign-key constraint by using a trigger, instead of using the cascade feature. Not only would this be more work to implement, but also, it would be much harder for a database user to understand the set of constraints implemented in the database.
 
 As another example, triggers can be used to maintain materialized views. For instance, if we wished to support very fast access to the total number of students registered for each course section, we could do this by creating a relation
 
@@ -3953,7 +3961,7 @@ The value of _total students_ for each course must be maintained up-to-date by t
 
 However, many database systems now support materialized views, which are automatically maintained by the database system (see Section 4.2.3). As a result, there is no need to write trigger code for maintaining such materialized views.
 
-Triggers have been used for maintaining copies, or replicas, of databases. A collection of triggers on insert, delete, or update can be created on each relation to record the changes in relations called **change** or **delta** relations. A separate process copies over the changes to the replica of the database. Modern database systems, however, provide built-in facilities for database replication, making trig- gers unnecessary for replication in most cases. Replicated databases are discussed in detail in Chapter 19.
+Triggers have been used for maintaining copies, or replicas, of databases. A collection of triggers on insert, delete, or update can be created on each relation to record the changes in relations called **change** or **delta** relations. A separate process copies over the changes to the replica of the database. Modern database systems, however, provide built-in facilities for database replication, making triggers unnecessary for replication in most cases. Replicated databases are discussed in detail in Chapter 19.
 
 Another problem with triggers lies in unintended execution of the triggered action when data are loaded from a backup copy,6 or when database updates at a site are replicated on a backup site. In such cases, the triggered action has already been executed, and typically should not be executed again. When loading data, triggers can be disabled explicitly. For backup replica systems that may have to take over from the primary system, triggers would have to be disabled initially, and enabled when the backup site takes over processing from the primary system. As an alternative, some database systems allow triggers to be specified as **not**
 
@@ -3969,13 +3977,13 @@ BIO-301 BIO-101 BIO-399 BIO-101 CS-190 CS-101 CS-315 CS-101 CS-319 CS-101 CS-347
 
 **for replication**, which ensures that they are not executed on the backup site during database replication. Other database systems provide a system variable that denotes that the database is a replica on which database actions are being replayed; the trigger body should check this variable and exit if it is true. Both solutions remove the need for explicit disabling and enabling of triggers.
 
-Triggers should be written with great care, since a trigger error detected at runtime causes the failure of the action statement that set off the trigger. Further- more, the action of one trigger can set off another trigger. In the worst case, this could even lead to an infinite chain of triggering. For example, suppose an insert trigger on a relation has an action that causes another (new) insert on the same relation. The insert action then triggers yet another insert action, and so on ad infinitum. Some database systems limit the length of such chains of triggers (for example, to 16 or 32) and consider longer chains of triggering an error. Other systems flag as an error any trigger that attempts to reference the relation whose modification caused the trigger to execute in the first place.
+Triggers should be written with great care, since a trigger error detected at runtime causes the failure of the action statement that set off the trigger. Furthermore, the action of one trigger can set off another trigger. In the worst case, this could even lead to an infinite chain of triggering. For example, suppose an insert trigger on a relation has an action that causes another (new) insert on the same relation. The insert action then triggers yet another insert action, and so on ad infinitum. Some database systems limit the length of such chains of triggers (for example, to 16 or 32) and consider longer chains of triggering an error. Other systems flag as an error any trigger that attempts to reference the relation whose modification caused the trigger to execute in the first place.
 
 Triggers can serve a very useful purpose, but they are best avoided when alternatives exist. Many trigger applications can be substituted by appropriate use of stored procedures, which we discussed in Section 5.2.
 
 **5.4 Recursive Queries \*\***
 
-Consider the instance of the relation _prereq_ shown in Figure 5.12 containing infor- mation about the various courses offered at the university and the prerequisite for each course.7
+Consider the instance of the relation _prereq_ shown in Figure 5.12 containing information about the various courses offered at the university and the prerequisite for each course.7
 
 Suppose now that we want to find out which courses are a prerequisite whether directly or indirectly, for a specific course—say, CS-347. That is, we wish to find a course that is a direct prerequisite for CS-347, or is a prerequisite for a course that is a prerequisite for CS-347, and so on.
 
@@ -3999,7 +4007,7 @@ prerequisites of that course, and returns the set. The procedure uses three temp
 
 • _temp_: used as temporary storage while sets of courses are manipulated.
 
-Note that SQL allows the creation of temporary tables using the command **create temporary table**; such tables are available only within the transaction executing the query, and are dropped when the transaction finishes. Moreover, if two in- stances of _findAllPrereqs_ run concurrently, each gets its own copy of the temporary tables; if they shared a copy, their result could be incorrect.
+Note that SQL allows the creation of temporary tables using the command **create temporary table**; such tables are available only within the transaction executing the query, and are dropped when the transaction finishes. Moreover, if two instances of _findAllPrereqs_ run concurrently, each gets its own copy of the temporary tables; if they shared a copy, their result could be incorrect.
 
 The procedure inserts all direct prerequisites of course _cid_ into _new c prereq_ before the **repeat** loop. The **repeat** loop first adds all courses in _new c prereq_ to _c prereq_. Next, it computes prerequisites of all those courses in _new c prereq_, except those that have already been found to be prerequisites of _cid_, and stores them in the temporary table _temp_. Finally, it replaces the contents of _new c prereq_ by the contents of _temp_. The **repeat** loop terminates when it finds no new (indirect) prerequisites.
 
@@ -4065,13 +4073,13 @@ We can use recursion to define the set of courses that are prerequisites of a pa
 
 **1\.** Courses that are prerequisites for CS-347.
 
-**2\.** Courses that are prerequisites for those courses that are prerequisites (di- rectly or indirectly) for CS-347.
+**2\.** Courses that are prerequisites for those courses that are prerequisites (directly or indirectly) for CS-347.
 
 Note that case 2 is recursive, since it defines the set of courses that are prerequisites of CS-347 in terms of the set of courses that are prerequisites of CS-347. Other examples of transitive closure, such as finding all subparts (direct or indirect) of a given part can also be defined in a similar manner, recursively.
 
-Since the SQL:1999 version, the SQL standard supports a limited form of re- cursion, using the **with recursive** clause, where a view (or temporary view) is expressed in terms of itself. Recursive queries can be used, for example, to express transitive closure concisely. Recall that the **with** clause is used to define a tempo- rary view whose definition is available only to the query in which it is defined. The additional keyword **recursive** specifies that the view is recursive.
+Since the SQL:1999 version, the SQL standard supports a limited form of recursion, using the **with recursive** clause, where a view (or temporary view) is expressed in terms of itself. Recursive queries can be used, for example, to express transitive closure concisely. Recall that the **with** clause is used to define a temporary view whose definition is available only to the query in which it is defined. The additional keyword **recursive** specifies that the view is recursive.
 
-For example, we can find every pair (_cid_,_pre_) such that _pre_ is directly or in- directly a prerequisite for course _cid_, using the recursive SQL view shown in Figure 5.15.
+For example, we can find every pair (_cid_,_pre_) such that _pre_ is directly or indirectly a prerequisite for course _cid_, using the recursive SQL view shown in Figure 5.15.
 
 Any recursive view must be defined as the union of two subqueries: a **base query** that is nonrecursive and a **recursive query** that uses the recursive view. In the example in Figure 5.15, the base query is the select on _prereq_ while the recursive query computes the join of _prereq_ and _rec prereq_.  
 
@@ -4091,7 +4099,7 @@ Applying the above logic to our example, we first find all direct prerequisites 
 
 To find the prerequisites of a specific course, such as CS-347, we can modify the outer level query by adding a where clause “**where** _rec prereq.course id_ \= ‘CS-347‘”. One way to evaluate the query with the selection is to compute the full contents of _rec prereq_ using the iterative technique, and then select from this result only those tuples whose _course id_ is CS-347. However, this would result in computing (course, prerequisite) pairs for all courses, all of which are irrelevant except for those for the course CS-347. In fact the database system is not required to use the above iterative technique to compute the full result of the recursive query and then perform the selection. It may get the same result using other techniques that may be more efficient, such as that used in the function _findAllPrereqs_ which we saw earlier. See the bibliographic notes for references to more information on this topic.
 
-There are some restrictions on the recursive query in a recursive view; specifi- cally, the query should be **monotonic**, that is, its result on a view relation instance _V_1 should be a superset of its result on a view relation instance _V_2 if _V_1 is a super- set of _V_2\. Intuitively, if more tuples are added to the view relation, the recursive query should return at least the same set of tuples as before, and possibly return additional tuples.  
+There are some restrictions on the recursive query in a recursive view; specifically, the query should be **monotonic**, that is, its result on a view relation instance _V_1 should be a superset of its result on a view relation instance _V_2 if _V_1 is a superset of _V_2\. Intuitively, if more tuples are added to the view relation, the recursive query should return at least the same set of tuples as before, and possibly return additional tuples.  
 
 **192 Chapter 5 Advanced SQL**
 
@@ -4159,7 +4167,7 @@ The ranking functions can be used to find the top _n_ tuples by embedding a rank
 
 However, the **limit** clause does not support partitioning, so we cannot get the top _n_ within each partition without performing ranking; further, if more than one student gets the same GPA, it is possible that one is included in the top 10, while another is excluded.
 
-Several other functions can be used in place of **rank**. For instance, **per- cent rank** of a tuple gives the rank of the tuple as a fraction. If there are _n_ tuples in the partition9 and the rank of the tuple is _r_ , then its percent rank is defined as (_r_ − 1)_/_(_n_ − 1) (and as _null_ if there is only one tuple in the partition). The function **cume dist**, short for cumulative distribution, for a tuple is defined as _p/n_ where _p_ is the number of tuples in the partition with ordering values preceding or equal to the ordering value of the tuple and _n_ is the number of tuples in the partition. The function **row number** sorts the rows and gives each row a unique number corre-
+Several other functions can be used in place of **rank**. For instance, **percent rank** of a tuple gives the rank of the tuple as a fraction. If there are _n_ tuples in the partition9 and the rank of the tuple is _r_ , then its percent rank is defined as (_r_ − 1)_/_(_n_ − 1) (and as _null_ if there is only one tuple in the partition). The function **cume dist**, short for cumulative distribution, for a tuple is defined as _p/n_ where _p_ is the number of tuples in the partition with ordering values preceding or equal to the ordering value of the tuple and _n_ is the number of tuples in the partition. The function **row number** sorts the rows and gives each row a unique number corre-
 
 9The entire set is treated as a single partition if no explicit partition is used.  
 
@@ -4217,7 +4225,7 @@ Instead of a specific count of tuples, we can specify a range based on the value
 
 **5.6 OLAP 197**
 
-**select** _year_, **avg**(_num credits_) **over** (**order by** _year_ **range between** _year_ \- 4 **and** _year_) **as** _avg total credits_
+**select** _year_, **avg**(_num credits_) **over** (**order by** _year_ **range between** _year_ \4 **and** _year_) **as** _avg total credits_
 
 **from** _tot credits_;
 
@@ -4233,9 +4241,9 @@ In our example, all tuples pertain to the entire university. Suppose instead, we
 
 **5.6 OLAP\*\***
 
-An online analytical processing (OLAP) system is an interactive system that per- mits an analyst to view different summaries of multidimensional data. The word _online_ indicates that an analyst must be able to request new summaries and get responses online, within a few seconds, and should not be forced to wait for a long time to see the result of a query.
+An online analytical processing (OLAP) system is an interactive system that permits an analyst to view different summaries of multidimensional data. The word _online_ indicates that an analyst must be able to request new summaries and get responses online, within a few seconds, and should not be forced to wait for a long time to see the result of a query.
 
-There are many OLAP products available, including some that ship with database products such as Microsoft SQL Server, and Oracle, and other stand- alone tools. The initial versions of many OLAP tools assumed that data is memory resident. Data analysis on small amounts of data can in fact be performed using spreadsheet applications, such as Excel. However, OLAP on very large amounts of data requires that data be resident in a database, and requires support from the database for efficient preprocessing of data as well as for online query processing. In this section, we study extensions of SQL to support such tasks.
+There are many OLAP products available, including some that ship with database products such as Microsoft SQL Server, and Oracle, and other standalone tools. The initial versions of many OLAP tools assumed that data is memory resident. Data analysis on small amounts of data can in fact be performed using spreadsheet applications, such as Excel. However, OLAP on very large amounts of data requires that data be resident in a database, and requires support from the database for efficient preprocessing of data as well as for online query processing. In this section, we study extensions of SQL to support such tasks.
 
 **5.6.1 Online Analytical Processing**
 
@@ -4345,7 +4353,7 @@ In our example, the cross-tab also has an extra column and an extra row storing 
 
 The generalization of a cross-tab, which is two-dimensional, to _n_ dimensions can be visualized as an _n_\-dimensional cube, called the **data cube**. Figure 5.18 shows a data cube on the _sales_ relation. The data cube has three dimensions, _item name_, _color_, and _clothes size_, and the measure attribute is _quantity_. Each cell is identified by values for these three dimensions. Each cell in the data cube contains a value, just as in a cross-tab. In Figure 5.18, the value contained in a cell is shown on one of the faces of the cell; other faces of the cell are shown blank if they are visible. All cells contain values, even if they are not visible. The value for a dimension may be **all**, in which case the cell contains a summary over all values of that dimension, as in the case of cross-tabs.
 
-The number of different ways in which the tuples can be grouped for aggre- gation can be large. In the example of Figure 5.18, there are 3 colors, 4 items, and 3 sizes resulting in a cube size of 3 × 4 × 3 = 36. Including the summary values, we obtain a 4 × 5 × 4 cube, whose size is 80. In fact, for a table with _n_ dimensions, aggregation can be performed with grouping on each of the 2_n_ subsets of the _n_ dimensions.12
+The number of different ways in which the tuples can be grouped for aggregation can be large. In the example of Figure 5.18, there are 3 colors, 4 items, and 3 sizes resulting in a cube size of 3 × 4 × 3 = 36. Including the summary values, we obtain a 4 × 5 × 4 cube, whose size is 80. In fact, for a table with _n_ dimensions, aggregation can be performed with grouping on each of the 2_n_ subsets of the _n_ dimensions.12
 
 12Grouping on the set of all _n_ dimensions is useful only if the table may have duplicates.  
 
@@ -4355,7 +4363,7 @@ With an OLAP system, a data analyst can look at different cross-tabs on the same
 
 OLAP systems allow an analyst to see a cross-tab on _item name_ and _color_ for a fixed value of _clothes size_, for example, large, instead of the sum across all sizes. Such an operation is referred to as **slicing**, since it can be thought of as viewing a slice of the data cube. The operation is sometimes called **dicing**, particularly when values for multiple dimensions are fixed.
 
-When a cross-tab is used to view a multidimensional cube, the values of dimension attributes that are not part of the cross-tab are shown above the cross- tab. The value of such an attribute can be **all**, as shown in Figure 5.17, indicating that data in the cross-tab are a summary over all values for the attribute. Slic- ing/dicing simply consists of selecting specific values for these attributes, which are then displayed on top of the cross-tab.
+When a cross-tab is used to view a multidimensional cube, the values of dimension attributes that are not part of the cross-tab are shown above the crosstab. The value of such an attribute can be **all**, as shown in Figure 5.17, indicating that data in the cross-tab are a summary over all values for the attribute. Slicing/dicing simply consists of selecting specific values for these attributes, which are then displayed on top of the cross-tab.
 
 OLAP systems permit users to view data at any desired level of granularity. The operation of moving from finer-granularity data to a coarser granularity (by means of aggregation) is called a **rollup**. In our example, starting from the data cube on the _sales_ table, we got our example cross-tab by rolling up on the attribute _clothes size_. The opposite operation—that of moving from coarser-granularity data to finer-granularity data—is called a **drill down**. Clearly, finer-granularity data cannot be generated from coarse-granularity data; they must be generated either from the original data, or from even finer-granularity summary data.
 
@@ -4429,11 +4437,11 @@ The earliest OLAP systems used multidimensional arrays in memory to store data c
 
 Many OLAP systems are implemented as client-server systems. The server contains the relational database as well as any MOLAP data cubes. Client systems obtain views of the data by communicating with the server.
 
-A naı̈ve way of computing the entire data cube (all groupings) on a relation is to use any standard algorithm for computing aggregate operations, one group- ing at a time. The naı̈ve algorithm would require a large number of scans of the relation. A simple optimization is to compute an aggregation on, say, (_item name_, _color_) from an aggregation (_item name_, _color_, _clothes size_), instead of from
+A naı̈ve way of computing the entire data cube (all groupings) on a relation is to use any standard algorithm for computing aggregate operations, one grouping at a time. The naı̈ve algorithm would require a large number of scans of the relation. A simple optimization is to compute an aggregation on, say, (_item name_, _color_) from an aggregation (_item name_, _color_, _clothes size_), instead of from
 
 the original relation. For the standard SQL aggregate functions, we can compute an aggregate with
 
-grouping on a set of attributes _A_ from an aggregate with grouping on a set of at- tributes _B_ if _A_ ⊆ _B_; you can do so as an exercise (see Exercise 5.24), but note that to compute **avg**, we additionally need the **count** value. (For some nonstandard aggregate functions, such as median, aggregates cannot be computed as above; the optimization described here does not apply to such _non-decomposable_ aggre- gate functions.) The amount of data read drops significantly by computing an aggregate from another aggregate, instead of from the original relation. Further improvements are possible; for instance, multiple groupings can be computed on a single scan of the data.
+grouping on a set of attributes _A_ from an aggregate with grouping on a set of attributes _B_ if _A_ ⊆ _B_; you can do so as an exercise (see Exercise 5.24), but note that to compute **avg**, we additionally need the **count** value. (For some nonstandard aggregate functions, such as median, aggregates cannot be computed as above; the optimization described here does not apply to such _non-decomposable_ aggregate functions.) The amount of data read drops significantly by computing an aggregate from another aggregate, instead of from the original relation. Further improvements are possible; for instance, multiple groupings can be computed on a single scan of the data.
 
 Early OLAP implementations precomputed and stored entire data cubes, that is, groupings on all subsets of the dimension attributes. Precomputation allows OLAP queries to be answered within a few seconds, even on datasets that may contain millions of tuples adding up to gigabytes of data. However, there are 2_n_ groupings with _n_ dimension attributes; hierarchies on attributes increase the number further. As a result, the entire data cube is often larger than the original relation that formed the data cube and in many cases it is not feasible to store the entire data cube.
 
@@ -4505,7 +4513,7 @@ The above query produces a relation whose schema is:
 
 (_item name_, _color_, _clothes size_, **sum**(_quantity_))
 
-So that the result of this query is indeed a relation, tuples in the result con- tain _null_ as the value of those attributes not present in a particular grouping. For example, tuples produced by grouping on _clothes size_ have a schema (_clothes size_, **sum**(_quantity_)). They are converted to tuples on (_item name_, _color_, _clothes size_,
+So that the result of this query is indeed a relation, tuples in the result contain _null_ as the value of those attributes not present in a particular grouping. For example, tuples produced by grouping on _clothes size_ have a schema (_clothes size_, **sum**(_quantity_)). They are converted to tuples on (_item name_, _color_, _clothes size_,
 
 **sum**(_quantity_)) by inserting _null_ for _item name_ and _color_. Data cube relations are often very large. The cube query above, with 3 possible
 
@@ -4529,7 +4537,7 @@ The **decode** function does not work as we might like for null values because, 
 
 **from** _sales_ **group by cube**(_item name_, _color_);
 
-generates the relation of Figure 5.21 with nulls. The substitution of **all** is achieved using the SQL **decode** and **grouping** functions. The **decode** function is conceptu- ally simple but its syntax is somewhat hard to read. See blue box for details.
+generates the relation of Figure 5.21 with nulls. The substitution of **all** is achieved using the SQL **decode** and **grouping** functions. The **decode** function is conceptually simple but its syntax is somewhat hard to read. See blue box for details.
 
 The **rollup** construct is the same as the **cube** construct except that **rollup** generates fewer **group by** queries. We saw that **group by cube** (_item name_, _color_, _clothes size_) generated all 8 ways of forming a **group by** query using some (or all or none) of the attributes. In:
 
@@ -4539,7 +4547,7 @@ The **rollup** construct is the same as the **cube** construct except that **rol
 
 _{_ (_item name_, _color_, _clothes size_), (_item name_, _color_), (_item name_), () _}_
 
-Notice that the order of the attributes in the **rollup** makes a difference; the final attribute (_clothes size_, in our example) appears in only one grouping, the penul- timate (second last) attribute in 2 groupings, and so on, with the first attribute appearing in all groups but one (the empty grouping).  
+Notice that the order of the attributes in the **rollup** makes a difference; the final attribute (_clothes size_, in our example) appears in only one grouping, the penultimate (second last) attribute in 2 groupings, and so on, with the first attribute appearing in all groups but one (the empty grouping).  
 
 **5.7 Summary 209**
 
@@ -4555,7 +4563,7 @@ _{_ (_item name_, _color_, _clothes size_), (_item name_, _color_), (_item name_
 
 To understand why, observe that **rollup**(_item name_) generates two groupings, _{_(_item name_), ()_}_, and **rollup**(_color_, _clothes size_) generates three groupings, _{_(_color_, _clothes size_), (_color_), () _}_. The Cartesian product of the two gives us the six groupings shown.
 
-Neither the **rollup** nor the **cube** clause gives complete control on the group- ings that are generated. For instance, we cannot use them to specify that we want only groupings _{_(_color_, _clothes size_), (_clothes size_, _item name_)_}_. Such restricted groupings can be generated by using the **grouping** construct in the **having** clause; we leave the details as an exercise for you.
+Neither the **rollup** nor the **cube** clause gives complete control on the groupings that are generated. For instance, we cannot use them to specify that we want only groupings _{_(_color_, _clothes size_), (_clothes size_, _item name_)_}_. Such restricted groupings can be generated by using the **grouping** construct in the **having** clause; we leave the details as an exercise for you.
 
 **5.7 Summary**
 
@@ -4573,13 +4581,13 @@ SQL standard until SQL:1999, most database systems have long implemented trigger
 
 • SQL supports several advanced aggregation features, including ranking and windowing queries that simplify the expression of some aggregates and allow more efficient evaluation.
 
-• Online analytical processing (OLAP) tools help analysts view data summa- rized in different ways, so that they can gain insight into the functioning of an organization.
+• Online analytical processing (OLAP) tools help analysts view data summarized in different ways, so that they can gain insight into the functioning of an organization.
 
 ◦ OLAP tools work on multidimensional data, characterized by dimension attributes and measure attributes.
 
 ◦ The data cube consists of multidimensional data summarized in different ways. Precomputing the data cube helps speed up queries on summaries of data.
 
-◦ Cross-tab displays permit users to view two dimensions of multidimen- sional data at a time, along with summaries of the data.
+◦ Cross-tab displays permit users to view two dimensions of multidimensional data at a time, along with summaries of the data.
 
 ◦ Drill down, rollup, slicing, and dicing are among the operations that users perform with OLAP tools.
 
@@ -4629,7 +4637,7 @@ SQL standard until SQL:1999, most database systems have long implemented trigger
 
 **Practice Exercises**
 
-**5.1** Describe the circumstances in which you would choose to use embedded SQL rather than SQL alone or only a general-purpose programming lan- guage.
+**5.1** Describe the circumstances in which you would choose to use embedded SQL rather than SQL alone or only a general-purpose programming language.
 
 **5.2** Write a Java function using JDBC metadata features that takes a ResultSet as an input parameter, and prints out the result in tabular form, with appropriate names as column headings.
 
@@ -4639,7 +4647,7 @@ SQL standard until SQL:1999, most database systems have long implemented trigger
 
 **5.5** Write triggers to enforce the referential integrity constraint from _section_ to _time slot_, on updates to _section_, and _time slot_. Note that the ones we wrote in Figure 5.8 do not cover the **update** operation.
 
-**5.6** To maintain the _tot cred_ attribute of the _student_ relation, carry out the fol- lowing:
+**5.6** To maintain the _tot cred_ attribute of the _student_ relation, carry out the following:
 
 a. Modify the trigger on updates of _takes_, to handle all updates that can affect the value of _tot cred_.
 
@@ -4675,7 +4683,7 @@ Suppose that the view is _materialized_; that is, the view is computed and store
 
 • _mgr_ (_ename_, _mname_)
 
-and the Java code in Figure 5.26, which uses the JDBC API. Assume that the userid, password, machine name, etc. are all okay. Describe in concise English what the Java program does. (That is, produce an English sen- tence like “It finds the manager of the toy department,” not a line-by-line description of what each Java statement does.)
+and the Java code in Figure 5.26, which uses the JDBC API. Assume that the userid, password, machine name, etc. are all okay. Describe in concise English what the Java program does. (That is, produce an English sentence like “It finds the manager of the toy department,” not a line-by-line description of what each Java statement does.)
 
 **5.13** Suppose you were asked to define a class MetaDisplay in Java, containing a method static void printTable(String r); the method takes a relation name _r_ as input, executes the query “**select** \* **from** _r_”, and prints the result out in nice tabular format, with the attribute names displayed in the header of the table.  
 
@@ -4727,7 +4735,7 @@ b. Without using SQL functions.
 
 _prereq depth_(_course id_, _prereq id_, _depth_)
 
-where the attribute _depth_ indicates how many levels of intermediate pre- requisites are there between the course and the prerequisite. Direct prereq- uisites have a depth of 0.
+where the attribute _depth_ indicates how many levels of intermediate prerequisites are there between the course and the prerequisite. Direct prerequisites have a depth of 0.
 
 **5.19** Consider the relational schema
 
@@ -4741,7 +4749,7 @@ A tuple (_p_1_, p_2_,_ 3) in the _subpart_ relation denotes that the part with p
 
 **5.22** The execution of a trigger can cause another action to be triggered. Most database systems place a limit on how deep the nesting can be. Explain why they might place such a limit.
 
-**5.23** Consider the relation, _r_ , shown in Figure 5.27. Give the result of the follow- ing query:  
+**5.23** Consider the relation, _r_ , shown in Figure 5.27. Give the result of the following query:  
 
 **Exercises 215**
 
@@ -4751,7 +4759,7 @@ _building room number time slot id course id sec id_ Garfield 359 A BIO-101 1 Ga
 
 **select** _building_, _room number_, _time slot id_, **count**(\*) **from** r **group by rollup** (_building_, _room number_, _time slot id_)
 
-**5.24** For each of the SQL aggregate functions **sum, count, min**, and **max**, show how to compute the aggregate value on a multiset _S_1 ∪ _S_2, given the aggre- gate values on multisets _S_1 and _S_2.
+**5.24** For each of the SQL aggregate functions **sum, count, min**, and **max**, show how to compute the aggregate value on a multiset _S_1 ∪ _S_2, given the aggregate values on multisets _S_1 and _S_2.
 
 On the basis of the above, give expressions to compute aggregate values with grouping on a subset _S_ of the attributes of a relation _r_ (_A, B, C, D, E_), given aggregate values for grouping on attributes _T_ ⊇ _S_, for the following aggregate functions:
 
@@ -4779,11 +4787,11 @@ Most database vendors provide OLAP tools as part of their database systems, or a
 
 See the bibliographic notes of Chapter 3 for references to SQL standards and books on SQL.
 
-An excellent source for more (and up-to-date) information on JDBC, and on Java in general, is java.sun.com/docs/books/tutorial. References to books on Java (in- cluding JDBC) are also available at this URL. The ODBC API is described in Microsoft \[1997\] and Sanders \[1998\]. Melton and Eisenberg \[2000\] provides a guide to SQLJ, JDBC, and related technologies. More information on ODBC, ADO, and ADO.NET can be found on msdn.microsoft.com/data.
+An excellent source for more (and up-to-date) information on JDBC, and on Java in general, is java.sun.com/docs/books/tutorial. References to books on Java (including JDBC) are also available at this URL. The ODBC API is described in Microsoft \[1997\] and Sanders \[1998\]. Melton and Eisenberg \[2000\] provides a guide to SQLJ, JDBC, and related technologies. More information on ODBC, ADO, and ADO.NET can be found on msdn.microsoft.com/data.
 
 In the context of functions and procedures in SQL, many database products support features beyond those specified in the standards, and do not support many of the features of the standard. More information on these features may be found in the SQL user manuals of the respective products.
 
-The original SQL proposals for assertions and triggers are discussed in Astra- han et al. \[1976\], Chamberlin et al. \[1976\], and Chamberlin et al. \[1981\]. Melton and Simon \[2001\], Melton \[2002\], and Eisenberg and Melton \[1999\] provide textbook coverage of SQL:1999, the version of the SQL standard that first included triggers.
+The original SQL proposals for assertions and triggers are discussed in Astrahan et al. \[1976\], Chamberlin et al. \[1976\], and Chamberlin et al. \[1981\]. Melton and Simon \[2001\], Melton \[2002\], and Eisenberg and Melton \[1999\] provide textbook coverage of SQL:1999, the version of the SQL standard that first included triggers.
 
 Recursive query processing was first studied in detail in the context of a query language called Datalog, which was based on mathematical logic and followed the syntax of the logic programming language Prolog. Ramakrishnan and Ullman \[1995\] provides a survey of results in this area, including techniques to optimize queries that select a subset of tuples from a recursively defined view.
 
@@ -4799,7 +4807,7 @@ We cover three formal languages. We start by presenting the relational algebra, 
 
 **6.1 The Relational Algebra**
 
-The relational algebra is a _procedural_ query language. It consists of a set of op- erations that take one or two relations as input and produce a new relation as their result. The fundamental operations in the relational algebra are _select, project_, _union_, _set difference_, _Cartesian product,_ and _rename_. In addition to the fundamental operations, there are several other operations—namely, _set intersection_, _natural join_, and _assignment_. We shall define these operations in terms of the fundamental operations.
+The relational algebra is a _procedural_ query language. It consists of a set of operations that take one or two relations as input and produce a new relation as their result. The fundamental operations in the relational algebra are _select, project_, _union_, _set difference_, _Cartesian product,_ and _rename_. In addition to the fundamental operations, there are several other operations—namely, _set intersection_, _natural join_, and _assignment_. We shall define these operations in terms of the fundamental operations.
 
 **6.1.1 Fundamental Operations**
 
@@ -4921,7 +4929,7 @@ _course id_ CS-347 PHY-101
 
 We can find all the courses taught in the Fall 2009 semester but not in Spring 2010 semester by writing:
 
-_course id_ (_semester_ \= “Fall” ∧ _year_\=2009 (_section_)) - _course id_ (_semester_ \= “Spring” ∧ _year_\=2010 (_section_))
+_course id_ (_semester_ \= “Fall” ∧ _year_\=2009 (_section_)) _course id_ (_semester_ \= “Spring” ∧ _year_\=2010 (_section_))
 
 The result relation for this query appears in Figure 6.6. As with the union operation, we must ensure that set differences are taken
 
@@ -4929,13 +4937,13 @@ between _compatible_ relations. Therefore, for a set-difference operation _r_ �
 
 **6.1.1.6 The Cartesian-Product Operation**
 
-The **Cartesian-product** operation, denoted by a cross (×), allows us to combine information from any two relations. We write the Cartesian product of relations _r_1 and _r_2 as _r_1 × _r_2.
+The **Cartesian-product** operation, denoted by a cross (×), allows us to combine information from any two relations. We write the Cartesian product of relations _r_~1~ and _r_~2~ as _r_~1~ × _r_~2~.
 
-Recall that a relation is by definition a subset of a Cartesian product of a set of domains. From that definition, we should already have an intuition about the definition of the Cartesian-product operation. However, since the same attribute name may appear in both _r_1 and _r_2, we need to devise a naming schema to distinguish between these attributes. We do so here by attaching to an attribute the name of the relation from which the attribute originally came. For example, the relation schema for _r_ \= _instructor_ × _teaches_ is:
+Recall that a relation is by definition a subset of a Cartesian product of a set of domains. From that definition, we should already have an intuition about the definition of the Cartesian-product operation. However, since the same attribute name may appear in both _r_~1~ and _r_~2~, we need to devise a naming schema to distinguish between these attributes. We do so here by attaching to an attribute the name of the relation from which the attribute originally came. For example, the relation schema for _r_ \= _instructor_ × _teaches_ is:
 
 (_instructor_._ID_, _instructor_._name_, _instructor_._dept name_, _instructor_._salary teaches_._ID_, _teaches_._course id_, _teaches_._sec id_, _teaches_._semester_, _teaches_._year_)
 
-With this schema, we can distinguish _instructor_._ID_ from _teaches_._ID_. For those at- tributes that appear in only one of the two schemas, we shall usually drop the relation-name prefix. This simplification does not lead to any ambiguity. We can then write the relation schema for _r_ as:
+With this schema, we can distinguish _instructor_._ID_ from _teaches_._ID_. For those attributes that appear in only one of the two schemas, we shall usually drop the relation-name prefix. This simplification does not lead to any ambiguity. We can then write the relation schema for _r_ as:
 
 (_instructor_._ID_, _name_, _dept name_, _salary teaches_._ID_, _course id_, _sec id_, _semester_, _year_)
 
@@ -4955,7 +4963,7 @@ Now that we know the relation schema for _r_ \= _instructor_ × _teaches_, what 
 
 Assume that we have _n_1 tuples in _instructor_ and _n_2 tuples in _teaches_. Then, there are _n_1 ∗ _n_2 ways of choosing a pair of tuples—one tuple from each relation; so there are _n_1 ∗ _n_2 tuples in _r_. In particular, note that for some tuples _t_ in _r_, it may be that _t_\[_instructor_._ID_\] = _t_\[_teaches_._ID_\].
 
-In general, if we have relations _r_1(_R_1) and _r_2(_R_2), then _r_1 × _r_2 is a relation whose schema is the concatenation of _R_1 and _R_2\. Relation _R_ contains all tuples _t_ for which there is a tuple _t_1 in _r_1 and a tuple _t_2 in _r_2 for which _t_\[_R_1\] = _t_1\[_R_1\] and _t_\[_R_2\] = _t_2\[_R_2\].
+In general, if we have relations _r_~1~(_r_~1~) and _r_~2~(_r_~2~), then _r_~1~ × _r_~2~ is a relation whose schema is the concatenation of _r_~1~ and _r_~2~\. Relation _R_ contains all tuples _t_ for which there is a tuple _t_~1~ in _r_~1~ and a tuple _t_~2~  in _r_~2~ for which _t_\[_r_~1~\] = _t_~1~\[_r_~1~\] and _t_\[_r_~2~\] = _t_~2~ \[_r_~2~\].
 
 Suppose that we want to find the names of all instructors in the Physics department together with the _course id_ of all courses they taught. We need the information in both the _instructor_ relation and the _teaches_ relation to do so. If we write:
 
@@ -5011,7 +5019,7 @@ tuple in _dept name_ \= “Physics”(_instructor_ × _teaches_) that contains 
 
 we get only those tuples of _instructor_ × _teaches_ that pertain to instructors in Physics and the courses that they taught.
 
-Finally, since we only want the names of all instructors in the Physics depart- ment together with the _course id_ of all courses they taught, we do a projection:
+Finally, since we only want the names of all instructors in the Physics department together with the _course id_ of all courses they taught, we do a projection:
 
 _name, course id_ (_instructor .ID_ \= _teaches .ID_ (_dept name_ \= “Physics”(_instructor_ × _teaches_)))
 
@@ -5027,7 +5035,7 @@ Note that there is often more than one way to write a query in relational algebr
 
 _name, course id_ (_instructor .ID_ \= _teaches .ID_ ((_dept name_ \= “Physics”(_instructor_ )) × _teaches_))
 
-Note the subtle difference between the two queries: in the query above, the selec- tion that restricts _dept name_ to Physics is applied to _instructor_, and the Cartesian product is applied subsequently; in contrast, the Cartesian product was applied before the selection in the earlier query. However, the two queries are **equivalent**; that is, they give the same result on any database.
+Note the subtle difference between the two queries: in the query above, the selection that restricts _dept name_ to Physics is applied to _instructor_, and the Cartesian product is applied subsequently; in contrast, the Cartesian product was applied before the selection in the earlier query. However, the two queries are **equivalent**; that is, they give the same result on any database.
 
 **6.1.1.7 The Rename Operation**
 
@@ -5039,7 +5047,7 @@ returns the result of expression _E_ under the name _x_. A relation _r_ by itsel
 
 Thus, we can also apply the rename operation to a relation _r_ to get the same relation under a new name.
 
-A second form of the rename operation is as follows: Assume that a relational- algebra expression _E_ has arity _n_. Then, the expression
+A second form of the rename operation is as follows: Assume that a relationalalgebra expression _E_ has arity _n_. Then, the expression
 
 _x_(_A_1_,A_2_,...,An_) (_E_)
 
@@ -5067,7 +5075,7 @@ _salary_ (_instructor_ ) − _instructor .salary_ (_instructor .salary < d .sal
 
 Figure 6.12 shows the result of this query.
 
-The rename operation is not strictly required, since it is possible to use a positional notation for attributes. We can name attributes of a relation implicitly by using a positional notation, where $1, $2, _. . ._ refer to the first attribute, the second attribute, and so on. The positional notation also applies to results of relational- algebra operations. The following relational-algebra expression illustrates the
+The rename operation is not strictly required, since it is possible to use a positional notation for attributes. We can name attributes of a relation implicitly by using a positional notation, where $1, $2, _. . ._ refer to the first attribute, the second attribute, and so on. The positional notation also applies to results of relationalalgebra operations. The following relational-algebra expression illustrates the
 
 _salary_ 95000
 
@@ -5079,11 +5087,11 @@ use of positional notation to write the expression we saw earlier, which compute
 
 $4 ($4 _<_ $8 (_instructor_ × _instructor_ ))
 
-Note that the Cartesian product concatenates the attributes of the two relations. Thus, for the result of the Cartesian product (_instructor_ × _instructor_), $4 refers to the _salary_ attribute from the first occurrence of _instructor_, while $8 refers to the _salary_ attribute from the second occurrence of _instructor_. A positional notation can also be used to refer to relation names, if a binary operation needs to distinguish between its two operand relations. For example, $_R_1 could refer to the first operand relation, and $_R_2 could refer to the second operand relation of a Cartesian product. However, the positional notation is inconvenient for humans, since the position of the attribute is a number, rather than an easy-to-remember attribute name. Hence, we do not use the positional notation in this textbook.
+Note that the Cartesian product concatenates the attributes of the two relations. Thus, for the result of the Cartesian product (_instructor_ × _instructor_), $4 refers to the _salary_ attribute from the first occurrence of _instructor_, while $8 refers to the _salary_ attribute from the second occurrence of _instructor_. A positional notation can also be used to refer to relation names, if a binary operation needs to distinguish between its two operand relations. For example, $_r_~1~ could refer to the first operand relation, and $_r_~2~ could refer to the second operand relation of a Cartesian product. However, the positional notation is inconvenient for humans, since the position of the attribute is a number, rather than an easy-to-remember attribute name. Hence, we do not use the positional notation in this textbook.
 
 **6.1.2 Formal Definition of the Relational Algebra**
 
-The operations in Section 6.1.1 allow us to give a complete definition of an expres- sion in the relational algebra. A basic expression in the relational algebra consists of either one of the following:
+The operations in Section 6.1.1 allow us to give a complete definition of an expression in the relational algebra. A basic expression in the relational algebra consists of either one of the following:
 
 • A relation in the database
 
@@ -5091,7 +5099,7 @@ The operations in Section 6.1.1 allow us to give a complete definition of an exp
 
 A constant relation is written by listing its tuples within { }, for example { (22222, Einstein, Physics, 95000), (76543, Singh, Finance, 80000) }.
 
-A general expression in the relational algebra is constructed out of smaller subexpressions. Let _E_1 and _E_2 be relational-algebra expressions. Then, the fol- lowing are all relational-algebra expressions:
+A general expression in the relational algebra is constructed out of smaller subexpressions. Let _E_1 and _E_2 be relational-algebra expressions. Then, the following are all relational-algebra expressions:
 
 • _E_1 ∪ _E_2
 
@@ -5119,7 +5127,7 @@ common queries. For each new operation, we give an equivalent expression that us
 
 **6.1.3.1 The Set-Intersection Operation**
 
-The first additional relational-algebra operation that we shall define is **set inter- section** (∩). Suppose that we wish to find the set of all courses taught in both the Fall 2009 and the Spring 2010 semesters. Using set intersection, we can write
+The first additional relational-algebra operation that we shall define is **set intersection** (∩). Suppose that we wish to find the set of all courses taught in both the Fall 2009 and the Spring 2010 semesters. Using set intersection, we can write
 
 _course id_ (_semester_ \= “Fall” ∧ _year_\=2009 (_section_)) ∩ _course id_ (_semester_ \= “Spring” ∧ _year_\=2010 (_section_))
 
@@ -5133,11 +5141,11 @@ Thus, set intersection is not a fundamental operation and does not add any power
 
 **6.1.3.2 The Natural-Join Operation**
 
-It is often desirable to simplify certain queries that require a Cartesian product. Usually, a query that involves a Cartesian product includes a selection opera- tion on the result of the Cartesian product. The selection operation most often requires that all attributes that are common to the relations that are involved in the Cartesian product be equated.
+It is often desirable to simplify certain queries that require a Cartesian product. Usually, a query that involves a Cartesian product includes a selection operation on the result of the Cartesian product. The selection operation most often requires that all attributes that are common to the relations that are involved in the Cartesian product be equated.
 
 In our example query from Section 6.1.1.6 that combined information from the _instructor_ and _teaches_ tables, the matching condition required _instructor_._ID_ to be equal to _teaches_._ID_. These are the only attributes in the two relations that have the same name.
 
-The _natural join_ is a binary operation that allows us to combine certain selec- tions and a Cartesian product into one operation. It is denoted by the **join** symbol . The natural-join operation forms a Cartesian product of its two arguments, performs a selection forcing equality on those attributes that appear in both rela- tion schemas, and finally removes duplicate attributes. Returning to the example of the relations _instructor_ and _teaches_, computing _instructor_ **natural join** _teaches_ considers only those pairs of tuples where both the tuple from _instructor_ and the  
+The _natural join_ is a binary operation that allows us to combine certain selections and a Cartesian product into one operation. It is denoted by the **join** symbol . The natural-join operation forms a Cartesian product of its two arguments, performs a selection forcing equality on those attributes that appear in both relation schemas, and finally removes duplicate attributes. Returning to the example of the relations _instructor_ and _teaches_, computing _instructor_ **natural join** _teaches_ considers only those pairs of tuples where both the tuple from _instructor_ and the  
 
 **230 Chapter 6 Formal Relational Query Languages**
 
@@ -5231,7 +5239,7 @@ The **right outer join** ( ) is symmetric with the left outer join: It pads tupl
 
 The **full outer join**(  ) does both the left and right outer join operations, padding tuples from the left relation that did not match any from the right relation, as well as tuples from the right relation that did not match any from the left relation, and adding them to the result of the join.
 
-Note that in going from our left-outer-join example to our right-outer-join ex- ample, we chose to swap the order of the operands. Thus both examples preserve tuples from the _instructor_ relation, and thus contain the same information. In our example relations, _teaches_ tuples always have matching _instructor_ tuples, and thus _teaches  instructor_ would give the same result as _teaches  instructor_ . If there were tuples in _teaches_ without matching tuples in _instructor_, such tu- ples would appear padded with nulls in _teaches  instructor_ as well as in _teaches  instructor_ . Further examples of outer joins (expressed in SQL syntax) may be found in Section 4.1.2.
+Note that in going from our left-outer-join example to our right-outer-join example, we chose to swap the order of the operands. Thus both examples preserve tuples from the _instructor_ relation, and thus contain the same information. In our example relations, _teaches_ tuples always have matching _instructor_ tuples, and thus _teaches  instructor_ would give the same result as _teaches  instructor_ . If there were tuples in _teaches_ without matching tuples in _instructor_, such tuples would appear padded with nulls in _teaches  instructor_ as well as in _teaches  instructor_ . Further examples of outer joins (expressed in SQL syntax) may be found in Section 4.1.2.
 
 Since outer-join operations may generate results containing null values, we need to specify how the different relational-algebra operations deal with null values. Section 3.6 dealt with this issue in the context of SQL. The same concepts apply for the case of relational algebra, and we omit details.  
 
@@ -5249,7 +5257,7 @@ We now describe relational-algebra operations that provide the ability to write 
 
 **6.1.4.1 Generalized Projection**
 
-The first operation is the **generalized-projection** operation, which extends the projection operation by allowing operations such as arithmetic and string func- tions to be used in the projection list. The generalized-projection operation has the form:
+The first operation is the **generalized-projection** operation, which extends the projection operation by allowing operations such as arithmetic and string functions to be used in the projection list. The generalized-projection operation has the form:
 
 _F_1_,F_2_,...,Fn_(_E_)
 
@@ -5273,7 +5281,7 @@ The second extended relational-algebra operation is the aggregate operation _G_,
 
 returns the value 24. The aggregate function **avg** returns the average of the values. When applied to the preceding collection, it returns the value 4. The aggregate function **count** returns the number of the elements in the collection, and returns 6 on the preceding collection. Other common aggregate functions include **min** and **max**, which return the minimum and maximum values in a collection; they return 1 and 11, respectively, on the preceding collection.
 
-The collections on which aggregate functions operate can have multiple oc- currences of a value; the order in which the values appear is not relevant. Such collections are called **multisets**. Sets are a special case of multisets where there is only one copy of each element.
+The collections on which aggregate functions operate can have multiple occurrences of a value; the order in which the values appear is not relevant. Such collections are called **multisets**. Sets are a special case of multisets where there is only one copy of each element.
 
 To illustrate the concept of aggregation, we shall use the _instructor_ relation. Suppose that we want to find out the sum of salaries of all instructors; the relational-algebra expression for this query is:
 
@@ -5281,7 +5289,7 @@ _G_**sum**(_salar y_)(_instructor_ )
 
 The symbol _G_ is the letter G in calligraphic font; read it as “calligraphic G.” The relational-algebra operation _G_ signifies that aggregation is to be applied, and its subscript specifies the aggregate operation to be applied. The result of the expression above is a relation with a single attribute, containing a single row with a numerical value corresponding to the sum of the salaries of all instructors.
 
-There are cases where we must eliminate multiple occurrences of a value before computing an aggregate function. If we do want to eliminate duplicates, we use the same function names as before, with the addition of the hyphenated string “**distinct**” appended to the end of the function name (for example, **count- distinct**). An example arises in the query “Find the total number of instructors who teach a course in the Spring 2010 semester.” In this case, an instructor counts only once, regardless of the number of course sections that the instructor teaches. The required information is contained in the relation _teaches_, and we write this query as follows:
+There are cases where we must eliminate multiple occurrences of a value before computing an aggregate function. If we do want to eliminate duplicates, we use the same function names as before, with the addition of the hyphenated string “**distinct**” appended to the end of the function name (for example, **countdistinct**). An example arises in the query “Find the total number of instructors who teach a course in the Spring 2010 semester.” In this case, an instructor counts only once, regardless of the number of course sections that the instructor teaches. The required information is contained in the relation _teaches_, and we write this query as follows:
 
 _G_**count**−**distinct**(_ID_)(_semester_\=“Spring”∧_year_ \=2010(_teaches_))
 
@@ -5325,21 +5333,21 @@ Unlike the relational algebra, SQL allows multiple copies of a tuple in an input
 
 To model this behavior of SQL, a version of relational algebra, called the **multiset relational algebra**, is defined to work on multisets, that is, sets that may contain duplicates. The basic operations in the multiset relational algebra are defined as follows:
 
-**1\.** If there are _c_1 copies of tuple _t_1 in _r_1, and _t_1 satisfies selection  , then there are _c_1 copies of _t_1 in (_r_1).
+**1\.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~, and _t_~1~ satisfies selection  , then there are _c_1 copies of _t_~1~ in (_r_~1~).
 
-**2\.** For each copy of tuple _t_1 in _r_1, there is a copy of tuple _A_(_t_1) in _A_(_r_1), where _A_(_t_1) denotes the projection of the single tuple _t_1.
+**2\.** For each copy of tuple _t_~1~ in _r_~1~, there is a copy of tuple _A_(_t_~1~) in _A_(_r_~1~), where _A_(_t_~1~) denotes the projection of the single tuple _t_~1~.
 
-**3\.** If there are _c_1 copies of tuple _t_1 in _r_1 and _c_2 copies of tuple _t_2 in _r_2, there are _c_1 ∗ _c_2 copies of the tuple _t_1_.t_2 in _r_1 × _r_2.
+**3\.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~ and _c_2 copies of tuple _t_~2~  in _r_~2~, there are _c_1 ∗ _c_2 copies of the tuple _t_~1~_.t_2 in _r_~1~ × _r_~2~.
 
-For example, suppose that relations _r_1 with schema (_A, B_) and _r_2 with schema (_C_) are the following multisets:
+For example, suppose that relations _r_~1~ with schema (_A, B_) and _r_~2~ with schema (_C_) are the following multisets:
 
-_r_1 = {(1_, a_)_,_ (2_, a_)} _r_2 = {(2)_,_ (3)_,_ (3)}
+_r_~1~ = {(1_, a_)_,_ (2_, a_)} _r_~2~ = {(2)_,_ (3)_,_ (3)}
 
-Then _B_(_r_1) would be {(_a_)_,_ (_a_)}, whereas _B_(_r_1) × _r_2 would be:
+Then _B_(_r_~1~) would be {(_a_)_,_ (_a_)}, whereas _B_(_r_~1~) × _r_~2~ would be:
 
 {(_a,_ 2)_,_ (_a,_ 2)_,_ (_a,_ 3)_,_ (_a,_ 3)_,_ (_a,_ 3)_,_ (_a,_ 3)}
 
-Multiset union, intersection and set difference can also be defined in a similar way, following the corresponding definitions in SQL, which we saw in Sec- tion 3.5. There is no change in the definition of the aggregation operation.
+Multiset union, intersection and set difference can also be defined in a similar way, following the corresponding definitions in SQL, which we saw in Section 3.5. There is no change in the definition of the aggregation operation.
 
 **1\.** All tuples in a group have the same values for _G_1_, G_2_, . . . , Gn_.
 
@@ -5357,31 +5365,31 @@ From a comparison of the relational algebra operations and the SQL operations, i
 
 **select** _A_1_, A_2_, . . . , An_
 
-**from** _r_1_, r_2_, . . . , rm_
+**from** _r_~1~_, r_2_, . . . , rm_
 
 **where** _P_
 
 Each _Ai_ represents an attribute, and each _ri_ a relation. _P_ is a predicate. The query is equivalent to the multiset relational-algebra expression:
 
-_A_1_, A_2_,...,An_ (_P_ (_r_1 × _r_2 × · · · × _rm_))
+_A_1_, A_2_,...,An_ (_P_ (_r_~1~ × _r_~2~ × · · · × _rm_))
 
 If the **where** clause is omitted, the predicate _P_ is **true**. More complex SQL queries can also be rewritten in relational algebra. For
 
 example, the query:
 
-**select** _A_1_, A_2, **sum**(_A_3) **from** _r_1_, r_2_, . . . , rm_
+**select** _A_1_, A_2, **sum**(_A_3) **from** _r_~1~_, r_2_, . . . , rm_
 
 **where** _P_ **group by** _A_1_, A_2
 
 is equivalent to:
 
-_A_1_, A_2_G_sum(_A_3)(_A_1_, A_2_,..., An_(_P_ (_r_1 × _r_2 × · · · × _rm_)))
+_A_1_, A_2_G_sum(_A_3)(_A_1_, A_2_,..., An_(_P_ (_r_~1~ × _r_~2~ × · · · × _rm_)))
 
-Join expressions in the **from** clause can be written using equivalent join expres- sions in relational algebra; we leave the details as an exercise for the reader. However, subqueries in the **where** or **select** clause cannot be rewritten into relational algebra in such a straightforward manner, since there is no relational- algebra operation equivalent to the subquery construct. Extensions of relational algebra have been proposed for this task, but are beyond the scope of this book.
+Join expressions in the **from** clause can be written using equivalent join expressions in relational algebra; we leave the details as an exercise for the reader. However, subqueries in the **where** or **select** clause cannot be rewritten into relational algebra in such a straightforward manner, since there is no relationalalgebra operation equivalent to the subquery construct. Extensions of relational algebra have been proposed for this task, but are beyond the scope of this book.
 
 **6.2 The Tuple Relational Calculus**
 
-When we write a relational-algebra expression, we provide a sequence of proce- dures that generates the answer to our query. The tuple relational calculus, by contrast, is a **nonprocedural** query language. It describes the desired information without giving a specific procedure for obtaining that information.
+When we write a relational-algebra expression, we provide a sequence of procedures that generates the answer to our query. The tuple relational calculus, by contrast, is a **nonprocedural** query language. It describes the desired information without giving a specific procedure for obtaining that information.
 
 A query in the tuple relational calculus is expressed as:
 
@@ -5391,7 +5399,7 @@ A query in the tuple relational calculus is expressed as:
 
 That is, it is the set of all tuples _t_ such that predicate _P_ is true for _t_. Following our earlier notation, we use _t_\[_A_\] to denote the value of tuple _t_ on attribute _A_, and we use _t_ ∈ _r_ to denote that tuple _t_ is in relation _r_.
 
-Before we give a formal definition of the tuple relational calculus, we re- turn to some of the queries for which we wrote relational-algebra expressions in Section 6.1.1.
+Before we give a formal definition of the tuple relational calculus, we return to some of the queries for which we wrote relational-algebra expressions in Section 6.1.1.
 
 **6.2.1 Example Queries**
 
@@ -5425,7 +5433,7 @@ _name_ Einstein Crick Gold
 
 **Figure 6.21** Names of all instructors whose department is in the Watson building.
 
-Tuple variable _u_ is restricted to departments that are located in the Watson build- ing, while tuple variable _s_ is restricted to instructors whose _dept name_ matches that of tuple variable _u_. Figure 6.21 shows the result of this query.
+Tuple variable _u_ is restricted to departments that are located in the Watson building, while tuple variable _s_ is restricted to instructors whose _dept name_ matches that of tuple variable _u_. Figure 6.21 shows the result of this query.
 
 To find the set of all courses taught in the Fall 2009 semester, the Spring 2010 semester, or both, we used the union operation in the relational algebra. In the tuple relational calculus, we shall need two “there exists” clauses, connected by _or_ (∨):
 
@@ -5519,7 +5527,7 @@ We build up formulae from atoms by using the following rules:
 
 are also formulae.
 
-As we could for the relational algebra, we can write equivalent expressions that are not identical in appearance. In the tuple relational calculus, these equiv- alences include the following three rules:
+As we could for the relational algebra, we can write equivalent expressions that are not identical in appearance. In the tuple relational calculus, these equivalences include the following three rules:
 
 **1\.** _P_1 ∧ _P_2 is equivalent to ¬ (¬(_P_1) ∨ ¬(_P_2)).
 
@@ -5545,7 +5553,7 @@ The number of tuples that satisfy an unsafe expression, such as {_t_ |¬ (_t_ �
 
 **6.2.4 Expressive Power of Languages**
 
-The tuple relational calculus restricted to safe expressions is equivalent in expres- sive power to the basic relational algebra (with the operators ∪_,_ −_,_ ×_,_ , and  , but without the extended relational operations such as generalized projection and ag- gregation (_G_)). Thus, for every relational-algebra expression using only the basic operations, there is an equivalent expression in the tuple relational calculus, and for every tuple-relational-calculus expression, there is an equivalent relational- algebra expression. We shall not prove this assertion here; the bibliographic notes contain references to the proof. Some parts of the proof are included in the exer- cises. We note that the tuple relational calculus does not have any equivalent of the aggregate operation, but it can be extended to support aggregation. Extending the tuple relational calculus to handle arithmetic expressions is straightforward.  
+The tuple relational calculus restricted to safe expressions is equivalent in expressive power to the basic relational algebra (with the operators ∪_,_ −_,_ ×_,_ , and  , but without the extended relational operations such as generalized projection and aggregation (_G_)). Thus, for every relational-algebra expression using only the basic operations, there is an equivalent expression in the tuple relational calculus, and for every tuple-relational-calculus expression, there is an equivalent relationalalgebra expression. We shall not prove this assertion here; the bibliographic notes contain references to the proof. Some parts of the proof are included in the exercises. We note that the tuple relational calculus does not have any equivalent of the aggregate operation, but it can be extended to support aggregation. Extending the tuple relational calculus to handle arithmetic expressions is straightforward.  
 
 **6.3 The Domain Relational Calculus 245**
 
@@ -5589,7 +5597,7 @@ As a notational shorthand, we write ∃ _a , b, c_ (_P_(_a , b, c_)) for ∃ _a_
 
 **6.3.2 Example Queries**
 
-We now give domain-relational-calculus queries for the examples that we con- sidered earlier. Note the similarity of these expressions and the corresponding tuple-relational-calculus expressions.
+We now give domain-relational-calculus queries for the examples that we considered earlier. Note the similarity of these expressions and the corresponding tuple-relational-calculus expressions.
 
 • Find the instructor _ID_, _name_, _dept name_, and _salary_ for instructors whose salary is greater than $80,000:
 
@@ -5613,7 +5621,7 @@ We now give several examples of queries in the domain relational calculus.
 
 ∨∃ _u_ (_< c, a , s, y, b, r, t >_∈ _section_ ∧ _s_ \= “Spring” ∧ _y_ \= “2010”
 
-• Find all students who have taken all courses offered in the Biology depart- ment:
+• Find all students who have taken all courses offered in the Biology department:
 
 {_< i >_ | ∃ _n, d, t_ (_< i, n, d, t >_ ∈ _student_) ∧ ∀ _x, y, z, w_ (_< x, y, z, w >_ ∈ _course_ ∧ _z_ \= “Biology” ⇒ ∃ _a , b_ (_< a , x, b, r, p, q >_ ∈ _takes_ ∧ _< c, a >_ ∈ _depositor_ ))}  
 
@@ -5635,7 +5643,7 @@ For the domain relational calculus, we must be concerned also about the form of 
 
 where _P_ is some formula involving _x_ and _z_. We can test the first part of the formula, ∃ _y_ (_< x, y >_ ∈ _r_ ), by considering only the values in _r_. However, to test the second part of the formula, ∃ _z_ (¬ (_< x, z >_ ∈ _r_ ) ∧ _P_(_x, z_)), we must consider values for _z_ that do not appear in _r_. Since all relations are finite, an infinite number of values do not appear in _r_. Thus, it is not possible, in general, to test the second part of the formula without considering an infinite number of potential values for _z_. Instead, we add restrictions to prohibit expressions such as the preceding one.
 
-In the tuple relational calculus, we restricted any existentially quantified vari- able to range over a specific relation. Since we did not do so in the domain calculus, we add rules to the definition of safety to deal with cases like our example. We say that an expression
+In the tuple relational calculus, we restricted any existentially quantified variable to range over a specific relation. Since we did not do so in the domain calculus, we add rules to the definition of safety to deal with cases like our example. We say that an expression
 
 {_< x_1_, x_2_, . . . , xn >_ | _P_ (_x_1_, x_2_, . . . , xn_)}
 
@@ -5659,9 +5667,9 @@ All the domain-relational-calculus expressions that we have written in the examp
 
 **6.3.4 Expressive Power of Languages**
 
-When the domain relational calculus is restricted to safe expressions, it is equiv- alent in expressive power to the tuple relational calculus restricted to safe ex- pressions. Since we noted earlier that the restricted tuple relational calculus is equivalent to the relational algebra, all three of the following are equivalent:
+When the domain relational calculus is restricted to safe expressions, it is equivalent in expressive power to the tuple relational calculus restricted to safe expressions. Since we noted earlier that the restricted tuple relational calculus is equivalent to the relational algebra, all three of the following are equivalent:
 
-• The basic relational algebra (without the extended relational-algebra opera- tions)
+• The basic relational algebra (without the extended relational-algebra operations)
 
 • The tuple relational calculus restricted to safe expressions
 
@@ -5677,7 +5685,7 @@ We note that the domain relational calculus also does not have any equivalent of
 
 ◦ Basic operations
 
-◦ Additional operations that can be expressed in terms of the basic opera- tions
+◦ Additional operations that can be expressed in terms of the basic operations
 
 ◦ Extended operations, some of which add further expressive power to relational algebra
 
@@ -5687,7 +5695,7 @@ We note that the domain relational calculus also does not have any equivalent of
 
 use languages with more “syntactic sugar.” In Chapters 3 through 5, we cover the most influential language—**SQL**, which is based on relational algebra.
 
-• The **tuple relational calculus** and the **domain relational calculus** are non- procedural languages that represent the basic power required in a relational query language. The basic relational algebra is a procedural language that is equivalent in power to both forms of the relational calculus when they are restricted to safe expressions.
+• The **tuple relational calculus** and the **domain relational calculus** are nonprocedural languages that represent the basic power required in a relational query language. The basic relational algebra is a procedural language that is equivalent in power to both forms of the relational calculus when they are restricted to safe expressions.
 
 • The relational calculi are terse, formal languages that are inappropriate for casual users of a database system. These two formal languages form the basis for two more user-friendly languages, QBE and Datalog, that we cover in Appendix B.
 
@@ -5771,7 +5779,7 @@ b. Show how to write the above query in relational algebra, without using divisi
 
 _R_ \= (_A, B, C_) _S_ \= (_D, E, F_ )
 
-Let relations _r_(_R_) and _s_(_S_) be given. Give an expression in the tuple rela- tional calculus that is equivalent to each of the following:
+Let relations _r_(_R_) and _s_(_S_) be given. Give an expression in the tuple relational calculus that is equivalent to each of the following:
 
 a. _A_(_r_ )
 
@@ -5781,19 +5789,19 @@ c. _r_ × _s_
 
 d. _A,F_ (_C_ \= _D_(_r_ × _s_))
 
-**6.6** Let _R_ \= (_A, B, C_), and let _r_1 and _r_2 both be relations on schema _R_. Give an expression in the domain relational calculus that is equivalent to each of the following:
+**6.6** Let _R_ \= (_A, B, C_), and let _r_~1~ and _r_~2~ both be relations on schema _R_. Give an expression in the domain relational calculus that is equivalent to each of the following:
 
-a. _A_(_r_1)
+a. _A_(_r_~1~)
 
-b. _B_ \= 17 (_r_1)
+b. _B_ \= 17 (_r_~1~)
 
-c. _r_1 ∪ _r_2
+c. _r_~1~ ∪ _r_~2~
 
-d. _r_1 ∩ _r_2
+d. _r_~1~ ∩ _r_~2~
 
-e. _r_1 − _r_2
+e. _r_~1~ − _r_~2~
 
-f. _A,B_(_r_1) _B,C_ (_r_2)
+f. _A,B_(_r_~1~) _B,C_ (_r_~2~)
 
 **6.7** Let _R_ \= (_A, B_) and _S_ \= (_A, C_), and let _r_ (_R_) and _s_(_S_) be relations. Write expressions in relational algebra for each of the following queries:
 
@@ -5825,19 +5833,19 @@ b. Find the IDs and names of all students who have not taken any course offering
 
 c. For each department, find the maximum salary of instructors in that department. You may assume that every department has at least one instructor.
 
-d. Find the lowest, across all departments, of the per-department maxi- mum salary computed by the preceding query.
+d. Find the lowest, across all departments, of the per-department maximum salary computed by the preceding query.
 
 **6.11** Consider the relational database of Figure 6.22, where the primary keys are underlined. Give an expression in the relational algebra to express each of the following queries:
 
-a. Find the names of all employees who work for “First Bank Corpora- tion”.
+a. Find the names of all employees who work for “First Bank Corporation”.
 
 b. Find the names and cities of residence of all employees who work for “First Bank Corporation”.
 
-c. Find the names, street addresses, and cities of residence of all em- ployees who work for “First Bank Corporation” and earn more than $10,000.
+c. Find the names, street addresses, and cities of residence of all employees who work for “First Bank Corporation” and earn more than $10,000.
 
 d. Find the names of all employees in this database who live in the same city as the company for which they work.
 
-e. Assume the companies may be located in several cities. Find all com- panies located in every city in which “Small Bank Corporation” is located.  
+e. Assume the companies may be located in several cities. Find all companies located in every city in which “Small Bank Corporation” is located.  
 
 **Exercises 253**
 
@@ -5853,7 +5861,7 @@ a. Find the company with the most employees.
 
 b. Find the company with the smallest payroll.
 
-c. Find those companies whose employees earn a higher salary, on av- erage, than the average salary at First Bank Corporation.
+c. Find those companies whose employees earn a higher salary, on average, than the average salary at First Bank Corporation.
 
 **6.14** Consider the following relational schema for a library:
 
@@ -5865,19 +5873,19 @@ a. Find the names of members who have borrowed any book published by “McGraw-H
 
 b. Find the name of members who have borrowed all books published by “McGraw-Hill”.
 
-c. Find the name and membership number of members who have bor- rowed more than five different books published by “McGraw-Hill”.
+c. Find the name and membership number of members who have borrowed more than five different books published by “McGraw-Hill”.
 
-d. For each publisher, find the name and membership number of mem- bers who have borrowed more than five books of that publisher.
+d. For each publisher, find the name and membership number of members who have borrowed more than five books of that publisher.
 
 e. Find the average number of books borrowed per member. Take into account that if an member does not borrow any books, then that member does not appear in the _borrowed_ relation at all.
 
 **6.15** Consider the employee database of Figure 6.22. Give expressions in tuple relational calculus and domain relational calculus for each of the following queries:
 
-a. Find the names of all employees who work for “First Bank Corpora- tion”.
+a. Find the names of all employees who work for “First Bank Corporation”.
 
 b. Find the names and cities of residence of all employees who work for “First Bank Corporation”.
 
-c. Find the names, street addresses, and cities of residence of all em- ployees who work for “First Bank Corporation” and earn more than $10,000.  
+c. Find the names, street addresses, and cities of residence of all employees who work for “First Bank Corporation” and earn more than $10,000.  
 
 **254 Chapter 6 Formal Relational Query Languages**
 
@@ -5891,7 +5899,7 @@ g. Find all employees who earn more than every employee of “Small Bank Corpora
 
 h. Assume that the companies may be located in several cities. Find all companies located in every city in which “Small Bank Corporation” is located.
 
-**6.16** Let _R_ \= (_A, B_) and _S_ \= (_A, C_), and let _r_ (_R_) and _s_(_S_) be relations. Write relational-algebra expressions equivalent to the following domain- relational-calculus expressions:
+**6.16** Let _R_ \= (_A, B_) and _S_ \= (_A, C_), and let _r_ (_R_) and _s_(_S_) be relations. Write relational-algebra expressions equivalent to the following domainrelational-calculus expressions:
 
 a. {_< a >_ | ∃ _b_ (_< a , b >_ ∈ _r_ ∧ _b_ \= 17)} b. {_< a , b, c >_ | _< a , b >_ ∈ _r_ ∧ _< a , c >_ ∈ _s_} c. {_< a >_ | ∃ _b_ (_< a , b >_ ∈ _r_ ) ∨ ∀ _c_ (∃ _d_ (_< d, c >_ ∈ _s_) ⇒ _< a , c >_ ∈ _s_)} d. {_< a >_ | ∃ _c_ (_< a , c >_ ∈ _s_ ∧ ∃ _b_1_, b_2 (_< a , b_1 _\>_ ∈ _r_ ∧ _< c, b_2 _\>_
 
@@ -5915,6 +5923,6 @@ The original definition of relational algebra is in Codd \[1970\]. Extensions to
 
 **Bibliographical Notes 255**
 
-The original definition of tuple relational calculus is in Codd \[1972\]. A for- mal proof of the equivalence of tuple relational calculus and relational algebra is in Codd \[1972\]. Several extensions to the relational calculus have been pro- posed. Klug \[1982\] and Escobar-Molano et al. \[1993\] describe extensions to scalar aggregate functions.  
+The original definition of tuple relational calculus is in Codd \[1972\]. A formal proof of the equivalence of tuple relational calculus and relational algebra is in Codd \[1972\]. Several extensions to the relational calculus have been proposed. Klug \[1982\] and Escobar-Molano et al. \[1993\] describe extensions to scalar aggregate functions.  
 
 _This page intentionally left blank_
