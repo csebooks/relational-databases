@@ -322,8 +322,6 @@ Conceptually, multiple inheritance is possible with tables, just as it is possib
 
 **under** students, teachers;  
 
-**22.4 Table Inheritance 955**
-
 As a result of the declaration, every tuple present in the teaching assistants table is also implicitly present in the teachers and in the students table, and in turn in the people table. We note, however, that multiple inheritance of tables is not supported by SQL.
 
 There are some consistency requirements for subtables. Before we state the constraints, we need a definition: we say that tuples in a subtable and parent table **correspond** if they have the same values for all inherited attributes. Thus, corresponding tuples represent the same entity.
@@ -348,11 +346,7 @@ For example, suppose we again have the type Person, with subtypes Student and Te
 
 We note, however, that SQL unfortunately prohibits such a situation, because of consistency requirement 2. Since SQL also does not support multiple inheri- tance, we cannot use inheritance to model a situation where a person can be both a student and a teacher. As a result, SQL subtables cannot be used to represent overlapping specializations from the E-R model.
 
-We can of course create separate tables to represent the overlapping special- izations/generalizations without using inheritance. The process was described earlier, in Section 7.8.6.1. In the above example, we would create tables people, stu- dents, and teachers, with the students and teachers tables containing the primary-key  
-
-**956 Chapter 22 Object-Based Databases**
-
-attribute of Person and other attributes specific to Student and Teacher, respectively. The people table would contain information about all persons, including students and teachers. We would then have to add appropriate referential-integrity constraints to ensure that students and teachers are also represented in the people table.
+We can of course create separate tables to represent the overlapping special- izations/generalizations without using inheritance. The process was described earlier, in Section 7.8.6.1. In the above example, we would create tables people, stu- dents, and teachers, with the students and teachers tables containing the primary-key attribute of Person and other attributes specific to Student and Teacher, respectively. The people table would contain information about all persons, including students and teachers. We would then have to add appropriate referential-integrity constraints to ensure that students and teachers are also represented in the people table.
 
 In other words, we can create our own improved implementation of the subtable mechanism using existing features of SQL, with some extra effort in defining the table, as well as some extra effort at query time to specify joins to access required attributes.
 
@@ -454,11 +448,7 @@ The **with ordinality** clause generates an extra attribute which records the po
 
 The transformation of a nested relation into a form with fewer (or no) relationvalued attributes is called **unnesting**. The books relation has two attributes, author array and keyword set, that are collections, and two attributes, title and publisher,
 
-that are not. Suppose that we want to convert the relation into a single flat relation, with no nested relations or structured types as attributes. We can use the following query to carry out the task:  
-
-**22.5 Array and Multiset Types in SQL 959**
-
-title author pub\name pub\branch keyword Compilers Smith McGraw-Hill New York parsing Compilers Jones McGraw-Hill New York parsing Compilers Smith McGraw-Hill New York analysis Compilers Jones McGraw-Hill New York analysis Networks Jones Oxford London Internet Networks Frick Oxford London Internet Networks Jones Oxford London Web Networks Frick Oxford London Web
+that are not. Suppose that we want to convert the relation into a single flat relation, with no nested relations or structured types as attributes. We can use the following query to carry out the task:  title author pub\name pub\branch keyword Compilers Smith McGraw-Hill New York parsing Compilers Jones McGraw-Hill New York parsing Compilers Smith McGraw-Hill New York analysis Compilers Jones McGraw-Hill New York analysis Networks Jones Oxford London Internet Networks Frick Oxford London Internet Networks Jones Oxford London Web Networks Frick Oxford London Web
 ![Alt text](22.3.png)
 ```SQL
 select title, A.author, publisher.name as pubname, publisher.branch
@@ -522,8 +512,6 @@ The referenced table must have an attribute that stores the identifier of the tu
 Here, person id is an attribute name, not a keyword, and the **create table** statement specifies that the identifier is generated automatically by the database.
 
 In order to initialize a reference attribute, we need to get the identifier of the tuple that is to be referenced. We can get the identifier value of a tuple by means of a query. Thus, to create a tuple with the reference value, we may first create the tuple with a null reference and then set the reference separately:  
-
-**962 Chapter 22 Object-Based Databases**
 
 **insert into** departments **values** (’CS’, null);
 
@@ -823,19 +811,36 @@ These descriptions hold in general, but keep in mind that some database systems 
 
 **Review Terms**
 
-- Nested relations - Nested relational model - Complex types - Collection types - Large object types
+- Nested relations 
+- Nested relational model 
+- Complex types 
+- Collection types 
+- Large object types
 
-- Sets - Arrays - Multisets - Structured types - Methods  
+- Sets 
+- Arrays 
+- Multisets 
+- Structured types 
+- Methods  
+- Row types 
+- Constructors 
+- Inheritance
 
-**976 Chapter 22 Object-Based Databases**
+    ◦ Single inheritance
 
-- Row types - Constructors - Inheritance
+    ◦ Multiple inheritance
 
-◦ Single inheritance
-
-◦ Multiple inheritance
-
-- Type inheritance - Most-specific type - Table inheritance - Subtable - Overlapping subtables - Reference types - Scope of a reference - Self-referential attribute - Path expressions - Nesting and unnesting - SQL functions and procedures
+- Type inheritance 
+- Most-specific type 
+- Table inheritance 
+- Subtable 
+- Overlapping subtables 
+- Reference types 
+- Scope of a reference 
+- Self-referential attribute 
+- Path expressions 
+- Nesting and unnesting 
+- SQL functions and procedures
 
 - Persistent programming languages
 
@@ -2244,68 +2249,65 @@ creating complex types and specifying integrity constraints, including key const
 - XML is used in a variety of applications, such as storing complex data, ex- change of data between organizations in a standardized form, data mediation, and Web services. Web services provide a remote-procedure call interface, with XML as the mechanism for encoding parameters as well as results.
 
 # Review Terms
-
-- Extensible Markup Language (XML)
-
-- Hyper-Text Markup Language (HTML)
-
-- Standard Generalized Markup Language
-
-- Markup language
-
-- Tags - Self-documenting - Element - Root element - Nested elements - Attribute  
-
-# Practice Exercises 
-
-- Namespace - Default namespace - Schema definition - Document Type Definition
-
+• Extensible Markup Language
+(XML)
+• Hyper-Text Markup Language
+(HTML)
+• Standard Generalized Markup
+Language
+• Markup language
+• Tags
+• Self-documenting
+• Element
+• Root element
+• Nested elements
+• Attribute
+• Namespace
+• Default namespace
+• Schema definition
+• Document Type Definition
 (DTD)
-
-◦ ID
-
-◦ IDREF and IDREFS
-
-- XML Schema
-
-◦ Simple and complex types
-
-◦ Sequence type
-
-◦ Key and keyref
-
-◦ Occurrence constraints
-
-- Tree model of XML data - Nodes - Querying and transformation - Path expressions - XPath - XQuery
-
-◦ FLWOR expressions  **for**  **let**  **where**  **order by**
-
- **return**
-
-◦ Joins
-
-◦ Nested FLWOR expression
-
-◦ Sorting
-
-- XML API
-
-- Document Object Model (DOM) - Simple API for XML (SAX) - Storage of XML data
-
-◦ In nonrelational data stores
-
-◦ In relational databases  Store as string  Tree representation  Map to relations  Publish and shred  XML-enabled database  Native storage  SQL/XML
-
-- XML applications
-
-◦ Storing complex data
-
-◦ Exchange of data
-
-◦ Data mediation
-
-◦ SOAP
-
-◦ Web services
+    ◦ ID
+    ◦ IDREF and IDREFS
+• XML Schema
+    ◦ Simple and complex types
+    ◦ Sequence type
+    ◦ Key and keyref
+    ◦ Occurrence constraints
+• Tree model of XML data
+• Nodes
+• Querying and transformation
+• Path expressions
+• XPath
+• XQuery
+    ◦ FLWOR expressions
+        -for
+        -let
+        -where
+        -order by
+        -return
+    ◦ Joins
+    ◦ Nested FLWOR expression
+    ◦ Sorting
+• XML API
+• Document Object Model (DOM)
+• Simple API for XML (SAX)
+• Storage of XML data
+    ◦ In nonrelational data stores
+    ◦ In relational databases
+        - Store as string
+        - Tree representation
+        - Map to relations
+        - Publish and shred
+        - XML-enabled database
+        - Native storage
+        - SQL/XML
+• XML applications
+    ◦ Storing complex data
+    ◦ Exchange of data
+    ◦ Data mediation
+    ◦ SOAP
+    ◦ Web services
 
 **Practice Exercises**
 
@@ -2315,9 +2317,8 @@ creating complex types and specifying integrity constraints, including key const
 
 Emp = (ename, ChildrenSet **setof**(Children), SkillsSet **setof**(Skills)) Children = (name, Birthday) Birthday = (day, month, year) Skills = (type, ExamsSet **setof**(Exams)) Exams = (year, city)  
 
-**1022 Chapter 23 XML**
-
-<_!DOCTYPE bibliography [ <_!ELEMENT book (title, author+, year, publisher, place?)> <_!ELEMENT article (title, author+, journal, year, number, volume, pages?)> <_!ELEMENT author ( last name, first name) >
+<_!DOCTYPE bibliography [ 
+<_!ELEMENT book (title, author+, year, publisher, place?)> <_!ELEMENT article (title, author+, journal, year, number, volume, pages?)> <_!ELEMENT author ( last name, first name) >
 
 <_!ELEMENT title ( #PCDATA )> · · · similar PCDATA declarations for year, publisher, place, journal, year,
 
