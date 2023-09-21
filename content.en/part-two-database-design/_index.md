@@ -3615,7 +3615,9 @@ Some of the above tools are open-source software that can be used free of cost, 
 
 The Yahoo! User Interface (YUI) JavaScript library (developer.yahoo.com/yui) is widely used for creating JavaScript programs that work across multiple browsers.
 
-##  Bibliographical Notes
+
+## Bibliographical Notes
+
 
 Information about servlets, including tutorials, standard specifications, and soft- ware, is available on java.sun.com/products/servlet. Information about JSP is available at java.sun.com/products/jsp. Information on JSP tag libraries can also be found at this URL. Information about the .NET framework and about Web application de- velopment using ASP.NET can be found at msdn.microsoft.com.
 
