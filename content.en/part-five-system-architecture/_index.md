@@ -43,7 +43,7 @@ We distinguish two ways in which computers are used: as single-user systems and 
 
 Database systems designed for use by single users usually do not provide many of the facilities that a multiuser database provides. In particular, they may not support concurrency control, which is not required when only a single user can generate updates. Provisions for crash recovery in such systems are either absent or primitive—for example, they may consist of simply making a backup of the database before any update. Some such systems do not support SQL, and they provide a simpler query language, such as a variant of QBE. In contrast,
 
-![Alt text](centralized.png)
+![Alt text](figure-17.1.png)
 
 database systems designed for multiuser systems support the full transactional features that we have studied earlier.
 
@@ -63,7 +63,7 @@ Functionality provided by database systems can be broadly divided into two parts
 
 ^1^The reasons for this pertain to issues in computer architecture related to heat generation and power consumption. Rather than make processors significantly faster, computer architects are using advances in chip design to put more cores on a single chip, a trend likely to continue for some time.  
 
-![Alt text](client.png)
+![Alt text](figure-17.2.png)
 
 
 - Standards such as _ODBC_ and _JDBC_, which we saw in Chapter 3, were developed to interface clients with servers. Any client that uses the ODBC or JDBC interface can connect to any server that provides the interface.
@@ -78,7 +78,7 @@ Functionality provided by database systems can be broadly divided into two parts
 
 Server systems can be broadly categorized as transaction servers and data servers.
 
-![Alt text](front.png)
+![Alt text](figure-17.3.png)
 
 - **Transaction-server** systems, also called **query-server** systems, provide an in- terface to which clients can send requests to perform an action, in response to which they execute the action and send back results to the client. Usually, client machines ship transactions to the server systems, where those transac- tions are executed, and results are shipped back to clients that are in charge of displaying the data. Requests may be specified by using SQL, or through a specialized application program interface.
 
@@ -98,8 +98,7 @@ A typical transaction-server system today consists of multiple processes accessi
 
 - **Log writer process**: This process outputs log records from the log record buffer to stable storage. Server processes simply add log records to the log  
 
-![Alt text](share.png)
-
+![Alt text](figure-17.4.png)
 
 record buffer in shared memory, and if a log force is required, they request the log writer process to output log records.
 
@@ -175,9 +174,9 @@ Consider a database application running on a parallel system with a certain numb
 
 Scaleup relates to the ability to process larger tasks in the same amount of time by providing more resources. Let _Q_ be a task, and let _QN_ be a task that is _N_ times bigger than _Q_. Suppose that the execution time of task _Q_ on a given machine
 
-![Alt text](speedup.png)
+![Alt text](figure-17.5.png)
 
-![Alt text](scaleup.png)
+![Alt text](figure-17.6.png)
 
 _MS_ is _TS_, and the execution time of task _QN_ on a parallel machine _ML_ , which is _N_ times larger than _MS_, is _TL_ . The scaleup is then defined as _TS/TL_ . The parallel system _ML_ is said to demonstrate **linear scaleup** on task _Q_ if _TL_ \= _TS_. If _TL > TS_, the system is said to demonstrate **sublinear scaleup**. Figure 17.6 illustrates linear and sublinear scaleups (where the resources increase in proportion to problem size). There are two kinds of scaleup that are relevant in parallel database systems, depending on how the size of the task is measured:
 
@@ -203,7 +202,7 @@ Parallel systems consist of a set of components (processors, memory, and disks) 
 
 - **Mesh**. The components are nodes in a grid, and each component connects to all its adjacent components in the grid. In a two-dimensional mesh each node connects to four adjacent nodes, while in a three-dimensional mesh each node connects to six adjacent nodes. Figure 17.7b shows a two-dimensional mesh. 
 
-![Alt text](interconnection.png)
+![Alt text](figure-17.7.png)
 
 Nodes that are not directly connected can communicate with one another by routing messages via a sequence of intermediate nodes that are directly connected to one another. The number of communication links grows as the number of components grows, and the communication capacity of a mesh therefore scales better with increasing parallelism.
 
@@ -223,7 +222,7 @@ There are several architectural models for parallel machines. Among the most pro
 
 In Sections 17.3.3.1 through 17.3.3.4, we elaborate on each of these models.  
 
-![Alt text](parallel.png)
+![Alt text](figure-17.8.png)
 
 
 Techniques used to speed up transaction processing on data-server systems, such as data and lock caching and lock de-escalation, outlined in Section 17.2.2, can also be used in shared-disk parallel databases as well as in shared-nothing parallel databases. In fact, they are very important for efficient transaction pro- cessing in such systems.
@@ -260,7 +259,7 @@ The computers in a distributed system are referred to by a number of dif- ferent
 
 The main differences between shared-nothing parallel databases and dis- tributed databases are that distributed databases are typically geographically separated, are separately administered, and have a slower interconnection. An- other major difference is that, in a distributed database system, we differentiate between local and global transactions. A **local transaction** is one that accesses data only from sites where the transaction was initiated. A **global transaction**, on the other hand, is one that either accesses data in a site different from the one at which the transaction was initiated, or accesses data in several different sites.  
 
-![Alt text](distributed.png)
+![Alt text](figure-17.9.png)
 
 There are several reasons for building distributed database systems, including sharing of data, autonomy, and availability.
 
@@ -309,7 +308,7 @@ There are several approaches to distributed database design, ranging from fully 
 
 Distributed databases and client–server systems are built around communica- tion networks. There are basically two types of networks: **local-area networks** and **wide-area networks**. The main difference between the two is the way in which they are distributed geographically. In local-area networks, processors are distributed over small geographical areas, such as a single building or a number of adjacent buildings. In wide-area networks, on the other hand, a number of autonomous processors are distributed over a large geographical area (such as the United States or the entire world). These differences imply major variations in the speed and reliability of the communication network, and are reflected in the distributed operating-system design.
 
-![Alt text](local.png)
+![Alt text](figure-17.10.png)
 
 ### Local-Area Networks
 
@@ -325,7 +324,7 @@ Thus storage-area networks help build large-scale _shared-disk systems_. The mot
 
 - High availability, since data are still accessible even if a computer fails.
 
-![Alt text](storage.png)
+![Alt text](figure-17.11.png)
 
 RAID organizations are used in the storage devices to ensure high availability of the data, permitting processing to continue even if individual disks fail. Storage- area networks are usually built with redundancy, such as multiple paths between nodes, so if a component such as a link or a connection to the network fails, the network continues to function.
 
@@ -609,7 +608,7 @@ Another approach to minimizing the effect of skew, particularly with range parti
 
 The idea is that even if one range had many more tuples than the others because of skew, these tuples would get split across multiple virtual processor  
 
-![Alt text](histro.png)
+![Alt text](figure-18.1.png)
 
 ranges. Round-robin allocation of virtual processors to real processors would distribute the extra work among multiple real processors, so that one processor does not have to bear all the burden.
 
@@ -723,7 +722,7 @@ In either case, the same partitioning function must be used for both relations. 
 
 Once the relations are partitioned, we can use any join technique locally at each processor _P_~i~ to compute the join of _r_~i~ and _s_~i~ . For example, hash join, merge join, or nested-loop join could be used. Thus, we can use partitioning to parallelize any join technique.
 
-![Alt text](partitional.png)
+![Alt text](figure-18.2.png)
 
 If one or both of the relations _r_ and _s_ are already partitioned on the join attributes (by either hash partitioning or range partitioning), the work needed for partitioning is reduced greatly. If the relations are not partitioned, or are partitioned on attributes other than the join attributes, then the tuples need to be repartitioned. Each processor _P_~i~ reads in the tuples on disk _D_~i~ , computes for each tuple _t_ the partition _j_ to which _t_ belongs, and sends tuple _t_ to processor _P_~j~ . Processor _P_~j~ stores the tuples on disk _D_~j~ .
 
@@ -747,7 +746,7 @@ The asymmetric fragment-and-replicate scheme appears in Figure 18.3a. If _r_ is 
 
 The general case of **fragment-and-replicate join** appears in Figure 18.3b; it works this way: The system partitions relation _r_ into _n_ partitions, r~0~, r~1~, . . . , r~n−1~, and partitions _s_ into _m_ partitions, s~0~, s~1~, . . . , s~m−1~. As before, any partitioning technique may be used on _r_ and on _s_. The values of _m_ and _n_ do not need to be equal, but they must be chosen so that there are at least _m_ ∗ _n_ processors. Asymmetric fragment and replicate is simply a special case of general fragment and replicate, where _m_ \= 1. Fragment and replicate reduces the sizes of the relations at each processor, compared to asymmetric fragment and replicate.  
 
-![Alt text](fragment.png)
+![Alt text](figure-18.3.png)
 
 
 Let the processors be P~0~,~0~, P~0~,~1~, . . . , P~0~,~m−1~, P~1~,~0~, . . . , P~n−1~,~m−1~. Processor _P_~i~, ~j~_ computes the join of _ri_ with _s j_ . Each processor must get those tuples in the partitions on which it works. To accomplish this, the system replicates _ri_ to processors ~P~i~,~0~, P~i~,~1~, . . . , P~i~,~m−1~ (which form a row in Figure 18.3b), and replicates _si_ to processors P~0~,~i~ , P~1~,~i~ , . . . , P~n−1~,~i~ (which form a column in Figure 18.3b). Any join technique can be used at each processor _P_~i~, ~j~_ .

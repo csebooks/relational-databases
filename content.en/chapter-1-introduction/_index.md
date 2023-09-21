@@ -360,7 +360,7 @@ To understand the need for normalization, let us look at what can go wrong in a 
 
 - Inability to represent certain information  
 
-![alt The faculty table](Figure%201.4.png)
+![Alt text](Figure-1.4.png)
 **Figure 1.4** The faculty table.
 
 We shall discuss these problems with the help of a modified database design for our university example.
@@ -451,10 +451,10 @@ Most users of a database system today are not present at the site of the databas
 
 Database applications are usually partitioned into two or three parts, as in Figure 1.6. In a **two-tier architecture**, the application resides at the client machine, where it invokes database system functionality at the server machine through
 
-![alt System structure](Figure%201.5.png)
+![alt System structure](Figure-1.5.png)
 **Figure 1.5** System structure.  
 
-![alt Two-tier and three-tier architectures ](Figure%201.6.png)
+![alt Two-tier and three-tier architectures ](Figure-1.6.png)
 **Figure 1.6** Two-tier and three-tier architectures.
 
 query language statements. Application program interface standards like ODBC and JDBC are used for interaction between the client and the server.

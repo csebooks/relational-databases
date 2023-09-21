@@ -3,7 +3,6 @@ title: 'TRANSACTION MANAGEMENT'
 weight: 9
 ---
 
-  
 
 **PART 4**
 
@@ -1288,7 +1287,7 @@ The concept of view equivalence leads to the concept of view serializability. We
 
 As an illustration, suppose that we augment schedule 4 with transaction _T_29, and obtain the following view serializable (schedule 5):
 
-![](1.18.1-validation.png.png)
+![](1.18.1-validation.png)
 
 Indeed, schedule 5 is view equivalent to the serial schedule _<T_27_, T_28_, T_29_\>_, since the one read(_Q_) instruction reads the initial value of _Q_ in both schedules and _T_29 performs the final write of _Q_ in both schedules.
 

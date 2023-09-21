@@ -45,12 +45,12 @@ If the _instructor_ relation does not have a clustered index on _dept name_, eac
 Instead, we can use a single SQL query to find total salary expenses of each department:
 
 
->**select** _dept name_, 
+>**select** _dept name_, \
 **sum**(_salary_) **from** 
 _instructor_ **group by** _dept name_;
 
 
-This query can be evaluated with a single scan of the _instructor_ relation, avoiding random I/O for each department. The results can be fetched to the client side using a single round of communication, and the client program can then step through the results to find the aggregate for each department. Combining multiple SQL queries into a single SQL query as above can reduce execution costs greatly in many cases–for example, if the _instructor_ relation is very large and has a large number of departments.
+This query can be evaluated with a single scan of the _instructor_ relation, avoiding random I/O for each departmentf The results can be fetched to the client side using a single round of communication, and the client program can then step through the results to find the aggregate for each department. Combining multiple SQL queries into a single SQL query as above can reduce execution costs greatly in many cases–for example, if the _instructor_ relation is very large and has a large number of departments.
 
 The JDBC API also provides a feature called **batch update** that allows a number of inserts to be performed using a single communication with the database. Figure 24.1 illustrates the use of this feature. The code shown in the figure requires only one round of communication with the database, when the executeBatch() method is executed, in contrast to similar code without the batch update feature that we saw earlier in Figure 5.2. In the absence of batch update, as many rounds of communication with the database are required as there are instructors to be inserted. The batch update feature also enables the database to process a batch of PreparedStatement 
 
@@ -85,20 +85,20 @@ To support bulk load operations, most database systems provide a **bulk im- port
 
 We now consider the case of tuning of bulk updates. Suppose we have a rela- tion _funds received_(_dept name_, _amount_) that stores funds received (say, by electronic funds transfer) for each of a set of departments. Suppose now that we want to add the amounts to the balances of the corresponding department budgets. In order to use the SQL update statement to carry out this task, we have to perform a look up on the _funds received_ relation for each tuple in the _department_ relation. We can use subqueries in the update clause to carry out this task, as follows: We assume for simplicity that the relation _funds received_ contains at most one tuple for each department.
 
-![Alt text](f1.svg)
+![Alt text](f1.png)
 
 Note that the condition in the **where** clause of the update ensures that only accounts with corresponding tuples in _funds received_ are updated, while the sub- query within the **set** clause computes the amount to be added to each such department.
 
 There are many applications that require updates such as that illustrated above. Typically, there is a table, which we shall call the **master table**, and updates to the master table are received as a batch. Now the master table has to be correspondingly updated. SQL:2003 provides a special construct, called the **merge** construct, to simplify the task of performing such merging of information. For example, the above update can be expressed using **merge** as follows:
 
-![Alt text](f2.svg)
+![Alt text](f2.png)
 
 
 When a record from the subquery in the **using** clause matches a record in the _department_ relation, the **when matched** clause is executed, which can execute an update on the relation; in this case, the matching record in the _department_ relation is updated as shown.
 
 The **merge** statement can also have a **when not matched then** clause, which permits insertion of new records into the relation. In the above example, when there is no matching department for a _funds received_ tuple, the insertion action could create a new department record (with a null _building_) using the following clause:
 
-![Alt text](f3.svg)
+![Alt text](f3.png)
 
 Although not very meaningful in this example,1 the **when not matched then** clause can be quite useful in other cases. For example, suppose the local rela- tion is a copy of a master relation, and we receive updated as well as newly in- serted records from the master relation. The **merge** statement can update matched records (these would be updated old records) and insert records that are not matched (these would be new records).
 
@@ -108,7 +108,7 @@ Not all SQL implementations support the **merge** statement currently; see the r
 
 The performance of most systems (at least before they are tuned) is usually limited primarily by the performance of one or a few components, called **bottlenecks**. For instance, a program may spend 80 percent of its time in a small loop deep in the code, and the remaining 20 percent of the time on the rest of the code; the small loop then is a bottleneck. Improving the performance of a component that is not a bottleneck does little to improve the overall speed of the system; in the example, improving the speed of the rest of the code cannot lead to more than a
 
-![Alt text](fBottlenecks.svg)
+![Alt text](fBottlenecks.png)
 
 20 percent improvement overall, whereas improving the speed of the bottleneck loop could result in an improvement of nearly 80 percent overall, in the best case.
 
@@ -149,7 +149,7 @@ Thus, if a particular page is accessed n times per second, the saving due to kee
 
 Thus, the break-even point is:
 
-![Alt text](f4.svg)
+![Alt text](f4.png)
 
 We can rearrange the equation and substitute current values for each of the above parameters to get a value for n; if a page is accessed more frequently than this, it is worth buying enough memory to store it. Current disk technology and memory and disk prices (which we assume to be about $50 per disk, and $0.020 per megabyte) give a value of n around 1_6400 times per second (or equivalently, once in nearly 2 hours) for pages that are randomly accessed; with disk and memory cost and speeds as of some years ago, the corresponding value was in 5 minutes.
 
@@ -303,7 +303,7 @@ The example shows that a simple measure of performance is misleading if there is
 
 For our example, the harmonic mean for the throughputs in system A is 1_.98. For system B, it is 50. Thus, system B is approximately 25 times faster than system A on a workload consisting of an equal mixture of the two example types of transactions.
 
-![Alt text](f6.svg)
+![Alt text](f6.png)
 
 ### Database-Application Classes
 
@@ -695,7 +695,7 @@ List-based representations of polylines or polygons are often convenient for que
 
 The representation of points and line segments in three-dimensional space is similar to their representation in two-dimensional space, the only difference being that points have an extra _z_ component. Similarly, the representation of pla- nar figures—such as triangles, rectangles, and other polygons—does not change
 
-![Alt text](D1.svg)
+![Alt text](D1.png)
 
 much when we move to three dimensions. Tetrahedrons and cuboids can be rep- resented in the same way as triangles and rectangles. We can represent arbitrary polyhedra by dividing them into tetrahedrons, just as we triangulate polygons. We can also represent them by listing their faces, each of which is itself a polygon, along with an indication of which side of the face is inside the polyhedron.
 
@@ -711,7 +711,7 @@ Various spatial operations must be performed on a design. For instance, the desi
 
 Spatial-integrity constraints, such as “two pipes should not be in the same location,” are important in design databases to prevent interference errors. Such errors often occur if the design is performed manually, and are detected only when a prototype is being constructed. As a result, these errors can be expensive to fix. Database support for spatial-integrity constraints helps people to avoid design
 
-![Alt text](D2.svg)
+![Alt text](D2.png)
 
 errors, thereby keeping the design consistent. Implementing such integrity checks again depends on the availability of efficient multidimensional index structures.
 
@@ -782,7 +782,7 @@ Indices are required for efficient access to spatial data. Traditional index str
 
 To understand how to index spatial data consisting of two or more dimensions, we consider first the indexing of points in one-dimensional data. Tree structures, such as binary trees and B-trees, operate by successively dividing space into smaller parts. For instance, each internal node of a binary tree partitions a one-
 
-![Alt text](D3.svg)
+![Alt text](D3.png)
 
 dimensional interval in two. Points that lie in the left partition go into the left subtree; points that lie in the right partition go into the right subtree. In a balanced binary tree, the partition is chosen so that approximately one-half of the points stored in the subtree fall in each partition. Similarly, each level of a B-tree splits a one-dimensional interval into multiple parts.
 
@@ -794,7 +794,7 @@ The **k-d-B tree** extends the k-d tree to allow multiple child nodes for each i
 
 An alternative representation for two-dimensional data is a **quadtree**. An example of the division of space by a quadtree appears in Figure 25.5. The set of points
 
-![Alt text](D4.svg)
+![Alt text](D4.png)
 
 is the same as that in Figure 25.4. Each node of a quadtree is associated with a rectangular region of space. The top node is associated with the entire target space. Each nonleaf node in a quadtree divides its region into four equal-sized quadrants, and correspondingly each such node has four child nodes corresponding to the four quadrants. Leaf nodes have between zero and some fixed maximum number of points. Correspondingly, if the region corresponding to a node has more than the maximum number of points, child nodes are created for that node. In the example in Figure 25.5, the maximum number of points in a leaf node is set to 1.
 
@@ -814,7 +814,7 @@ The R-tree itself is at the right side of Figure 25.6. The figure refers to the 
 
 We shall now see how to implement search, insert, and delete operations on an R-tree.
 
-![Alt text](D5.svg)
+![Alt text](D5.png)
 
 - **Search**. As the figure shows, the bounding boxes associated with sibling nodes may overlap; in B+-trees, k-d trees, and quadtrees, in contrast, the ranges do not overlap. A search for objects containing a point therefore has to follow _all_ child nodes whose associated bounding boxes contain the point; as a result, multiple paths may have to be searched. Similarly, a query to find all objects that intersect a given object has to go down every node where the associated rectangle intersects the given object.
 
@@ -1168,7 +1168,7 @@ Large-scale transaction-processing systems are built around a client–server ar
 
 The above problems can be avoided by having a single-server process to which all remote clients connect; this model is called the **single-server model**,
 
-![Alt text](D6.svg)
+![Alt text](D6.png)
 
 illustrated in Figure 26.1b. Remote clients send requests to the server process, which then executes those requests. This model is also used in client–server en- vironments, where clients send requests to a single-server process. The server process handles tasks, such as user authentication, that would normally be han- dled by the operating system. To avoid blocking other clients when processing a long request for one client, the server process is **multithreaded**: The server process has a thread of control for each client, and, in effect, implements its own low-overhead multitasking. It executes code on behalf of one client for a while, then saves the internal context and switches to the code for another client. Unlike the overhead of full multitasking, the cost of switching between threads is low (typically only a few microseconds).
 
@@ -1182,7 +1182,7 @@ One way to solve these problems is to run multiple application-server pro- cesse
 
 The above architecture is also widely used in Web servers. A Web server has a main process that receives HTTP requests, and then assigns the task of handling each request to a separate process (chosen from among a pool of processes). Each of the processes is itself multithreaded, so that it can handle multiple requests. The use of safe programming languages, such as Java, C#, or Visual Basic, allows Web application servers to protect threads from errors in other threads. In contrast, with a language like C or C++, errors such as memory allocation errors in one thread can cause other threads to fail.
 
-![Alt text](D7.svg)
+![Alt text](D7.png)
 
 A more general architecture has multiple processes, rather than just one, to communicate with clients. The client communication processes interact with one or more router processes, which route their requests to the appropriate server. Later-generation TP monitors therefore have a different architecture, called the **many-server, many-router model**, illustrated in Figure 26.1d. A controller process starts up the other processes and supervises their functioning. Very high perfor- mance Web-server systems also adopt such an architecture. The router processes are often network routers that direct traffic addressed to the same Internet ad- dress to different server computers, depending on where the traffic comes from. What looks like a single server with a single address to the outside world may be a collection of servers.
 
@@ -1225,7 +1225,7 @@ In general, workflows may involve one or more humans. For instance, con- sider t
 
 **Figure 26.3** Examples of workflows.  
 
-![Alt text](image.svg)
+![Alt text](image.png)
 
 then have to be approved by one or more superior officers, after which the loan can be made. Each human here performs a task; in a bank that has not automated the task of loan processing, the coordination of the tasks is typically carried out by passing of the loan application, with attached notes and other information, from one employee to the next. Other examples of workflows include processing of expense vouchers, of purchase orders, and of credit-card transactions.
 
