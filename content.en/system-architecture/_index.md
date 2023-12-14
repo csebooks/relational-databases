@@ -1,5 +1,5 @@
 ---
-title: 'PART FIVE: SYSTEM ARCHITECTURE'
+title: 'SYSTEM ARCHITECTURE'
 weight: 10
 ---
 

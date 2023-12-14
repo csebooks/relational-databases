@@ -1,5 +1,5 @@
 ---
-title: 'PART THREE: DATA STORAGE AND QUERYING'
+title: 'DATA STORAGE AND QUERYING'
 weight: 8
 ---
 

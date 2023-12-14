@@ -1,5 +1,5 @@
 ---
-title: 'PART EIGHT: ADVANCED TOPICS'
+title: 'ADVANCED TOPICS'
 weight: 13
 ---
 

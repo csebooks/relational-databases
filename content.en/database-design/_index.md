@@ -1,5 +1,5 @@
 ---
-title: 'PART TWO: DATABASE DESIGN'
+title: 'DATABASE DESIGN'
 weight: 7
 ---
 

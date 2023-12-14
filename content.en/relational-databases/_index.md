@@ -1,5 +1,5 @@
 ---
-title: 'PART ONE: RELATIONAL DATABASES'
+title: 'RELATIONAL DATABASES'
 weight: 6
 ---
 

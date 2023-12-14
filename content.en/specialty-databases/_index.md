@@ -1,5 +1,5 @@
 ---
-title: 'PART SEVEN: SPECIALTY DATABASES'
+title: 'SPECIALTY DATABASES'
 weight: 12
 ---
 

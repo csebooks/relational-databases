@@ -1,5 +1,5 @@
 ---
-title: 'PART NINE: CASE STUDIES'
+title: 'CASE STUDIES'
 weight: 14
 ---
 
