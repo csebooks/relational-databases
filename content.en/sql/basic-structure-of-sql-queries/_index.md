@@ -11,7 +11,20 @@ The basic structure of an SQL query consists of three clauses: **select**, **fro
 
 Let us consider a simple query using our university example, “Find the names of all instructors.” Instructor names are found in the _instructor_ relation, so we 
 
-![Alt text](image-13.png)
+| name |
+| :------: |
+| Srinivasan |
+| Wu |
+| Mozart |
+| Einstein | 
+| El Said |
+| Gold |
+| Katz |
+| Califieri |
+| Singh |
+| Crick | 
+| Brandt |
+| Kim | 
 
 **Figure 3.2** Result of “**select** _name_ **from** _instructor_”.
 
@@ -36,7 +49,20 @@ In those cases where we want to force the elimination of duplicates, we insert t
 **select distinct** _dept name_
 **from** _instructor_;  
 
-![Alt text](image-14.png)
+| dept_name |
+| :------: |
+| Comp. Sci. |
+| Finance|
+| Music |
+| Physics |
+| History |
+| Physics |
+| Comp. Sci. |
+| History |
+| Finance |
+| Biology |
+| Comp. Sci. |
+| Elec. Eng. |
 
 **Figure 3.3** Result of “**select** _dept name_ **from** _instructor_”.
 
@@ -60,7 +86,11 @@ SQL also provides special data types, such as various forms of the _date_ type, 
 
 The **where** clause allows us to select only those rows in the result relation of the **from** clause that satisfy a specified predicate. Consider the query “Find the names of all instructors in the Computer Science department who have salary greater than $70,000.” This query can be written in SQL as:  
 
-![Alt text](image-15.png)
+
+| name |
+| :------: |
+| Katz |
+| Brandt |
 
 **Figure 3.4** Result of “Find the names of all instructors in the Computer Science department who have salary greater than $70,000.”
 
@@ -92,7 +122,20 @@ If the _instructor_ and _department_ relations are as shown in Figures 2.1 and 2
 
 Note that the attribute _dept name_ occurs in both the relations _instructor_ and _department_, and the relation name is used as a prefix (in _instructor_._dept name_, and  
 
-![Alt text](image-16.png)
+| name | dept_name | building |
+| :------: | :------: | :----: |
+| Srinivasan | Comp. Sci. | Taylor |
+| Wu | Finance | Painter |
+| Mozart | Music | Packard |
+| Einstein | Physics | Watson |
+| El Said | History | Painter |
+| Gold | Physics | Watson |
+| Katz | Comp. Sci. | Taylor |
+| Califieri | History | Painter |
+| Singh | Finance | Painter |
+| Crick | Biology | Watson |
+| Brandt | Comp. Sci. | Taylor |
+| Kim | Elec. Eng. | Taylor |
 
 **Figure 3.5** The result of “Retrieve the names of all instructors, along with their department names and department building name.”
 
