@@ -1,13 +1,13 @@
 ---
-title: 3.4 Additional Basic Operations
-weight: 17
+title:  Additional Basic Operations
+weight: 4
 ---
 
-3.4 Additional Basic Operations## 3.4 Additional Basic Operations
+# Additional Basic Operations
 
 There are number of additional basic operations that are supported in SQL.
 
-### 3.4.1 The Rename Operation
+## The Rename Operation
 
 Consider again the query that we used earlier:
 
@@ -51,7 +51,7 @@ In the above query, _T_ and _S_ can be thought of as copies of the relation _ins
 
 Note that a better way to phrase the previous query in English would be “Find the names of all instructors who earn more than the lowest paid instructor in the Biology department.” Our original wording fits more closely with the SQL that we wrote, but the latter wording is more intuitive, and can in fact be expressed directly in SQL as we shall see in Section 3.8.2.
 
-### 3.4.2 String Operations
+## String Operations
 
 SQL specifies strings by enclosing them in single quotes, for example, ’Computer’. A single quote character that is part of a string can be specified by using two single quote characters; for example, the string “It’s right” can be specified by “It”s right”.
 
@@ -91,7 +91,7 @@ SQL allows us to search for mismatches instead of matches by using the **not lik
 
 SQL:1999 also offers a **similar to** operation, which provides more powerful pattern matching than the **like** operation; the syntax for specifying patterns is similar to that used in Unix regular expressions.
 
-### 3.4.3 Attribute Specification in Select Clause
+## Attribute Specification in Select Clause
 
 The asterisk symbol “ \* ” can be used in the **select** clause to denote “all attributes.” Thus, the use of _instructor_.\* in the **select** clause of the query:
 
@@ -101,7 +101,7 @@ The asterisk symbol “ \* ” can be used in the **select** clause to denote �
 
 indicates that all attributes of _instructor_ are to be selected. A **select** clause of the form **select** \* indicates that all attributes of the result relation of the **from** clause are selected.
 
-### 3.4.4 Ordering the Display of Tuples
+## Ordering the Display of Tuples
 
 SQL offers the user some control over the order in which tuples in a relation are displayed. The **order by** clause causes the tuples in the result of a query to appear in sorted order. To list in alphabetic order all instructors in the Physics department, we write:
 
@@ -116,7 +116,7 @@ By default, the **order by** clause lists items in ascending order. To specify t
 **from** _instructor_ 
 **order by** _salary_ **desc**, _name_ **asc**;
 
-### 3.4.5 Where Clause Predicates
+## Where Clause Predicates
 
 SQL includes a **between** comparison operator to simplify **where** clauses that specify that a value be less than or equal to some value and greater than or equal to some other value. If we wish to find the names of instructors with salary amounts between $90,000 and $100,000, we can use the **between** comparison to write:
 

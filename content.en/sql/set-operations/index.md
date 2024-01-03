@@ -1,9 +1,9 @@
 ---
-title: 3.5 Set Operations
-weight: 18
+title: Set Operations
+weight: 5
 ---
 
-3.5 Set Operations## 3.5 Set Operations
+# Set Operations
 
 The SQL operations **union**, **intersect**, and **except** operate on relations and correspond to the mathematical set-theory operations ∪, ∩, and −. We shall now construct queries involving the **union**, **intersect**, and **except** operations over two sets.
 
@@ -25,7 +25,7 @@ In our discussion that follows, we shall refer to the relations obtained as the 
 
 **Figure 3.10** The _c2_ relation, listing courses taught in Spring 2010.
 
-**3.5.1 The Union Operation**
+## The Union Operation
 
 To find the set of all courses taught either in Fall 2009 or in Spring 2010, or both, we write:6
 
@@ -55,7 +55,7 @@ The number of duplicate tuples in the result is equal to the total number of dup
 
 were taught in the Fall 2010 semester, then there would be 6 tuples with ECE-101 in the result.
 
-### 3.5.2 The Intersect Operation
+## The Intersect Operation
 
 To find the set of all courses taught in the Fall 2009 as well as in Spring 2010 we write:
 
@@ -85,7 +85,7 @@ If we want to retain all duplicates, we must write **intersect all** in place of
 
 The number of duplicate tuples that appear in the result is equal to the minimum number of duplicates in both _c1_ and _c2_. For example, if 4 sections of ECE-101 were taught in the Fall 2009 semester and 2 sections of ECE-101 were taught in the Spring 2010 semester, then there would be 2 tuples with ECE-101 in the result.
 
-### 3.5.3 The Except Operation
+## The Except Operation
 
 To find all courses taught in the Fall 2009 semester but not in the Spring 2010 semester, we write:
 

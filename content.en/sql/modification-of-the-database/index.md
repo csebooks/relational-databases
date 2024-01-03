@@ -1,13 +1,13 @@
 ---
-title: 3.9 Modification of the Database
-weight: 22
+title: Modification of the Database
+weight: 9
 ---
 
-3.9 Modification of the Database## 3.9 Modification of the Database
+# Modification of the Database
 
 We have restricted our attention until now to the extraction of information from the database. Now, we show how to add, remove, or change information with SQL.
 
-### 3.9.1 Deletion
+## Deletion
 
 A delete request is expressed in much the same way as a query. We can delete only whole tuples; we cannot delete values on only particular attributes. SQL expresses a deletion by
 
@@ -48,17 +48,11 @@ Note that, although we may delete tuples from only one relation at a time, we ma
 
 The **delete** statement first tests each tuple in the relation _instructor_ to check whether the salary is less than the average salary of instructors in the univer- sity. Then, all tuples that fail the test—that is, represent an instructor with a lower-than-average salary—are deleted. Performing all the tests before perform- ing any deletion is important—if some tuples are deleted before other tuples have been tested, the average salary may change, and the final result of the **delete** would depend on the order in which the tuples were processed!
 
-<<<<<<< HEAD
 The **delete** statement first tests each tuple in the relation _instructor_ to check whether the salary is less than the average salary of instructors in the university. Then, all tuples that fail the test—that is, represent an instructor with a lower-than-average salary—are deleted. Performing all the tests before performing any deletion is important—if some tuples are deleted before other tuples  
-
-**100 Chapter 3 Introduction to SQL**
 
 have been tested, the average salary may change, and the final result of the **delete** would depend on the order in which the tuples were processed!
 
-**3.9.2 Insertion**
-=======
-### 3.9.2 Insertion
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
+## 3.9.2 Insertion
 
 To insert data into a relation, we either specify a tuple to be inserted or write a query whose result is a set of tuples to be inserted. Obviously, the attribute values for inserted tuples must be members of the corresponding attribute’s domain. Similarly, tuples inserted must have the correct number of attributes.
 
@@ -106,7 +100,7 @@ Since the _tot cred_ value of student “3003” is not known, we cannot determi
 
 Most relational database products have special “bulk loader” utilities to insert a large set of tuples into a relation. These utilities allow data to be read from formatted text files, and can execute much faster than an equivalent sequence of insert statements.
 
-### 3.9.3 Updates
+## Updates
 
 In certain situations, we may wish to change a value in a tuple without changing _all_ values in the tuple. For this purpose, the **update** statement can be used. As we could for **insert** and **delete**, we can choose the tuples to be updated by using a query.
 
@@ -172,6 +166,5 @@ Observe that the subquery uses a correlation variable _S_ from the **update** st
 
 **select case** 
 **when sum**(_credits_) **is not null then sum**(_credits_) 
-**else** 0 
+**else** ()
 **end**  
-

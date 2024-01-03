@@ -1,9 +1,9 @@
 ---
-title: 3.7 Aggregate Functions
-weight: 20
+title: Aggregate Functions
+weight: 7
 ---
 
-3.7 Aggregate Functions## 3.7 Aggregate Functions
+# Aggregate Functions
 
 _Aggregate functions_ are functions that take a collection (a set or multiset) of values as input and return a single value. SQL offers five built-in aggregate functions:
 
@@ -19,7 +19,7 @@ _Aggregate functions_ are functions that take a collection (a set or multiset) o
 
 The input to **sum** and **avg** must be a collection of numbers, but the other operators can operate on collections of nonnumeric data types, such as strings, as well.  
 
-### 3.7.1 Basic Aggregation
+## Basic Aggregation
 
 Consider the query “Find the average salary of instructors in the Computer Science department.” We write this query as follows:
 
@@ -56,7 +56,7 @@ We use the aggregate function **count** frequently to count the number of tuples
 
 SQL does not allow the use of **distinct** with **count** (\*). It is legal to use **distinct** with **max** and **min**, even though the result does not change. We can use the keyword **all** in place of **distinct** to specify duplicate retention, but, since **all** is the default, there is no need to do so.
 
-### 3.7.2 Aggregation with Grouping
+## Aggregation with Grouping
 
 There are circumstances where we would like to apply the aggregate function not only to a single set of tuples, but also to a group of sets of tuples; we specify this wish in SQL using the **group by** clause. The attribute or attributes given in the **group by** clause are used to form groups. Tuples with the same value on all attributes in the **group by** clause are placed in one group.
 
@@ -102,7 +102,7 @@ attributes that appear in the **select** statement without being aggregated are 
 
 Each instructor in a particular group (defined by _dept name_) can have a different _ID_, and since only one tuple is output for each group, there is no unique way of choosing which _ID_ value to output. As a result, such cases are disallowed by SQL.
 
-### 3.7.3 The Having Clause*
+## The Having Clause*
 
 At times, it is useful to state a condition that applies to groups rather than to tuples. For example, we might be interested in only those departments where the average salary of the instructors is more than $42,000. This condition does not apply to a single tuple; rather, it applies to each group constructed by the **group by** clause. To express such a query, we use the **having** clause of SQL. SQL applies predicates in the **having** clause after groups have been formed, so aggregate functions may be used. We express this query in SQL as follows:
 
@@ -117,19 +117,19 @@ clause without being aggregated must appear in the **group by** clause, otherwis
 
 The meaning of a query containing aggregation, **group by**, or **having** clauses is defined by the following sequence of operations:
 
-**1\.** As was the case for queries without aggregation, the **from** clause is first evaluated to get a relation.
+**1.** As was the case for queries without aggregation, the **from** clause is first evaluated to get a relation.
 
 ![Alt text](image-28.png)
 
 **Figure 3.17** The result relation for the query “Find the average salary of instructors in those departments where the average salary is more than $42,000.”  
 
-**2\.** If a **where** clause is present, the predicate in the **where** clause is applied on the result relation of the **from** clause.
+**2.** If a **where** clause is present, the predicate in the **where** clause is applied on the result relation of the **from** clause.
 
-**3\.** Tuples satisfying the **where** predicate are then placed into groups by the **group by** clause if it is present. If the **group by** clause is absent, the entire set of tuples satisfying the **where** predicate is treated as being in one group.
+**3.** Tuples satisfying the **where** predicate are then placed into groups by the **group by** clause if it is present. If the **group by** clause is absent, the entire set of tuples satisfying the **where** predicate is treated as being in one group.
 
-**4\.** The **having** clause, if it is present, is applied to each group; the groups that do not satisfy the **having** clause predicate are removed.
+**4.** The **having** clause, if it is present, is applied to each group; the groups that do not satisfy the **having** clause predicate are removed.
 
-**5\.** The **select** clause uses the remaining groups to generate tuples of the result of the query, applying the aggregate functions to get a single result tuple for each group.
+**5.** The **select** clause uses the remaining groups to generate tuples of the result of the query, applying the aggregate functions to get a single result tuple for each group.
 
 To illustrate the use of both a **having** clause and a **where** clause in the same query, we consider the query “For each course section offered in 2009, find the average total credits (_tot cred_) of all students enrolled in the section, if the section had at least 2 students.”
 
@@ -141,7 +141,7 @@ To illustrate the use of both a **having** clause and a **where** clause in the 
 
 Note that all the required information for the preceding query is available from the relations _takes_ and _student_, and that although the query pertains to sections, a join with _section_ is not needed.
 
-### 3.7.4 Aggregation with Null and Boolean Values
+## Aggregation with Null and Boolean Values
 
 Null values, when they exist, complicate the processing of aggregate operators. For example, assume that some tuples in the _instructor_ relation have a null value for _salary_. Consider the following query to total all salary amounts:
 

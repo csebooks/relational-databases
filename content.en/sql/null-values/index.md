@@ -1,9 +1,9 @@
 ---
-title: 3.6 Null Values
-weight: 19
+title: Null Values
+weight: 6
 ---
 
-3.6 Null Values## 3.6 Null Values
+# Null Values
 
 Null values present special problems in relational operations, including arithmetic operations, comparison operations, and set operations.
 

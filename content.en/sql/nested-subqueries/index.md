@@ -1,13 +1,13 @@
 ---
-title: 3.8 Nested Subqueries
-weight: 21
+title: Nested Subqueries
+weight: 8
 ---
 
-3.8 Nested Subqueries## 3.8 Nested Subqueries
+# Nested Subqueries
 
 SQL provides a mechanism for nesting subqueries. A subquery is a **select**\-**from**\**where** expression that is nested within another query. A common use of subqueries is to perform tests for set membership, make set comparisons, and determine set cardinality, by nesting subqueries in the **where** clause. We study such uses of nested subqueries in the **where** clause in Sections 3.8.1 through 3.8.4. In Section 3.8.5, we study nesting of subqueries in the **from** clause. In Section 3.8.7, we see how a class of subqueries called scalar subqueries can appear wherever an expression returning a value can occur.
 
-### 3.8.1 Set Membership
+## Set Membership
 
 SQL allows testing tuples for membership in a relation. The **in** connective tests for set membership, where the set is a collection of values produced by a **select** clause. The **not in** connective tests for the absence of set membership.
 
@@ -49,7 +49,7 @@ In the preceding examples, we tested membership in a one-attribute relation. It 
 **from** _takes_ 
 **where** (_course id_, _sec id_, _semester_, _year_) **in** (**select** _course id_, _sec id_, _semester_, _year_**from** _teaches_ **where** _teaches_._ID_\= 10101);
 
-### 3.8.2 Set Comparison
+## Set Comparison
 
 As an example of the ability of a nested subquery to compare sets, consider the query “Find the names of all instructors whose salary is greater than at least one instructor in the Biology department.” In Section 3.4.1, we wrote this query as follows:
 
@@ -83,19 +83,13 @@ Now we modify our query slightly. Let us find the names of all instructors that 
 
 As it does for **some**, SQL also allows _<_ **all**, _<_\= **all**, _\>_\= **all**, = **all**, and _<>_ **all** comparisons. As an exercise, verify that _<>_ **all** is identical to **not in**, whereas = **all** is _not_ the same as **in**.
 
-<<<<<<< HEAD
 As another example of set comparisons, consider the query “Find the departments that have the highest average salary.” We begin by writing a query to find all average salaries, and then nest it as a subquery of a larger query that finds
 
 8The keyword **any** is synonymous to **some** in SQL. Early versions of SQL allowed only **any**. Later versions added the alternative **some** to avoid the linguistic ambiguity of the word _any_ in English.  
 
-**3.8 Nested Subqueries 93**
-
 those departments for which the average salary is greater than or equal to all average salaries:
 
 **select** _dept name_ **from** _instructor_ **group by** _dept name_ **having avg** (_salary_) _\>_\= **all** (**select avg** (_salary_)
-=======
-As another example of set comparisons, consider the query “Find the depart- ments that have the highest average salary.” We begin by writing a query to find all average salaries, and then nest it as a subquery of a larger query that finds those departments for which the average salary is greater than or equal to all average salaries:
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **select** _dept name_ 
 **from** _instructor_ 
@@ -103,7 +97,7 @@ As another example of set comparisons, consider the query “Find the depart- me
 **having avg** (_salary_) _\>_\= **all** (**select avg** (_salary_)
 **from** _instructor_ **group by** _dept name_);
 
-### 3.8.3 Test for Empty Relations
+## Test for Empty Relations
 
 SQL includes a feature for testing whether a subquery has any tuples in its result. The **exists** construct returns the value **true** if the argument subquery is nonempty. Using the **exists** construct, we can write the query “Find all courses taught in both the Fall 2009 semester and in the Spring 2010 semester” in still another way:
 
@@ -134,7 +128,7 @@ finds the set of all courses offered in the Biology department. The subquery:
 
 finds all the courses that student _S_._ID_ has taken. Thus, the outer **select** takes each student and tests whether the set of all courses that the student has taken contains the set of all courses offered in the Biology department.
 
-### 3.8.4 Test for the Absence of Duplicate Tuples
+## Test for the Absence of Duplicate Tuples
 
 SQL includes a boolean function for testing whether a subquery has duplicate tuples in its result. The **unique** construct9 returns the value **true** if the argument subquery contains no duplicate tuples. Using the **unique** construct, we can write the query “Find all courses that were offered at most once in 2009” as follows:
 
@@ -160,7 +154,7 @@ We can test for the existence of duplicate tuples in a subquery by using the **n
 
 Formally, the **unique** test on a relation is defined to fail if and only if the relation contains two tuples _t_~1~ and _t_~2~  such that _t_~1~ = _t_~2~ \. Since the test _t_~1~ = _t_~2~  fails if any of the fields of _t_~1~ or _t_~2~  are null, it is possible for **unique** to be true even if there are multiple copies of a tuple, as long as at least one of the attributes of the tuple is null.
 
-### 3.8.5 Subqueries in the From Clause
+## Subqueries in the From Clause
 
 SQL allows a subquery expression to be used in the **from** clause. The key concept applied here is that any **select**\-**from**\-**where** expression returns a relation as a result and, therefore, can be inserted into another **select**\-**from**\-**where** anywhere that a relation can appear.
 
@@ -203,7 +197,7 @@ We note that nested subqueries in the **from** clause cannot use correlation var
 
 Without the **lateral** clause, the subquery cannot access the correlation variable _I1_ from the outer query. Currently, only a few SQL implementations, such as IBM DB2, support the **lateral** clause.  
 
-### 3.8.6 The with Clause
+## The with Clause
 
 The **with** clause provides a way of defining a temporary relation whose definition is available only to the query in which the **with** clause occurs. Consider the following query, which finds those departments with the maximum budget.
 
@@ -232,7 +226,7 @@ _dept total avg_(_value_) **as** (**select avg**(_value_)
 
 We can, of course, create an equivalent query without the **with** clause, but it would be more complicated and harder to understand. You can write the equivalent query as an exercise.
 
-### 3.8.7 Scalar Subqueries
+## Scalar Subqueries
 
 SQL allows subqueries to occur wherever an expression returning a value is permitted, provided the subquery returns only one tuple containing a single attribute; such subqueries are called **scalar subqueries**. For example, a subquery can be used in the **select** clause as illustrated in the following example that lists all departments along with the number of instructors in each department:
 
@@ -246,4 +240,3 @@ The subquery in the above example is guaranteed to return only a single value si
 Scalar subqueries can occur in **select**, **where**, and **having** clauses. Scalar subqueries may also be defined without aggregates. It is not always possible to figure out at compile time if a subquery can return more than one tuple in its result; if the result has more than one tuple when the subquery is executed, a run-time error occurs.
 
 Note that technically the type of a scalar subquery result is still a relation, even if it contains a single tuple. However, when a scalar subquery is used in an expression where a value is expected, SQL implicitly extracts the value from the single attribute of the single tuple in the relation, and returns that value.
-

@@ -1,6 +1,6 @@
 ---
-title: 3.10 Summary
-weight: 23
+title: Summary
+weight: 10
 ---
 
 3.10 Summary## 3.10 Summary
