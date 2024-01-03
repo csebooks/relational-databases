@@ -1,9 +1,9 @@
 ---
-title: 4.1 Join Expressions
-weight: 26
+title: Join Expressions
+weight: 1
 ---
 
-4.1 Join Expressions## 4.1 Join Expressions
+# Join Expressions
 
 In Section 3.3.3, we introduced the **natural join** operation. SQL provides other forms of the join operation, including the ability to specify an explicit **join predicate**, and the ability to include in the result tuples that are excluded by **natural join**. We shall discuss these forms of join in this section.
 
@@ -14,21 +14,11 @@ The examples in this section involve the two relations _student_ and _takes_, sh
 
 **Figure 4.1** The _student_ relation.
 
-<<<<<<< HEAD
-**113**  
-
-**114 Chapter 4 Intermediate SQL**
-
-_ID course id sec id semester year grade_
-
-00128 CS-101 1 Fall 2009 A 00128 CS-347 1 Fall 2009 A12345 CS-101 1 Fall 2009 C 12345 CS-190 2 Spring 2009 A 12345 CS-315 1 Spring 2010 A 12345 CS-347 1 Fall 2009 A 19991 HIS-351 1 Spring 2010 B 23121 FIN-201 1 Spring 2010 C+ 44553 PHY-101 1 Fall 2009 B45678 CS-101 1 Fall 2009 F 45678 CS-101 1 Spring 2010 B+ 45678 CS-319 1 Spring 2010 B 54321 CS-101 1 Fall 2009 A54321 CS-190 2 Spring 2009 B+ 55739 MU-199 1 Spring 2010 A76543 CS-101 1 Fall 2009 A 76543 CS-319 2 Spring 2010 A 76653 EE-181 1 Spring 2009 C 98765 CS-101 1 Fall 2009 C98765 CS-315 1 Spring 2010 B 98988 BIO-101 1 Summer 2009 A 98988 BIO-301 1 Summer 2010 _null_
-=======
 ![Alt text](image-30.png)
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **Figure 4.2** The _takes_ relation.
 
-### 4.1.1 Join Conditions
+## Join Conditions
 
 In Section 3.3.3, we saw how to express natural joins, and we saw the **join** _. . ._
 
@@ -60,7 +50,7 @@ using the **on** condition can express a richer class of join conditions than **
 
 However, there are two good reasons for introducing the **on** condition. First, we shall see shortly that for a kind of join called an outer join, **on** conditions do behave in a manner different from **where** conditions. Second, an SQL query is often more readable by humans if the join condition is specified in the **on** clause and the rest of the conditions appear in the **where** clause.
 
-### 4.1.2 Outer Joins
+## Outer Joins
 
 Suppose we wish to display a list of all students, displaying their _ID_, and _name_, _dept name_, and _tot cred_, along with the courses that they have taken. The following SQL query may appear to retrieve the required information:
 
@@ -69,13 +59,8 @@ Suppose we wish to display a list of all students, displaying their _ID_, and _n
 
 Unfortunately, the above query does not work quite as intended. Suppose that there is some student who takes no courses. Then the tuple in the _student_ relation for that particular student would not satisfy the condition of a natural join with any tuple in the _takes_ relation, and that student’s data would not appear in the result. We would thus not see any information about students who have not taken  
 
-<<<<<<< HEAD
-**116 Chapter 4 Intermediate SQL**
 
-_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
-=======
 ![Alt text](image-31.png)
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **Figure 4.3** The result of _student_ **join** _takes_ **on** _student_._ID_\= _takes_._ID_ with second occurrence of _ID_ omitted.
 
@@ -123,13 +108,7 @@ we get the same result except for the order in which the attributes appear in th
 
 The **full outer join** is a combination of the left and right outer-join types. After the operation computes the result of the inner join, it extends with nulls those tuples from the left-hand-side relation that did not match with any from the  
 
-<<<<<<< HEAD
-**118 Chapter 4 Intermediate SQL**
-
-_ID name dept name tot cred course id sec id semester year grade_ 00128 Zhang Comp. Sci. 102 CS-101 1 Fall 2009 A 00128 Zhang Comp. Sci. 102 CS-347 1 Fall 2009 A12345 Shankar Comp. Sci. 32 CS-101 1 Fall 2009 C 12345 Shankar Comp. Sci. 32 CS-190 2 Spring 2009 A 12345 Shankar Comp. Sci. 32 CS-315 1 Spring 2010 A 12345 Shankar Comp. Sci. 32 CS-347 1 Fall 2009 A 19991 Brandt History 80 HIS-351 1 Spring 2010 B 23121 Chavez Finance 110 FIN-201 1 Spring 2010 C+ 44553 Peltier Physics 56 PHY-101 1 Fall 2009 B45678 Levy Physics 46 CS-101 1 Fall 2009 F 45678 Levy Physics 46 CS-101 1 Spring 2010 B+ 45678 Levy Physics 46 CS-319 1 Spring 2010 B 54321 Williams Comp. Sci. 54 CS-101 1 Fall 2009 A54321 Williams Comp. Sci. 54 CS-190 2 Spring 2009 B+ 55739 Sanchez Music 38 MU-199 1 Spring 2010 A70557 Snow Physics 0 _null null null null null_ 76543 Brown Comp. Sci. 58 CS-101 1 Fall 2009 A 76543 Brown Comp. Sci. 58 CS-319 2 Spring 2010 A 76653 Aoi Elec. Eng. 60 EE-181 1 Spring 2009 C 98765 Bourikas Elec. Eng. 98 CS-101 1 Fall 2009 C- 98765 Bourikas Elec. Eng. 98 CS-315 1 Spring 2010 B 98988 Tanaka Biology 120 BIO-101 1 Summer 2009 A 98988 Tanaka Biology 120 BIO-301 1 Summer 2010 _null_
-=======
 ![Alt text](image-32.png)
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **Figure 4.4** Result of _student_ **natural left outer join** _takes_.
 
@@ -166,7 +145,7 @@ As we noted earlier, **on** and **where** behave differently for outer join. The
 
 The earlier query, using the left outer join with the **on** condition, includes a tuple (70557, Snow, Physics, 0, _null_, _null_, _null_, _null_, _null_, _null_ ), because there is no tuple in _takes_ with _ID_ \= 70557. In the latter query, however, every tuple satisfies the join condition _true_, so no null-padded tuples are generated by the outer join. The outer join actually generates the Cartesian product of the two relations. Since there is no tuple in _takes_ with _ID_ \= 70557, every time a tuple appears in the outer join with _name_ \= “Snow”, the values for _student_._ID_ and _takes_._ID_ must be different, and such tuples would be eliminated by the **where** clause predicate. Thus student Snow never appears in the result of the latter query.
 
-### 4.1.3 Join Types and Conditions
+## Join Types and Conditions
 
 To distinguish normal joins from outer joins, normal joins are called **inner joins** in SQL. A join clause can thus specify **inner join** instead of **outer join** to specify that a normal join is to be used. The keyword **inner** is, however, optional. The default join type, when the **join** clause is used without the **outer** prefix is the **inner join**. Thus,
 

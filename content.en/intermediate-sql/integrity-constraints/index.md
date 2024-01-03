@@ -1,9 +1,9 @@
 ---
-title: 4.4 Integrity Constraints
-weight: 29
+title: 'Integrity Constraints'
+weight: 4
 ---
 
-4.4 Integrity Constraints## 4.4 Integrity Constraints
+# Integrity Constraints
 
 Integrity constraints ensure that changes made to the database by authorized users do not result in a loss of data consistency. Thus, integrity constraints guard against accidental damage to the database.
 
@@ -23,7 +23,7 @@ We have already seen some forms of integrity constraints in Section 3.2.2. We st
 
 Integrity constraints are usually identified as part of the database schema design process, and declared as part of the **create table** command used to create relations. However, integrity constraints can also be added to an existing relation by using the command **alter table** _table-name_ **add** _constraint_, where _constraint_ can be any constraint on the relation. When such a command is executed, the system first ensures that the relation satisfies the specified constraint. If it does, the constraint is added to the relation; if not, the command is rejected.
 
-### 4.4.1 Constraints on a Single Relation
+## Constraints on a Single Relation
 
 We described in Section 3.2 how to define tables using the **create table** command. The **create table** command may also include integrity-constraint statements. In addition to the primary-key constraint, there are a number of other ones that can be included in the **create table** command. The allowed integrity constraints include
 
@@ -35,7 +35,7 @@ We described in Section 3.2 how to define tables using the **create table** comm
 
 We cover each of these types of constraints in the following sections.
 
-### 4.4.2 Not Null Constraint
+## Not Null Constraint
 
 As we discussed in Chapter 3, the null value is a member of all domains, and as a result is a legal value for every attribute in SQL by default. For certain attributes, however, null values may be inappropriate. Consider a tuple in the _student_ relation where _name_ is _null_. Such a tuple gives student information for an unknown student; thus, it does not contain useful information. Similarly, we would not want the department budget to be _null_. In cases such as this, we wish to forbid null values, and we can do so by restricting the domain of the attributes _name_ and _budget_ to exclude null values, by declaring it as follows:
 
@@ -46,7 +46,7 @@ The **not null** specification prohibits the insertion of a null value for the a
 
 There are many situations where we want to avoid null values. In particular, SQL prohibits null values in the primary key of a relation schema. Thus, in our university example, in the _department_ relation, if the attribute _dept name_ is declared as the primary key for _department_, it cannot take a null value. As a result it would not need to be declared explicitly to be **not null**.
 
-### 4.4.3 Unique Constraint
+## Unique Constraint
 
 SQL also supports an integrity constraint:
 
@@ -54,7 +54,7 @@ SQL also supports an integrity constraint:
 
 The **unique** specification says that attributes _Aj1 _, Aj2_, . . . , Ajm_ form a candidate key; that is, no two tuples in the relation can be equal on all the listed attributes. However, candidate key attributes are permitted to be _null_ unless they have explicitly been declared to be **not null**. Recall that a null value does not equal any other value. (The treatment of nulls here is the same as that of the **unique** construct defined in Section 3.8.4.)
 
-### 4.4.4 The check Clause
+## The check Clause
 
 When applied to a relation declaration, the clause **check**(_P_) specifies a predicate _P_ that must be satisfied by every tuple in a relation.
 
@@ -76,21 +76,15 @@ Here, we use the **check** clause to simulate an enumerated type, by specifying 
 
 The predicate in the **check** clause can, according to the SQL standard, be an arbitrary predicate that can include a subquery. However, currently none of the widely used database products allows the predicate to contain a subquery.  
 
-### 4.4.5 Referential Integrity
+## Referential Integrity
 
 Often, we wish to ensure that a value that appears in one relation for a given set of attributes also appears for a certain set of attributes in another relation. This condition is called **referential integrity**.
 
 Foreign keys can be specified as part of the SQL **create table** statement by using the **foreign key** clause, as we saw earlier in Section 3.2.2. We illustrate foreign-key declarations by using the SQL DDL definition of part of our university database, shown in Figure 4.8. The definition of the _course_ table has a declaration “**foreign key** (_dept name_) **references** _department_”. This foreign-key declaration specifies that for each course tuple, the department name specified in the tuple must exist in the _department_ relation. Without this constraint, it is possible for a course to specify a nonexistent department name.
 
-<<<<<<< HEAD
 More generally, let _r_~1~ and _r_~2~ be relations whose set of attributes are _r_~1~ and _r_~2~, respectively, with primary keys _K_1 and _K_2\. We say that a subset  of _r_~2~ is a **foreign key** referencing _K_1 in relation _r_~1~ if it is required that, for every tuple _t_~2~  in _r_~2~, there must be a tuple _t_~1~ in _r_~1~ such that _t_~1~_.K_1 = _t_~2~ _._.
 
 Requirements of this form are called **referential-integrity constraints**, or **subset dependencies**. The latter term arises because the preceding referentialintegrity constraint can be stated as a requirement that the set of values on  in _r_~2~ must be a subset of the values on _K_1 in _r_~1~\. Note that, for a referential-integrity constraint to make sense,  and _K_1 must be compatible sets of attributes; that is, either  must be equal to _K_1, or they must contain the same number of attributes, and the types of corresponding attributes must be compatible (we assume here that  and _K_1 are ordered). Unlike foreign-key constraints, in general a referential integrity constraint does not require _K_1 to be a primary key of _r_~1~; as a result, more than one tuple in _r_~1~ can have the same value for attributes _K_1.
-=======
-More generally, let r1 and r2 be relations whose set of attributes are R1 and R2, respectively, with primary keys K1 and K2\. We say that a subset α of R2 is a **foreign key** referencing K1 in relation r1 if it is required that, for every tuple t2 in r2, there must be a tuple t1 in r1 such that t1.K1 = t2.α.
-
-Requirements of this form are called **referential-integrity constraints**, or **subset dependencies**. The latter term arises because the preceding referential- integrity constraint can be stated as a requirement that the set of values on α in r2 must be a subset of the values on K1 in r1\. Note that, for a referential-integrity constraint to make sense, α and K1 must be compatible sets of attributes; that is, either α must be equal to _K_1, or they must contain the same number of attributes, and the types of corresponding attributes must be compatible (we assume here that α and _K_1 are ordered). Unlike foreign-key constraints, in general a referential integrity constraint does not require _K_1 to be a primary key of _r_1; as a result, more than one tuple in _r_1 can have the same value for attributes _K_1.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 By default, in SQL a foreign key references the primary-key attributes of the referenced table. SQL also supports a version of the **references** clause where a list of attributes of the referenced relation can be specified explicitly. The specified list of attributes must, however, be declared as a candidate key of the referenced relation, using either a **primary key** constraint, or a **unique** constraint. A more general form of a referential-integrity constraint, where the referenced columns need not be a candidate key, cannot be directly specified in SQL. The SQL standard specifies other constructs that can be used to implement such constraints; they are described in Section 4.4.7.
 
@@ -160,17 +154,9 @@ Null values complicate the semantics of referential-integrity constraints in SQL
 
 This definition may not always be the right choice, so SQL also provides constructs that allow you to change the behavior with null values; we do not discuss the constructs here.
 
-### 4.4.6 Integrity Constraint Violation During a Transaction
+## Integrity Constraint Violation During a Transaction
 
-<<<<<<< HEAD
-Transactions may consist of several steps, and integrity constraints may be violated temporarily after one step, but a later step may remove the violation. For instance, suppose we have a relation _person_ with primary key _name_, and an attribute _spouse_, and suppose that _spouse_ is a foreign key on _person_. That is, the constraint says that the _spouse_ attribute must contain a name that is present in the _person_ table. Suppose we wish to note the fact that John and Mary are married to each other by inserting two tuples, one for John and one for Mary, in the above relation, with the spouse attributes set to Mary and John, respectively. The insertion of the first tuple would violate the foreign-key constraint, regardless of which of  
-
-**134 Chapter 4 Intermediate SQL**
-
-the two tuples is inserted first. After the second tuple is inserted the foreign-key constraint would hold again.
-=======
-Transactions may consist of several steps, and integrity constraints may be vio- lated temporarily after one step, but a later step may remove the violation. For instance, suppose we have a relation _person_ with primary key _name_, and an at- tribute _spouse_, and suppose that _spouse_ is a foreign key on _person_. That is, the constraint says that the _spouse_ attribute must contain a name that is present in the _person_ table. Suppose we wish to note the fact that John and Mary are married to each other by inserting two tuples, one for John and one for Mary, in the above re- lation, with the spouse attributes set to Mary and John, respectively. The insertion of the first tuple would violate the foreign-key constraint, regardless of which of the two tuples is inserted first. After the second tuple is inserted the foreign-key constraint would hold again.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
+Transactions may consist of several steps, and integrity constraints may be violated temporarily after one step, but a later step may remove the violation. For instance, suppose we have a relation _person_ with primary key _name_, and an attribute _spouse_, and suppose that _spouse_ is a foreign key on _person_. That is, the constraint says that the _spouse_ attribute must contain a name that is present in the _person_ table. Suppose we wish to note the fact that John and Mary are married to each other by inserting two tuples, one for John and one for Mary, in the above relation, with the spouse attributes set to Mary and John, respectively. The insertion of the first tuple would violate the foreign-key constraint, regardless of which of the two tuples is inserted first. After the second tuple is inserted the foreign-key constraint would hold again.
 
 To handle such situations, the SQL standard allows a clause **initially deferred** to be added to a constraint specification; the constraint would then be checked at the end of a transaction, and not at intermediate steps. A constraint can alternatively be specified as **deferrable**, which means it is checked immediately by default, but can be deferred when desired. For constraints declared as deferrable, executing a statement **set constraints** _constraint-list_ **deferred** as part of a transaction causes the checking of the specified constraints to be deferred to the end of that transaction.
 
@@ -178,7 +164,7 @@ However, you should be aware that the default behavior is to check constraints i
 
 We can work around the problem in the above example in another way, if the _spouse_ attribute can be set to _null_: We set the spouse attributes to _null_ when inserting the tuples for John and Mary, and we update them later. However, this technique requires more programming effort, and does not work if the attributes cannot be set to _null_.
 
-### 4.4.7 Complex Check Conditions and Assertions
+## Complex Check Conditions and Assertions
 
 The SQL standard supports additional constructs for specifying integrity constraints that are described in this section. However, you should be aware that these constructs are not currently supported by most database systems.
 
@@ -220,11 +206,5 @@ We leave the specification of the second constraint as an exercise. When an asse
 
 1We assume that lectures are not displayed remotely in a second classroom! An alternative constraint that specifies that “an instructor cannot teach two courses in a given semester in the same time slot” may not hold since courses are sometimes cross-listed; that is, the same course is given two identifiers and titles.  
 
-<<<<<<< HEAD
-**136 Chapter 4 Intermediate SQL**
-
 Currently, none of the widely used database systems supports either subqueries in the **check** clause predicate, or the **create assertion** construct. However, equivalent functionality can be implemented using triggers, which are described in Section 5.3, if they are supported by the database system. Section 5.3 also describes how the referential integrity constraint on _time slot id_ can be implemented using triggers.
-=======
-Currently, none of the widely used database systems supports either sub- queries in the **check** clause predicate, or the **create assertion** construct. However, equivalent functionality can be implemented using triggers, which are described in Section 5.3, if they are supported by the database system. Section 5.3 also de- scribes how the referential integrity constraint on _time slot id_ can be implemented using triggers.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 

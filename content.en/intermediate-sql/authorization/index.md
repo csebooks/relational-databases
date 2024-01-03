@@ -1,9 +1,9 @@
 ---
-title: 4.6 Authorization
-weight: 31
+title: 'Authorization'
+weight: 6
 ---
 
-4.6 Authorization## 4.6 Authorization
+# 4.6 Authorization
 
 We may assign a user several forms of authorizations on parts of the database. Authorizations on data include:
 
@@ -23,17 +23,9 @@ In addition to authorizations on data, users may also be granted authorizations 
 
 The ultimate form of authority is that given to the database administrator. The database administrator may authorize new users, restructure the database, and so on. This form of authorization is analogous to that of a **superuser**, administrator, or operator for an operating system.
 
-### 4.6.1 Granting and Revoking of Privileges
+## Granting and Revoking of Privileges
 
-<<<<<<< HEAD
-The SQL standard includes the privileges **select**, **insert**, **update**, and **delete**. The privilege **all privileges** can be used as a short form for all the allowable privi 
-
-**144 Chapter 4 Intermediate SQL**
-
-leges. A user who creates a new relation is given all privileges on that relation automatically.
-=======
 The SQL standard includes the privileges **select**, **insert**, **update**, and **delete**. The privilege **all privileges** can be used as a short form for all the allowable privileges. A user who creates a new relation is given all privileges on that relation automatically.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 The SQL data-definition language includes commands to grant and revoke privileges. The **grant** statement is used to confer authorization. The basic form of this statement is:
 
@@ -78,7 +70,7 @@ Thus, to revoke the privileges that we granted previously, we write
 
 Revocation of privileges is more complex if the user from whom the privilege is revoked has granted the privilege to another user. We return to this issue in Section 4.6.5.
 
-### 4.6.2 Roles
+## Roles
 
 Consider the real-world roles of various people in a university. Each instructor must have the same types of authorizations on the same set of relations. Whenever a new instructor is appointed, she will have to be given all these authorizations individually.
 
@@ -120,7 +112,7 @@ When a user logs in to the database system, the actions executed by the user dur
 
 It is worth noting that the concept of role-based authorization is not specific to SQL, and role-based authorization is used for access control in a wide variety of shared applications.
 
-### 4.6.3 Authorization on Views
+## Authorization on Views
 
 In our university example, consider a staff member who needs to know the salaries of all faculty in a particular department, say the Geology department. This staff member is not authorized to see information regarding faculty in other departments. Thus, the staff member must be denied direct access to the _instructor_ relation. But, if he is to have access to the information for the Geology department, he might be granted access to a view that we shall call _geo instructor_, consisting of only those _instructor_ tuples pertaining to the Geology department. This view can be defined in SQL as follows:
 
@@ -142,7 +134,7 @@ As we will see later, in Section 5.2, SQL supports the creation of functions and
 
 Although this behavior is appropriate in many situations, it is not always appropriate. Starting with SQL:2003, if the function definition has an extra clause **sql security invoker**, then it is executed under the privileges of the user who invokes the function, rather than the privileges of the **definer** of the function. This allows the creation of libraries of functions that can run under the same authorization as the invoker.
 
-### 4.6.4 Authorizations on Schema
+## Authorizations on Schema
 
 The SQL standard specifies a primitive authorization mechanism for the database schema: Only the owner of the schema can carry out any modification to the schema, such as creating or deleting relations, adding or dropping attributes of relations, and adding or dropping indices.  
 
@@ -154,7 +146,7 @@ Initially, it may appear that there is no reason ever to prevent users from crea
 
 Continuing to use the example of the _department_ relation, the references privilege on _department_ is also required to create a **check** constraint on a relation _r_ if the constraint has a subquery referencing _department_. This is reasonable for the same reason as the one we gave for foreign-key constraints; a check constraint that references a relation limits potential updates to that relation.
 
-### 4.6.5 Transfer of Privileges
+## Transfer of Privileges
 
 A user who has been granted some form of authorization may be allowed to pass on this authorization to other users. By default, a user/role that is granted a privilege is not authorized to grant that privilege to another user/role. If we wish to grant a privilege and to allow the recipient to pass the privilege on to other users, we append the **with grant option** clause to the appropriate **grant** command. For example, if we wish to allow Amit the **select** privilege on _department_ and allow Amit to grant this privilege to others, we write:
 
@@ -174,7 +166,7 @@ observe that user _U_5 is granted authorization by both _U_1 and _U_2; _U_4 is g
 
 A user has an authorization _if and only if_ there is a path from the root of the authorization graph (the node representing the database administrator) down to the node representing the user.
 
-### 4.6.6 Revoking of Privileges
+## Revoking of Privileges
 
 Suppose that the database administrator decides to revoke the authorization of user _U_1\. Since _U_4 has authorization from _U_1, that authorization should be revoked as well. However, _U_5 was granted authorization by both _U_1 and _U_2\. Since the database administrator did not revoke update authorization on _teaches_ from _U_2, _U_5 retains update authorization on _teaches_. If _U_2 eventually revokes authorization from _U_5, then _U_5 loses the authorization.
 
@@ -205,4 +197,3 @@ To grant a privilege with the grantor set to the current role associated with a 
 to the grant statement, provided the current role is not null. Suppose the granting of the role _instructor_ (or other privileges) to Amit is
 
 done using the **granted by current role** clause, with the current role set to _dean_), instead of the grantor being the user Satoshi. Then, revoking of roles/privileges (including the role _dean_) from Satoshi will not result in revoking of privileges that had the grantor set to the role _dean_, even if Satoshi was the user who executed the grant; thus, Amit would retain the _instructor_ role even after Satoshi’s privileges are revoked.
-

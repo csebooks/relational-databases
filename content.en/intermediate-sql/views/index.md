@@ -1,19 +1,13 @@
 ---
-title: 4.2 Views
-weight: 27
+title: Views
+weight: 2
 ---
 
-4.2 Views## 4.2 Views
+# Views
 
 In our examples up to this point, we have operated at the logical-model level. That is, we have assumed that the relations in the collection we are given are the actual relations stored in the database.  
 
-<<<<<<< HEAD
-**4.2 Views 121**
-
 It is not desirable for all users to see the entire logical model. Security considerations may require that certain data be hidden from users. Consider a clerk who needs to know an instructor’s ID, name and department name, but does not have authorization to see the instructor’s salary amount. This person should see a relation described in SQL, by:
-=======
-It is not desirable for all users to see the entire logical model. Security con- siderations may require that certain data be hidden from users. Consider a clerk who needs to know an instructor’s ID, name and department name, but does not have authorization to see the instructor’s salary amount. This person should see a relation described in SQL, by:
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **select** _ID_, _name_, _dept name_ 
 **from** _instructor_;
@@ -33,7 +27,7 @@ Instead, SQL allows a “virtual relation” to be defined by a query, and the r
 
 Any such relation that is not part of the logical model, but is made visible to a user as a virtual relation, is called a **view**. It is possible to support a large number of views on top of any given set of actual relations.
 
-### 4.2.1 View Definition
+## View Definition
 
 We define a view in SQL by using the **create view** command. To define a view, we must give the view a name and must state the query that computes the view. The form of the **create view** command is:
 
@@ -61,7 +55,7 @@ To create a view that lists all course sections offered by the Physics departmen
 **and** _section_._semester_ \= ’Fall’ 
 **and** _section_._year_ \= ’2009’;
 
-### 4.2.2 Using Views in SQL Queries
+## Using Views in SQL Queries
 
 Once we have defined a view, we can use the view name to refer to the virtual relation that the view generates. Using the view _physics fall 2009_, we can find all Physics courses offered in the Fall 2009 semester in the Watson building by writing:
 
@@ -99,25 +93,19 @@ where _physics fall 2009 watson_ is itself a view relation. This is equivalent t
 **and** _section_._year_ \= ’2009’)
 **where** _building_\= ’Watson’;
 
-### 4.2.3 Materialized Views
+## Materialized Views
 
 Certain database systems allow view relations to be stored, but they make sure that, if the actual relations used in the view definition change, the view is kept up-to-date. Such views are called **materialized views**.
 
 For example, consider the view _departments total salary_. If the above view is materialized, its results would be stored in the database. However, if an _instructor_ tuple is added to or deleted from the _instructor_ relation, the result of the query defining the view would change, and as a result the materialized view’s contents must be updated. Similarly, if an instructor’s salary is updated, the tuple in _departments total salary_ corresponding to that instructor’s department must be updated.  
 
-<<<<<<< HEAD
-**124 Chapter 4 Intermediate SQL**
-
 The process of keeping the materialized view up-to-date is called **materialized view maintenance** (or often, just **view maintenance**) and is covered in Section 13.5. View maintenance can be done immediately when any of the relations on which the view is defined is updated. Some database systems, however, perform view maintenance lazily, when the view is accessed. Some systems update materialized views only periodically; in this case, the contents of the materialized view may be stale, that is, not up-to-date, when it is used, and should not be used if the application needs up-to-date data. And some database systems permit the database administrator to control which of the above methods is used for each materialized view.
-=======
-The process of keeping the materialized view up-to-date is called **material- ized view maintenance** (or often, just **view maintenance**) and is covered in Sec- tion 13.5. View maintenance can be done immediately when any of the relations on which the view is defined is updated. Some database systems, however, per- form view maintenance lazily, when the view is accessed. Some systems update materialized views only periodically; in this case, the contents of the materialized view may be stale, that is, not up-to-date, when it is used, and should not be used if the application needs up-to-date data. And some database systems permit the database administrator to control which of the above methods is used for each materialized view.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 Applications that use a view frequently may benefit if the view is materialized. Applications that demand fast response to certain queries that compute aggregates over large relations can also benefit greatly by creating materialized views corresponding to the queries. In this case, the aggregated result is likely to be much smaller than the large relations on which the view is defined; as a result the materialized view can be used to answer the query very quickly, avoiding reading the large underlying relations. Of course, the benefits to queries from the materialization of a view must be weighed against the storage costs and the added overhead for updates.
 
 SQL does not define a standard way of specifying that a view is materialized, but many database systems provide their own SQL extensions for this task. Some database systems always keep materialized views up-to-date when the underlying relations change, while others permit them to become out of date, and periodically recompute them.
 
-### 4.2.4 Update of a View
+## Update of a View
 
 Although views are a useful tool for queries, they present serious problems if we express updates, insertions, or deletions with them. The difficulty is that a modification to the database expressed in terms of a view must be translated to a modification to the actual relations in the logical model of the database.
 

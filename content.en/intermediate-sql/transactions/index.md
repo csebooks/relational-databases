@@ -1,9 +1,9 @@
 ---
-title: 4.3 Transactions
-weight: 28
+title: 'Transactions'
+weight: 3
 ---
 
-4.3 Transactions## 4.3 Transactions
+# Transactions
 
 A **transaction** consists of a sequence of query and/or update statements. The SQL standard specifies that a transaction begins implicitly when an SQL statement is executed. One of the following SQL statements must end the transaction:
 
@@ -19,13 +19,8 @@ For instance, consider a banking application, where we need to transfer money fr
 
 As another example, consider our running example of a university application. We assume that the attribute _tot cred_ of each tuple in the _student_ relation is kept up-to-date by modifying it whenever the student successfully completes a course. To do so, whenever the _takes_ relation is updated to record successful completion of a course by a student (by assigning an appropriate grade) the corresponding _student_ tuple must also be updated. If the application performing these two updates crashes after one update is performed, but before the second one is performed, the data in the database would be inconsistent.
 
-<<<<<<< HEAD
 By either committing the actions of a transaction after all its steps are completed, or rolling back all its actions in case the transaction could not complete all its actions successfully, the database provides an abstraction of a transaction as being **atomic**, that is, indivisible. Either all the effects of the transaction are reflected in the database, or none are (after rollback).  
 
-**128 Chapter 4 Intermediate SQL**
-=======
-By either committing the actions of a transaction after all its steps are com- pleted, or rolling back all its actions in case the transaction could not complete all its actions successfully, the database provides an abstraction of a transaction as being **atomic**, that is, indivisible. Either all the effects of the transaction are reflected in the database, or none are (after rollback). 
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 Applying the notion of transactions to the above applications, the update statements should be executed as a single transaction. An error while a transaction executes one of its statements would result in undoing of the effects of the earlier statements of the transaction, so that the database is not left in a partially updated state.
 

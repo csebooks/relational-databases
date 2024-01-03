@@ -1,13 +1,13 @@
 ---
-title: 4.5 SQL Data Types and Schemas
-weight: 30
+title:  'SQL Data Types and Schemas'
+weight: 5
 ---
 
-4.5 SQL Data Types and Schemas## 4.5 SQL Data Types and Schemas
+# SQL Data Types and Schemas
 
 In Chapter 3, we covered a number of built-in data types supported in SQL, such as integer types, real types, and character types. There are additional built-in data types supported by SQL, which we describe below. We also describe how to create basic user-defined types in SQL.
 
-### 4.5.1 Date and Time Types in SQL
+## Date and Time Types in SQL
 
 In addition to the basic data types we introduced in Section 3.2, the SQL standard supports several data types relating to dates and times:
 
@@ -33,7 +33,7 @@ SQL defines several functions to get the current date and time. For example, **c
 
 SQL allows comparison operations on all the types listed here, and it allows both arithmetic and comparison operations on the various numeric types. SQL also provides a data type called **interval**, and it allows computations based on dates and times and on intervals. For example, if _x_ and _y_ are of type **date**, then _x_ − _y_ is an interval whose value is the number of days from date _x_ to date _y_. Similarly, adding or subtracting an interval to a date or time gives back a date or time, respectively.
 
-**4.5.2 Default Values**
+## Default Values
 
 SQL allows a default value to be specified for an attribute as illustrated by the following **create table** statement:
 
@@ -49,7 +49,7 @@ The default value of the _tot cred_ attribute is declared to be 0. As a result, 
 **insert into** _student_(_ID_, _name_, _dept name_) 
 **values** (’12789’, ’Newman’, ’Comp. Sci.’);
 
-### 4.5.3 Index Creation
+## 4.5.3 Index Creation
 
 Many queries reference only a small proportion of the records in a file. For example, a query like “Find all instructors in the Physics department” or “Find the _tot cred_ value of the student with _ID_ 22201” references only a fraction of the student
 
@@ -67,7 +67,7 @@ The above statement creates an index named _studentID index_ on the attribute _I
 
 When a user submits an SQL query that can benefit from using an index, the SQL query processor automatically uses the index. For example, given an SQL query that selects the _student_ tuple with _ID_ 22201, the SQL query processor would use the index _studentID index_ defined above to find the required tuple without reading the whole relation.
 
-### 4.5.4 Large-Object Types
+## Large-Object Types
 
 Many current-generation database applications need to store attributes that can be large (of the order of many kilobytes), such as a photograph, or very large (of the order of many megabytes or even gigabytes), such as a high-resolution medical image or video clip. SQL therefore provides large-object data types for character data (**clob**) and binary data (**blob**). The letters “lob” in these data types stand for “Large OBject.” For example, we may declare attributes
 
@@ -77,7 +77,7 @@ _movie_ **blob**(2GB)
 
 For result tuples containing large objects (multiple megabytes to gigabytes), it is inefficient or impractical to retrieve an entire large object into memory. Instead, an application would usually use an SQL query to retrieve a “locator” for a large object and then use the locator to manipulate the object from the host language in which the application itself is written. For instance, the JDBC application program interface (described in Section 5.1.1) permits a locator to be fetched instead of the entire large object; the locator can then be used to fetch the large object in small pieces, rather than all at once, much like reading data from an operating system file using a read function call.
 
-### 4.5.5 User-Defined Types
+## User-Defined Types
 
 SQL supports two forms of user-defined data types. The first form, which we cover here, is called **distinct types**. The other form, called **structured data types**, allows the creation of complex data types with nested record structures, arrays, and multisets. We do not cover structured data types in this chapter, but describe them later, in Chapter 22.
 
@@ -113,9 +113,9 @@ Even before user-defined types were added to SQL (in SQL:1999), SQL had a simila
 
 The domain _DDollars_ can be used as an attribute type, just as we used the type _Dollars_. However, there are two significant differences between types and domains:
 
-**1\.** Domains can have constraints, such as **not null**, specified on them, and can have default values defined for variables of the domain type, whereas userdefined types cannot have constraints or default values specified on them. User-defined types are designed to be used not just for specifying attribute types, but also in procedural extensions to SQL where it may not be possible to enforce constraints.
+**1.** Domains can have constraints, such as **not null**, specified on them, and can have default values defined for variables of the domain type, whereas userdefined types cannot have constraints or default values specified on them. User-defined types are designed to be used not just for specifying attribute types, but also in procedural extensions to SQL where it may not be possible to enforce constraints.
 
-**2\.** Domains are not strongly typed. As a result, values of one domain type can be assigned to values of another domain type as long as the underlying types are compatible.
+**2.** Domains are not strongly typed. As a result, values of one domain type can be assigned to values of another domain type as long as the underlying types are compatible.
 
 When applied to a domain, the **check** clause permits the schema designer to specify a predicate that must be satisfied by any attribute declared to be from this domain. For instance, a **check** clause can ensure that an instructor’s salary domain allows only values greater than a specified value:
 
@@ -138,7 +138,7 @@ IBM DB2 supports a version of the **create type** that uses the syntax **create 
 
 Oracle does not support either construct as described here. However, SQL also defines a more complex object-oriented type system, which we study later in Chapter 22. Oracle, IBM DB2, PostgreSQL, and SQL Server all support objectoriented type systems using different forms of the **create type** construct.
 
-### 4.5.6 Create Table Extensions
+## Create Table Extensions
 
 Applications often require creation of tables that have the same schema as an existing table. SQL provides a **create table like** extension to support this task:
 
@@ -164,7 +164,7 @@ Note that several implementations support the functionality of **create table** 
 
 The above **create table** _. . ._ **as** statement closely resembles the **create view** statement and both are defined by using queries. The main difference is that the contents of the table are set when the table is created, whereas the contents of a view always reflect the current query result.
 
-### 4.5.7 Schemas, Catalogs, and Environments
+## Schemas, Catalogs, and Environments
 
 To understand the motivation for schemas and catalogs, consider how files are named in a file system. Early file systems were flat; that is, all files were stored in a single directory. Current file systems, of course, have a directory (or, synonymously, folder) structure, with files stored within subdirectories. To name a file uniquely, we must specify the full path name of the file, for example, /users/avi/db-book/chapter3.tex.
 
@@ -182,15 +182,8 @@ If a user wishes to access a relation that exists in a different schema than the
 
 With multiple catalogs and schemas available, different applications and different users can work independently without worrying about name clashes. Moreover, multiple versions of an application—one a production version, other test versions—can run on the same database system.  
 
-<<<<<<< HEAD
-**4.6 Authorization 143**
-
 The default catalog and schema are part of an **SQL environment** that is set up for each connection. The environment additionally contains the user identifier (also referred to as the _authorization identifier)._ All the usual SQL statements, including the DDL and DML statements, operate in the context of a schema.
-=======
-The default catalog and schema are part of an **SQL environment** that is set up for each connection. The environment additionally contains the user identi- fier (also referred to as the _authorization identifier)._ All the usual SQL statements, including the DDL and DML statements, operate in the context of a schema.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 We can create and drop schemas by means of **create schema** and **drop schema** statements. In most database systems, schemas are also created automatically when user accounts are created, with the schema name set to the user account name. The schema is created in either a default catalog, or a catalog specified in creating the user account. The newly created schema becomes the default schema for the user account.
 
 Creation and dropping of catalogs is implementation dependent and not part of the SQL standard.
-
