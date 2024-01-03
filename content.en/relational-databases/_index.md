@@ -1,20 +1,11 @@
 ---
 title: 'RELATIONAL DATABASES'
-weight: 6
+weight: 2
 ---
-
-  
-# RELATIONAL DATABASES
-
-<<<<<<< HEAD
-A data model is a collection of conceptual tools for describing data, data relationships, data semantics, and consistency constraints. In this part, we focus on the relational model.
-=======
-**PART 1**
 
 # RELATIONAL DATABASES
 
 A data model is a collection of conceptual tools for describing data, data relation- ships, data semantics, and consistency constraints. In this part, we focus on the relational model.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 The relational model, which is covered in Chapter 2, uses a collection of tables to represent both data and the relationships among those data. Its conceptual simplicity has led to its widespread adoption; today a vast majority of database products are based on the relational model. The relational model describes data at the logical and view levels, abstracting away low-level details of data storage. The entity-relationship model, discussed later in Chapter 7 (in Part 2), is a higher-level data model which is widely used for database design.
 
@@ -24,9 +15,6 @@ Chapters 3, 4 and 5 cover the SQL language, which is the most widely used query 
 
 Chapter 6 covers three formal query languages, the relational algebra, the tuple relational calculus and the domain relational calculus, which are declarative query languages based on mathematical logic. These formal languages form the basis for SQL, and for two other user-friendly languages, QBE and Datalog, which are described in Appendix B (available online at db-book.com).
 
-<<<<<<< HEAD
-
-# CHAPTER 2 
 # Introduction to the Relational Model
 
 The relational model is today the primary data model for commercial dataprocessing applications. It attained its primary position because of its simplicity, which eases the job of the programmer, compared to earlier data models such as the network model or the hierarchical model.

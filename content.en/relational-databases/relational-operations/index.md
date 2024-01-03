@@ -1,9 +1,9 @@
 ---
-title: 2.6 Relational Operations
-weight: 11
+title:  Relational Operations
+weight: 6
 ---
 
-2.6 Relational Operations## 2.6 Relational Operations
+# Relational Operations
 
 All procedural relational query languages provide a set of operations that can be applied to either a single relation or a pair of relations. These operations have the nice and desired property that their result is always a single relation. This property allows one to combine several of these operations in a modular way. Specifically, since the result of a relational query is itself a relation, relational operations can be applied to the results of queries as well as to the given set of relations.
 
@@ -44,4 +44,21 @@ As we noted earlier, we can perform operations on the results of queries. For ex
 ![Alt text](image-11.png)
 
 **Figure 2.13** Result of selecting attributes _ID_ and _salary_ of instructors with salary greater than $85,000.  
+
+RELATIONAL ALGEBRA## RELATIONAL ALGEBRA
+
+The relational algebra defines a set of operations on relations, paralleling the usual algebraic operations such as addition, subtraction or multiplication, which operate on numbers. Just as algebraic operations on numbers take one or more numbers as input and return a number as output, the relational algebra operations typically take one or two relations as input and return a relation as output.
+
+Relational algebra is covered in detail in Chapter 6, but we outline a few of the operations below.
+
+![Alt text](image-12.png)
+
+and _salary_. In this example, we could have performed the operations in either order, but that is not the case for all situations, as we shall see.
+
+Sometimes, the result of a query contains duplicate tuples. For example, if we select the _dept name_ attribute from the _instructor_ relation, there are several cases of duplication, including “Comp. Sci.”, which shows up three times. Certain relational languages adhere strictly to the mathematical definition of a set and remove duplicates. Others, in consideration of the relatively large amount of processing required to remove duplicates from large result relations, retain duplicates. In these latter cases, the relations are not truly relations in the pure mathematical sense of the term.
+
+Of course, data in a database must be changed over time. A relation can be updated by inserting new tuples, deleting existing tuples, or modifying tuples by changing the values of certain attributes. Entire relations can be deleted and new ones created.
+
+We shall discuss relational queries and updates using the SQL language in Chapters 3 through 5.
+
 
