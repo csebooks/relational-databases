@@ -1,6 +1,6 @@
 ---
 title: 2.7 Summary
-weight: 13
+weight: 7
 ---
 
 2.7 Summary## 2.7 Summary
