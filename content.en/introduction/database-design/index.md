@@ -1,15 +1,15 @@
 ---
 title: Database Design
-weight: 8
+weight: 6
 ---
 
-Database Design## Database Design
+# Database Design
 
 Database systems are designed to manage large bodies of information. These large bodies of information do not exist in isolation. They are part of the operation of some enterprise whose end product may be information from the database or may be some device or service for which the database plays only a supporting role.
 
 Database design mainly involves the design of the database schema. The design of a complete database application environment that meets the needs of the enterprise being modeled requires attention to a broader set of issues. In this text, we focus initially on the writing of database queries and the design of database schemas. Chapter 9 discusses the overall process of application design.
 
-### Design Process
+## Design Process
 
 A high-level data model provides the database designer with a conceptual frame- work in which to specify the data requirements of the database users, and how the database will be structured to fulfill these requirements. The initial phase of database design, then, is to characterize fully the data needs of the prospective database users. The database designer needs to interact extensively with domain experts and users to carry out this task. The outcome of this phase is a specification of user requirements.
 
@@ -21,7 +21,7 @@ A fully developed conceptual schema indicates the functional requirements of the
 
 The process of moving from an abstract data model to the implementation of the database proceeds in two final design phases. In the **logical-design phase**, the designer maps the high-level conceptual schema onto the implementation data model of the database system that will be used. The designer uses the resulting system-specific database schema in the subsequent **physical-design phase**, in which the physical features of the database are specified. These features include the form of file organization and the internal storage structures; they are discussed in Chapter 10.
 
-### Database Design for a University Organization
+## Database Design for a University Organization
 
 To illustrate the design process, let us examine how a database for a university could be designed. The initial specification of user requirements may be based on interviews with the database users, and on the designer’s own analysis of the organization. The description that arises from this design phase serves as the basis for specifying the conceptual structure of the database. Here are the major characteristics of the university.
 
@@ -43,7 +43,7 @@ To illustrate the design process, let us examine how a database for a university
 
 A real university database would be much more complex than the preceding design. However we use this simplified model to help you understand conceptual ideas without getting lost in details of a complex design.
 
-### The Entity-Relationship Model
+## The Entity-Relationship Model
 
 The entity-relationship (E-R) data model uses a collection of basic objects, called entities, and relationships among these objects. An entity is a “thing” or “object” in the real world that is distinguishable from other objects. For example, each person is an entity, and bank accounts can be considered as entities.
 
@@ -70,7 +70,7 @@ In addition to entities and relationships, the E-R model represents certain cons
 
 The entity-relationship model is widely used in database design, and Chapter 7 explores it in detail.
 
-### Normalization
+## Normalization
 
 Another method for designing a relational database is to use a process commonly known as normalization. The goal is to generate a set of relation schemas that allows us to store information without unnecessary redundancy, yet also allows us to retrieve information easily. The approach is to design schemas that are in an appropriate normal form. To determine whether a relation schema is in one of the desirable normal forms, we need additional information about the real-world enterprise that we are modeling with the database. The most common approach is to use **functional dependencies**, which we cover in Section 8.4.
 

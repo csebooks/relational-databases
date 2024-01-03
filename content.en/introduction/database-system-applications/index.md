@@ -3,7 +3,7 @@ title: Database-System Applications
 weight: 1
 ---
 
-Database-System Applications## Database-System Applications
+# Database-System Applications
 
 Databases are widely used. Here are some representative applications:
 

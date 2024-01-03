@@ -1,9 +1,9 @@
 ---
 title: Data Mining and Information Retrieval
-weight: 12
+weight: 10
 ---
 
-Data Mining and Information Retrieval## Data Mining and Information Retrieval
+# Data Mining and Information Retrieval
 
 The term **data mining** refers loosely to the process of semiautomatically analyzing large databases to find useful patterns. Like knowledge discovery in artificial intelligence (also called **machine learning**) or statistical analysis, data mining attempts to discover rules and patterns from data. However, data mining differs from machine learning and statistics in that it deals with large volumes of data, stored primarily on disk. That is, data mining deals with “knowledge discovery in databases.”
 

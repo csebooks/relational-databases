@@ -1,13 +1,13 @@
 ---
 title: Relational Databases
-weight: 7
+weight: 5
 ---
 
-Relational Databases## Relational Databases
+# Relational Databases
 
 A relational database is based on the relational model and uses a collection of tables to represent both data and the relationships among those data. It also in- cludes a DML and DDL. In Chapter 2 we present a gentle introduction to the fundamentals of the relational model. Most commercial relational database sys- tems employ the SQL language, which we cover in great detail in Chapters 3, 4, and 5. In Chapter 6 we discuss other influential languages.
 
-### Tables
+## Tables
 
 Each table has multiple columns and each column has a unique name. Figure 1.2 presents a sample relational database comprising two tables: one shows details of university instructors and the other shows details of the various university departments.
 
@@ -22,7 +22,7 @@ We also note that it is possible to create schemas in the relational model that 
 ![alt A sample relational database](sample.png)
 **Figure 1.2** A sample relational database.
 
-### Data-Manipulation Language
+## Data-Manipulation Language
 
 The SQL query language is nonprocedural. A query takes as input several tables (possibly only one) and always returns a single table. Here is an example of an SQL query that finds the names of all instructors in the History department:
 
@@ -40,7 +40,7 @@ department._budget >_ 95000;
 
 If the above query were run on the tables in Figure 1.2, the system would find that there are two departments with budget of greater than $95,000—Computer Science and Finance; there are five instructors in these departments. Thus, the result will consist of a table with two columns (ID, _dept name_) and five rows: (12121, Finance), (45565, Computer Science), (10101, Computer Science), (83821, Computer Science), and (76543, Finance).
 
-### Data-Definition Language
+## Data-Definition Language
 
 SQL provides a rich DDL that allows one to define tables, integrity constraints, assertions, etc.
 
@@ -50,7 +50,7 @@ For instance, the following SQL DDL statement defines the department table:
 
 Execution of the above DDL statement creates the department table with three columns: _dept name_, building, and budget, each of which has a specific data type associated with it. We discuss data types in more detail in Chapter 3. In addition, the DDL statement updates the data dictionary, which contains metadata (see Section 1.4.2). The schema of a table is an example of metadata.
 
-### Database Access from Application Programs
+## Database Access from Application Programs
 
 SQL is not as powerful as a universal Turing machine; that is, there are some computations that are possible using a general-purpose programming language but are not possible using SQL. SQL also does not support actions such as input from users, output to displays, or communication over the network. Such com- putations and actions must be written in a host language, such as C, C++, or Java, with embedded SQL queries that access the data in the database. **Application programs** are programs that are used to interact with the database in this fashion.  
 

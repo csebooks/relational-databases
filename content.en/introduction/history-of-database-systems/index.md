@@ -1,9 +1,9 @@
 ---
 title: History of Database Systems
-weight: 15
+weight: 13
 ---
 
-History of Database Systems## History of Database Systems
+# History of Database Systems
 
 Information processing drives the growth of computers, as it has from the earli- est days of commercial computers. In fact, automation of data processing tasks predates computers. Punched cards, invented by Herman Hollerith, were used at the very beginning of the twentieth century to record U.S. census data, and mechanical systems were used to process the cards and tabulate results. Punched cards were later widely used as a means of entering data into computers.
 

@@ -3,11 +3,11 @@ title: View of Data
 weight: 3
 ---
 
-View of Data## View of Data
+# View of Data
 
 A database system is a collection of interrelated data and a set of programs that allow users to access and modify these data. A major purpose of a database system is to provide users with an abstract view of the data. That is, the system hides certain details of how the data are stored and maintained.
 
-### Data Abstraction
+## Data Abstraction
 
 For the system to be usable, it must retrieve data efficiently. The need for efficiency has led designers to use complex data structures to represent data in the database. Since many database-system users are not computer trained, developers hide the complexity from users through several levels of abstraction, to simplify users’ interactions with the system:
 
@@ -21,26 +21,17 @@ Figure 1.1 shows the relationship among the three levels of abstraction. An anal
 
 clarify the distinction among levels of abstraction. Many high-level programming  
 
-
-view 1 view 2
-
-logical level
-
-physical level
-
-view n…
-
-view level
-
 ![Alt  The three levels of data abstraction.](three.png)
 
 **Figure 1.1** The three levels of data abstraction.
 
 languages support the notion of a structured type. For example, we may describe a record as follows:1
 
+```bash
 **type** instructor = **record** ID : **char** (5); name : **char** (20); _dept name_ : **char** (20); salary : **numeric** (8,2);
 
 **end**;
+```
 
 This code defines a new record type called instructor with four fields. Each field has a name and a type associated with it. A university organization may have several such record types, including
 
@@ -56,7 +47,7 @@ At the logical level, each such record is described by a type definition, as in 
 
 Finally, at the view level, computer users see a set of application programs that hide details of the data types. At the view level, several views of the database are defined, and a database user sees some or all of these views. In addition to hiding details of the logical level of the database, the views also provide a security mechanism to prevent users from accessing certain parts of the database. For example, clerks in the university registrar office can see only that part of the database that has information about students; they cannot access information about salaries of instructors.
 
-### Instances and Schemas
+## Instances and Schemas
 
 Databases change over time as information is inserted and deleted. The collection of information stored in the database at a particular moment is called an **instance** of the database. The overall design of the database is called the database **schema**. Schemas are changed infrequently, if at all.
 
@@ -68,7 +59,7 @@ Of these, the logical schema is by far the most important, in terms of its effec
 
 We study languages for describing schemas after introducing the notion of data models in the next section.
 
-### Data Models
+## Data Models
 
 Underlying the structure of a database is the **data model**: a collection of conceptual tools for describing data, data relationships, data semantics, and consistency constraints. A data model provides a way to describe the design of a database at the physical, logical, and view levels.  
 

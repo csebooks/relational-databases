@@ -1,9 +1,9 @@
 ---
 title: Database Architecture
-weight: 11
+weight: 9
 ---
 
-Database Architecture## Database Architecture
+# Database Architecture
 
 We are now in a position to provide a single picture (Figure 1.5) of the various components of a database system and the connections among them.
 

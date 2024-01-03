@@ -1,13 +1,13 @@
 ---
 title: Database Users and Administrators
-weight: 14
+weight: 13
 ---
 
-Database Users and Administrators## Database Users and Administrators
+# Database Users and Administrators
 
 A primary goal of a database system is to retrieve information from and store new information into the database. People who work with a database can be categorized as database users or database administrators.
 
-### Database Users and User Interfaces
+## Database Users and User Interfaces
 
 There are four different types of database-system users, differentiated by the way they expect to interact with the system. Different types of user interfaces have been designed for the different types of users.
 
@@ -25,7 +25,7 @@ As another example, consider a student, who during class registration period, wi
 
 - **Specialized users** are sophisticated users who write specialized database applications that do not fit into the traditional data-processing framework. Among these applications are computer-aided design systems, knowledge- base and expert systems, systems that store data with complex data types (for example, graphics data and audio data), and environment-modeling systems. Chapter 22 covers several of these applications.
 
-### Database Administrator
+## Database Administrator
 
 One of the main reasons for using DBMSs is to have central control of both the data and the programs that access those data. A person who has such central control over the system is called a **database administrator (DBA)**. The functions of a DBA include:
 

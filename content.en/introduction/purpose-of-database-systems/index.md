@@ -3,7 +3,7 @@ title: Purpose of Database Systems
 weight: 2
 ---
 
-Purpose of Database Systems## Purpose of Database Systems
+# Purpose of Database Systems
 
 Database systems arose in response to early methods of computerized manage- ment of commercial data. As an example of such methods, typical of the 1960s, consider part of a university organization that, among other data, keeps infor- mation about all instructors, students, departments, and course offerings. One way to keep the information on a computer is to store it in operating system files. To allow users to manipulate the information, the system has a number of application programs that manipulate the files, including programs to:
 

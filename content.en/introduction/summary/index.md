@@ -1,9 +1,9 @@
 ---
 title: Summary
-weight: 16
+weight: 14
 ---
 
-Summary## Summary
+# Summary
 
 - A **database-management system** (DBMS) consists of a collection of interre- lated data and a collection of programs to access that data. The data describe one particular enterprise.
 
@@ -93,7 +93,7 @@ Summary## Summary
 
 - Database administrator (DBA)
 
-### Practice Exercises
+## Practice Exercises
 
 **1.1** This chapter has described several major advantages of a database system. What are two disadvantages?
 
@@ -107,7 +107,7 @@ Summary## Summary
 
 **1.6** Keyword queries used in Web search are quite different from database queries. List key differences between the two, in terms of the way the queries are specified, and in terms of what is the result of a query.
 
-### Exercises
+## Exercises
 
 **1.7** List four applications you have used that most likely employed a database system to store persistent data.
 
@@ -127,7 +127,7 @@ Summary## Summary
 
 **1.15** Describe at least 3 tables that might be used to store information in a social-networking system such as Facebook.
 
-### Tools
+## Tools
 
 There are a large number of commercial database systems in use today. The major ones include: IBM DB2 (www.ibm.com/software/data/db2), Oracle (www.oracle.com), Microsoft SQL Server (www.microsoft.com/sql), Sybase (www.sybase.com), and IBM Informix (www.ibm.com/software/data/informix). Some of these systems are available free for personal or noncommercial use, or for development, but are not free for actual deployment.
 
@@ -135,7 +135,7 @@ There are also a number of free/public domain database systems; widely used ones
 
 A more complete list of links to vendor Web sites and other information is available from the home page of this book, at www.db-book.com.
 
-### Bibliographical Notes
+## Bibliographical Notes
 
 We list below general-purpose books, research paper collections, and Web sites on databases. Subsequent chapters provide references to material on each topic outlined in this chapter.
 

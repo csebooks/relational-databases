@@ -1,9 +1,9 @@
 ---
 title: Data Storage and Querying
-weight: 9
+weight: 7
 ---
 
-Data Storage and Querying## Data Storage and Querying
+# Data Storage and Querying
 
 A database system is partitioned into modules that deal with each of the re- sponsibilities of the overall system. The functional components of a database system can be broadly divided into the storage manager and the query processor components.
 
@@ -11,7 +11,7 @@ The storage manager is important because databases typically require a large amo
 
 The query processor is important because it helps the database system to simplify and facilitate access to data. The query processor allows database users to obtain good performance while being able to work at the view level and not be burdened with understanding the physical-level details of the implementation of the system. It is the job of the database system to translate updates and queries written in a nonprocedural language, at the logical level, into an efficient sequence of operations at the physical level.
 
-### Storage Manager
+## Storage Manager
 
 The _storage manager_ is the component of a database system that provides the interface between the low-level data stored in the database and the application programs and queries submitted to the system. The storage manager is respon- sible for the interaction with the file manager. The raw data are stored on the disk using the file system provided by the operating system. The storage man- ager translates the various DML statements into low-level file-system commands.  
 
@@ -37,7 +37,7 @@ The storage manager implements several data structures as part of the phys- ical
 
 We discuss storage media, file structures, and buffer management in Chapter 10. Methods of accessing data efficiently via indexing or hashing are discussed in Chapter 11.
 
-### The Query Processor
+## The Query Processor
 
 The query processor components include:
 
