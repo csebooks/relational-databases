@@ -1,5 +1,5 @@
 ---
-title: 'Intermediate SQL'
+title: 'INTERMEDIATE SQL'
 weight: 4
 ---
 
