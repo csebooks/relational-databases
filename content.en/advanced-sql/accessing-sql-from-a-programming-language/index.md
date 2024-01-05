@@ -1,15 +1,15 @@
 ---
-title: 5.1 Accessing SQL From a Programming Language
-weight: 33
+title: 'Accessing SQL From a Programming Language'
+weight: 1
 ---
 
-5.1 Accessing SQL From a Programming Language## 5.1 Accessing SQL From a Programming Language
+# Accessing SQL From a Programming Language
 
 SQL provides a powerful declarative query language. Writing queries in SQL is usually much easier than coding the same queries in a general-purpose programming language. However, a database programmer must have access to a general-purpose programming language for at least two reasons:
 
-**1\.** Not all queries can be expressed in SQL, since SQL does not provide the full expressive power of a general-purpose language. That is, there exist queries that can be expressed in a language such as C, Java, or Cobol that cannot be expressed in SQL. To write such queries, we can embed SQL within a more powerful language.
+**1.** Not all queries can be expressed in SQL, since SQL does not provide the full expressive power of a general-purpose language. That is, there exist queries that can be expressed in a language such as C, Java, or Cobol that cannot be expressed in SQL. To write such queries, we can embed SQL within a more powerful language.
 
-**2\.** Nondeclarative actions—such as printing a report, interacting with a user, or sending the results of a query to a graphical user interface—cannot be done from within SQL. Applications usually have several components, and querying or updating data is only one component; other components are written in general-purpose programming languages. For an integrated application, there must be a means to combine SQL with a general-purpose programming language.
+**2.** Nondeclarative actions—such as printing a report, interacting with a user, or sending the results of a query to a graphical user interface—cannot be done from within SQL. Applications usually have several components, and querying or updating data is only one component; other components are written in general-purpose programming languages. For an integrated application, there must be a means to combine SQL with a general-purpose programming language.
 
 There are two approaches to accessing SQL from a general-purpose programming language:
 
@@ -21,7 +21,7 @@ In this chapter, we look at two standards for connecting to an SQL database and 
 
 A major challenge in mixing SQL with a general-purpose language is the mismatch in the ways these languages manipulate data. In SQL, the primary type of data is the relation. SQL statements operate on relations and return relations as a result. Programming languages normally operate on a variable at a time, and those variables correspond roughly to the value of an attribute in a tuple in a relation. Thus, integrating these two types of languages into a single application requires providing a mechanism to return the result of a query in a manner that the program can handle.
 
-### 5.1.1 JDBC
+## JDBC
 
 The **JDBC** standard defines an **application program interface (API)** that Java programs can use to connect to database servers. (The word JDBC was originally  
 
@@ -67,7 +67,7 @@ an abbreviation for **Java Database Connectivity**, but the full form is no long
 
 Figure 5.1 shows an example Java program that uses the JDBC interface. It illustrates how connections are opened, how statements are executed and results processed, and how connections are closed. We discuss this example in detail in this section. The Java program must import java.sql.\*, which contains the interface definitions for the functionality provided by JDBC.
 
-#### 5.1.1.1 Connecting to the Database
+### Connecting to the Database
 
 The first step in accessing a database from a Java program is to open a connection to the database. This step is required to select which database to use, for example ,an instance of Oracle running on your machine, or a PostgreSQL database running on another machine. Only after opening a connection can a Java program execute SQL statements.
 
@@ -85,27 +85,19 @@ Each database product that supports JDBC (all the major database vendors do) pro
 
 This is done by invoking Class.forName with one argument specifying a concrete class implementing the java.sql.Driver interface, in the first line of the program in Figure 5.1. This interface provides for the translation of productindependent JDBC calls into the product-specific calls needed by the specific database management system being used. The example in the figure shows the Oracle driver, oracle.jdbc.driver.OracleDriver.3 The driver is available in a .jar file at vendor Web sites and should be placed within the classpath so that the Java compiler can access it.
 
-<<<<<<< HEAD
 The actual protocol used to exchange information with the database depends on the driver that is used, and is not defined by the JDBC standard. Some
 
-2There are multiple versions of the getConnection method, which differ in the parameters that they accept. We present the most commonly used version. 3The equivalent driver names for other products are as follows: IBM DB2: com.ibm.db2.jdbc.app.DB2Driver; Microsoft SQL Server: com.microsoft.sqlserver.jdbc.SQLServerDriver; PostgreSQL: org.postgresql.Driver; and MySQL: com.mysql.jdbc.Driver. Sun also offers a “bridge driver” that converts JDBC calls to ODBC. This should be used only for vendors that support ODBC but not JDBC.  
+>There are multiple versions of the getConnection method, which differ in the parameters that they accept. We present the most commonly used version. 3The equivalent driver names for other products are as follows: IBM DB2: com.ibm.db2.jdbc.app.DB2Driver; Microsoft SQL Server: com.microsoft.sqlserver.jdbc.SQLServerDriver; PostgreSQL: org.postgresql.Driver; and MySQL: com.mysql.jdbc.Driver. Sun also offers a “bridge driver” that converts JDBC calls to ODBC. This should be used only for vendors that support ODBC but not JDBC.  
 
-**5.1 Accessing SQL From a Programming Language 161**
-
-drivers support more than one protocol, and a suitable protocol must be chosen depending on what protocol the database that you are connecting to supports. In our example, when opening a connection with the database, the string jdbc:oracle:thin: specifies a particular protocol supported by Oracle.
-
-**5.1.1.2 Shipping SQL Statements to the Database System**
-=======
 The actual protocol used to exchange information with the database de- pends on the driver that is used, and is not defined by the JDBC standard. Some drivers support more than one protocol, and a suitable protocol must be cho- sen depending on what protocol the database that you are connecting to sup- ports. In our example, when opening a connection with the database, the string jdbc:oracle:thin: specifies a particular protocol supported by Oracle.
 
-#### 5.1.1.2 Shipping SQL Statements to the Database System
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
+### Shipping SQL Statements to the Database System
 
 Once a database connection is open, the program can use it to send SQL statements to the database system for execution. This is done via an instance of the class Statement. A Statement object is not the SQL statement itself, but rather an object that allows the Java program to invoke methods that ship an SQL statement given as an argument for execution by the database system. Our example creates a Statement handle (stmt) on the connection conn.
 
 To execute a statement, we invoke either the executeQuery method or the executeUpdate method, depending on whether the SQL statement is a query (and, thus, returns a result set) or nonquery statement such as **update**, **insert**, **delete**, **create table**, etc. In our example, stmt.executeUpdate executes an update statement that inserts into the _instructor_ relation. It returns an integer giving the number of tuples inserted, updated, or deleted. For DDL statements, the return value is zero. The try _{ . . . }_ catch _{ . . . }_ construct permits us to catch any exceptions (error conditions) that arise when JDBC calls are made, and print an appropriate message to the user.
 
-#### 5.1.1.3 Retrieving the Result of a Query
+###  Retrieving the Result of a Query
 
 The example program executes a query by using stmt.executeQuery. It retrieves the set of tuples in the result into a ResultSet object rset and fetches them one tuple at a time. The next method on the result set tests whether or not there remains at least one unfetched tuple in the result set and if so, fetches it. The return value of the next method is a Boolean indicating whether it fetched a tuple. Attributes from the fetched tuple are retrieved using various methods whose names begin with get. The method getString can retrieve any of the basic SQL data types (converting the value to a Java String object), but more restrictive methods such as getFloat can be used as well. The argument to the various get methods can either be an attribute name specified as a string, or an integer indicating the position of the desired attribute within the tuple. Figure 5.1 shows two ways of retrieving the values of attributes in a tuple: using the name of the attribute (_dept name_) and using the position of the attribute (2, to denote the second attribute).
 
@@ -123,7 +115,7 @@ pStmt.executeUpdate();
 
 **Figure 5.2** Prepared statements in JDBC code.
 
-#### 5.1.1.4 Prepared Statements
+### Prepared Statements
 
 We can create a prepared statement in which some values are replaced by “?”, thereby specifying that actual values will be provided later. The database system compiles the query when it is prepared. Each time the query is executed (with new values to replace the “?”s), the database system can reuse the previously compiled form of the query and apply the new values. The code fragment in Figure 5.2 shows how prepared statements can be used.
 
@@ -163,7 +155,7 @@ In the resulting query, the **where** clause is always true and the entire instr
 
 which is harmless and returns the empty relation. Older systems allow multiple statements to be executed in a single call, with statements separated by a semicolon. This feature is being eliminated because the SQL injection technique was used by malicious hackers to insert whole SQL statements. Because these statements run with the privileges of the owner of the Java program, devastating SQL statements such as **drop table** could be executed. Developers of SQL applications need to be wary of such potential security holes.
 
-#### 5.1.1.5 Callable Statements
+### Callable Statements
 
 JDBC also provides a CallableStatement interface that allows invocation of SQL stored procedures and functions (described later, in Section 5.2). These play the same role for functions and procedures as prepareStatement does for queries.
 
@@ -172,7 +164,7 @@ CallableStatement cStmt2 = conn.prepareCall("_{_call some procedure(?,?)_}_");
 
 The data types of function return values and out parameters of procedures must be registered using the method registerOutParameter(), and can be retrieved using get methods similar to those for result sets. See a JDBC manual for more details.
 
-#### 5.1.1.6 Metadata Features
+### Metadata Features
 
 As we noted earlier, a Java application program does not include declarations for data stored in the database. Those declarations are part of the SQL DDL statements. Therefore, a Java program that uses JDBC must either have assumptions about the database schema hard-coded into the program or determine that information directly from the database system at runtime. The latter approach is usually preferable, since it makes the application program more robust to changes in the database schema.
 
@@ -208,7 +200,7 @@ Examples of other methods provided by DatabaseMetaData that provide information 
 
 The metadata interfaces can be used for a variety of tasks. For example, they can be used to write a database browser that allows a user to find the tables in a database, examine their schema, examine rows in a table, apply selections to see desired rows, and so on. The metadata information can be used to make code used for these tasks generic; for example, code to display the rows in a relation can be written in such a way that it would work on all possible relations regardless of their schema. Similarly, it is possible to write code that takes a query string, executes the query, and prints out the results as a formatted table; the code can work regardless of the actual query submitted.
 
-#### 5.1.1.7 Other Features
+### Other Features
 
 JDBC provides a number of other features, such as **updatable result sets**. It can create an updatable result set from a query that performs a selection and/or a projection on a database relation. An update to a tuple in the result set then results in an update to the corresponding tuple of the database relation.
 
@@ -222,13 +214,9 @@ Conversely, to store large objects in the database, the PreparedStatement class 
 
 JDBC includes a _row set_ feature that allows result sets to be collected and shipped to other applications. Row sets can be scanned both backward and forward and can be modified. Because row sets are not part of the database itself once they are downloaded, we do not cover details of their use here.
 
-### 5.1.2 ODBC
+## ODBC
 
-<<<<<<< HEAD
-The **Open Database Connectivity** (ODBC) standard defines an API that applications can use to open a connection with a database, send queries and updates, and get back results. Applications such as graphical user interfaces, statistics pack 
-=======
 The **Open Database Connectivity** (ODBC) standard defines an API that applica- tions can use to open a connection with a database, send queries and updates, and get back results. Applications such as graphical user interfaces, statistics pack
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 ```
 void ODBCexample()
@@ -295,7 +283,7 @@ Level 2 requires further features, such as the ability to send and retrieve arra
 
 The SQL standard defines a **call level interface (CLI)** that is similar to the ODBC interface.
 
-### 5.1.3 Embedded SQL
+## Embedded SQL
 
 The SQL standard defines embeddings of SQL in a variety of programming languages, such as C, C++, Cobol, Pascal, Java, PL/I, and Fortran. A language in which SQL queries are embedded is referred to as a _host_ language, and the SQL structures permitted in the host language constitute _embedded_ SQL.
 
@@ -344,13 +332,7 @@ EXEC SQL **open** _c_;
 
 This statement causes the database system to execute the query and to save the results within a temporary relation. The query uses the value of the host-language variable (_credit amount_) at the time the **open** statement is executed.  
 
-<<<<<<< HEAD
-**5.1 Accessing SQL From a Programming Language 171**
-
-If the SQL query results in an error, the database system stores an error diagnostic in the SQL communication-area (SQLCA) variables.
-=======
 If the SQL query results in an error, the database system stores an error diag- nostic in the SQL communication-area (SQLCA) variables.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 We then use a series of **fetch** statements, each of which causes the values of one tuple to be placed in host-language variables. The **fetch** statement requires one host-language variable for each attribute of the result relation. For our example query, we need one variable to hold the _ID_ value and another to hold the _name_ value. Suppose that those variables are _si_ and _sn_, respectively, and have been declared within a DECLARE section. Then the statement:
 
@@ -413,4 +395,3 @@ Transactions can be committed using EXEC SQL COMMIT, or rolled back using EXEC S
 Queries in embedded SQL are normally defined when the program is written. There are rare situations where a query needs to be defined at runtime. For example, an application interface may allow a user to specify selection conditions on one or more attributes of a relation, and may construct the **where** clause of an SQL query at runtime, with conditions on only those attributes for which the user specifies selections. In such cases, a query string can be constructed and prepared at runtime, using a statement of the form EXEC SQL PREPARE _<_query-name_\>_
 
 FROM :_<_variable_\>_, and a cursor can be opened on the query name.
-

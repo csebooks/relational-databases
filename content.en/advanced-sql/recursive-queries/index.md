@@ -1,9 +1,9 @@
 ---
-title: 5.4 Recursive Queries \*\*
-weight: 36
+title: 'Recursive Queries'
+weight: 4
 ---
 
-5.4 Recursive Queries \*\*## 5.4 Recursive Queries \*\*
+# Recursive Queries
 
 Consider the instance of the relation _prereq_ shown in Figure 5.12 containing information about the various courses offered at the university and the prerequisite for each course.7
 
@@ -13,7 +13,7 @@ Thus, if CS-301 is a prerequisite for CS-347, and CS-201 is a prerequisite for C
 
 The **transitive closure** of the relation _prereq_ is a relation that contains all pairs (_cid_, _pre_) such that _pre_ is a direct or indirect prerequisite of _cid_. There are numerous applications that require computation of similar transitive closures on **hierarchies**. For instance, organizations typically consist of several levels of organizational units. Machines consist of parts that in turn have subparts, and so on; for example, a bicycle may have subparts such as wheels and pedals, which in turn have subparts such as tires, rims, and spokes. Transitive closure can be used on such hierarchies to find, for example, all parts in a bicycle.
 
-### 5.4.1 Transitive Closure Using Iteration
+## Transitive Closure Using Iteration
 
 One way to write the above query is to use iteration: First find those courses that are a direct prerequisite of CS-347, then those courses that are a prerequisite of all the courses under the first set, and so on. This iterative process continues until we reach an iteration where no courses are added. Figure 5.13 shows a function _findAllPrereqs(cid)_ to carry out this task; the function takes the _course id_ of the course as a parameter (_cid_), computes the set of all direct and indirect
 
@@ -85,15 +85,15 @@ While cycles may be unrealistic in course prerequisites, cycles are possible in 
 
 write code similar to that in the _findAllPrereqs_ function, to find all cities that are reachable by a sequence of one or more flights from a given city. All we have to do is to replace _prereq_ by _flight_ and replace attribute names correspondingly. In this situation, there can be cycles of reachability, but the function would work correctly since it would eliminate cities that have already been seen.
 
-### 5.4.2 Recursion in SQL
+## Recursion in SQL
 
 It is rather inconvenient to specify transitive closure using iteration. There is an alternative approach, using recursive view definitions, that is easier to use.
 
 We can use recursion to define the set of courses that are prerequisites of a particular course, say CS-347, as follows. The courses that are prerequisites (directly or indirectly) of CS-347 are:
 
-**1\.** Courses that are prerequisites for CS-347.
+**1.** Courses that are prerequisites for CS-347.
 
-**2\.** Courses that are prerequisites for those courses that are prerequisites (directly or indirectly) for CS-347.
+**2.** Courses that are prerequisites for those courses that are prerequisites (directly or indirectly) for CS-347.
 
 Note that case 2 is recursive, since it defines the set of courses that are prerequisites of CS-347 in terms of the set of courses that are prerequisites of CS-347. Other examples of transitive closure, such as finding all subparts (direct or indirect) of a given part can also be defined in a similar manner, recursively.
 
@@ -137,4 +137,3 @@ For instance, if the recursive query was of the form _r_ − _v_ where _v_ is th
 The meaning of recursive views can be defined by the iterative procedure as long as the recursive query is monotonic; if the recursive query is nonmonotonic, the meaning of the view is hard to define. SQL therefore requires the queries to be monotonic. Recursive queries are discussed in more detail in the context of the Datalog query language, in Section B.3.6.
 
 SQL also allows creation of recursively defined permanent views by using **create recursive view** in place of **with recursive**. Some implementations support recursive queries using a different syntax; see the respective system manuals for further details.
-

@@ -1,13 +1,13 @@
 ---
-title: 5.5 Advanced Aggregation Features\*\*
-weight: 37
+title: 'Advanced Aggregation Features'
+weight: 5
 ---
 
-5.5 Advanced Aggregation Features\*\*## 5.5 Advanced Aggregation Features\*\*
+# Advanced Aggregation Features
 
 The aggregation support in SQL, which we have seen earlier, is quite powerful, and handles most common tasks with ease. However, there are some tasks that are hard to implement efficiently with the basic aggregation features. In this section, we study features that were added to SQL to handle some such tasks.
 
-### 5.5.1 Ranking
+## Ranking
 
 Finding the position of a value in a larger set is a common operation. For instance, we may wish to assign students a rank in class based on their grade-point average (GPA), with the rank 1 going to the student with the highest GPA, the rank 2 to the student with the next highest GPA, and so on. A related type of query is to find the percentile in which a value in a (multi)set belongs, for example, the bottom third, middle third, or top third. While such queries can be expressed using the SQL constructs we have seen so far, they are difficult to express and inefficient to evaluate. Programmers may resort to writing the query partly in SQL and partly in a programming language. We study SQL support for direct expression of these types of queries here.
 
@@ -54,17 +54,7 @@ The ranking functions can be used to find the top _n_ tuples by embedding a rank
 
 However, the **limit** clause does not support partitioning, so we cannot get the top _n_ within each partition without performing ranking; further, if more than one student gets the same GPA, it is possible that one is included in the top 10, while another is excluded.
 
-<<<<<<< HEAD
-Several other functions can be used in place of **rank**. For instance, **percent rank** of a tuple gives the rank of the tuple as a fraction. If there are _n_ tuples in the partition9 and the rank of the tuple is _r_ , then its percent rank is defined as (_r_ − 1)_/_(_n_ − 1) (and as _null_ if there is only one tuple in the partition). The function **cume dist**, short for cumulative distribution, for a tuple is defined as _p/n_ where _p_ is the number of tuples in the partition with ordering values preceding or equal to the ordering value of the tuple and _n_ is the number of tuples in the partition. The function **row number** sorts the rows and gives each row a unique number corre-
-
-9The entire set is treated as a single partition if no explicit partition is used.  
-
-**5.5 Advanced Aggregation Features 195**
-
-sponding to its position in the sort order; different rows with the same ordering value would get different row numbers, in a nondeterministic fashion.
-=======
 Several other functions can be used in place of **rank**. For instance, **per- cent rank** of a tuple gives the rank of the tuple as a fraction. If there are _n_ tuples in the partition9 and the rank of the tuple is _r_ , then its percent rank is defined as (_r_ − 1)_/_(_n_ − 1) (and as _null_ if there is only one tuple in the partition). The function **cume dist**, short for cumulative distribution, for a tuple is defined as _p/n_ where _p_ is the number of tuples in the partition with ordering values preceding or equal to the ordering value of the tuple and _n_ is the number of tuples in the partition. The function **row number** sorts the rows and gives each row a unique number corresponding to its position in the sort order; different rows with the same ordering value would get different row numbers, in a nondeterministic fashion.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 Finally, for a given constant _n_, the ranking function **ntile**(_n_) takes the tuples in each partition in the specified order and divides them into _n_ buckets with equal numbers of tuples.10 For each tuple, **ntile**(_n_) then gives the number of the bucket in which it is placed, with bucket numbers starting with 1. This function is particularly useful for constructing histograms based on percentiles. We can show the quartile into which each student falls based on GPA by the following query:
 
@@ -74,7 +64,7 @@ The presence of null values can complicate the definition of rank, since it is n
 
 **select** _ID_, **rank** () **over** (**order by** _GPA_ **desc nulls last**) **as** _s rank_ **from** _student grades_;
 
-### 5.5.2 Windowing
+## Windowing
 
 Window queries compute an aggregate function over ranges of tuples. This is useful, for example, to compute an aggregate of a fixed range of time; the time range is called a _window_. Windows may overlap, in which case a tuple may contribute to more than one window. This is unlike the partitions we saw earlier, where a tuple could contribute to only one partition.
 
@@ -108,18 +98,11 @@ It is possible to use the keyword **following** in place of **preceding**. If we
 
 Instead of a specific count of tuples, we can specify a range based on the value of the **order by** attribute. To specify a range going back 4 years and including the current year, we write:
 
-<<<<<<< HEAD
-11We leave the definition of this view in terms of our university example as an exercise.  
+We leave the definition of this view in terms of our university example as an exercise.  
 
-**5.6 OLAP 197**
-
-**select** _year_, **avg**(_num credits_) **over** (**order by** _year_ **range between** _year_ \4 **and** _year_) **as** _avg total credits_
-
-=======
 **select** _year_, **avg**(_num credits_) 
 **over** (**order by** _year_ **range between** _year_ \- 4 **and** _year_) 
 **as** _avg total credits_
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 **from** _tot credits_;
 
 Be sure to note the use of the keyword **range** in the above example. For the year 2010, data for years 2006 to 2010 inclusive would be included regardless of how many tuples actually exist for that range.
@@ -130,4 +113,3 @@ In our example, all tuples pertain to the entire university. Suppose instead, we
 **over** (**partition by** _dept name_**order by** _year_ **rows between** 3 **preceding and current row**) 
 **as** _avg total credits_
 **from** _tot credits dept_;
-

@@ -1,9 +1,9 @@
 ---
-title: 5.2 Functions and Procedures
-weight: 34
+title: 'Functions and Procedures'
+weight: 2
 ---
 
-5.2 Functions and Procedures## 5.2 Functions and Procedures
+# Functions and Procedures
 
 We have already seen several functions that are built into the SQL language. In this section, we show how developers can write their own functions and procedures, store them in the database, and then invoke them from SQL statements. Functions are particularly useful with specialized data types such as images and geometric objects. For instance, a line-segment data type used in a map database may have an associated function that checks whether two line segments overlap, and an image data type may have associated functions to compare two images for similarity.
 
@@ -27,7 +27,7 @@ Although the syntax we present here is defined by the SQL standard, most databas
 
 here. We illustrate some of the differences, for the case of Oracle, later (page 178). See the respective system manuals for further details. Although parts of the syntax we present here may not be supported on such systems, the concepts we describe are applicable across implementations, although with a different syntax.
 
-### 5.2.1 Declaring and Invoking SQL Functions and Procedures
+## Declaring and Invoking SQL Functions and Procedures
 
 Suppose that we want a function that, given the name of a department, returns the count of the number of instructors in that department. We can define the function as shown in Figure 5.5.4 This function can be used in a query that returns names and budgets of all departments with more than 12 instructors:
 
@@ -78,7 +78,7 @@ Procedures and functions can be invoked from dynamic SQL, as illustrated by the 
 
 SQL permits more than one procedure of the same name, so long as the number of arguments of the procedures with the same name is different. The name, along with the number of arguments, is used to identify the procedure. SQL also permits more than one function with the same name, so long as the different functions with the same name either have different numbers of arguments, or for functions with the same number of arguments, they differ in the type of at least one argument.  
 
-### 5.2.2 Language Constructs for Procedures and Functions
+## Language Constructs for Procedures and Functions
 
 SQL supports constructs that give it almost all the power of a general-purpose programming language. The part of the SQL standard that deals with these constructs is called the **Persistent Storage Module (PSM)**.
 
@@ -184,7 +184,7 @@ _sequence of statements_
 
 The statements between the **begin** and the **end** can raise an exception by executing **signal** _out of classroom seats_. The handler says that if the condition arises, the action to be taken is to exit the enclosing **begin end** statement. Alternative actions would be **continue**, which continues execution from the next statement following the one that raised the exception. In addition to explicitly defined conditions, there are also predefined conditions such as **sqlexception**, **sqlwarning**, and **not found**.
 
-### 5.2.3 External Language Routines
+## External Language Routines
 
 Although the procedural extensions to SQL can be very useful, they are unfortunately not supported in a standard way across databases. Even the most basic features have different syntax or semantics in different database products. As a result, programmers have to essentially learn a new language for each database product. An alternative that is gaining in support is to define procedures in an imperative programming language, but allow them to be invoked from SQL queries and trigger definitions.
 
@@ -204,15 +204,8 @@ In general, the external language procedures need to deal with null values in pa
 
 Functions defined in a programming language and compiled outside the database system may be loaded and executed with the database-system code.  
 
-<<<<<<< HEAD
-**180 Chapter 5 Advanced SQL**
-
-However, doing so carries the risk that a bug in the program can corrupt the database internal structures, and can bypass the access-control functionality of the database system. Database systems that are concerned more about efficient performance than about security may execute procedures in such a fashion. Database systems that are concerned about security may execute such code as part of a separate process, communicate the parameter values to it, and fetch results back, via interprocess communication. However, the time overhead of interprocess communication is quite high; on typical CPU architectures, tens to hundreds of thousands of instructions can execute in the time taken for one interprocess communication.
-=======
 However, doing so carries the risk that a bug in the program can corrupt the database internal structures, and can bypass the access-control functionality of the database system. Database systems that are concerned more about efficient per- formance than about security may execute procedures in such a fashion. Database systems that are concerned about security may execute such code as part of a sep- arate process, communicate the parameter values to it, and fetch results back, via interprocess communication. However, the time overhead of interprocess communication is quite high; on typical CPU architectures, tens to hundreds of thousands of instructions can execute in the time taken for one interprocess com- munication.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 If the code is written in a “safe” language such as Java or C#, there is another possibility: executing the code in a **sandbox** within the database query execution process itself. The sandbox allows the Java or C# code to access its own memory area, but prevents the code from reading or updating the memory of the query execution process, or accessing files in the file system. (Creating a sandbox is not possible for a language such as C, which allows unrestricted access to memory through pointers.) Avoiding interprocess communication reduces function call overhead greatly.
 
 Several database systems today support external language routines running in a sandbox within the query execution process. For example, Oracle and IBM DB2 allow Java functions to run as part of the database process. Microsoft SQL Server allows procedures compiled into the Common Language Runtime (CLR) to execute within the database process; such procedures could have been written, for example, in C# or Visual Basic. PostgreSQL allows functions defined in several languages, such as Perl, Python, and Tcl.
-
