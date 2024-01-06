@@ -1,9 +1,9 @@
 ---
-title: 6.2 The Tuple Relational Calculus
-weight: 42
+title: 'The Tuple Relational Calculus'
+weight: 2
 ---
-
-6.2 The Tuple Relational Calculus## 6.2 The Tuple Relational Calculus
+##
+# The Tuple Relational Calculus
 
 When we write a relational-algebra expression, we provide a sequence of procedures that generates the answer to our query. The tuple relational calculus, by contrast, is a **nonprocedural** query language. It describes the desired information without giving a specific procedure for obtaining that information.
 
@@ -15,7 +15,7 @@ That is, it is the set of all tuples _t_ such that predicate _P_ is true for _t_
 
 Before we give a formal definition of the tuple relational calculus, we return to some of the queries for which we wrote relational-algebra expressions in Section 6.1.1.
 
-### 6.2.1 Example Queries
+## Example Queries
 
 Find the _ID_, _name_, _dept name_, _salary_ for instructors whose salary is greater than $80,000:
 
@@ -87,7 +87,7 @@ Note that there is a subtlety in the above query: If there is no course offered 
 
 if there is no course offered in the Biology department, any value of _t_ (including values that are not student _ID_s in the _student_ relation) would qualify.  
 
-### 6.2.2 Formal Definition
+## Formal Definition
 
 We are now ready for a formal definition. A tuple-relational-calculus expression is of the form:
 
@@ -125,13 +125,13 @@ are also formulae.
 
 As we could for the relational algebra, we can write equivalent expressions that are not identical in appearance. In the tuple relational calculus, these equivalences include the following three rules:
 
-**1\.** _P_1 ∧ _P_2 is equivalent to ¬ (¬(_P_1) ∨ ¬(_P_2)).
+**1.** _P_1 ∧ _P_2 is equivalent to ¬ (¬(_P_1) ∨ ¬(_P_2)).
 
-**2\.** ∀ _t_ ∈ _r_ (_P_1(_t_)) is equivalent to ¬ ∃ _t_ ∈ _r_ (¬_P_1(_t_)).
+**2.** ∀ _t_ ∈ _r_ (_P_1(_t_)) is equivalent to ¬ ∃ _t_ ∈ _r_ (¬_P_1(_t_)).
 
-**3\.** _P_1 ⇒ _P_2 is equivalent to ¬(_P_1) ∨ _P_2.  
+**3.** _P_1 ⇒ _P_2 is equivalent to ¬(_P_1) ∨ _P_2.  
 
-### 6.2.3 Safety of Expressions
+## Safety of Expressions
 
 There is one final issue to be addressed. A tuple-relational-calculus expression may generate an infinite relation. Suppose that we write the expression:
 
@@ -145,11 +145,6 @@ We say that an expression {_t_ | _P_(_t_)} is _safe_ if all values that appear i
 
 The number of tuples that satisfy an unsafe expression, such as {_t_ |¬ (_t_ ∈ _instructor_ )}, could be infinite, whereas safe expressions are guaranteed to have finite results. The class of tuple-relational-calculus expressions that are allowed is therefore restricted to those that are safe.
 
-### 6.2.4 Expressive Power of Languages
+## Expressive Power of Languages
 
-<<<<<<< HEAD
-The tuple relational calculus restricted to safe expressions is equivalent in expressive power to the basic relational algebra (with the operators ∪_,_ −_,_ ×_,_ , and  , but without the extended relational operations such as generalized projection and aggregation (_G_)). Thus, for every relational-algebra expression using only the basic operations, there is an equivalent expression in the tuple relational calculus, and for every tuple-relational-calculus expression, there is an equivalent relationalalgebra expression. We shall not prove this assertion here; the bibliographic notes contain references to the proof. Some parts of the proof are included in the exercises. We note that the tuple relational calculus does not have any equivalent of the aggregate operation, but it can be extended to support aggregation. Extending the tuple relational calculus to handle arithmetic expressions is straightforward.  
-=======
 The tuple relational calculus restricted to safe expressions is equivalent in expres- sive power to the basic relational algebra (with the operators ∪_,_ −_,_ ×_,_ , and ρ , but without the extended relational operations such as generalized projection and ag- gregation (_G_)). Thus, for every relational-algebra expression using only the basic operations, there is an equivalent expression in the tuple relational calculus, and for every tuple-relational-calculus expression, there is an equivalent relational- algebra expression. We shall not prove this assertion here; the bibliographic notes contain references to the proof. Some parts of the proof are included in the exer- cises. We note that the tuple relational calculus does not have any equivalent of the aggregate operation, but it can be extended to support aggregation. Extending the tuple relational calculus to handle arithmetic expressions is straightforward.  
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
-

@@ -1,15 +1,15 @@
 ---
-title: 6.3 The Domain Relational Calculus
-weight: 43
+title: 'The Domain Relational Calculus'
+weight: 3
 ---
 
-6.3 The Domain Relational Calculus## 6.3 The Domain Relational Calculus
+# The Domain Relational Calculus
 
 A second form of relational calculus, called **domain relational calculus**, uses _domain_ variables that take on values from an attributes domain, rather than values for an entire tuple. The domain relational calculus, however, is closely related to the tuple relational calculus.
 
 Domain relational calculus serves as the theoretical basis of the widely used QBE language (see Appendix B.1), just as relational algebra serves as the basis for the SQL language.
 
-### 6.3.1 Formal Definition
+## Formal Definition
 
 An expression in the domain relational calculus is of the form
 
@@ -39,7 +39,7 @@ are also formulae.
 
 As a notational shorthand, we write ∃ _a , b, c_ (_P_(_a , b, c_)) for ∃ _a_ (∃ _b_ (∃ _c_ (_P_(_a , b, c_)))).  
 
-### 6.3.2 Example Queries
+## Example Queries
 
 We now give domain-relational-calculus queries for the examples that we considered earlier. Note the similarity of these expressions and the corresponding tuple-relational-calculus expressions.
 
@@ -71,7 +71,7 @@ We now give several examples of queries in the domain relational calculus.
 
 Note that as was the case for tuple-relational-calculus, if no courses are offered in the Biology department, all students would be in the result.
 
-### 6.3.3 Safety of Expressions
+## Safety of Expressions
 
 We noted that, in the tuple relational calculus (Section 6.2), it is possible to write expressions that may generate an infinite relation. That led us to define _safety_ for tuple-relational-calculus expressions. A similar situation arises for the domain relational calculus. An expression such as
 
@@ -91,15 +91,13 @@ In the tuple relational calculus, we restricted any existentially quantified var
 
 is safe if all of the following hold:
 
-**1\.** All values that appear in tuples of the expression are values from _dom_(_P_).
+**1.** All values that appear in tuples of the expression are values from _dom_(_P_).
 
-**2\.** For every “there exists” subformula of the form ∃ _x_ (_P_1(_x_)), the subformula is true if and only if there is a value _x_ in _dom_(_P_1) such that _P_1(_x_) is true.
+**2.** For every “there exists” subformula of the form ∃ _x_ (_P_1(_x_)), the subformula is true if and only if there is a value _x_ in _dom_(_P_1) such that _P_1(_x_) is true.
 
-**3\.** For every “for all” subformula of the form ∀_x_ (_P_1(_x_)), the subformula is true if and only if _P_1(_x_) is true for all values _x_ from _dom_(_P_1).
+**3.** For every “for all” subformula of the form ∀_x_ (_P_1(_x_)), the subformula is true if and only if _P_1(_x_) is true for all values _x_ from _dom_(_P_1).
 
 The purpose of the additional rules is to ensure that we can test “for all” and “there exists” subformulae without having to test infinitely many possibilities. Consider the second rule in the definition of safety. For ∃ _x_ (_P_1(_x_)) to be true,  
-
-**248 Chapter 6 Formal Relational Query Languages**
 
 we need to find only one _x_ for which _P_1(_x_) is true. In general, there would be infinitely many values to test. However, if the expression is safe, we know that we can restrict our attention to values from _dom_(_P_1). This restriction reduces to a finite number the tuples we must consider.
 
@@ -107,7 +105,7 @@ The situation for subformulae of the form ∀_x_ (_P_1(_x_)) is similar. To asse
 
 All the domain-relational-calculus expressions that we have written in the example queries of this section are safe, except for the example unsafe query we saw earlier.
 
-### 6.3.4 Expressive Power of Languages
+##  Expressive Power of Languages
 
 When the domain relational calculus is restricted to safe expressions, it is equivalent in expressive power to the tuple relational calculus restricted to safe expressions. Since we noted earlier that the restricted tuple relational calculus is equivalent to the relational algebra, all three of the following are equivalent:
 
@@ -118,4 +116,3 @@ When the domain relational calculus is restricted to safe expressions, it is equ
 • The domain relational calculus restricted to safe expressions
 
 We note that the domain relational calculus also does not have any equivalent of the aggregate operation, but it can be extended to support aggregation, and extending it to handle arithmetic expressions is straightforward.
-

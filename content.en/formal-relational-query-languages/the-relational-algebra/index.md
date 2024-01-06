@@ -1,17 +1,17 @@
 ---
-title: 6.1 The Relational Algebra
-weight: 41
+title: 'The Relational Algebra'
+weight: 1
 ---
 
-6.1 The Relational Algebra## 6.1 The Relational Algebra
+# 6.1 The Relational Algebra
 
 The relational algebra is a _procedural_ query language. It consists of a set of operations that take one or two relations as input and produce a new relation as their result. The fundamental operations in the relational algebra are _select, project_, _union_, _set difference_, _Cartesian product,_ and _rename_. In addition to the fundamental operations, there are several other operations—namely, _set intersection_, _natural join_, and _assignment_. We shall define these operations in terms of the fundamental operations.
 
-### 6.1.1 Fundamental Operations
+## Fundamental Operations
 
 The select, project, and rename operations are called _unary_ operations, because they operate on one relation. The other three operations operate on pairs of relations and are, therefore, called _binary_ operations.
 
-#### 6.1.1.1 The Select Operation
+### The Select Operation
 
 The **select** operation selects tuples that satisfy a given predicate. We use the lowercase Greek letter sigma (σ) to denote selection. The predicate appears as a subscript to σ. The argument relation is in parentheses after the σ. Thus, to select
 
@@ -46,7 +46,7 @@ The selection predicate may include comparisons between two attributes. To illus
 
 The term _select_ in relational algebra has a different meaning than the one used in SQL, which is an unfortunate historical fact. In relational algebra, the term _select_ corresponds to what we refer to in SQL as _where_. We emphasize the different interpretations here to minimize potential confusion.
 
-#### 6.1.1.2 The Project Operation
+### The Project Operation
 
 Suppose we want to list all instructors’ _ID_, _name_, and _salary_, but do not care about the _dept name_. The **project** operation allows us to produce this relation. The project operation is a unary operation that returns its argument relation, with certain attributes left out. Since a relation is a set, any duplicate rows are eliminated. Projection is denoted by the uppercase Greek letter pi (). We list those attributes that we wish to appear in the result as a subscript to . The argument relation follows in parentheses. We write the query to produce such a list as:
 
@@ -54,7 +54,7 @@ Suppose we want to list all instructors’ _ID_, _name_, and _salary_, but do no
 
 Figure 6.3 shows the relation that results from this query.
 
-#### 6.1.1.3 Composition of Relational Operations
+### Composition of Relational Operations
 
 The fact that the result of a relational operation is itself a relation is important. Consider the more complicated query “Find the name of all instructors in the Physics department.” We write:
 
@@ -68,7 +68,7 @@ Notice that, instead of giving the name of a relation as the argument of the pro
 
 In general, since the result of a relational-algebra operation is of the same type (relation) as its inputs, relational-algebra operations can be composed together into a **relational-algebra expression**. Composing relational-algebra operations into relational-algebra expressions is just like composing arithmetic operations (such as +, −, ∗, and ÷) into arithmetic expressions. We study the formal definition of relational-algebra expressions in Section 6.1.2.
 
-#### 6.1.1.4 The Union Operation
+### The Union Operation
 
 Consider a query to find the set of all courses taught in the Fall 2009 semester, the Spring 2010 semester, or both. The information is contained in the _section_ relation (Figure 6.4). To find the set of all courses taught in the Fall 2009 semester, we write:
 
@@ -102,7 +102,7 @@ Observe that, in our example, we took the union of two sets, both of which consi
 
 Note that _r_ and _s_ can be either database relations or temporary relations that are the result of relational-algebra expressions.
 
-#### 6.1.1.5 The Set-Difference Operation
+### The Set-Difference Operation
 
 The **set-difference** operation, denoted by −, allows us to find tuples that are in one relation but are not in another. The expression _r_ − _s_ produces a relation containing those tuples in _r_ but not in _s_.  
 
@@ -112,17 +112,13 @@ The **set-difference** operation, denoted by −, allows us to find tuples that 
 
 We can find all the courses taught in the Fall 2009 semester but not in Spring 2010 semester by writing:
 
-<<<<<<< HEAD
-_course id_ (_semester_ \= “Fall” ∧ _year_\=2009 (_section_)) _course id_ (_semester_ \= “Spring” ∧ _year_\=2010 (_section_))
-=======
 π_course id_ (σ_semester_ \= “Fall” ∧ _year_\=2009 (_section_)) - π_course id_ (σ_semester_ \= “Spring” ∧ _year_\=2010 (_section_))
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 The result relation for this query appears in Figure 6.6. As with the union operation, we must ensure that set differences are taken
 
 between _compatible_ relations. Therefore, for a set-difference operation _r_ − _s_ to be valid, we require that the relations _r_ and _s_ be of the same arity, and that the domains of the _i_th attribute of _r_ and the _i_th attribute of _s_ be the same, for all _i_ .
 
-#### 6.1.1.6 The Cartesian-Product Operation
+### The Cartesian-Product Operation
 
 The **Cartesian-product** operation, denoted by a cross (×), allows us to combine information from any two relations. We write the Cartesian product of relations _r_~1~ and _r_~2~ as _r_~1~ × _r_~2~.
 
@@ -146,11 +142,7 @@ Now that we know the relation schema for _r_ \= _instructor_ × _teaches_, what 
 
 Assume that we have _n_1 tuples in _instructor and n2 tuples in teaches. Then, there are n1 ∗ n2 ways of choosing a pair of tuples—one tuple from each relation; so there are n1 ∗ n2 tuples in r. In particular, note that for some tuples t in r, it may be that t[instructor.ID] α= t[teaches.ID].
 
-<<<<<<< HEAD
-In general, if we have relations _r_~1~(_r_~1~) and _r_~2~(_r_~2~), then _r_~1~ × _r_~2~ is a relation whose schema is the concatenation of _r_~1~ and _r_~2~\. Relation _R_ contains all tuples _t_ for which there is a tuple _t_~1~ in _r_~1~ and a tuple _t_~2~  in _r_~2~ for which _t_\[_r_~1~\] = _t_~1~\[_r_~1~\] and _t_\[_r_~2~\] = _t_~2~ \[_r_~2~\].
-=======
 In general, if we have relations r1(R1) and r2(R2), then r1 × r2 is a relation whose schema is the concatenation of R1 and R2. Relation R contains all tuples t for which there is a tuple t1 in r1 and a tuple t2 in r2 for which t[R1] = t1[R1] and t[R2] = t2[R2].
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 Suppose that we want to find the names of all instructors in the Physics department together with the _course id_ of all courses they taught. We need the information in both the _instructor_ relation and the _teaches_ relation to do so. If we write:
 
@@ -192,7 +184,7 @@ _name, course id_ (σ_instructor .ID_ \= _teaches .ID_ ((σ_dept name_ \= “Phy
 
 Note the subtle difference between the two queries: in the query above, the selection that restricts _dept name_ to Physics is applied to _instructor_, and the Cartesian product is applied subsequently; in contrast, the Cartesian product was applied before the selection in the earlier query. However, the two queries are **equivalent**; that is, they give the same result on any database.
 
-#### 6.1.1.7 The Rename Operation
+### The Rename Operation
 
 Unlike relations in the database, the results of relational-algebra expressions do not have a name that we can use to refer to them. It is useful to be able to give them names; the **rename** operator, denoted by the lowercase Greek letter rho (ρ ), lets us do this. Given a relational-algebra expression _E_ , the expression
 
@@ -210,7 +202,7 @@ returns the result of expression _E_ under the name _x_, and with the attributes
 
 To illustrate renaming a relation, we consider the query “Find the highest salary in the university.” Our strategy is to (1) compute first a temporary relation consisting of those salaries that are _not_ the largest and (2) take the set difference between the relation _salary_ (_instructor_ ) and the temporary relation just computed, to obtain the result.
 
-**1\.** Step 1: To compute the temporary relation, we need to compare the values of all salaries. We do this comparison by computing the Cartesian product _instructor_ × _instructor_ and forming a selection to compare the value of any two salaries appearing in one tuple. First, we need to devise a mechanism to distinguish between the two _salary_ attributes. We shall use the rename operation to rename one reference to the instructor relation; thus we can reference the relation twice without ambiguity.  
+**1.** Step 1: To compute the temporary relation, we need to compare the values of all salaries. We do this comparison by computing the Cartesian product _instructor_ × _instructor_ and forming a selection to compare the value of any two salaries appearing in one tuple. First, we need to devise a mechanism to distinguish between the two _salary_ attributes. We shall use the rename operation to rename one reference to the instructor relation; thus we can reference the relation twice without ambiguity.  
 
 ![Alt text](image-59.png)
 
@@ -222,7 +214,7 @@ _instructor .salary_ (α_instructor .salary < d .salary_ (_instructor_ × ρ_d_ 
 
 This expression gives those salaries in the _instructor_ relation for which a larger salary appears somewhere in the _instructor_ relation (renamed as _d_). The result contains all salaries _except_ the largest one. Figure 6.11 shows this relation.
 
-**2\.** Step 2: The query to find the largest salary in the university can be written as:
+**2.** Step 2: The query to find the largest salary in the university can be written as:
 
 _salary_ (_instructor_ ) − _instructor .salary_ (α_instructor .salary < d .salary_ (_instructor_ × ρ_d_ (_instructor_ )))
 
@@ -238,13 +230,9 @@ use of positional notation to write the expression we saw earlier, which compute
 
 π$4 (σ$4 < $8 (instructor × instructor ))
 
-<<<<<<< HEAD
-Note that the Cartesian product concatenates the attributes of the two relations. Thus, for the result of the Cartesian product (_instructor_ × _instructor_), $4 refers to the _salary_ attribute from the first occurrence of _instructor_, while $8 refers to the _salary_ attribute from the second occurrence of _instructor_. A positional notation can also be used to refer to relation names, if a binary operation needs to distinguish between its two operand relations. For example, $_r_~1~ could refer to the first operand relation, and $_r_~2~ could refer to the second operand relation of a Cartesian product. However, the positional notation is inconvenient for humans, since the position of the attribute is a number, rather than an easy-to-remember attribute name. Hence, we do not use the positional notation in this textbook.
-=======
 Note that the Cartesian product concatenates the attributes of the two relations. Thus, for the result of the Cartesian product (_instructor_ × _instructor_), 4 refers to the _salary_ attribute from the first occurrence of _instructor_, while 8 refers to the _salary_ attribute from the second occurrence of _instructor_. A positional notation can also be used to refer to relation names, if a binary operation needs to distinguish between its two operand relations. For example, _R_1 could refer to the first operand relation, and _R_2 could refer to the second operand relation of a Cartesian product. However, the positional notation is inconvenient for humans, since the position of the attribute is a number, rather than an easy-to-remember attribute name. Hence, we do not use the positional notation in this textbook.
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
-### 6.1.2 Formal Definition of the Relational Algebra
+## Formal Definition of the Relational Algebra
 
 The operations in Section 6.1.1 allow us to give a complete definition of an expression in the relational algebra. A basic expression in the relational algebra consists of either one of the following:
 
@@ -268,7 +256,7 @@ A general expression in the relational algebra is constructed out of smaller sub
 
 • ρ_x_ (_E_1), where _x_ is the new name for the result of _E_1
 
-### 6.1.3 Additional Relational-Algebra Operations
+## Additional Relational-Algebra Operations
 
 The fundamental operations of the relational algebra are sufficient to express any relational-algebra query. However, if we restrict ourselves to just the fundamental operations, certain common queries are lengthy to express. Therefore, we define additional operations that do not add any power to the algebra, but simplify  
 
@@ -278,7 +266,7 @@ The fundamental operations of the relational algebra are sufficient to express a
 
 common queries. For each new operation, we give an equivalent expression that uses only the fundamental operations.
 
-#### 6.1.3.1 The Set-Intersection Operation
+### The Set-Intersection Operation
 
 The first additional relational-algebra operation that we shall define is **set intersection** (∩). Suppose that we wish to find the set of all courses taught in both the Fall 2009 and the Spring 2010 semesters. Using set intersection, we can write
 
@@ -292,22 +280,16 @@ _r_ ∩ _s_ \= _r_ − (_r_ − _s_)
 
 Thus, set intersection is not a fundamental operation and does not add any power to the relational algebra. It is simply more convenient to write _r_ ∩ _s_ than to write _r_ − (_r_ − _s_).
 
-#### 6.1.3.2 The Natural-Join Operation
+### The Natural-Join Operation
 
 It is often desirable to simplify certain queries that require a Cartesian product. Usually, a query that involves a Cartesian product includes a selection operation on the result of the Cartesian product. The selection operation most often requires that all attributes that are common to the relations that are involved in the Cartesian product be equated.
 
 In our example query from Section 6.1.1.6 that combined information from the _instructor_ and _teaches_ tables, the matching condition required _instructor_._ID_ to be equal to _teaches_._ID_. These are the only attributes in the two relations that have the same name.
 
-<<<<<<< HEAD
-The _natural join_ is a binary operation that allows us to combine certain selections and a Cartesian product into one operation. It is denoted by the **join** symbol . The natural-join operation forms a Cartesian product of its two arguments, performs a selection forcing equality on those attributes that appear in both relation schemas, and finally removes duplicate attributes. Returning to the example of the relations _instructor_ and _teaches_, computing _instructor_ **natural join** _teaches_ considers only those pairs of tuples where both the tuple from _instructor_ and the  
-
-**230 Chapter 6 Formal Relational Query Languages**
+The _natural join_ is a binary operation that allows us to combine certain selec- tions and a Cartesian product into one operation. It is denoted by the **join** symbol . The natural-join operation forms a Cartesian product of its two arguments, performs a selection forcing equality on those attributes that appear in both rela- tion schemas, and finally removes duplicate attributes. Returning to the example of the relations _instructor_ and _teaches_, computing _instructor_ **natural join** _teaches_ considers only those pairs of tuples where both the tuple from _instructor_ and the  
+![Alt text](image-62.png) 
 
 _ID name dept name salary course id sec id semester year_ 10101 Srinivasan Comp. Sci. 65000 CS-101 1 Fall 2009 10101 Srinivasan Comp. Sci. 65000 CS-315 1 Spring 2010 10101 Srinivasan Comp. Sci. 65000 CS-347 1 Fall 2009 12121 Wu Finance 90000 FIN-201 1 Spring 2010 15151 Mozart Music 40000 MU-199 1 Spring 2010 22222 Einstein Physics 95000 PHY-101 1 Fall 2009 32343 El Said History 60000 HIS-351 1 Spring 2010 45565 Katz Comp. Sci. 75000 CS-101 1 Spring 2010 45565 Katz Comp. Sci. 75000 CS-319 1 Spring 2010 76766 Crick Biology 72000 BIO-101 1 Summer 2009 76766 Crick Biology 72000 BIO-301 1 Summer 2010 83821 Brandt Comp. Sci. 92000 CS-190 1 Spring 2009 83821 Brandt Comp. Sci. 92000 CS-190 2 Spring 2009 83821 Brandt Comp. Sci. 92000 CS-319 2 Spring 2010 98345 Kim Elec. Eng. 80000 EE-181 1 Spring 2009
-=======
-The _natural join_ is a binary operation that allows us to combine certain selec- tions and a Cartesian product into one operation. It is denoted by the **join** symbol . The natural-join operation forms a Cartesian product of its two arguments, performs a selection forcing equality on those attributes that appear in both rela- tion schemas, and finally removes duplicate attributes. Returning to the example of the relations _instructor_ and _teaches_, computing _instructor_ **natural join** _teaches_ considers only those pairs of tuples where both the tuple from _instructor_ and the  
-![Alt text](image-62.png)
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 **Figure 6.14** The natural join of the _instructor_ relation with the _teaches_ relation.
 
@@ -349,7 +331,7 @@ The _theta join_ operation is a variant of the natural-join operation that allow
 
 ![Alt text](image-68.png)
 
-#### 6.1.3.3 The Assignment Operation
+### The Assignment Operation
 
 It is convenient at times to write a relational-algebra expression by assigning parts of it to temporary relation variables. The **assignment** operation, denoted by ←, works like assignment in a programming language. To illustrate this operation, consider the definition of the natural-join operation. We could write _r  s_ as:
 
@@ -359,7 +341,7 @@ The evaluation of an assignment does not result in any relation being displayed 
 
 With the assignment operation, a query can be written as a sequential program consisting of a series of assignments followed by an expression whose value is displayed as the result of the query. For relational-algebra queries, assignment must always be made to a temporary relation variable. Assignments to permanent relations constitute a database modification. Note that the assignment operation does not provide any additional power to the algebra. It is, however, a convenient way to express complex queries.
 
-#### 6.1.3.4 Outer join Operations
+### Outer join Operations
 
 The **outer-join** operation is an extension of the join operation to deal with missing information. Suppose that there is some instructor who teaches no courses. Then  
 
@@ -392,11 +374,11 @@ It is interesting to note that the outer-join operations can be expressed by the
 
 where the constant relation {(_null, . . . , null_)} is on the schema _S_ − _R_.
 
-### 6.1.4 Extended Relational-Algebra Operations
+## Extended Relational-Algebra Operations
 
 We now describe relational-algebra operations that provide the ability to write queries that cannot be expressed using the basic relational-algebra operations. These operations are called **extended relational-algebra** operations.
 
-#### 6.1.4.1 Generalized Projection
+### Generalized Projection
 
 The first operation is the **generalized-projection** operation, which extends the projection operation by allowing operations such as arithmetic and string functions to be used in the projection list. The generalized-projection operation has the form:
 
@@ -410,7 +392,7 @@ _πID,name,dept name,salary_÷12(_instructor_ )
 
 gives the _ID_, _name_, _dept name_, and the monthly salary of each instructor.
 
-#### 6.1.4.2 Aggregation
+### Aggregation
 
 The second extended relational-algebra operation is the aggregate operation _G_, which permits the use of aggregate functions such as min or average, on sets of values.
 
@@ -468,29 +450,25 @@ Unlike the relational algebra, SQL allows multiple copies of a tuple in an input
 
 To model this behavior of SQL, a version of relational algebra, called the **multiset relational algebra**, is defined to work on multisets, that is, sets that may contain duplicates. The basic operations in the multiset relational algebra are defined as follows:
 
-**1\.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~, and _t_~1~ satisfies selection  , then there are _c_1 copies of _t_~1~ in (_r_~1~).
+**1.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~, and _t_~1~ satisfies selection  , then there are _c_1 copies of _t_~1~ in (_r_~1~).
 
-**2\.** For each copy of tuple _t_~1~ in _r_~1~, there is a copy of tuple _A_(_t_~1~) in _A_(_r_~1~), where _A_(_t_~1~) denotes the projection of the single tuple _t_~1~.
+**2.** For each copy of tuple _t_~1~ in _r_~1~, there is a copy of tuple _A_(_t_~1~) in _A_(_r_~1~), where _A_(_t_~1~) denotes the projection of the single tuple _t_~1~.
 
-**3\.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~ and _c_2 copies of tuple _t_~2~  in _r_~2~, there are _c_1 ∗ _c_2 copies of the tuple _t_~1~_.t_2 in _r_~1~ × _r_~2~.
+**3.** If there are _c_1 copies of tuple _t_~1~ in _r_~1~ and _c_2 copies of tuple _t_~2~  in _r_~2~, there are _c_1 ∗ _c_2 copies of the tuple _t_~1~_.t_2 in _r_~1~ × _r_~2~.
 
 For example, suppose that relations _r_~1~ with schema (_A, B_) and _r_~2~ with schema (_C_) are the following multisets:
 
 _r_~1~ = {(1_, a_)_,_ (2_, a_)} _r_~2~ = {(2)_,_ (3)_,_ (3)}
 
-<<<<<<< HEAD
-Then _B_(_r_~1~) would be {(_a_)_,_ (_a_)}, whereas _B_(_r_~1~) × _r_~2~ would be:
-=======
 Then _πB_(_r_1) would be {(_a_)_,_ (_a_)}, whereas _πB_(_r_1) × _r_2 would be:
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 {(_a,_ 2)_,_ (_a,_ 2)_,_ (_a,_ 3)_,_ (_a,_ 3)_,_ (_a,_ 3)_,_ (_a,_ 3)}
 
 Multiset union, intersection and set difference can also be defined in a similar way, following the corresponding definitions in SQL, which we saw in Section 3.5. There is no change in the definition of the aggregation operation.
 
-**1\.** All tuples in a group have the same values for _G_1_, G_2_, . . . , Gn_.
+**1.** All tuples in a group have the same values for _G_1_, G_2_, . . . , Gn_.
 
-**2\.** Tuples in different groups have different values for _G_1_, G_2_, . . . , Gn_.
+**2.** Tuples in different groups have different values for _G_1_, G_2_, . . . , Gn_.
 
 Thus, the groups can be identified by the values of attributes _G_1_, G_2_, . . . , Gn_. For each group (_g_1_, g_2_, . . . , gn_), the result has a tuple (_g_1_, g_2_, . . . , gn, a_1_, a_2_, . . . , am_) where, for each _i_ , _ai_ is the result of applying the aggregate function _Fi_ on the multiset of values for attribute _Ai_ in the group.
 
@@ -508,16 +486,11 @@ From a comparison of the relational algebra operations and the SQL operations, i
 
 Each _Ai_ represents an attribute, and each _ri_ a relation. _P_ is a predicate. The query is equivalent to the multiset relational-algebra expression:
 
-<<<<<<< HEAD
-_A_1_, A_2_,...,An_ (_P_ (_r_~1~ × _r_~2~ × · · · × _rm_))
-=======
 _πA_1_, A_2_,...,An_ (π_P_ (_r_1 × _r_2 × · · · × _rm_))
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 If the **where** clause is omitted, the predicate _P_ is **true**. More complex SQL queries can also be rewritten in relational algebra. For
 example, the query:
 
-<<<<<<< HEAD
 **select** _A_1_, A_2, **sum**(_A_3) **from** _r_~1~_, r_2_, . . . , rm_
 
 **where** _P_ **group by** _A_1_, A_2
@@ -534,7 +507,5 @@ _A_1_, A_2_G_sum(_A_3)(_A_1_, A_2_,..., An_(_P_ (_r_~1~ × _r_~2~ × · · · 
 is equivalent to:
 
 _A_1_, A_2_G_sum(_A_3)(_πA_1_, A_2_,..., Aσn_(_P_ (_r_1 × _r_2 × · · · × _rm_)))
->>>>>>> 0ecfe74e39ab7cceb756dfe2c8441bdba5f2f6d8
 
 Join expressions in the **from** clause can be written using equivalent join expressions in relational algebra; we leave the details as an exercise for the reader. However, subqueries in the **where** or **select** clause cannot be rewritten into relational algebra in such a straightforward manner, since there is no relationalalgebra operation equivalent to the subquery construct. Extensions of relational algebra have been proposed for this task, but are beyond the scope of this book.
-
