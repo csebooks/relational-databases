@@ -1,0 +1,14 @@
+{
+  "question" : "In a relational database, what is the purpose of foreign keys?",
+  "explanation" : "",
+  "choices" : [ {
+    "value" : "To encrypt sensitive data"
+  }, {
+    "value" : "float rateTo link tables and establish relationships",
+    "answer" : true
+  }, {
+    "value" : "To sort records based on a specific criterion"
+  }, {
+    "value" : " To create indexes for faster data retrieval"
+  } ]
+}

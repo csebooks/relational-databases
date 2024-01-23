@@ -1,0 +1,14 @@
+{
+  "question" : "Which SQL keyword is used to retrieve data from one or more tables?",
+  "explanation" : "",
+  "choices" : [ {
+    "value" : "SELECT",
+    "answer" : true
+  }, {
+    "value" : "FETCH"
+  }, {
+    "value" : "RETRIEVE"
+  }, {
+    "value" : " EXTRACT"
+  } ]
+}

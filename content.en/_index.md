@@ -3,6 +3,6 @@ title: 'Relational Databases'
 categories:
     - cse
     - languages
-    - relation database
+    - relation-databases
 weight: 1
 --- 
