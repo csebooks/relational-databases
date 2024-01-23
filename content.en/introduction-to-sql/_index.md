@@ -1,5 +1,5 @@
 ---
-title: 'INTRODUCTION TO SQL'
+title: 'Introduction To Sql'
 weight: 3
 ---
 

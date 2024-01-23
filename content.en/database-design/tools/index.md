@@ -3,13 +3,11 @@ title: Tools
 weight: 17
 ---
 
-Tools## Tools
+## Tools
 
 Many database systems provide tools for database design that support E-R dia- grams. These tools help a designer create E-Rdiagrams, and they can automatically create corresponding tables in a database. See bibliographic notes of Chapter 1 for references to database-system vendors’ Web sites.
 
 There are also several database-independent data modeling tools that sup- port E-R diagrams and UML class diagrams. The drawing tool Dia, which is available as freeware, supports E-R diagrams and UML class diagrams. Com- mercial tools include IBM Rational Rose (www.ibm.com/software/rational), Microsoft Visio (see www.microsoft.com/office/visio), CA’s ERwin (www.ca.com/us/data- modeling.aspx), Poseidon for UML (www.gentleware.com), and SmartDraw (www.smartdraw.com).
-
-## Tools
 
 Development of a Web application requires several software tools such as an application server, a compiler, and an editor for a programming language such as Java or C#, and other optional tools such as a Web server. There are several integrated development environments that provide support for Web application development. The two most popular open-source IDEs are Eclipse, developed by IBM, and Netbeans, developed by Sun Microsystems. Microsoft’s Visual Studio is the most widely used IDE in the Windows world.
 

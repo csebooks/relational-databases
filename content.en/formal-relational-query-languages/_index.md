@@ -1,5 +1,5 @@
 ---
-title: 'FORMAL RELATIONAL QUERY LANGUAGES' 
+title: 'Formal Relational Query Languages' 
 categories:
 weight: 6
 --- 
