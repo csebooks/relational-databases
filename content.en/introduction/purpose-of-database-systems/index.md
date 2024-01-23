@@ -17,7 +17,6 @@ references:
             url: https://www.flipkart.com/database-systems/p/itmeqzwv53mhy2ky?pid=9781484211922&lid=LSTBOK97814842119226DQ8A5&marketplace=FLIPKART&q=database+systems&store=bks&srno=s_1_2&otracker=search&otracker1=search&fm=Search&iid=9909c815-183e-4252-a6ab-adb0a919d5c3.9781484211922.SEARCH&ppt=sp&ppn=sp&ssid=57ent4v68g0000001705979893875&qH=c05a8f55e718b6cd 
 
 ---
----
 
 # Purpose of Database Systems
 
