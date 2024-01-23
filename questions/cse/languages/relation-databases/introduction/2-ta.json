@@ -1,0 +1,14 @@
+{
+  "question" : "பின்வருவனவற்றில் எது சரியான C மாறி(variable) பெயர் அல்ல?",
+  "explanation" : "",
+  "choices" : [ {
+    "value" : "int number"
+  }, {
+    "value" : "float rate"
+  }, {
+    "value" : "int variable_count"
+  }, {
+    "value" : "int $main",
+    "answer" : true
+  } ]
+}

@@ -1,0 +1,14 @@
+{
+  "question" : "What is a primary key in a relational database?",
+  "explanation" : "",
+  "choices" : [ {
+    "value" : "A key used for encryption purposes"
+  }, {
+    "value" : "A unique identifier for a record in a table",
+    "answer" : true
+  }, {
+    "value" : "A key used to establish relationships between tables"
+  }, {
+    "value" : "A key used for sorting records in a table"
+  } ]
+}
