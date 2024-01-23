@@ -1,9 +1,9 @@
 ---
-title: 'RELATIONAL DATABASES'
+title: 'Relational Databases'
 weight: 2
 ---
 
-# RELATIONAL DATABASES
+# Relational Databases
 
 A data model is a collection of conceptual tools for describing data, data relation- ships, data semantics, and consistency constraints. In this part, we focus on the relational model.
 

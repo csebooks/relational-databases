@@ -1,5 +1,5 @@
 ---
-title: 'INTRODUCTION' 
+title: 'Introduction' 
 weight: 1
 ---
 

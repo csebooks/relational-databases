@@ -1,7 +1,8 @@
 ---
 title: 'Relational Databases'
 categories:
-    - biology
-    - botany
+    - cse
+    - languages
+    - relation database
 weight: 1
 --- 

@@ -1,9 +1,9 @@
 ---
-title: 7.1 Overview of the Design Process
+title: Overview of the Design Process
 weight: 2
 ---
 
-7.1 Overview of the Design Process## 7.1 Overview of the Design Process
+## Overview of the Design Process
 
 The task of creating a database application is a complex one, involving design of the database schema, design of the programs that access and update the data, and design of a security scheme to control access to data. The needs of the users play a central role in the design process. In this chapter, we focus on the design of the database schema, although we briefly outline some of the other design tasks later in the chapter.
 

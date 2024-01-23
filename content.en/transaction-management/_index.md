@@ -1,12 +1,9 @@
 ---
-title: 'TRANSACTION MANAGEMENT'
+title: 'Transaction Management'
 weight: 9
 ---
 
-
-**PART 4**
-
-# TRANSACTION MANAGEMENT
+# Transaction Management
 
 The term _transaction_ refers to a collection of operations that form a single logical unit of work. For instance, transfer of money from one account to another is a transaction consisting of two updates, one to each account.
 

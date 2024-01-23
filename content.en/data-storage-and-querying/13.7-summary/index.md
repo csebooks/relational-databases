@@ -1,9 +1,9 @@
 ---
-title: 13.7 Summary
+title: Summary
 weight: 41
 ---
 
-13.7 Summary## 13.7 Summary
+## 13.7 Summary
 
 - Given a query, there are generally a variety of methods for computing the answer. It is the responsibility of the system to transform the query as entered by the user into an equivalent query that can be computed more efficiently. The process of finding a good strategy for processing a query is called _query optimization_.
 

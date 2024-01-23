@@ -1,13 +1,10 @@
 ---
-title: 'DATA STORAGE AND QUERYING'
+title: 'Data Storage And Querying'
 weight: 8
 ---
 
-  
 
-**PART 3**
-
-# DATA STORAGE AND QUERYING
+# Data Storage And Querying
 
 Although a database system provides a high-level view of data, ultimately data have to be stored as bits on one or more storage devices. A vast majority of databases today store data on magnetic disk (and, increasingly, on flash storage) and fetch data into main memory for processing, or copy data onto tapes and other backup devices for archival storage. The physical characteristics of storage devices play a major role in the way data are stored, in particular because access to a random piece of data on disk is much slower than memory access: Disk access takes tens of milliseconds, whereas memory access takes a tenth of a microsecond.
 
