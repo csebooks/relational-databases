@@ -1,6 +1,22 @@
 ---
 title: Purpose of Database Systems
 weight: 2
+references:
+    videos:
+        - youtube:PHbWo9boEFs
+        - youtube:Uoh_gfghsRI
+    links:
+        - https://www.geeksforgeeks.org/purpose-of-database-system-in-dbms/
+        - https://www.tutorialspoint.com/what-is-the-purpose-of-database-management-system
+    books:
+        - b1:
+            title: Database Systems (Foster Elvis)
+            url: https://www.flipkart.com/database-systems/p/itme2wkhvcujchvh?pid=9781032217321&lid=LSTBOK97810322173212COKWY&marketplace=FLIPKART&q=database+systems&store=bks&srno=s_1_1&otracker=search&otracker1=search&fm=Search&iid=9909c815-183e-4252-a6ab-adb0a919d5c3.9781032217321.SEARCH&ppt=sp&ppn=sp&ssid=57ent4v68g0000001705979893875&qH=c05a8f55e718b6cd
+        - b2:
+            title: Database Systems (Foster Elvis C.)
+            url: https://www.flipkart.com/database-systems/p/itmeqzwv53mhy2ky?pid=9781484211922&lid=LSTBOK97814842119226DQ8A5&marketplace=FLIPKART&q=database+systems&store=bks&srno=s_1_2&otracker=search&otracker1=search&fm=Search&iid=9909c815-183e-4252-a6ab-adb0a919d5c3.9781484211922.SEARCH&ppt=sp&ppn=sp&ssid=57ent4v68g0000001705979893875&qH=c05a8f55e718b6cd 
+
+---
 ---
 
 # Purpose of Database Systems
