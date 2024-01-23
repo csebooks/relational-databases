@@ -3,7 +3,7 @@ title: Database-System Applications
 weight: 1
 references:
    videos:
-        - youtube:Zde-Lzx_kt4
+        - youtube:Zde-Lzx_kt4&t=1s
         - youtube:vqxvDtSgW2k
     links:
         - https://www.geeksforgeeks.org/application-of-dbms/
