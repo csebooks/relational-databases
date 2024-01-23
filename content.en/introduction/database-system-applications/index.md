@@ -2,7 +2,7 @@
 title: Database-System Applications
 weight: 1
 references:
-   videos:
+    videos:
         - youtube:Zde-Lzx_kt4&t=1s
         - youtube:vqxvDtSgW2k
     links:
