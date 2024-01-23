@@ -3,7 +3,7 @@ title: 'The Relational Algebra'
 weight: 1
 ---
 
-# 6.1 The Relational Algebra
+# The Relational Algebra
 
 The relational algebra is a _procedural_ query language. It consists of a set of operations that take one or two relations as input and produce a new relation as their result. The fundamental operations in the relational algebra are _select, project_, _union_, _set difference_, _Cartesian product,_ and _rename_. In addition to the fundamental operations, there are several other operations—namely, _set intersection_, _natural join_, and _assignment_. We shall define these operations in terms of the fundamental operations.
 
@@ -42,8 +42,7 @@ The selection predicate may include comparisons between two attributes. To illus
 
 **Figure 6.2** Result of σ_dept name_ \= “Physics” (_instructor_ ). 
 
-**SQL VERSUS RELATIONAL ALGEBRA**
-
+>**SQL VERSUS RELATIONAL ALGEBRA**
 The term _select_ in relational algebra has a different meaning than the one used in SQL, which is an unfortunate historical fact. In relational algebra, the term _select_ corresponds to what we refer to in SQL as _where_. We emphasize the different interpretations here to minimize potential confusion.
 
 ### The Project Operation

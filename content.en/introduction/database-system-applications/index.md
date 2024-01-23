@@ -1,6 +1,21 @@
 ---
 title: Database-System Applications
 weight: 1
+references:
+    videos:
+        - youtube:Zde-Lzx_kt4
+        - youtube:vqxvDtSgW2k
+    links:
+        - https://www.geeksforgeeks.org/application-of-dbms/
+        - https://www.javatpoint.com/database-applications
+    books:
+        - b1:
+            title: Database Systems for Advanced Applications
+            url: https://www.flipkart.com/database-systems-advanced-applications/p/itmfc6e2mzhgtngd?pid=9783540253341&lid=LSTBOK9783540253341YBQNI4&marketplace=FLIPKART&q=database+systems+and+applications&store=bks%2Ff50%2Fksz&srno=s_1_2&otracker=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&fm=search-autosuggest&iid=2d24b066-b7ea-4035-b69d-cf915d937b7d.9783540253341.SEARCH&ppt=sp&ppn=sp&qH=f9df58cfd0b713e0
+        - b2:
+            title: Database and Expert Systems Applications
+            url: https://www.flipkart.com/database-expert-systems-applications/p/itmfc6cvq9wkdkks?pid=9783319228488&lid=LSTBOK9783319228488OGQABV&marketplace=FLIPKART&q=database+systems+and+applications&store=bks%2Ff50%2Fksz&srno=s_1_1&otracker=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&fm=search-autosuggest&iid=2d24b066-b7ea-4035-b69d-cf915d937b7d.9783319228488.SEARCH&ppt=sp&ppn=sp&qH=f9df58cfd0b713e0 
+
 ---
 
 # Database-System Applications
