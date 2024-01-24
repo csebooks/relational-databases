@@ -3,7 +3,7 @@ title: Database-System Applications
 weight: 1
 references:
     videos:
-        - youtube:Zde-Lzx_kt4&t=1s
+        - youtube:HRFVf1zBYqo
         - youtube:vqxvDtSgW2k
     links:
         - https://www.geeksforgeeks.org/application-of-dbms/
@@ -61,4 +61,3 @@ The Internet revolution of the late 1990s sharply increased direct user access t
 Thus, although user interfaces hide details of access to a database, and most people are not even aware they are dealing with a database, accessing databases forms an essential part of almost everyone’s life today.
 
 The importance of database systems can be judged in another way—today, database system vendors like Oracle are among the largest software companies in the world, and database systems form an important part of the product line of Microsoft and IBM.
-
