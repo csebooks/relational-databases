@@ -1,5 +1,5 @@
 ---
-title: 'RELATIONAL DATABASES' 
+title: 'Relational DataBase' 
 weight: 2
 ---
 
