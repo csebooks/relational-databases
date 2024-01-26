@@ -1,5 +1,5 @@
 ---
-title: Data Storage and Querying
+title: 'Data Storage and Querying'
 weight: 7
 ---
 

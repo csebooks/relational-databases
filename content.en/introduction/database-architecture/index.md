@@ -1,5 +1,5 @@
 ---
-title: Database Architecture
+title: 'Database Architecture'
 weight: 9
 ---
 

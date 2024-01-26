@@ -1,5 +1,5 @@
 ---
-title: Purpose of Database Systems
+title: 'Purpose of Database Systems'
 weight: 2
 references:
     videos:

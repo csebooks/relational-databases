@@ -1,5 +1,5 @@
 ---
-title: Database Design
+title: 'Database Design'
 weight: 6
 ---
 

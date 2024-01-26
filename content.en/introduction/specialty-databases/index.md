@@ -1,5 +1,5 @@
 ---
-title: Specialty Databases
+title: 'Specialty Databases'
 weight: 11
 ---
 

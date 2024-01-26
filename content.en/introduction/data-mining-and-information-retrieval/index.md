@@ -1,5 +1,5 @@
 ---
-title: Data Mining and Information Retrieval
+title: 'Data Mining and Information Retrieval'
 weight: 10
 ---
 

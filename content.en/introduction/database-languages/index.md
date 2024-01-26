@@ -1,5 +1,5 @@
 ---
-title: Database Languages
+title: 'Database Languages'
 weight: 4
 ---
 

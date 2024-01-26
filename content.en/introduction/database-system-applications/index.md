@@ -1,5 +1,5 @@
 ---
-title: Database-System Applications
+title: 'Database System Applications'
 weight: 1
 references:
     videos:

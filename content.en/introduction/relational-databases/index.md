@@ -1,5 +1,5 @@
 ---
-title: Relational Databases
+title: 'Relational Databases'
 weight: 5
 ---
 

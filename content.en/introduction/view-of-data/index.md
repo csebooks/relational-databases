@@ -1,5 +1,5 @@
 ---
-title: View of Data
+title: 'View of Data'
 weight: 3
 references:
     videos:
