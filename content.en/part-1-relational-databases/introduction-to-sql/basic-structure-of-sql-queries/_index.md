@@ -1,6 +1,6 @@
 ---
 title: Basic Structure of SQL Queries
-weight: 2
+weight: 3
 ---
 
 # Basic Structure of SQL Queries
