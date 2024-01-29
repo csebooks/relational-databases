@@ -8,7 +8,8 @@ weight: 1
 Although many people interact with databases, very few people use a query language to interact with a database system directly. The most common way in which users interact with databases is through an application program that provides a user interface at the front end, and interfaces with a database at the back end. Such applications take input from users, typically through a formsbased interface, and either enter data into a database or extract information from a database based on the user input, and generate output, which is displayed to the user.
 
 As an example of an application, consider a university registration system.Like  other such applications, the registration system first requires you to identify
-                                **Figure 9.1 Application architectures in different eras**
+
+ **Figure 9.1 Application architectures in different eras**
 
 and authenticate yourself, typically by a user name and password. The application then uses your identity to extract information, such as your name and the courses for which you have registered, from the database and displays the information. The application provides a number of interfaces that let you register for courses and query a variety of other information such as course and instructor information. Organizations use such applications to automate a variety of tasks, such as sales, purchases, accounting and payroll, human-resourcesmanagement, and inventory management, among many others.
 
