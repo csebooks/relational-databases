@@ -3,7 +3,7 @@ title: 'Query Optimization'
 weight: 4
 ---
 
-## Query Optimization
+# Query Optimization
 
 **Query optimization** is the process of selecting the most efficient query-evaluation plan from among the many strategies usually possible for processing a given query, especially if the query is complex. We do not expect users to write their queries so that they can be processed efficiently. Rather, we expect the system to construct a query-evaluation plan that minimizes the cost of query evaluation. This is where query optimization comes into play.
 
