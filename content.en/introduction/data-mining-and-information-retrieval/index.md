@@ -1,6 +1,20 @@
 ---
 title: 'Data Mining and Information Retrieval'
 weight: 10
+references:
+    videos:
+        - youtube:xEmrFePGjEg&t=67s
+        - youtube:Q72hzU1Z6aQ
+    links:
+        - https://www.javatpoint.com/data-mining
+        - https://www.geeksforgeeks.org/what-is-information-retrieval/
+    books:
+        - b1:
+            title: Data Mining And Information Retrival 
+            url: https://www.amazon.in/Intelligent-Agents-Mining-Information-Retrieval/dp/1591401941
+        - b2:
+            title: Introduction To Information retraival 
+            url:  https://www.google.co.in/books/edition/Introduction_to_Information_Retrieval/t1PoSh4uwVcC?hl=en&gbpv=1&dq=data+mining+and+information+retrieval+book&printsec=frontcover
 ---
 
 # Data Mining and Information Retrieval
