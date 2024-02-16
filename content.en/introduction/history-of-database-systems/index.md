@@ -1,6 +1,23 @@
 ---
 title: 'History of Database Systems'
 weight: 13
+references:
+    videos:
+        - youtube:KG-mqHoXOXY
+        - youtube:ydtw5mLQyjM
+    links:
+        - https://www.geeksforgeeks.org/history-of-dbms/
+        - https://en.wikipedia.org/wiki/Database
+    books:
+        - b1:
+            title: Introduction of Database 
+            url: https://www.google.co.in/books/edition/Introduction_to_Databases/gnVdtvb9wH0C?hl=en&gbpv=1&dq=History+of+Database+Systems&printsec=frontcover
+            
+            
+        - b2:
+            title: Database System 
+            url: https://www.google.co.in/books/edition/Database_Systems/9m382yDgxRsC?hl=en&gbpv=1&dq=History+of+Database+Systems&printsec=frontcover
+
 ---
 
 # History of Database Systems
