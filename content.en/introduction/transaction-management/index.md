@@ -1,6 +1,20 @@
 ---
 title: 'Transaction Management'
 weight: 8
+references:
+    videos:
+        - youtube:eYQwKi7P8MM
+        - youtube:P80Js_qClUE
+    links:
+        - https://www.geeksforgeeks.org/transaction-management/
+        - https://www.codingninjas.com/studio/library/transaction-management-in-dbms
+    books:
+        - b1:
+            title: Database Management System
+            url: https://www.google.co.in/books/edition/Database_Management_System/uhmQDwAAQBAJ?hl=en&gbpv=1&dq=transaction+management+in+dbms+books&printsec=frontcover
+        - b2:
+            title: Database System 
+            url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=1&dq=transaction+management+in+dbms+books&printsec=frontcover
 ---
 
 # Transaction Management
