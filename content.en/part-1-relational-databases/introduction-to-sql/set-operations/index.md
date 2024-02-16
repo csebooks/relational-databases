@@ -1,6 +1,21 @@
 ---
 title: Set Operations
 weight: 5
+references:
+    videos:
+        - youtube:Uu4GfSHy3_4
+        - youtube_fRXjmfRESk
+    links:
+        - https://www.javatpoint.com/dbms-sql-set-operation
+        - https://www.geeksforgeeks.org/set-theory-operations-in-relational-algebra/
+    books:
+        - b1:
+            title: DBMS - DATA BASE MANAGEMENT SYSTEM
+            url: https://www.google.co.in/books/edition/DBMS_DATA_BASE_MANAGEMENT_SYSTEM/gUTCDwAAQBAJ?hl=en&gbpv=0
+            
+        - b2:
+            title: An introduction to database systems 
+            url: https://www.google.co.in/books/edition/An_Introduction_to_Database_Systems/42nMjwEACAAJ?hl=en
 ---
 
 # Set Operations
