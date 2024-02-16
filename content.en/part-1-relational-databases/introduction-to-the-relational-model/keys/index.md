@@ -1,8 +1,20 @@
 ---
 title:  Keys
 weight: 3
----
-
+references:
+    videos:
+        - youtube:Ip1RhEyL7zM
+        - youtube:_UZLrD_R0T4
+    links:
+        - https://www.geeksforgeeks.org/types-of-keys-in-relational-model-candidate-super-primary-alternate-and-foreign/
+        - https://www.javatpoint.com/dbms-keys
+    books:
+        - b1:
+            title: Database Management System
+            url: https://www.google.co.in/books/edition/krishna_s_Database_Management_System/YM0AvJp6ocUC?hl=en&gbpv=1&dq=keys+in+dbms+books&printsec=frontcover
+        - b2:
+            title: Database Systems
+            url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=1&dq=keys+in+dbms+books&printsec=frontcover
 # Keys
 
 We must have a way to specify how tuples within a given relation are distin- guished. This is expressed in terms of their attributes. That is, the values of the attribute values of a tuple must be such that they can _uniquely identify_ the tuple. In other words, no two tuples in a relation are allowed to have exactly the same value for all attributes.
