@@ -1,6 +1,20 @@
 ---
 title: Overview of the SQL Query Language
 weight: 1
+references:
+    videos:
+        - youtube:k5WZ9MJTA_Y
+        - youtube:HqUWoQMxYfE
+    links:
+        - https://www.tutorialspoint.com/sql/sql-overview.htm
+        - https://aws.amazon.com/what-is/sql/
+    books:
+        - b1:
+            title: The Structured Query Language
+            url: https://www.google.co.in/books/edition/Structured_Query_Language_SQL/FKRQAAAAMAAJ?hl=en&gbpv=0&bsq=overview%20of%20the%20sql%20query%20language
+        - b2:
+           title: SQL Clearly Explained  
+            url: https://www.google.co.in/books/edition/SQL_Clearly_Explained/KMZasMUMU5UC?hl=en&gbpv=0
 ---
 
 # Overview of the SQL Query Language
