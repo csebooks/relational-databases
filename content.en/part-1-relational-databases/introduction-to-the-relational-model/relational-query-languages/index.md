@@ -1,6 +1,20 @@
 ---
 title:  Relational Query Languages
 weight: 5
+references:
+    videos:
+        - youtube:KpbyPhJqIf0
+        - youtube:0JAYah0MVno
+    links:
+        - https://www.tutorialspoint.com/what-is-a-query-language-in-dbms
+        - https://www.i2tutorials.com/dbms-introduction/dbms-relational-query-languages/
+    books:
+        - b1:
+            title: Understanding Relational Database Query Languages
+            url: https://www.google.co.in/books/edition/Understanding_Relational_Database_Query/y3JnQgAACAAJ?hl=en
+        - b2:
+            title: Theory and Practice of Relational database
+            url:   https://www.google.co.in/books/edition/Theory_and_Practice_of_Relational_Databa/T42BSf-1f5cC?hl=en&gbpv=1&dq=Relational+Query+language+books&printsec=frontcover
 ---
 
 # Relational Query Languages
