@@ -1,6 +1,21 @@
 ---
 title: Aggregate Functions
 weight: 7
+references:
+    videos:
+        - youtube:MB1Mrlj1ysk
+        - youtube:u7yUQRhxnA
+    links:
+        - https://www.geeksforgeeks.org/aggregate-functions-in-sql/
+        - https://www.javatpoint.com/sql-aggregate-functions
+    books:
+        - b1:
+            title: Mastering Oracle SQL   
+            url: https://www.google.co.in/books/edition/Mastering_Oracle_SQL/Rl2_4LhDjZkC?hl=en&gbpv=0
+            
+        - b2:
+            title: Oracle SQL The Essential Reference
+            url: https://www.google.co.in/books/edition/Oracle_SQL/NU-d9TIae9IC?hl=en&gbpv=0
 ---
 
 # Aggregate Functions
