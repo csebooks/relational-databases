@@ -1,6 +1,21 @@
 ---
 title: 'Functions and Procedures'
 weight: 2
+references:
+    videos:
+        - youtube:91mm8M_hs0s
+        - youtube:WOqFqZ9LB6A
+    links:
+        - https://www.geeksforgeeks.org/difference-between-function-and-procedure/
+        - https://www.javatpoint.com/function-vs-procedure
+    books:
+        - b1:
+            title:  SQL Procedures, Triggers, and Functions 
+            url: https://www.google.co.in/books/edition/SQL_Procedures_Triggers_and_Functions_on/nuALDAAAQBAJ?hl=en&gbpv=0
+            
+        - b2:
+            title: MySQL Stored Procedure Programming 
+            url: https://www.google.co.in/books/edition/MySQL_Stored_Procedure_Programming/YpeP0ok0cO4C?hl=en&gbpv=0
 ---
 
 # Functions and Procedures
