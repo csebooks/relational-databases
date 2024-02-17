@@ -1,6 +1,20 @@
 ---
 title: 'Integrity Constraints'
 weight: 4
+references:
+    videos:
+        - youtube:iwR9XNuLojs
+        - youtube:rnGeA8C6-K4
+    links:
+        - https://www.javatpoint.com/dbms-integrity-constraints
+        - https://www.javatpoint.com/dbms-integrity-constraints
+    books:
+        - b1:
+            title: Database Integrity
+            url: https://www.google.co.in/books/edition/Database_Integrity_Challenges_and_Soluti/fJWncL6mjnwC?hl=en&gbpv=0
+        - b2:
+           title: Principles of Data Management
+            url: https://www.google.co.in/books/edition/Principles_of_Data_Management/o9UlnQEACAAJ?hl=en
 ---
 
 # Integrity Constraints
