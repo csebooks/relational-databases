@@ -1,6 +1,20 @@
 ---
 title: 'Alternative Notations for Modeling Data'
 weight: 9
+references:
+    videos:
+        - youtube:hFLhRPoYvi4
+        - youtube:20cR-6rD8DU
+    links:
+        - https://runestone.academy/ns/books/published/practical_db/PART2_DATA_MODELING/04-other-notations/other-notations.html
+        - https://www.javatpoint.com/dbms-notation-of-er-diagram
+    books:
+        - b1:
+            title: Database Systems Concepts
+            url: https://www.google.co.in/books/edition/eBook_Database_Systems_Concepts_6e/b6RvEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: The Data Model Resource Book 
+            url: https://www.google.co.in/books/edition/The_Data_Model_Resource_Book/nUDIpjUb0ZMC?hl=en&gbpv=0
 ---
 
 # Alternative Notations for Modeling Data
