@@ -1,6 +1,20 @@
 ---
 title: Overview of the Design Process
 weight: 1
+references:
+    videos:
+        - youtube:ljkwQYn2KBA
+        - youtube:4eepgIo-8Cw
+    links:
+        - https://proximityschool.com/learn/design-process/
+        - https://www.sciencedirect.com/topics/engineering/design-process
+    books:
+        - b1:
+            title: Design Process Improvement 
+            url: https://www.google.co.in/books/edition/Design_Process_Improvement/A3EvmUT_PVYC?hl=en&gbpv=0
+        - b2:
+           title:  The Design Process
+            url: https://www.google.co.in/books/edition/The_Design_Process/afY4EAAAQBAJ?hl=en
 ---
 
 # Overview of the Design Process
