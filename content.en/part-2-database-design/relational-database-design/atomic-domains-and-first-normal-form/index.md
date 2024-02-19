@@ -1,6 +1,20 @@
 ---
 title: 'Atomic Domains and First Normal Form'
 weight: 2
+references:
+    videos:
+        - youtube:zh_adTKmTCg
+        - youtube:DqQ0CZdE8Bc
+    links:
+        - https://www.sciencedirect.com/topics/computer-science/first-normal-form#:~:text=First%20Normal%20Form-,A%20relation%20is%20in%20first%20normal%20form%20(abbreviated%20INF)%20if,functionally%20dependent%20on%20the%20key.
+        - https://www.geeksforgeeks.org/first-normal-form-1nf/
+    books:
+        - b1:
+            title: Database System Concepts
+            url: https://www.google.co.in/books/edition/Database_System_Concepts/HlBGAQAAIAAJ?hl=en&gbpv=0&bsq=Atomic%20Domains%20and%20First%20Normal%20Form%20book
+        - b2:
+            title: Database in Depth
+            url: https://www.google.co.in/books/edition/Database_in_Depth/TR8f5dtnC9IC?hl=en&gbpv=0
 ---
 
 # Atomic Domains and First Normal Form
