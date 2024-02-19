@@ -1,6 +1,20 @@
 ---
 title: 'Modeling Temporal Data'
 weight: 9
+references:
+    videos:
+        - youtube:iH-y_IGhBhI
+        - youtube:CbDBjfey6Jc
+    links:
+        - https://www.ibm.com/docs/en/ida/9.1?topic=modeling-temporal-data
+        - https://www.geeksforgeeks.org/introduction-to-temporal-database/
+    books:
+        - b1:
+            title: Temporal Data & the Relational Model 
+            url: https://www.google.co.in/books/edition/Temporal_Data_the_Relational_Model/rer2vXmt5ecC?hl=en&gbpv=0
+        - b2:
+            title: Statistics for Spatio-Temporal Data
+            url: https://www.google.co.in/books/edition/Statistics_for_Spatio_Temporal_Data/4L_dCgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Modeling Temporal Data
