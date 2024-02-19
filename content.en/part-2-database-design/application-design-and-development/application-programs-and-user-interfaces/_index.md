@@ -1,6 +1,20 @@
 ---
 title: 'Application Programs and User Interfaces'
 weight: 1
+references:
+    videos:
+        - youtube:596A-mhzWQU
+        - youtube:Ky_80dA7mD0
+    links:
+        - https://documentation.softwareag.com/natural/nat911mf/pg/pg_user_interfaces.htm
+        - https://www.browserstack.com/guide/what-is-user-interface
+    books:
+        - b1:
+            title: Programming the User Interface
+            url: https://www.google.co.in/books/edition/Programming_the_User_Interface/vphQAAAAMAAJ?hl=en&gbpv=0&bsq=Application%20Programs%20and%20User%20Interfaces%20books
+        - b2:
+            title: User Interface Design for Programmers
+            url: https://www.google.co.in/books/edition/User_Interface_Design_for_Programmers/V0QnCgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Application Programs and User Interfaces
