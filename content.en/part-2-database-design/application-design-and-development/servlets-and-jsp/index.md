@@ -1,6 +1,20 @@
 ---
 title: 'Servlets and JSP'
 weight: 3
+references:
+    videos:
+        - youtube:OuBUUkQfBYM
+        - youtube:7AIjcZMo-V4
+    links:
+        - https://www.geeksforgeeks.org/difference-between-servlet-and-jsp/
+        - https://www.upgrad.com/blog/jsp-vs-servlet/
+    books:
+        - b1:
+            title: JSP and SERVLETS
+            url: https://www.google.co.in/books/edition/JSP_and_SERVLETS/w5iBIRflD0gC?hl=en&gbpv=0
+        - b2:
+            title: Head First Servlets and JSP
+            url: https://www.google.co.in/books/edition/Head_First_Servlets_and_JSP/Xh53CwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Servlets and JSP
