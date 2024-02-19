@@ -1,6 +1,20 @@
 ---
 title: 'Application Security'
 weight: 7
+references:
+    videos:
+        - youtube:nthEXs12nFE
+        - youtube:Dp019cWu1cg
+    links:
+        - https://www.vmware.com/in/topics/glossary/content/application-security.html#:~:text=READ%20MORE-,Application%20security%20definition,as%20unauthorized%20access%20and%20modification.
+        - https://www.imperva.com/learn/application-security/application-security/
+    books:
+        - b1:
+            title: Web Application Security
+            url: https://www.google.co.in/books/edition/Web_Application_Security/3R3UDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Web Application Security, A Beginner's Guide
+            url: https://www.google.co.in/books/edition/Web_Application_Security_A_Beginner_s_Gu/uQkLr5ZnSmUC?hl=en&gbpv=0
 ---
 
 # Application Security
