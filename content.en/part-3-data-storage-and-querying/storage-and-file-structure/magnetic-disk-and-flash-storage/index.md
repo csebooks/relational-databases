@@ -1,6 +1,20 @@
 ---
 title: 'Magnetic Disk and Flash Storage'
 weight: 2
+references:
+    videos:
+        - youtube:m1oNigNpT5M
+        - youtube:Cj1uuVvd0s4
+    links:
+        - https://www.geeksforgeeks.org/magnetic-disk-memory/
+        - https://www.techopedia.com/definition/8210/magnetic-disk
+    books:
+        - b1:
+            title: Magnetic Disk Drive Technology
+            url: https://www.google.co.in/books/edition/Magnetic_Disk_Drive_Technology/WKEeAQAAIAAJ?hl=en&gbpv=0&bsq=Magnetic%20Disk%20and%20Flash%20Storage%20book
+        - b2:
+            title: Magnetic Information Storage Technology
+            url: https://www.google.co.in/books/edition/Magnetic_Information_Storage_Technology/wvYmTN9CL0IC?hl=en&gbpv=0
 ---
 
 # Magnetic Disk and Flash Storage
