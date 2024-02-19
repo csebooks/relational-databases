@@ -1,6 +1,20 @@
 ---
 title: 'Application Architectures'
 weight: 4
+references:
+    videos:
+        - youtube:iyES7UwJfvw
+        - youtube:dwGuLC98hS4
+    links:
+        - https://www.redhat.com/en/topics/cloud-native-apps/what-is-an-application-architecture
+        - https://www.techtarget.com/searchapparchitecture/definition/application-architecture
+    books:
+        - b1:
+            title: Patterns of Enterprise Application Architecture
+            url: https://www.google.co.in/books/edition/Patterns_of_Enterprise_Application_Archi/vqTfNFDzzdIC?hl=en&gbpv=0
+        - b2:
+            title: Web Application Architecture 
+            url: https://www.google.co.in/books/edition/Web_Application_Architecture/gcHJQwAACAAJ?hl=en
 ---
 
 # Application Architectures
