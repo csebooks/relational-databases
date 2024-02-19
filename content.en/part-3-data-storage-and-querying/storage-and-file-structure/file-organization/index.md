@@ -1,6 +1,20 @@
 ---
 title: 'File Organization'
 weight: 5
+references:
+    videos:
+        - youtube:bvoJI7WKBbc
+        - youtube:GyQv5P_HHcc
+    links:
+        - https://www.sciencedirect.com/topics/computer-science/tertiary-storage
+        - https://www.geeksforgeeks.org/tertiary-storage-in-operating-system/
+    books:
+        - b1:
+            title: FILE ORGANIZATION AND PROCESSING
+            url: https://www.google.co.in/books/edition/FILE_ORGANIZATION_AND_PROCESSING/AtK6ARcRjVQC?hl=en&gbpv=0
+        - b2:
+            title: File Systems
+            url: https://www.google.co.in/books/edition/File_Systems/RfWyAAAAIAAJ?hl=en&gbpv=0&bsq=File%20Organization%20book
 ---
 
 # File Organization
