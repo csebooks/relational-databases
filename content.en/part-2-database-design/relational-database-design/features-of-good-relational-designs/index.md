@@ -1,6 +1,20 @@
 ---
 title: 'Features of Good Relational Designs'
 weight: 1
+references:
+    videos:
+        - youtube:_0SO1ovwYiM
+        - youtube:PYEqUCl3RBk
+    links:
+        - https://www.salesforce.com/eu/blog/what-is-a-relational-database/
+        - https://web.mit.edu/11.521/www/lectures/lecture10/lec_data_design.html
+    books:
+        - b1:
+            title: Relational Database Design and Implementation
+            url: https://www.google.co.in/books/edition/Relational_Database_Design_and_Implement/O3Qdc2yb_JoC?hl=en&gbpv=0
+        - b2:
+            title: Relational Database Design
+            url: https://www.google.co.in/books/edition/Relational_Database_Design_Clearly_Expla/TwtA-uouTQkC?hl=en&gbpv=0
 ---
 
 # Features of Good Relational Designs
