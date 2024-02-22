@@ -1,6 +1,20 @@
 ---
 title: 'B+-Tree Extensions'
 weight: 4
+references:
+    videos:
+        - youtube:aZjYr87r1b8
+        - youtube:tGtT7VNuqdI
+    links:
+        - https://www.javatpoint.com/b-plus-tree
+        - https://www.geeksforgeeks.org/introduction-of-b-tree/
+    books:
+        - b1:
+            title: SQLite Database System
+            url: https://www.google.co.in/books/edition/SQLite_Database_System_Design_and_Implem/9Z6IQQnX1JEC?hl=en&gbpv=0
+        - b2:
+           title: Latest Trends of Information Technology
+            url: https://www.google.co.in/books/edition/Latest_Trends_of_Information_Technology/G_-jDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # B+-Tree Extensions
