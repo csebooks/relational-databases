@@ -1,6 +1,20 @@
 ---
 title: 'Transaction Isolation'
 weight: 5
+references:
+    videos:
+        - youtube:gxyut1VLcs
+        - youtube:G8wDjV0N9tk
+    links:
+        - https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
+        - https://www.javatpoint.com/transaction-isolation-levels-in-dbms
+    books:
+        - b1:
+            title: Expert SQL Server Transactions and Locking
+            url: https://www.google.co.in/books/edition/Expert_SQL_Server_Transactions_and_Locki/J6lxDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Principles of Transaction Processing
+            url: https://www.google.co.in/books/edition/Principles_of_Transaction_Processing/LmHgK5KKrQQC?hl=en&gbpv=0
 ---
 
 # Transaction Isolation
