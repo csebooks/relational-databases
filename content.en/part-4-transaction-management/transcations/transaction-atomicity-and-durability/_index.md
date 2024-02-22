@@ -1,6 +1,20 @@
 ---
 title: 'Transaction Atomicity and Durability'
 weight: 4
+references:
+    videos:
+        - youtube:vzmNlm8xLIY
+        - youtube:vzmNlm8xLIY
+    links:
+        - https://www.geeksforgeeks.org/how-to-im/plement-atomicity-and-durability-in-transactions-in-dbms
+        - https://www.javatpoint.com/implementation-of-atomicity-and-durability-in-dbms
+    books:
+        - b1:
+            title: Transactional Information Systems 
+            url: https://www.google.co.in/books/edition/Transactional_Information_Systems/wV5Ran71zNoC?hl=en&gbpv=0
+        - b2:
+            title: Databases and Transaction Processing 
+            url: https://www.google.co.in/books/edition/Databases_and_Transaction_Processing/o6ySAAAACAAJ?hl=en
 ---
 
 # Transaction Atomicity and Durability
