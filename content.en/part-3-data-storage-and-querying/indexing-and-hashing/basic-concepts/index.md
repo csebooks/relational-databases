@@ -1,6 +1,21 @@
 ---
 title: 'Basic Concepts'
 weight: 1
+references:
+    videos:
+        - youtube:E--yzX05_k8
+        - youtube:4UrPTAsVo88
+    links:
+        - https://www.basicconcepts.co.za/basic-concepts-programme/what-are-basic-concepts
+        - https://kidtherapy.org/helpful-articles/basic-concepts-what-are-they-and-why-are-they-important/
+    books:
+        - b1:
+            title: Indexing on Non-Volatile Memory
+            url: https://www.google.co.in/books/edition/Indexing_on_Non_Volatile_Memory/mmrmEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Hashing in Computer Science
+            url: https://www.google.co.in/books/edition/Hashing_in_Computer_Science/mU6fpT1sXCoC?hl=en&gbpv=0
+            
 ---
 
 # Basic Concepts
