@@ -1,6 +1,20 @@
 ---
 title: 'Serializability'
 weight: 6
+references:
+    videos:
+        - youtube:xWV1z5Du8N0
+        - youtube:bjy-lxWdcqw
+    links:
+        - https://jepsen.io/consistency/models/serializable#:~:text=Informally%2C%20serializability%20means%20that%20transactions,sub%2Doperations%20performed%20in%20order.
+        - https://www.geeksforgeeks.org/serializability-in-dbms/
+    books:
+        - b1:
+            title: Serialization and Persistent Objects
+            url: https://www.google.co.in/books/edition/Serialization_and_Persistent_Objects/DHDABAAAQBAJ?hl=en&gbpv=1&dq=Serializability+books&pg=PA20&printsec=frontcover
+        - b2:
+            title: Java 6 Programming Black Book, New Ed
+            url: https://www.google.co.in/books/edition/Java_6_Programming_Black_Book_New_Ed/SSyuJa04uv8C?hl=en&gbpv=0
 ---
 
 # Serializability
