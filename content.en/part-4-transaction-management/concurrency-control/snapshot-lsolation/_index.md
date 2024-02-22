@@ -1,6 +1,20 @@
 ---
 title: 'Snapshot Isolation' 
 weight: 7
+references:
+    videos:
+        - youtube: 9NVu17LjPSA
+        -  youtube:fLEztcGPUA
+    links:
+        - https://en.wikipedia.org/wiki/Snapshot_isolation
+        - https://www.geeksforgeeks.org/what-is-snapshot-isolation/
+    books:
+        - b1:
+            title: Sql Server 2005 Black Book
+            url: https://www.google.co.in/books/edition/Sql_Server_2005_Black_Book_New_Ed_With_C/Klj20GNs5egC?hl=en&gbpv=0
+        - b2:
+            title: Microsoft SQL Server Notes for Professionals book
+            url: https://www.google.co.in/books/edition/Microsoft_SQL_Server_Notes_for_Professio/1deyEAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Snapshot Isolation
