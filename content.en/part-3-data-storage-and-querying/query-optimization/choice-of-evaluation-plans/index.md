@@ -1,6 +1,20 @@
 ---
 title: 'Choice of Evaluation Plans'
 weight: 4
+references:
+    videos:
+        - youtube:zRkEYijGTto
+        - youtube:lVObpKtlf3M
+    links:
+        - https://tutorialcup.com/dbms/choice-of-evaluation-plans.htm
+        - https://www.oreilly.com/library/view/database-systems-concepts/9788177585674/9788177585674_ch11lev1sec8.html
+    books:
+        - b1:
+            title: Database Systems
+            url: https://www.google.co.in/books/edition/Database_Systems/9m382yDgxRsC?hl=en&gbpv=0
+        - b2:
+           title: Monitoring and Evaluation Training 
+            url: https://www.google.co.in/books/edition/Monitoring_and_Evaluation_Training/DKC9CgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Choice of Evaluation Plans
