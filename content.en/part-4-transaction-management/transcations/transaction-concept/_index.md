@@ -1,6 +1,20 @@
 ---
 title: 'Transaction Concept'
 weight: 1
+references:
+    videos:
+        - youtube: EJr2xrDI1QU
+        - youtube:eYQwKi7P8MM
+    links:
+        - https://www.google.com/search?q=Transaction+Concept&oq=Transaction+Concept&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQABiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDINCAgQABiGAxiABBiKBTINCAkQABiGAxiABBiKBdIBCDEwMDZqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8
+        - https://www.geeksforgeeks.org/transaction-in-dbms/
+    books:
+        - b1:
+            title: Transaction Processing
+            url:  https://www.google.co.in/books/edition/Transaction_Processing/S_yHERPRZScC?hl=en
+        - b2:
+            title: Principles of Transaction Processing l
+            url: https://www.google.co.in/books/edition/Principles_of_Transaction_Processing/LmHgK5KKrQQC?hl=en&gbpv=0
 ---
 
 # Transaction Concept
