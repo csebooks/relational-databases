@@ -1,6 +1,20 @@
 ---
 title: 'Lock-Based Protocols' 
 weight: 1
+references:
+    videos:
+        - youtube:a74V14OnDvw
+        - youtube:s1YEg1L0sH0
+    links:
+        - https://www.javatpoint.com/dbms-lock-based-protocol
+        - https://www.geeksforgeeks.org/lock-based-concurrency-control-protocol-in-dbms/
+    books:
+        - b1:
+            title: Transaction Processing 
+            url: https://www.google.co.in/books/edition/Transaction_Processing/TN1sBgAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Transactional Information Systems 
+            url: https://www.google.co.in/books/edition/Transactional_Information_Systems/wV5Ran71zNoC?hl=en&gbpv=0
 ---
 
 # Lock-Based Protocols
