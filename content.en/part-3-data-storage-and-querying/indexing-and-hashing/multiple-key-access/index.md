@@ -1,6 +1,20 @@
 ---
 title: 'Multiple-Key Access'
 weight: 5
+references:
+    videos:
+        - youtube:PL8erdW83Cc
+        - youtube:PL8erdW83Cc
+    links:
+        - https://tutorialcup.com/dbms/multiple-key-access.htm
+        - https://en.wikipedia.org/wiki/Multi-access_key
+    books:
+        - b1:
+            title: Introduction to Database Systems
+            url: https://www.google.co.in/books/edition/Introduction_to_Database_Systems/-YY-BAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: File structures with Ada
+            url: https://www.google.co.in/books/edition/File_Structures_with_Ada/sfYmAAAAMAAJ?hl=en&gbpv=0&bsq=Multiple-Key%20Access%20books
 ---
 
 # Multiple-Key Access
