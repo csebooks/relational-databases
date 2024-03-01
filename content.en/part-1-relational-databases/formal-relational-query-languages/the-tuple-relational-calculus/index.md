@@ -1,6 +1,20 @@
 ---
 title: 'The Tuple Relational Calculus'
 weight: 2
+references:
+    videos:
+        - youtube:4xb6ODQ9XFM
+        - youtube:WGAae0B-3gg
+    links:
+        - https://www.geeksforgeeks.org/tuple-relational-calculus-trc-in-dbms/
+        - https://www.javatpoint.com/dbms-relational-calculus
+    books:
+        - b1:
+            title: Introduction to Database Systems
+            url: https://www.google.co.in/books/edition/Introduction_to_Database_Systems/-YY-BAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Database Management Systems
+            url: https://www.google.co.in/books/edition/Database_Management_Systems/emI8BAAAQBAJ?hl=en&gbpv=0
 ---
 ##
 # The Tuple Relational Calculus

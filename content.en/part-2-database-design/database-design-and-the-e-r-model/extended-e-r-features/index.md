@@ -1,6 +1,20 @@
 ---
 title: 'Extended E-R Features'
 weight: 8
+references:
+    videos:
+        - youtube:20WU801_KXw
+        - youtube:mNW_BDkU9SM
+    links:
+        - https://www.geeksforgeeks.org/enhanced-er-model/
+        - https://www.javatpoint.com/enhanced-er-model
+    books:
+        - b1:
+            title: Entity-Relationship Modeling
+            url: https://www.google.co.in/books/edition/Entity_Relationship_Modeling/ztioCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: An Extended Entity-Relationship Model
+            url: https://www.google.co.in/books/edition/An_Extended_Entity_Relationship_Model/iP8NJ9UbZasC?hl=en
 ---
 
 # Extended E-R Features

@@ -1,7 +1,21 @@
 ---
 title: Nested Subqueries
 weight: 8
----
+references:
+    videos:
+        - youtube:ffd-Mw7A9ew
+        - youtube:lBpSMeQjNqQ
+    links:
+        - https://www.geeksforgeeks.org/nested-queries-in-sql/
+        - https://learnsql.com/blog/sql-nested-select/
+    books:
+        - b1:
+            title: Query Processing in Database Systems
+            url: https://www.google.co.in/books/edition/Query_Processing_in_Database_Systems/AOGpCAAAQBAJ?hl=en&gbpv=0
+            
+        - b2:
+            title: MySQL Reference Manual 
+            url: https://www.google.co.in/books/edition/MySQL_Reference_Manual/9c-pkLaNmqoC?hl=en&gbpv=0
 
 # Nested Subqueries
 

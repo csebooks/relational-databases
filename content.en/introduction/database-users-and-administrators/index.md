@@ -1,6 +1,22 @@
 ---
 title: 'Database Users and Administrators'
 weight: 13
+references:
+    videos:
+        - youtube:c9zR90MU51s
+        - youtube:RsQzWG7ePUA
+    links:
+        - https://www.techantena.com/4405/database-users-and-administrators/
+        - https://tutorialcup.com/dbms/database-users-administrators.htm
+    books:
+        - b1:
+            title: Database Administration     
+            url: https://www.google.co.in/books/edition/Database_Administration/KVHUbiSMYjAC?hl=en&gbpv=1&dq=database+users+and+administrators&printsec=frontcover
+            
+        - b2:
+            title: Pro Oracle Database 18c Adminisration 
+            url: https://www.google.co.in/books/edition/Pro_Oracle_Database_18c_Administration/pa6PDwAAQBAJ?hl=en&gbpv=1&dq=database+users+and+administrators&printsec=frontcover
+
 ---
 
 # Database Users and Administrators

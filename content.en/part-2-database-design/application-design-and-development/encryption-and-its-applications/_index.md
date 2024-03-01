@@ -1,6 +1,20 @@
 ---
 title: 'Encryption and Its Applications'
 weight: 8
+references:
+    videos:
+        - youtube:LA3fah6i-4A
+        - youtube:hAIbp4ZIlto
+    links:
+        - https://www.techtarget.com/searchsecurity/definition/encryption
+        - https://www.techtarget.com/searchsecurity/definition/encryption
+    books:
+        - b1:
+            title: Homomorphic Encryption and Applications
+            url: https://www.google.co.in/books/edition/Homomorphic_Encryption_and_Applications/OgA6BQAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Functional Encryption
+            url: https://www.google.co.in/books/edition/Functional_Encryption/tRszEAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Encryption and Its Applications

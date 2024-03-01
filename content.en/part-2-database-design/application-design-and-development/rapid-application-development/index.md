@@ -1,6 +1,20 @@
 ---
 title: 'Rapid Application Development'
 weight: 5
+references:
+    videos:
+        - youtube:yngKRepAgSg
+        - youtube:G9V4-YBIb-E
+    links:
+        - https://www.outsystems.com/tech-hub/app-dev/what-is-rapid-app-development/#:~:text=Rapid%20application%20development%20is%20an,rapid%20prototyping%20over%20costly%20planning.
+        - https://kissflow.com/application-development/rad/rapid-application-development/
+    books:
+        - b1:
+            title: Rapid Application Development
+            url: https://www.google.co.in/books/edition/Rapid_Application_Development/o6FQAAAAMAAJ?hl=en&gbpv=0&bsq=Rapid%20Application%20Development%20book
+        - b2:
+            title: Rapid Development
+            url: https://www.google.co.in/books/edition/Rapid_Development/bp5CAwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Rapid Application Development

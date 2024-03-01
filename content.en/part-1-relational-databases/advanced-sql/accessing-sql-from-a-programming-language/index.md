@@ -1,6 +1,21 @@
 ---
 title: 'Accessing SQL From a Programming Language'
 weight: 1
+references:
+    videos:
+        - youtube:zrNHkRgWzTI
+        - youtube:wzdCpJY6Y4c
+    links:
+        - https://vikram-bajaj.gitbook.io/cs-gy-6083-principles-of-database-systems/sql/advanced-sql/accessing-sql-from-a-programming-language
+        - https://www.slideshare.net/SeyyedShayanDaneshva/advanced-sql-database-access-from-programming-languages
+    books:
+        - b1:
+            title: Access database design and programming
+            url: https://www.google.co.in/books/edition/Access_Database_Design_Programming/0mv0geyQuQUC?hl=en&gbpv=0
+            
+        - b2:
+            title: Learn SQL Database Programming 
+            url: https://www.google.co.in/books/edition/Learn_SQL_Database_Programming/94LoDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Accessing SQL From a Programming Language

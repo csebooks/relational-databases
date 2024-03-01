@@ -1,6 +1,20 @@
 ---
 title: 'The Domain Relational Calculus'
 weight: 3
+references:
+    videos:
+        - youtube:yWlVeXEl344
+        - youtube:wtAuIBxd3Bw
+    links:
+        - https://www.geeksforgeeks.org/domain-relational-calculus-in-dbms/
+        - https://www.javatpoint.com/dbms-relational-calculus
+    books:
+        - b1:
+            title: Fundamentals of relational database management systems
+            url: https://www.google.co.in/books/edition/Fundamentals_of_Relational_Database_Mana/MQNtCQAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Introduction to Database Systems
+            url: https://www.google.co.in/books/edition/Introduction_to_Database_Systems/-YY-BAAAQBAJ?hl=en&gbpv=0
 ---
 
 # The Domain Relational Calculus

@@ -1,6 +1,20 @@
 ---
 title: 'Database Architecture'
 weight: 9
+references:
+    videos:
+        - youtube:8_W5JT7Jz2Y
+        - youtube:CZfmqC9dMJA
+    links:
+        - https://www.geeksforgeeks.org/dbms-architecture-2-level-3-level/
+        - https://www.javatpoint.com/dbms-architecture
+    books:
+        - b1:
+            title:Architecture of a Database
+            url: https://www.google.co.in/books/edition/Architecture_of_a_Database_System/aBPcm3C1avMC?hl=en&gbpv=1&dq=database+architecture+books&printsec=frontcover
+        - b2:
+            title: Real-Time Database Systems
+            url: https://www.google.co.in/books/edition/Real_Time_Database_Systems/PM0RBwAAQBAJ?hl=en&gbpv=1&dq=database+architecture+books&printsec=frontcover
 ---
 
 # Database Architecture

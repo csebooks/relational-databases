@@ -1,6 +1,20 @@
 ---
 title: 'The Relational Algebra'
 weight: 1
+references:
+    videos:
+        - youtube:76v3gRns28U
+        - youtube:KaIRmVD-v3U
+    links:
+        - https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/
+        - https://www.javatpoint.com/dbms-relational-algebra
+    books:
+        - b1:
+            title: Database Management Systems 
+            url: https://www.google.co.in/books/edition/Database_Management_Systems/mK4COraJvlIC?hl=en&gbpv=0
+        - b2:
+            title: SQL and Relational Theory
+            url: https://www.google.co.in/books/edition/SQL_and_Relational_Theory/Ew06OZtjuJEC?hl=en&gbpv=0
 ---
 
 # The Relational Algebra

@@ -1,6 +1,20 @@
 ---
 title: 'Decomposition Using Functional Dependencies'
 weight: 3
+references:
+    videos:
+        - youtube:9HlEIu4MRLA
+        - youtube:UlgEHaEjg3o
+    links:
+        - https://www.javatpoint.com/dbms-relational-decomposition
+        - https://www.geeksforgeeks.org/properties-of-relational-decomposition/
+    books:
+        - b1:
+            title: Databases Illuminated
+            url: https://www.google.co.in/books/edition/Databases_Illuminated/fED7PwOoMCkC?hl=en&gbpv=0
+        - b2:
+            title: Fundamentals of Database Systems 
+            url: https://www.google.co.in/books/edition/Fundamentals_of_Database_Systems/v_j0CSS3m7MC?hl=en&gbpv=0
 ---
 
 # Decomposition Using Functional Dependencies

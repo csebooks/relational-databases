@@ -1,6 +1,20 @@
 ---
 title: 'Web Fundamentals'
 weight: 2
+references:
+    videos:
+        - youtube:kmvg9C8hVa0
+        - youtube:0ykAOzJb-U8
+    links:
+        - https://runestone.academy/ns/books/published/webfundamentals/index.html
+        - https://tryhackme.com/path/outline/web
+    books:
+        - b1:
+            title: Fundamentals of Web Development
+            url: https://www.google.co.in/books/edition/Fundamentals_of_Web_Development/Ve6DngEACAAJ?hl=en
+        - b2:
+            title: Practical Web Development
+            url: https://www.google.co.in/books/edition/Practical_Web_Development/ULRJCgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Web Fundamentals

@@ -1,6 +1,20 @@
 ---
 title: 'Application Performance'
 weight: 6
+references:
+    videos:
+        - youtube:oZiBqPApLgY
+        - youtube:COk8j8XFv3c
+    links:
+        - https://www.dynatrace.com/monitoring/platform/application-performance-monitoring/?utm_source=google&utm_medium=cpc&utm_term=apm%20application%20performance%20monitoring&utm_campaign=in-apm-application-performance-management&utm_content=none&utm_campaign_id=16272465115&gclsrc=aw.ds&gad_source=1&gclid=CjwKCAiA8sauBhB3EiwAruTRJlPTnbKo-NnJTIZXeIhdeA0UXpMj72hcfsIGuEEJfJtQ0HZbFJilvxoCm6EQAvD_BwE
+        - https://www.ibm.com/topics/application-performance-management
+    books:
+        - b1:
+            title: Application Performance Management
+            url: https://www.google.co.in/books/edition/Application_Performance_Management_APM_i/dZtWvgAACAAJ?hl=en
+        - b2:
+            title: The Art of Application Performance Testing
+            url: https://www.google.co.in/books/edition/The_Art_of_Application_Performance_Testi/187UBQAAQBAJ?hl=en&gbpv=0
 ---
 
 # Application Performance

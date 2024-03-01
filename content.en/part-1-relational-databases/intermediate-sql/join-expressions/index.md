@@ -1,6 +1,21 @@
 ---
 title: Join Expressions
 weight: 1
+references:
+    videos:
+        - youtube:hIh5-Y1QwFw
+        - youtube:Yh4CrPHVBdE
+    links:
+        - https://www.geeksforgeeks.org/joins-in-dbms/
+        - https://www.javatpoint.com/dbms-sql-joins
+    books:
+        - b1:
+            title: Learning SQL on SQL Server
+            url: https://www.google.co.in/books/edition/Learning_SQL_on_SQL_Server_2005/RKt53NmLZiwC?hl=en&gbpv=0
+            
+        - b2:
+            title: Practical SQL 
+            url: https://www.google.co.in/books/edition/Practical_SQL/jrgrDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Join Expressions
