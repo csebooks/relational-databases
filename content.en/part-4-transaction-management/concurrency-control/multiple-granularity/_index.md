@@ -1,6 +1,20 @@
 ---
 title: 'Multiple Granularity' 
 weight: 3
+references:
+    videos:
+        - youtube:qK3qohb2XU4
+        - youtube:YmfjxA52Zy8
+    links:
+        - https://www.geeksforgeeks.org/multiple-granularity-locking-in-dbms/
+        - https://www.javatpoint.com/dbms-multiple-granularity
+    books:
+        - b1:
+            title: Granular Computing and Intelligent Systems 
+            url: https://www.google.co.in/books/edition/Granular_Computing_and_Intelligent_Syste/p-SERlncWCMC?hl=en&gbpv=0
+        - b2:
+            title: Novel Developments in Granular Computing 
+            url: https://www.google.co.in/books/edition/Novel_Developments_in_Granular_Computing/gw_iLzj36qgC?hl=en&gbpv=0
 ---
 
 # Multiple Granularity

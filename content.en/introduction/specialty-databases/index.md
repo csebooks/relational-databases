@@ -1,6 +1,20 @@
 ---
 title: 'Specialty Databases'
 weight: 11
+references:
+    videos:
+        - youtube:4_vsGgy9cGs
+        - youtube:hRzrAXmCNFk&t=20s
+    links:
+        - https://www.geeksforgeeks.org/specialty-databases/
+        - https://www.ttuhsc.edu/libraries/documents/information-literacy/specialized-databases.pdf
+    books:
+        - b1:
+            title: Database - Speciality
+            url: https://www.amazon.in/AWS-Certified-Database-Certification-comprehensive/dp/1803243104
+        - b2:
+            title: Speciality cirtification guide
+            url:   https://www.google.co.in/books/edition/AWS_Certified_Database_Specialty_DBS_C01/vNNsEAAAQBAJ?hl=en&gbpv=1&dq=Speciality+database+book&printsec=frontcover
 ---
 
 # Specialty Databases

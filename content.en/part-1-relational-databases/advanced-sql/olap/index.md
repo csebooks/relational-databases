@@ -1,6 +1,20 @@
 ---
 title: 'OLAP'
 weight: 6
+references:
+    videos:
+        - youtube:NuVAgAgemGI
+        - youtube:ul5Dk7bK5uA
+    links:
+        - https://www.techtarget.com/searchdatamanagement/definition/OLAP
+        - https://www.javatpoint.com/what-is-olap
+    books:
+        - b1:
+            title: Data Warehouses and OLAP
+            url: https://www.google.co.in/books/edition/Data_Warehouses_and_OLAP/XFivorxZDm8C?hl=en&gbpv=1&dq=OLAP+book&printsec=frontcover
+        - b2:
+            title: OLAP Solution
+            url: :https://www.google.co.in/books/edition/OLAP_Solutions/eskZA1CFdqMC?hl=en&gbpv=1&dq=OLAP+book&printsec=frontcover
 ---
 
 # OLAP

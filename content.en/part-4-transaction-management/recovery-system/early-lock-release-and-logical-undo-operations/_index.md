@@ -1,6 +1,20 @@
 ---
 title: 'Early Lock Release and Logical Undo Operations'
 weight: 7
+references:
+    videos:
+        - youtube:Vhumg6jClM0
+        - youtube:JAMRnR1dkQc
+    links:
+        - https://text-id.123dok.com/document/ky6l341gy-early-lock-release-and-logical-undo-operations-indian-institute-of-technology-bombay.html
+        - https://ayende.com/blog/165090/early-lock-release-transactions-and-errors
+    books:
+        - b1:
+            title: Oracle Essentials 
+            url: https://www.google.co.in/books/edition/Oracle_Essentials/oSKwAAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: VLDB '95
+            url:  https://www.google.co.in/books/edition/VLDB_95/QlI_AQAAIAAJ?hl=en&gbpv=0&bsq=Early%20Lock%20Release%20and%20Logical%20Undo%20Operations%20books
 ---
 
 # Early Lock Release and Logical Undo Operations

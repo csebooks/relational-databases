@@ -1,6 +1,20 @@
 ---
 title: 'Timestamp-Based Protocols' 
 weight: 4
+references:
+    videos:
+        - youtube:aeykOjWjT5Q
+        - youtube:tskULH6YV2Q
+    links:
+        - https://www.javatpoint.com/dbms-timestamp-ordering-protocol
+        - https://www.geeksforgeeks.org/timestamp-based-concurrency-control/
+    books:
+        - b1:
+            title: GATE 2019 Computer Science & Information Technology 
+            url: https://www.google.co.in/books/edition/GATE_2019_Computer_Science_Information_T/9-t1DwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Hands On Relational Database Management System 
+            url: https://www.google.co.in/books/edition/Hands_On_Relational_Database_Management/7QNuDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Timestamp-Based Protocols

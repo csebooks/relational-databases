@@ -1,6 +1,20 @@
 ---
 title: 'Insert Operations, Delete Operations, and Predicate Reads' 
 weight: 8
+references:
+    videos:
+        - youtube:ESD8mE1zSy4
+        - youtube:j7Ty7FQnH5A
+    links:
+        - https://www.geeksforgeeks.org/predicate-locking/
+        - https://www.tutorialspoint.com/other-concurrency-control-issues
+    books:
+        - b1:
+            title: Advances in Database Technology 
+            url: https://www.google.co.in/books/edition/Advances_in_Database_Technology_EDBT_94/YBnHy2a_C2UC?hl=en&gbpv=0
+        - b2:
+            title: Readings in Object-Oriented Database Systems  
+            url: https://www.google.co.in/books/edition/Readings_in_Object_Oriented_Database_Sys/vdHATYxBA5sC?hl=en&gbpv=0 
 ---
 
 # Insert Operations, Delete Operations, and Predicate Reads

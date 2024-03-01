@@ -1,6 +1,20 @@
 ---
 title: 'Recovery Algorithm'
 weight: 4
+references:
+    videos:
+        - youtube:LbbhaybYc5A
+        - youtube:HnVo3_iH76w
+    links:
+        - https://www.geeksforgeeks.org/log-based-recovery-in-dbms/
+        - https://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics
+    books:
+        - b1:
+            title: Algorithms for Structured Signal Recovery 
+            url: https://www.google.co.in/books/edition/Turbo_Message_Passing_Algorithms_for_Str/IO8CEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Transactional Information Systems
+            url: https://www.google.co.in/books/edition/Transactional_Information_Systems/wV5Ran71zNoC?hl=en&gbpv=0
 ---
 
 # Recovery Algorithm

@@ -1,6 +1,20 @@
 ---
 title: 'Failure Classification'
 weight: 1
+references:
+    videos:
+        - youtube:U__Io4IgWIo
+        - youtube:zEcLqV-Zd28
+    links:
+        - https://www.geeksforgeeks.org/failure-classification-in-dbms/
+        - https://www.javatpoint.com/dbms-failure-classification
+    books:
+        - b1:
+            title: Database Management Systems
+            url: https://www.google.co.in/books/edition/UGC_NET_unit_4_COMPUTER_SCIENCE_Database/9iWGEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Fault-Tolerant Systems 
+            url:  https://www.google.co.in/books/edition/Fault_Tolerant_Systems/o_Pjbo4Wvp8C?hl=en&gbpv=0
 ---
 
 #  Failure Classification

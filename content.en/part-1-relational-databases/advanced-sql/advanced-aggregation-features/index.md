@@ -1,6 +1,20 @@
 ---
 title: 'Advanced Aggregation Features'
 weight: 5
+references:
+    videos:
+        - youtube:nNrgRVIzeHg
+        - youtube:nNrgRVIzeHg
+    links:
+        - https://mode.com/sql-tutorial/sql-aggregate-functions
+        - https://www.sqlcourse.com/advanced-course/aggregate-functions/
+    books:
+        - b1:
+            title: Mastering Oracle SQL 
+            url: https://www.google.co.in/books/edition/Mastering_Oracle_SQL/Rl2_4LhDjZkC?hl=en&gbpv=1&dq=advanced+aggregation+features+in+sql&printsec=frontcover
+        - b2:
+            title: Oracle SLQ by Example 
+            url: https://www.google.co.in/books/edition/Oracle_SQL_By_Example/8Kk05fYPs7AC?hl=en&gbpv=1&dq=advanced+aggregation+features+in+sql&pg=PT352&printsec=frontcover
 ---
 
 # Advanced Aggregation Features

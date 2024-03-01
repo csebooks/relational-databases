@@ -1,6 +1,20 @@
 ---
 title: 'Deadlock Handling' 
 weight: 2
+references:
+    videos:
+        - youtube:qkMDpzZuTkA
+        - youtube:ee-wg9q29f0
+    links:
+        - https://www.geeksforgeeks.org/handling-deadlocks/
+        - https://www.javatpoint.com/os-strategies-for-handling-deadlock
+    books:
+        - b1:
+            title: Deadlock Resolution in Automated Manufacturing Systems
+            url: https://www.google.co.in/books/edition/Deadlock_Resolution_in_Automated_Manufac/Phz99CpZHvsC?hl=en&gbpv=0
+        - b2:
+            title: Troubleshooting SQL Server 
+            url: https://www.google.co.in/books/edition/Troubleshooting_SQL_Server/jtAkywAACAAJ?hl=en
 ---
 
 # Deadlock Handling

@@ -1,6 +1,20 @@
 ---
 title: 'Failure with Loss of Nonvolatile Storage'
 weight: 6
+references:
+    videos:
+        - youtube:8qXpQqa2CGQ
+        - youtube:Rt2GRoqB-A0
+    links:
+        - https://www.i2tutorials.com/dbms-introduction/dbms-failure-with-loss-of-nonvolatile-storage/
+        - http://www.faadooengineers.com/online-study/post/cse/database-management-systems/355/failure-with-loss-of-nonvolatile-storage
+    books:
+        - b1:
+            title: Non-Volatile Memory Database Management Systems
+            url: https://www.google.co.in/books/edition/Non_Volatile_Memory_Database_Management/386HDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Software Engineer's Reference Book
+            url: https://www.google.co.in/books/edition/Software_Engineer_s_Reference_Book/K_38BAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Failure with Loss of Nonvolatile Storage

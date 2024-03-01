@@ -1,6 +1,20 @@
 ---
 title: 'Transactions as SQL Statements'
 weight: 10
+references:
+    videos:
+        - youtube:20SXjcg6EIw
+        - youtube:PhUgUTutiGk
+    links:
+        - https://www.geeksforgeeks.org/sql-transactions/
+        - https://www.tutorialspoint.com/sql/sql-transactions.htm
+    books:
+        - b1:
+            title: Databases and Transaction Processing
+            url: https://www.google.co.in/books/edition/Databases_and_Transaction_Processing/o6ySAAAACAAJ?hl=en
+        - b2:
+            title: Learning SQL
+            url: https://www.google.co.in/books/edition/Learning_SQL/FwKHDwAAQBAJ?hl=en&gbpv=0
 ---
 
 #  Transactions as SQL Statements

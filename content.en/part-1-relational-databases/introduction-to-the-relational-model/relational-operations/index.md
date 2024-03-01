@@ -1,6 +1,20 @@
 ---
 title:  'Relational Operations'
 weight: 6
+references:
+    videos:
+        - youtube:sJtuZq-LEQM
+        - youtube:8PJGw123zeE
+    links:
+        - http://www.cs.iit.edu/~cs561/cs425/PANDURENGAN_VIGNESHRelationalDatabaseIntro/test/rdbms.html
+        - https://en.wikipedia.org/wiki/Relational_operator
+    books:
+        - b1:
+            title: Theory and Practice of Relational Database
+            url: :https://www.google.co.in/books/edition/Theory_and_Practice_of_Relational_Databa/FrAmAAAAMAAJ?hl=en&gbpv=1&bsq=Relational+operation+books&dq=Relational+operation+books&printsec=frontcover
+        - b2:
+            title: Logical and Relational Learning
+            url:   :https://www.google.co.in/books/edition/Theory_and_Practice_of_Relational_Algebr/sC6UtgAACAAJ?hl=en
 ---
 
 # Relational Operations
