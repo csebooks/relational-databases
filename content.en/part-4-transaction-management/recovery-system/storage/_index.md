@@ -1,6 +1,20 @@
 ---
 title: 'Storage'
 weight: 2
+references:
+    videos:
+        - youtube:WGkCLP-is8I
+        - youtube:Eh2DPF2IES0
+    links:
+        - https://www.javatpoint.com/storage-system-in-dbms
+        - https://www.geeksforgeeks.org/storage-types-in-dbms/
+    books:
+        - b1:
+            title: Information Storage and Management
+            url: https://www.google.co.in/books/edition/Information_Storage_and_Management/sCCfRAj3aCgC?hl=en&gbpv=0
+        - b2:
+            title: Computer Storage Fundamentals
+            url: https://www.google.co.in/books/edition/Computer_Storage_Fundamentals/uT6wDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Storage

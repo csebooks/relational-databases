@@ -1,6 +1,20 @@
 ---
 title: 'Tertiary Storage'
 weight: 4
+references:
+    videos:
+        - youtube:sdS3u2Fxxcw
+        - youtube:RvO-zo0c0hM
+    links:
+        - https://www.geeksforgeeks.org/tertiary-storage-in-operating-system/
+        - https://www.javatpoint.com/storage-system-in-dbms
+    books:
+        - b1:
+            title: Tertiary Storage
+            url: https://www.google.co.in/books/edition/Tertiary_Storage/vl1MAQAAMAAJ?hl=en&gbpv=0&bsq=Tertiary%20Storage%20book
+        - b2:
+            title: Database Systems
+            url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=0
 ---
 
 # Tertiary Storage

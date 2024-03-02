@@ -1,7 +1,21 @@
 ---
 title: Null Values
 weight: 6
----
+references:
+    videos:
+        - youtube:Ulf4l3PDa88
+        - youtube:xhol4V9u-ic
+    links:
+        - https://www.geeksforgeeks.org/sql-null-values/
+        - https://prepinsta.com/dbms/null-values/
+    books:
+        - b1:
+            title: SQL and Relational Theory
+            url: https://www.google.co.in/books/edition/SQL_and_Relational_Theory/Ew06OZtjuJEC?hl=en&gbpv=0
+            
+        - b2:
+            title: SQL in a Nutshell 
+            url: https://www.google.co.in/books/edition/SQL_in_a_Nutshell/J1hcTQB3JbcC?hl=en&gbpv=0
 
 # Null Values
 

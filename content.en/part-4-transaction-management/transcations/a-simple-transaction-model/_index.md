@@ -1,6 +1,20 @@
 ---
 title: 'A Simple Transaction Model'
 weight: 2
+references:
+    videos:
+        - youtube:PZhljH3Nelc
+        - youtube:UkfWH3RHIJk
+    links:
+        - https://tutorialcup.com/dbms/transaction-model.htm
+        - https://www.javatpoint.com/transactions-in-dbms
+    books:
+        - b1:
+            title: Advanced Transaction Models and Architectures
+            url: https://www.google.co.in/books/edition/Advanced_Transaction_Models_and_Architec/IV_mBwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Database Transaction Models for Advanced Applications
+            url:  https://www.google.co.in/books/edition/Database_Transaction_Models_for_Advanced/PVUdHj_dhi8C?hl=en
 ---
 
 # A Simple Transaction Model

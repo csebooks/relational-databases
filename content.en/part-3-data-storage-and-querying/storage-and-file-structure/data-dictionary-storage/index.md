@@ -1,6 +1,20 @@
 ---
 title: 'Data-Dictionary Storage'
 weight: 7
+references:
+    videos:
+        - youtube:wWKUQz3giRI
+        - youtube:nKochahg32Y
+    links:
+        - https://www.javatpoint.com/data-dictionary-storage
+        - https://www.geeksforgeeks.org/short-note-on-data-dictionary/
+    books:
+        - b1:
+            title: The Data Dictionary
+            url: https://www.google.co.in/books/edition/The_Data_Dictionary/PN9QAAAAMAAJ?hl=en
+        - b2:
+            title: D.R.I.E. Data Dictionary Concepts, Services, and Facilities
+            url: https://books.google.co.in/books?id=OGZ80AEACAAJ&newbks=0&hl=en&source=newbks_fb&redir_esc=y
 ---
 
 # Data-Dictionary Storage

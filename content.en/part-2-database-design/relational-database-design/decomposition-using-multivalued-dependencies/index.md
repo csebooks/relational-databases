@@ -1,6 +1,20 @@
 ---
 title: 'Decomposition Using Multivalued Dependencies'
 weight: 6
+references:
+    videos:
+        - youtube:Xgb73h8eozU
+        - youtube:dLiFeSSeUY4
+    links:
+        - https://prezi.com/ummip92rzqlv/decomposition-using-multivalued-dependencies/
+        - https://www.javatpoint.com/dbms-multivalued-dependency
+    books:
+        - b1:
+            title: Database Systems: The Complete Book
+            url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=0
+        - b2:
+            title: Database Systems
+            url: https://www.google.co.in/books/edition/Database_Systems/9m382yDgxRsC?hl=en&gbpv=0
 ---
 
 # Decomposition Using Multivalued Dependencies

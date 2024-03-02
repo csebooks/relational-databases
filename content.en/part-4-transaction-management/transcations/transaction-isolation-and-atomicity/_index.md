@@ -1,6 +1,20 @@
 ---
 title: 'Transaction Isolation and Atomicity'
 weight: 7
+references:
+    videos:
+        - youtube:AcqtAEzuoj0
+        - youtube:pomxJOFVcQs
+    links:
+        - https://www.javatpoint.com/transaction-isolation-levels-in-dbms
+        - https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
+    books:
+        - b1:
+            title: Advanced Transaction Models and Architectures
+            url: https://www.google.co.in/books/edition/Advanced_Transaction_Models_and_Architec/-U7n7rqf1aYC?hl=en&gbpv=0
+        - b2:
+            title: Principles of Transaction Processing  
+            url: https://www.google.co.in/books/edition/Principles_of_Transaction_Processing/LmHgK5KKrQQC?hl=en&gbpv=0
 ---
 
 # Transaction Isolation and Atomicity

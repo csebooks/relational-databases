@@ -1,6 +1,21 @@
 ---
 title: Modification of the Database
 weight: 9
+references:
+    videos:
+        - youtube:4k_C095D7GQ
+        - youtube:_IIvizgJoSo
+    links:
+        - https://www.i2tutorials.com/dbms-introduction/dbms-modification-of-the-database/
+        - https://www.geeksforgeeks.org/modifying-existing-data-in-sql/
+    books:
+        - b1:
+            title: Modification of Database  
+            url: https://www.studocu.com/in/document/thiruvalluvar-university/bcacomputer-application/11modification-of-database/29046874
+            
+        - b2:
+            title: Database Management System
+            url: https://www.google.co.in/books/edition/DATABASE_MANAGEMENT_SYSTEMS/8MZGDwAAQBAJ?hl=en&gbpv=1&dq=modification+of+database+in+dbms+books&printsec=frontcover
 ---
 
 # Modification of the Database

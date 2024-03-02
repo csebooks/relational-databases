@@ -1,6 +1,20 @@
 ---
 title: 'Validation-Based Protocols' 
 weight: 5
+references:
+    videos:
+        - youtube:Q2VcUdxruc8
+        - youtube:ApLVCsQlDPo
+    links:
+        - https://www.geeksforgeeks.org/validation-based-protocol-in-dbms/
+        - https://www.javatpoint.com/dbms-validation-based-protocol
+    books:
+        - b1:
+            title: Artificial Intelligence: Methods and Applications 
+            url: https://www.google.co.in/books/edition/Artificial_Intelligence_Methods_and_Appl/NFm7BQAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Database Management System
+            url: https://www.google.co.in/books/edition/Database_Management_System_University_of/JKZDDAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Validation-Based Protocols

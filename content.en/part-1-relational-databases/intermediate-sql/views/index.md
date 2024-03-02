@@ -1,6 +1,21 @@
 ---
 title: Views
 weight: 2
+references:
+    videos:
+        - youtube:XmI5SwzGC8Q
+        - youtube:cLSxasHg9WY
+    links:
+        - https://www.geeksforgeeks.org/sql-views/
+        - https://www.javatpoint.com/sql-view
+    books:
+        - b1:
+            title: SQL Server DMVs in Action
+            url: https://www.google.co.in/books/edition/SQL_Server_DMVs_in_Action/9TkzEAAAQBAJ?hl=en&gbpv=0
+            
+        - b2:
+            title: SQL Server Query Performance Tuning 
+            url: https://www.google.co.in/books/edition/SQL_Server_Query_Performance_Tuning/C65qBAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Views

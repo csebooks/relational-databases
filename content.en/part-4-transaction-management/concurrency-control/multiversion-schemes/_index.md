@@ -1,6 +1,20 @@
 ---
 title: 'Multiversion Schemes' 
 weight: 6
+references:
+    videos:
+        - youtube:ktDutIfAd9E
+        - youtube:iM71d2krbS4
+    links:
+        - https://www.tutorialspoint.com/multiversion-concurrency-control-techniques
+        - https://www.geeksforgeeks.org/concurrency-control-techniques/
+    books:
+        - b1:
+            title: krishna's Database Management System 
+            url: https://www.google.co.in/books/edition/krishna_s_Database_Management_System/YM0AvJp6ocUC?hl=en&gbpv=0
+        - b2:
+            title: Readings in Database Systems 
+            url: https://www.google.co.in/books/edition/Readings_in_Database_Systems/7a48qSMuVcUC?hl=en&gbpv=0
 ---
 
 # Multiversion Schemes

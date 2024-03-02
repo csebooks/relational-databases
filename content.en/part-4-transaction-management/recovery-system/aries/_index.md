@@ -1,6 +1,20 @@
 ---
 title: 'ARIES'
 weight: 8
+references:
+    videos:
+        - youtube:2eGK3wau4Mc
+        - youtube:LbbhaybYc5A&t
+    links:
+        - https://www.geeksforgeeks.org/algorithm-for-recovery-and-isolation-exploiting-semantics-aries/
+        - https://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics
+    books:
+        - b1:
+            title: Computer Science Handbook 
+            url: https://www.google.co.in/books/edition/Computer_Science_Handbook/hNLKBQAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Encyclopedia of Computer Science and Technology 
+            url: https://www.google.co.in/books/edition/Encyclopedia_of_Computer_Science_and_Tec/PySs1uQ2l3gC?hl=en&gbpv=0
 ---
 
 # ARIES

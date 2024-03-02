@@ -1,6 +1,20 @@
 ---
 title: 'Authorization'
 weight: 6
+references:
+    videos:
+        - youtube:uZ8X-F0cAPU
+        - youtube:FRxCVd-0OjI
+    links:
+        - https://www.ques10.com/p/9680/explain-authorization-in-sql-1/
+        - https://docs.oracle.com/javadb/10.6.2.1/devguide/cdevcsecuregrantrevokeaccess.html
+    books:
+        - b1:
+            title: SQL Server Security Distilled 
+            url: :https://www.google.co.in/books/edition/SQL_Server_Security_Distilled/umb38F7aHdkC?hl=en&gbpv=1&dq=Authorization+in+sql&printsec=frontcover
+        - b2:
+            title: Mastering SQL Server 2000 Security 
+            url:   :https://www.google.co.in/books/edition/Mastering_SQL_Server_2000_Security/h4RIBvSPNkIC?hl=en&gbpv=1&dq=Authorization+in+sql&printsec=frontcover
 ---
 
 # 4.6 Authorization

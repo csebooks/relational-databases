@@ -1,6 +1,20 @@
 ---
 title: 'Algorithms for Decomposition'
 weight: 5
+references:
+    videos:
+        - youtube:H8RI1MM4ucI
+        - youtube:ZgPltuFFrno
+    links:
+        - https://www.javatpoint.com/decomposition-algorithms
+        - https://en.wikipedia.org/wiki/Decomposition_method
+    books:
+        - b1:
+            title: An Introduction to Domain Decomposition Methods
+            url: https://www.google.co.in/books/edition/An_Introduction_to_Domain_Decomposition/sSQuCwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Domain Decomposition Methods - Algorithms and Theory
+            url: https://www.google.co.in/books/edition/Domain_Decomposition_Methods_Algorithms/h7EVoI2g1nkC?hl=en&gbpv=0
 ---
 
 # Algorithms for Decomposition

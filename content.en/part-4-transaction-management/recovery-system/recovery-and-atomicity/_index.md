@@ -1,6 +1,20 @@
 ---
 title: 'Recovery and Atomicity'
 weight: 3
+references:
+    videos:
+        - youtube:gk3V11eULnU&t
+        - youtube:bOE31C5p13Y
+    links:
+        - https://www.javatpoint.com/recovery-and-atomicity-in-dbms
+        - https://www.tutorialspoint.com/dbms/dbms_data_recovery.htm
+    books:
+        - b1:
+            title: Database Recovery
+            url: https://www.google.co.in/books/edition/Database_Recovery/nV_1BwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Concurrency Control and Recovery in Database Systems 
+            url: https://www.google.co.in/books/edition/Concurrency_Control_and_Recovery_in_Data/aiEPAQAAMAAJ?hl=en&gbpv=0&bsq=Recovery%20and%20Atomicity%20books
 ---
 
 # Recovery and Atomicity

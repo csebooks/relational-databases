@@ -1,6 +1,20 @@
 ---
 title: 'Remote Backup Systems'
 weight: 9
+references:
+    videos:
+        - youtube:RFPsbFvwMY8
+        - youtube:m4bu_VH8OZQ
+    links:
+        - https://www.i2tutorials.com/dbms-introduction/dbms-remote-backup-systems/
+        - https://www.tutorialspoint.com/dbms/dbms_data_backup.htm
+    books:
+        - b1:
+            title: Network backup systems 
+            url: https://www.google.co.in/books/edition/Network_backup_systems/MsofDQAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Enterprise Systems Backup and Recovery 
+            url: https://www.google.co.in/books/edition/Enterprise_Systems_Backup_and_Recovery/2OtqvySBTu4C?hl=en&gbpv=0
 ---
 
 # Remote Backup Systems

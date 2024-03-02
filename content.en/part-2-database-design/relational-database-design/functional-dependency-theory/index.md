@@ -1,6 +1,20 @@
 ---
 title: 'Functional-Dependency Theory'
 weight: 4
+references:
+    videos:
+        - youtube:dR-jJimWWHA
+        - youtube:Wd1IaVyl-bg
+    links:
+        - https://www.javatpoint.com/dbms-functional-dependency
+        - https://www.geeksforgeeks.org/types-of-functional-dependencies-in-dbms/
+    books:
+        - b1:
+            title: Dependency Theory
+            url: https://www.google.co.in/books/edition/Dependency_Theory_Revisited/Q-KRAAAAIAAJ?hl=en&gbpv=0&bsq=Functional-Dependency%20Theory%20books
+        - b2:
+            title: Time-Dependent Density-Functional
+            url: https://www.google.co.in/books/edition/Time_Dependent_Density_Functional_Theory/hCNNsC4sEtkC?hl=en&gbpv=0
 ---
 
 # Functional-Dependency Theory

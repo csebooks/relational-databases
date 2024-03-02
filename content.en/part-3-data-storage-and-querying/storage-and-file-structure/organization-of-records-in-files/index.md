@@ -1,6 +1,20 @@
 ---
 title: 'Organization of Records in Files'
 weight: 6
+references:
+    videos:
+        - youtube:c4KXyusdBqI
+        - youtube:bvoJI7WKBbc
+    links:
+        - https://www2.cs.sfu.ca/CourseCentral/354/zaiane/material/notes/Chapter10/node19.html
+        - https://www.javatpoint.com/dbms-file-organization
+    books:
+        - b1:
+            title: Records Management Handbook
+            url: https://www.google.co.in/books/edition/Records_Management_Handbook/SlFBDgAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Records and Information Management
+            url: https://www.google.co.in/books/edition/Records_and_Information_Management/e8skEAAAQBAJ?hl=en&gbpv=0
 ---
 
 # Organization of Records in Files

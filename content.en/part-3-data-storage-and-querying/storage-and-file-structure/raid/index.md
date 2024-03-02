@@ -1,6 +1,20 @@
 ---
 title: 'RAID'
 weight: 3
+references:
+    videos:
+        - youtube:Uazebt3-i3k
+        - youtube:MZfRxjEGRj4
+    links:
+        - https://www.javatpoint.com/dbms-raid#:~:text=RAID%20refers%20to%20redundancy%20array,upon%20the%20RAID%20level%20used.
+        - https://www.geeksforgeeks.org/raid-redundant-arrays-of-independent-disks/
+    books:
+        - b1:
+            title: The RAID Book
+            url: https://www.google.co.in/books/edition/The_RAID_Book/XFFJuwEACAAJ?hl=en
+        - b2:
+            title: Managing RAID on Linux
+            url: https://www.google.co.in/books/edition/Managing_RAID_on_Linux/EbWbAgAAQBAJ?hl=en&gbpv=0
 ---
 
 # RAID

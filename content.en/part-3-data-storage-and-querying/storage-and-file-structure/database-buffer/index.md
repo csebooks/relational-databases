@@ -1,6 +1,20 @@
 ---
 title: 'Database Buffer'
 weight: 8
+references:
+    videos:
+        - youtube:Dp3vJrjKMpo
+        - youtube:HW148BPYnrQ
+    links:
+        - https://www.javatpoint.com/database-buffer
+        - https://www.tutorialspoint.com/database-buffer-in-dbms
+    books:
+        - b1:
+            title: Oracle Database Administration: The Essential Refe
+            url: https://www.google.co.in/books/edition/Oracle_Database_Administration_The_Essen/WVC-R0gdl0kC?hl=en&gbpv=0&bsq=Database%20Buffer%20book
+        - b2:
+            title: Database Internals
+            url: https://www.google.co.in/books/edition/Database_Internals/-l2vDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Database Buffer

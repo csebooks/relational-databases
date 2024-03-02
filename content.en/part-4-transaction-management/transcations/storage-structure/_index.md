@@ -1,6 +1,20 @@
 ---
 title: 'Storage Structure'
 weight: 3
+references:
+    videos:
+        - youtube:YcRd3WMbXnE
+        - youtube:YcRd3WMbXnE&t
+    links:
+        - https://www.geeksforgeeks.org/storage-structure-in-operating-systems/
+        - https://www.tutorialspoint.com/Computer-Storage-Structure
+    books:
+        - b1:
+            title: Database Management Systems 
+            url:  https://www.google.co.in/books/edition/UGC_NET_unit_4_COMPUTER_SCIENCE_Database/9iWGEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Computer Storage Fundamentals
+            url: https://www.google.co.in/books/edition/Computer_Storage_Fundamentals/uT6wDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Storage Structure

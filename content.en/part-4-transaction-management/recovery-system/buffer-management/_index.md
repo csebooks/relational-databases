@@ -1,6 +1,20 @@
 ---
 title: 'Buffer Management'
 weight: 5
+references:
+    videos:
+        - youtube:Dp3vJrjKMpo
+        - youtube:-UWY_6X60jg
+    links:
+        - https://www.javatpoint.com/database-buffer
+        - https://www.tutorialspoint.com/database-buffer-in-dbms
+    books:
+        - b1:
+            title: Systems Programming in Unix/Linux
+            url: https://www.google.co.in/books/edition/Systems_Programming_in_Unix_Linux/nexqDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: High-Performance Computing and Networking 
+            url: https://www.google.co.in/books/edition/High_Performance_Computing_and_Networkin/CfnjWCLCUWEC?hl=en&gbpv=0
 ---
 
 # Buffer Management

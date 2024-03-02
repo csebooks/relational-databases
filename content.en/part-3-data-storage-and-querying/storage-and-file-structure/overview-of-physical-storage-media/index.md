@@ -1,6 +1,20 @@
 ---
 title: 'Overview of Physical Storage Media'
 weight: 1
+references:
+    videos:
+        - youtube:blTkMaz3SYM
+        - youtube:Si9W0AxWFL8
+    links:
+        - https://www2.cs.sfu.ca/CourseCentral/354/zaiane/material/notes/Chapter10/node2.html
+        - http://www.faadooengineers.com/online-study/post/cse/database-management-systems/313/physical-storage-media
+    books:
+        - b1:
+            title: High Density Data Storage:Principle, Technology, And Materials 2009
+            url: https://www.google.co.in/books/edition/High_Density_Data_Storage_Principle_Tech/PvrFCgAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Computer Storage Fundamentals
+            url: https://www.google.co.in/books/edition/Computer_Storage_Fundamentals/uT6wDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Overview of Physical Storage Media

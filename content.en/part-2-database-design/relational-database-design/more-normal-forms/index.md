@@ -1,6 +1,20 @@
 ---
 title: 'More Normal Forms'
 weight: 7
+references:
+    videos:
+        - youtube:IBEuwmYsMKI   
+        - youtube:ABwD8IYByfk
+    links:
+        - https://www.geeksforgeeks.org/normal-forms-in-dbms/
+        - https://www.tutorialspoint.com/normal-forms-in-dbms
+    books:
+        - b1:
+            title: The Method of Normal Forms
+            url: https://www.google.co.in/books/edition/The_Method_of_Normal_Forms/E3GvZ16s8AAC?hl=en&gbpv=0
+        - b2:
+            title: Poisson Structures and Their Normal Forms
+            url: https://www.google.co.in/books/edition/Poisson_Structures_and_Their_Normal_Form/t8rHBAAAQBAJ?hl=en&gbpv=0
 ---
 
 # More Normal Forms

@@ -1,6 +1,20 @@
 ---
 title: 'Weak Levels of Consistency in Practice' 
 weight: 9
+references:
+    videos:
+        - youtube:DMg-ubs27pk
+        - youtube:uAqIa-mtjJ4
+    links:
+        - https://www.geeksforgeeks.org/weak-levels-of-consistency/
+        - https://www.javatpoint.com/consistency-in-dbms
+    books:
+        - b1:
+            title: Paraconsistent Logic: Consistency, Contradiction and Negation 
+            url: https://www.google.co.in/books/edition/Paraconsistent_Logic_Consistency_Contrad/VApkDAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Distributed Systems
+            url:  https://www.google.co.in/books/edition/Distributed_Systems/8ksgDgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Weak Levels of Consistency in Practice

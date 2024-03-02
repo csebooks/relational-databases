@@ -1,6 +1,20 @@
 ---
 title: 'Database-Design Process'
 weight: 8
+references:
+    videos:
+        - youtube:7m6gXeMDaHc
+        - youtube:GH1KfNdn7ls
+    links:
+        - https://www.geeksforgeeks.org/database-design-in-dbms/
+        - https://www.javatpoint.com/database-design
+    books:
+        - b1:
+            title: Database Design for Mere Mortals
+            url: https://www.google.co.in/books/edition/Database_Design_for_Mere_Mortals/dkxsjXNayHQC?hl=en&gbpv=0
+        - b2:
+            title: Beginning Database Design
+            url: https://www.google.co.in/books/edition/Beginning_Database_Design/6ksf6yHS7L4C?hl=en&gbpv=0
 ---
 
 # Database-Design Process

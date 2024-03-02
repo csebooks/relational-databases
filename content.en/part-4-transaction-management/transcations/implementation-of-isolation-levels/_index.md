@@ -1,6 +1,20 @@
 ---
 title: 'Implementation of Isolation Levels'
 weight: 9
+references:
+    videos:
+        - youtube:hVb08W-l_Kg
+        - youtube:-gxyut1VLcs&t
+    links:
+        - https://www.geeksforgeeks.org/transaction-isolation-levels-dbms/
+        - https://www.javatpoint.com/transaction-isolation-levels-in-dbms
+    books:
+        - b1:
+            title: Java Server Programming
+            url: https://www.google.co.in/books/edition/Java_Server_Programming_J2Ee_1_4_Ed_Blac/YUXyUmGpAh8C?hl=en&gbpv=0
+        - b2:
+            title: Java Transaction Processing 
+            url: https://www.google.co.in/books/edition/Java_Transaction_Processing/5bRQAAAAMAAJ?hl=en&gbpv=0&bsq=Implementation%20of%20Isolation%20Levels%20books
 ---
 
 # Implementation of Isolation Levels

@@ -1,6 +1,19 @@
 ---
 title: 'Other Aspects of Database Design'
-weight: 10
+weight: 10\references:
+    videos:
+        - youtube:OU5mwEDa_P0
+        - youtube:fh6jrvGy9K8
+    links:
+        - https://www.javatpoint.com/database-design
+        - https://www.geeksforgeeks.org/database-design-in-dbms/
+    books:
+        - b1:
+            title: Database Design and Relational Theory
+            url: https://www.google.co.in/books/edition/Database_Design_and_Relational_Theory/8jAGhpMSjAcC?hl=en&gbpv=0
+        - b2:
+            title: Access database design and programming
+            url: https://www.google.co.in/books/edition/Access_Database_Design_Programming/0mv0geyQuQUC?hl=en&gbpv=0
 ---
 
 # Other Aspects of Database Design
