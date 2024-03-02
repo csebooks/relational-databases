@@ -1,6 +1,20 @@
 ---
 title: 'Transformation of Relational Expressions'
 weight: 2
+references:
+    videos:
+        - youtube:_luHqhzrDD8
+        - youtube:3W566_eFtxM
+    links:
+        - https://www.javatpoint.com/dbms-transforming-relational-expressions
+        - https://tutorialcup.com/dbms/transformation-of-relational-expressions.htm
+    books:
+        - b1:
+            title: Hands On Relational Database Management System
+            url: https://www.google.co.in/books/edition/Hands_On_Relational_Database_Management/7QNuDwAAQBAJ?hl=en&gbpv=1&dq=Transformation+of+Relational+Expressions+books&pg=PA3&printsec=frontcover
+        - b2:
+           title: Database in Depth
+            url:   https://www.google.co.in/books/edition/Database_in_Depth/sZc7B6wnmNcC?hl=en&gbpv=0
 ---
 
 # Transformation of Relational Expressions

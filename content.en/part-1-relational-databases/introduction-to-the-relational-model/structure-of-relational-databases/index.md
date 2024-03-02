@@ -1,6 +1,21 @@
 ---
 title:  Structure of Relational Databases
 weight: 1
+references:
+    videos:
+        - youtube:J4hZbuTLyhI
+        - youtube:FecTzh0ohpA
+    links:
+        - https://www.oracle.com/in/database/what-is-a-relational-database/#:~:text=In%20a%20relational%20database%2C%20each,the%20relationships%20among%20data%20points.
+        - https://cloud.google.com/learn/what-is-a-relational-database
+    books:
+        - b1:
+            title: The Structure of the Relational Database Model 
+            url: https://www.google.co.in/books/edition/The_Structure_of_the_Relational_Database/0t2pCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Relational Database Design and Implementation
+            url: 
+            https://www.google.co.in/books/edition/Relational_Database_Design_and_Implement/yQgfCgAAQBAJ?hl=en&gbpv=0
 ---
 
 #  Structure of Relational Databases

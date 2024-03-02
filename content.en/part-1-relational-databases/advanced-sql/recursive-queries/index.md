@@ -1,6 +1,20 @@
 ---
 title: 'Recursive Queries'
 weight: 4
+references:
+    videos:
+        - youtube:fLV3TPj6MKM
+        - youtube:if1u24r0YhI
+    links:
+        - https://codedamn.com/news/sql/recursive-queries-in-sql
+        - https://www.ibm.com/docs/en/i/7.4?topic=optimization-example
+    books:
+        - b1:
+            title: Datalog and Recursive Query Processing 
+            url: https://www.google.co.in/books/edition/Datalog_and_Recursive_Query_Processing/wSIVngEACAAJ?hl=en
+        - b2:
+           title: Beginning SQL Queries
+            url: https://www.google.co.in/books/edition/Beginning_SQL_Queries/KkEnCgAAQBAJ?hl=en&gbpv=0
 ---
 
 # Recursive Queries

@@ -1,6 +1,20 @@
 ---
 title: 'Comparison of Ordered Indexing and Hashing'
-weight: 8
+weight: 8 \
+references:
+    videos:
+        - youtube:_sW4aOdvQ3o&t
+        - youtube:d_4SL3BRPuQ&t
+    links:
+        - https://www.geeksforgeeks.org/difference-between-indexing-and-hashing-in-dbms/
+        - https://pediaa.com/what-is-the-difference-between-indexing-and-hashing/
+    books:
+        - b1:
+            title: Database System Concepts
+            url: https://www.google.co.in/books/edition/Database_System_Concepts/Hvn_QQAACAAJ?hl=en
+        - b2:
+           title: Data Structures Based on Non-linear Relations and Data Processing Methods
+            url: https://www.google.co.in/books/edition/Data_structures_based_on_non_linear_rela/eXnnDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Comparison of Ordered Indexing and Hashing

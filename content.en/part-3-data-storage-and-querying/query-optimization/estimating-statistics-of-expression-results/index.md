@@ -1,6 +1,20 @@
 ---
 title: 'Estimating Statistics of Expression Results'
 weight: 3
+references:
+    videos:
+        - youtube:3W566_eFtxM
+        - youtube:pQikJMfHBEc
+    links:
+        - https://tutorialcup.com/dbms/estimating-statistics-of-expression-results.htm
+        - https://www.ibm.com/docs/en/db2-big-sql/5.0.4?topic=statistics-gathered-from-expression-columns-in-statistical-views
+    books:
+        - b1:
+            title: Hands On Relational Database Management System RDBMS
+            url: https://www.google.co.in/books/edition/Hands_On_Relational_Database_Management/7QNuDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Hands On DATABASE
+            url: https://www.google.co.in/books/edition/Hands_On_DATABASE_2000_MCQ/s7BUDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Estimating Statistics of Expression Results

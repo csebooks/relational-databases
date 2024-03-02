@@ -1,6 +1,21 @@
 ---
 title:  Additional Basic Operations
 weight: 4
+references:
+    videos:
+        - youtubeRD9tMyFY_F0
+        - youtube:rFCKrC2NWgI
+    links:
+        - https://upscfever.com/upsc-fever/en/gatecse/en-gatecse-chp34.html
+        - https://padakuu.com/additional-basic-operations-the-rename-operation-385-article
+    books:
+        - b1:
+            title: Building Intuition 
+            url: https://www.google.co.in/books/edition/Building_Intuition/YkFMfY7qgBwC?hl=en&gbpv=0
+        - b2:
+            title: SQL Cookbook
+            url: https://www.google.co.in/books/edition/SQL_Cookbook/2j-bAgAAQBAJ?hl=en&gbpv=0
+---
 ---
 
 # Additional Basic Operations

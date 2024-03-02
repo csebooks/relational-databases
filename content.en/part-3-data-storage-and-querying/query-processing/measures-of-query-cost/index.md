@@ -1,6 +1,20 @@
 ---
 title: 'Measures of Query Cost'
 weight: 2
+references:
+    videos:
+        - youtube:rKN60UnVsMw
+        - youtube:coqVU1xJfFg
+    links:
+        - https://www.geeksforgeeks.org/measures-of-query-cost-in-dbms/
+        - https://www.javatpoint.com/estimating-query-cost
+    books:
+        - b1:
+            title: Query Processing in Database Systems
+            url: https://www.google.co.in/books/edition/Query_Processing_in_Database_Systems/AOGpCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Database Systems
+            url: https://www.google.co.in/books/edition/Database_Systems/9m382yDgxRsC?hl=en&gbpv=0
 ---
 
 # Measures of Query Cost

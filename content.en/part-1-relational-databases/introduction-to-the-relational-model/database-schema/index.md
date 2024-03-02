@@ -3,18 +3,18 @@ title:  Database Schema
 weight: 2
 references:
     videos:
-        - youtube:KpbyPhJqIf0
-        - youtube:0JAYah0MVno
+        - youtube:kKouZm86VtI
+        - youtube:3BZz8R7mqu0
     links:
-        - https://www.tutorialspoint.com/what-is-a-query-language-in-dbms
-        - https://www.i2tutorials.com/dbms-introduction/dbms-relational-query-languages/
+        - https://www.ibm.com/topics/database-schema
+        - https://www.javatpoint.com/database-schema
     books:
         - b1:
-            title: Understanding Relational Database Query Languages
-            url: https://www.google.co.in/books/edition/Understanding_Relational_Database_Query/y3JnQgAACAAJ?hl=en
+            title: Database Design and Relational Theory 
+            url: https://www.google.co.in/books/edition/Database_Design_and_Relational_Theory/8jAGhpMSjAcC?hl=en&gbpv=0
         - b2:
-            title: Theory and Practice Of Relational Database
-            url: https://www.google.co.in/books/edition/Theory_and_Practice_of_Relational_Databa/T42BSf-1f5cC?hl=en&gbpv=1&dq=Relational+Query+language+books&printsec=frontcover
+            title: Beginning Database Design
+            url: https://www.google.co.in/books/edition/Beginning_Database_Design/6ksf6yHS7L4C?hl=en&gbpv=0
 ---
 
 #  Database Schema

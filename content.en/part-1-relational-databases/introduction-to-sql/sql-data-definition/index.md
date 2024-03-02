@@ -1,6 +1,21 @@
 ---
 title: SQL Data Definition
 weight: 2
+references:
+    videos:
+        - youtube:Cedzh6P2zx0
+        - youtube:glDNGDl7qGw
+    links:
+        - https://www.ibm.com/docs/en/i/7.2?topic=programming-data-definition-language
+        - https://binaryterms.com/sql-data-definition-language.html
+    books:
+        - b1:
+            title: SQL for Data Analytics
+            url: //www.google.co.in/books/edition/SQL_for_Data_Analytics/jfAXxQEACAAJ?hl=en
+        - b2:
+           title: Data Analysis Using SQL and Excel
+            url: //www.google.co.in/books/edition/Data_Analysis_Using_SQL_and_Excel/98wIUfzeVvgC?hl=en&gbpv=0
+ 
 ---
 
 # SQL Data Definition

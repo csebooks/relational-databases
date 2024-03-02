@@ -1,6 +1,20 @@
 ---
 title: 'Selection Operation'
 weight: 3
+references:
+    videos:
+        - youtube:PnzdA0Tz-yo
+        - youtube:JdkKIrs0q5g
+    links:
+        - https://www.geeksforgeeks.org/select-operation-in-relational-algebra/
+        - https://www.javatpoint.com/selection-operation-in-query-processing
+    books:
+        - b1:
+            title: RUDIMENTS OF COMPUTER SCIENCE
+            url: https://www.google.co.in/books/edition/RUDIMENTS_OF_COMPUTER_SCIENCE/K7ZcDAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Database Systems for Advanced Applications
+            url: https://www.google.co.in/books/edition/Database_Systems_for_Advanced_Applicatio/_Cv6BwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Selection Operation

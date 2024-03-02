@@ -1,6 +1,20 @@
 ---
 title: 'Sorting'
 weight: 4
+references:
+    videos:
+        - youtube:PkJIc5tBRUE
+        - youtube:TnU8C-OKcZs
+    links:
+        - https://www.geeksforgeeks.org/sorting-algorithms/
+        - https://en.wikipedia.org/wiki/Sorting
+    books:
+        - b1:
+            title: The Art of Computer Programming
+            url: https://www.google.co.in/books/edition/The_Art_of_Computer_Programming/cYULBAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: The Art of Computer Programming
+            url: https://www.google.co.in/books/edition/The_Art_of_Computer_Programming_Sorting/0VoZAQAAIAAJ?hl=en&gbpv=0&bsq=Computer%20Science%20Sorting%20books
 ---
 
 # Sorting

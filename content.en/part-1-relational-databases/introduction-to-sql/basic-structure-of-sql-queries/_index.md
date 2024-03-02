@@ -1,6 +1,21 @@
 ---
 title: Basic Structure of SQL Queries
 weight: 3
+references:
+    videos:
+        - youtube:aLMcHQKU5ww
+        - youtube:aLMcHQKU5ww
+    links:
+        - https://beingintelligent.com/basic-structure-of-sql-queries.html
+        - https://padakuu.com/basic-structure-of-sql-queries-372-article
+    books:
+        - b1:
+            title: Learning SQL
+            url: https://www.google.co.in/books/edition/Learning_SQL/FwKHDwAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title:  SQL Queries for Mere Mortals 
+            url: https://www.google.co.in/books/edition/SQL_Queries_for_Mere_Mortals/EtrHAwAAQBAJ?hl=en&gbpv=0
+ 
 ---
 
 # Basic Structure of SQL Queries

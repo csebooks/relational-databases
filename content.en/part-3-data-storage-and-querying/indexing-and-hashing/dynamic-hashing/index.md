@@ -1,6 +1,20 @@
 ---
 title: 'Dynamic Hashing'
 weight: 7
+references:
+    videos:
+        - youtube:oyF_aXJg6SM
+        - youtube:ti5fyHn3t44
+    links:
+        - https://www.javatpoint.com/dbms-dynamic-hashing
+        - https://www.devx.com/terms/dynamic-hashing/
+    books:
+        - b1:
+            title: Foundations of Data Organization and Algorithm
+            url: https://www.google.co.in/books/edition/Foundations_of_Data_Organization_and_Alg/C39nU_byNRcC?hl=en&gbpv=0
+        - b2:
+           title: Software Engineer's Pocket Book
+            url: https://www.google.co.in/books/edition/Software_Engineer_s_Pocket_Book/Og4BBQAAQBAJ?hl=en&gbpv=0
 ---
 
 # Dynamic Hashing

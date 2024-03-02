@@ -1,6 +1,20 @@
 ---
 title: 'Constraints'
 weight: 3
+references:
+    videos:
+        - youtube:uPOGPL2C0_8
+        - youtube:xEqvxU3LuS0
+    links:
+        - https://www.w3schools.com/sql/sql_constraints.asp
+        - https://en.wikipedia.org/wiki/Constraint
+    books:
+        - b1:
+            title: Theory of Constraints Handbook
+            url: https://www.google.co.in/books/edition/Theory_of_Constraints_Handbook/18biX-wLjE8C?hl=en&gbpv=0&bsq=Constraints%20books
+        - b2:
+           title: The Triple Constraints in Project Management
+            url: https://www.google.co.in/books/edition/The_Triple_Constraints_in_Project_Manage/ihhFDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Constraints

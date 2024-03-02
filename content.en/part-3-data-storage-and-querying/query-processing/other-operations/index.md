@@ -1,6 +1,20 @@
 ---
 title: 'Other Operations'
 weight: 6
+references:
+    videos:
+        - youtube:KaIRmVD-v3U
+        - youtube:Vaosfh0vRfk
+    links:
+        - https://en.wikipedia.org/wiki/Operation_(mathematics)
+        - https://www.geeksforgeeks.org/operators-in-c/
+    books:
+        - b1:
+            title: Query Processing in Database Systems
+            url: https://www.google.co.in/books/edition/Query_Processing_in_Database_Systems/AOGpCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Query Processing for Advanced Database Systems
+            url: https://www.google.co.in/books/edition/Query_Processing_for_Advanced_Database_S/Umv1oQEACAAJ?hl=en
 ---
 
 # Other Operations

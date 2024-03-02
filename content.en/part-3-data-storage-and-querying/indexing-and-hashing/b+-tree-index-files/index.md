@@ -1,6 +1,20 @@
 ---
 title: 'B+-Tree Index Files'
 weight: 3
+references:
+    videos:
+        - youtube:jpS8BLb8BgI
+        - youtube:APqePNhADT4
+    links:
+        - https://www.javatpoint.com/dbms-b-plus-tree
+        - https://www.geeksforgeeks.org/introduction-of-b-tree/
+    books:
+        - b1:
+            title: Modern B-Tree Techniques
+            url: https://www.google.co.in/books/edition/Modern_B_Tree_Techniques/AiOj6n7-s_UC?hl=en&gbpv=0
+        - b2:
+           title: Fundamentals of Database System
+            url: https://www.google.co.in/books/edition/Fundamentals_of_Database_System/LoiqDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # B+-Tree Index Files

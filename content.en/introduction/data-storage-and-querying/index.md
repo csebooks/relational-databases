@@ -1,6 +1,20 @@
 ---
 title: 'Data Storage and Querying'
 weight: 7
+references:
+    videos:
+        - youtube:OYx9RUFwP8E
+        - youtube:p8khxj6YalI
+    links:
+        - https://www.geeksforgeeks.org/data-storage-and-querying-in-dbms/
+        - https://www.i2tutorials.com/dbms-introduction/dbms-storage-and-querying/
+    books:
+        - b1:
+            title: Linked Data Storing, Querying, and Reasoning
+            url: https://www.google.co.in/books/edition/Linked_Data/h79ODwAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: RDF Database Systems Triples Storage and SPARQL Query Processing
+            url: https://www.google.co.in/books/edition/RDF_Database_Systems/OySOAwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Data Storage and Querying

@@ -1,6 +1,20 @@
 ---
 title: 'Evaluation of Expressions'
 weight: 7
+references:
+    videos:
+        - youtube:HBN-RL7W8uM
+        - youtube:84BsI5VJPq4
+    links:
+        - https://www.geeksforgeeks.org/expression-evaluation/
+        - https://www.javatpoint.com/evaluation-of-expressions
+    books:
+        - b1:
+            title: Query Processing in Database Systems
+            url: https://www.google.co.in/books/edition/Query_Processing_in_Database_Systems/AOGpCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Query Processing in Data-warehousing Environments
+            url: https://www.google.co.in/books/edition/Query_Processing_in_Data_warehousing_Env/_rJEAQAAIAAJ?hl=en&gbpv=0&bsq=query%20processing%20Evaluation%20of%20Expressions%20books
 ---
 
 # Evaluation of Expressions

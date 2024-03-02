@@ -1,6 +1,20 @@
 ---
 title: 'Transactions'
 weight: 3
+references:
+    videos:
+        - youtube:eYQwKi7P8MM
+        - youtube:P80Js_qClUE
+    links:
+        - https://www.investopedia.com/terms/t/transaction.asp
+        - https://en.wikipedia.org/wiki/Transaction
+    books:
+        - b1:
+            title: Transactions and Creations
+            url: https://www.google.co.in/books/edition/Transactions_and_Creations/ekP9QmsFvt8C?hl=en&gbpv=0
+        - b2:
+           title: Design Transactions
+            url: https://www.google.co.in/books/edition/Design_Transactions/lkjmDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Transactions

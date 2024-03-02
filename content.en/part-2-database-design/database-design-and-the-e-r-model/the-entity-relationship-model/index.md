@@ -1,6 +1,20 @@
 ---
 title: 'The Entity-Relationship Model'
 weight: 2
+references:
+    videos:
+        - youtube:wOD02sezmX8
+        - youtube:p7GsjrXoW28
+    links:
+        - https://www.geeksforgeeks.org/introduction-of-er-model/
+        - https://www.javatpoint.com/dbms-er-model-concept
+    books:
+        - b1:
+            title: Entity-Relationship Modeling
+            url: https://www.google.co.in/books/edition/Entity_Relationship_Modeling/ztioCAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Database Design Using Entity-Relationship Diagrams
+            url: https://www.google.co.in/books/edition/Database_Design_Using_Entity_Relationshi/KZKylX9oH8IC?hl=en&gbpv=0
 ---
 
 # The Entity-Relationship Model

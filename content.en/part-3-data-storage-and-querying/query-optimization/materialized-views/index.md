@@ -1,6 +1,20 @@
 ---
 title: 'Materialized Views'
 weight: 5
+references:
+    videos:
+        - youtube:WzkBZ0byoYE
+        - youtube:ZomzrCTxFeQ
+    links:
+        - https://aws.amazon.com/what-is/materialized-view/#:~:text=A%20materialized%20view%20is%20a,for%20customer%20and%20product%20data.
+        - https://docs.snowflake.com/en/user-guide/views-materialized
+    books:
+        - b1:
+            title: Materialized Views
+            url: https://www.google.co.in/books/edition/Materialized_Views/QIAekwEACAAJ?hl=en
+        - b2:
+           title: Oracle  SQL 
+            url: https://www.google.co.in/books/edition/Oracle_SQL/NU-d9TIae9IC?hl=en&gbpv=0
 ---
 
 # Materialized Views

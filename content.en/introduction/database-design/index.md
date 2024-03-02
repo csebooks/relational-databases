@@ -1,6 +1,20 @@
 ---
 title: 'Database Design'
 weight: 6
+references:
+    videos:
+        - youtube:7m6gXeMDaHc
+        - youtube:I_rxqSJAj6U
+    links:
+        - https://support.microsoft.com/en-gb/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5
+        - https://en.wikipedia.org/wiki/Database_design
+    books:
+        - b1:
+            title: Database Design for Mere Mortals
+            url: //www.google.co.in/books/edition/Database_Design_for_Mere_Mortals/dkxsjXNayHQC?hl=en&gbpv=0
+        - b2:
+            title: Beginning Database Design
+            url: //www.google.co.in/books/edition/Beginning_Database_Design/6ksf6yHS7L4C?hl=en&gbpv=0
 ---
 
 # Database Design

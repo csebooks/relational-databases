@@ -2,6 +2,20 @@
 title: 'Advanced Sql'
 categories:
 weight: 4
+references:
+    videos:
+        - youtube:FttzCZICGpQ
+        - youtube:22KOl07dMRM
+    links:
+        - https://www.geeksforgeeks.org/sql-trigger-student-database/
+        - https://www.javatpoint.com/triggers-in-sql-server
+    books:
+        - b1:
+            title: Triggers
+            url: https://www.google.co.in/books/edition/Triggers/0qmeBgAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: SQL Procedures, Triggers, and Functions
+            url: https://www.google.co.in/books/edition/SQL_Procedures_Triggers_and_Functions_on/nuALDAAAQBAJ?hl=en&gbpv=0
 --- 
 
 # Advanced Sql

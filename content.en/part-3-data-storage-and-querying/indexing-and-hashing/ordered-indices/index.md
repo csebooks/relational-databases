@@ -1,6 +1,20 @@
 ---
 title: 'Ordered Indices'
 weight: 2
+references:
+    videos:
+        - youtube:_sW4aOdvQ3o
+        - youtube:tv97STBJm3o
+    links:
+        - https://www.javatpoint.com/indexing-in-dbms#:~:text=The%20indices%20are%20usually%20sorted,search%20student%20with%20ID%2D543.
+        - https://www.javatpoint.com/couchdb-tutorial
+    books:
+        - b1:
+            title: The Art and Science of Computer Assisted Ordering
+            url: https://www.google.co.in/books/edition/The_Art_and_Science_of_Computer_Assisted/aEvEEAAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: Indexing Books, Second Edition
+            url: https://www.google.co.in/books/edition/Indexing_Books_Second_Edition/G0Eqm8FbiTMC?hl=en&gbpv=0
 ---
 
 # Ordered Indices

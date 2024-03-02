@@ -1,6 +1,7 @@
 ---
 title: 'Indexing and Hashing'
 weight: 2
+
 ---
 
 # Indexing and Hashing

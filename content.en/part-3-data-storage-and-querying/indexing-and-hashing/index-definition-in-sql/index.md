@@ -1,6 +1,20 @@
 ---
 title: 'Index Definition in SQL'
 weight: 10
+references:
+    videos:
+        - youtube:YuRO9-rOgv4
+        - youtube:NZgfYbAmge8
+    links:
+        - https://www.geeksforgeeks.org/sql-indexes/
+        - https://www.w3schools.com/sql/sql_create_index.asp
+    books:
+        - b1:
+            title: Expert Performance Indexing in SQL Server 
+            url: https://www.google.co.in/books/edition/Expert_Performance_Indexing_in_SQL_Serve/nvLpCgAAQBAJ?hl=en&gbpv=0
+        - b2:
+           title: SQL Performance
+            url: https://www.google.co.in/books/edition/SQL_Performance_Explained/Wi-xNAEACAAJ?hl=en
 ---
 
 # Index Definition in SQL

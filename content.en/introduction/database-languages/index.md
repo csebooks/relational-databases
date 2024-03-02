@@ -1,6 +1,20 @@
 ---
 title: 'Database Languages'
 weight: 4
+references:
+    videos:
+        - youtube:IPvY9Gp83WM
+        - youtube:DkEMtOFMNQE
+    links:
+        - https://www.javatpoint.com/dbms-language
+        - https://www.indeed.com/career-advice/career-development/database-languages
+    books:
+        - b1:
+            title: Data Models, Database Languages and Database Management Systems 
+            url: https://www.google.co.in/books/edition/Data_Models_Database_Languages_and_Datab/CSMPAQAAMAAJ?hl=en&gbpv=0&bsq=database%20languages%20books
+        - b2:
+            title: Database Management  System
+            url: https://www.google.co.in/books/edition/Database_Management_System/uhmQDwAAQBAJ?hl=en&gbpv=0
 ---
 
 # Database Languages

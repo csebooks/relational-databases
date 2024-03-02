@@ -1,6 +1,20 @@
 ---
 title: 'Relational Databases'
 weight: 5
+references:
+    videos:
+        - youtube:WI9dE8-TFAc
+        - youtube:OqjJjpjDRLc
+    links:
+        - https://www.oracle.com/in/database/what-is-a-relational-database/#:~:text=A%20relational%20database%20is%20a,of%20representing%20data%20in%20tables.
+        - https://www.ibm.com/topics/relational-databases
+    books:
+        - b1:
+            title: Relational Database Design and Implementation
+            url: https://www.google.co.in/books/edition/Relational_Database_Design_and_Implement/yQgfCgAAQBAJ?hl=en&gbpv=0
+        - b2:
+            title: Fundamentals of relational database management systems 
+            url: https://www.google.co.in/books/edition/Fundamentals_of_Relational_Database_Mana/MQNtCQAAQBAJ?hl=en&gbpv=0
 ---
 
 # Relational Databases
