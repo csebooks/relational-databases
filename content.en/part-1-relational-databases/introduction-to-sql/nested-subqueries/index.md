@@ -16,7 +16,7 @@ references:
         - b2:
             title: MySQL Reference Manual 
             url: https://www.google.co.in/books/edition/MySQL_Reference_Manual/9c-pkLaNmqoC?hl=en&gbpv=0
-
+---
 # Nested Subqueries
 
 SQL provides a mechanism for nesting subqueries. A subquery is a **select**\-**from**\**where** expression that is nested within another query. A common use of subqueries is to perform tests for set membership, make set comparisons, and determine set cardinality, by nesting subqueries in the **where** clause. We study such uses of nested subqueries in the **where** clause in Sections 3.8.1 through 3.8.4. In Section 3.8.5, we study nesting of subqueries in the **from** clause. In Section 3.8.7, we see how a class of subqueries called scalar subqueries can appear wherever an expression returning a value can occur.
