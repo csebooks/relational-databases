@@ -14,7 +14,7 @@ references:
             title: Triggers
             url: https://www.google.co.in/books/edition/Triggers/0qmeBgAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: SQL Procedures, Triggers, and Functions
+            title: SQL Procedures, Triggers, and Functions
             url: https://www.google.co.in/books/edition/SQL_Procedures_Triggers_and_Functions_on/nuALDAAAQBAJ?hl=en&gbpv=0
 --- 
 
