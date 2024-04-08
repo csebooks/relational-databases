@@ -10,7 +10,7 @@ references:
         - https://www.javatpoint.com/dbms-architecture
     books:
         - b1:
-            title:Architecture of a Database
+            title: Architecture of a Database
             url: https://www.google.co.in/books/edition/Architecture_of_a_Database_System/aBPcm3C1avMC?hl=en&gbpv=1&dq=database+architecture+books&printsec=frontcover
         - b2:
             title: Real-Time Database Systems
