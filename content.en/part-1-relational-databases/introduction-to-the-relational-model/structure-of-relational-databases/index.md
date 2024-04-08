@@ -14,8 +14,7 @@ references:
             url: https://www.google.co.in/books/edition/The_Structure_of_the_Relational_Database/0t2pCAAAQBAJ?hl=en&gbpv=0
         - b2:
             title: Relational Database Design and Implementation
-            url: 
-            https://www.google.co.in/books/edition/Relational_Database_Design_and_Implement/yQgfCgAAQBAJ?hl=en&gbpv=0
+            url: https://www.google.co.in/books/edition/Relational_Database_Design_and_Implement/yQgfCgAAQBAJ?hl=en&gbpv=0
 ---
 
 #  Structure of Relational Databases
