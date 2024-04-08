@@ -13,7 +13,7 @@ references:
             title: Learning SQL
             url: https://www.google.co.in/books/edition/Learning_SQL/FwKHDwAAQBAJ?hl=en&gbpv=0
         - b2:
-           title:  SQL Queries for Mere Mortals 
+            title:  SQL Queries for Mere Mortals 
             url: https://www.google.co.in/books/edition/SQL_Queries_for_Mere_Mortals/EtrHAwAAQBAJ?hl=en&gbpv=0
  
 ---
