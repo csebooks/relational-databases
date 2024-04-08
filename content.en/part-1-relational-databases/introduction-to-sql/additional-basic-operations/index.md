@@ -16,7 +16,7 @@ references:
             title: SQL Cookbook
             url: https://www.google.co.in/books/edition/SQL_Cookbook/2j-bAgAAQBAJ?hl=en&gbpv=0
 ---
----
+
 
 # Additional Basic Operations
 

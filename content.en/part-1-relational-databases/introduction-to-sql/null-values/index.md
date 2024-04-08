@@ -16,7 +16,7 @@ references:
         - b2:
             title: SQL in a Nutshell 
             url: https://www.google.co.in/books/edition/SQL_in_a_Nutshell/J1hcTQB3JbcC?hl=en&gbpv=0
-
+---
 # Null Values
 
 Null values present special problems in relational operations, including arithmetic operations, comparison operations, and set operations.
