@@ -11,10 +11,10 @@ references:
     books:
         - b1:
             title: Sql Server Advanced Data Types 
-            url: : https://www.google.co.in/books/edition/SQL_Server_Advanced_Data_Types/l61qDwAAQBAJ?hl=en&gbpv=1&dq=sql+data+types+and+schemas&printsec=frontcover
+            url: https://www.google.co.in/books/edition/SQL_Server_Advanced_Data_Types/l61qDwAAQBAJ?hl=en&gbpv=1&dq=sql+data+types+and+schemas&printsec=frontcover
         - b2:
             title: My SQL in a Nutshell
-            url:  : https://www.google.co.in/books/edition/MySQL_in_a_Nutshell/lBHE8xdSGwQC?hl=en&gbpv=1&dq=sql+data+types&printsec=frontcover
+            url: https://www.google.co.in/books/edition/MySQL_in_a_Nutshell/lBHE8xdSGwQC?hl=en&gbpv=1&dq=sql+data+types&printsec=frontcover
 ---
 
 # SQL Data Types and Schemas
