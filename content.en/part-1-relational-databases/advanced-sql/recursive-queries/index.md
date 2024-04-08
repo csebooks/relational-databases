@@ -13,7 +13,7 @@ references:
             title: Datalog and Recursive Query Processing 
             url: https://www.google.co.in/books/edition/Datalog_and_Recursive_Query_Processing/wSIVngEACAAJ?hl=en
         - b2:
-           title: Beginning SQL Queries
+            title: Beginning SQL Queries
             url: https://www.google.co.in/books/edition/Beginning_SQL_Queries/KkEnCgAAQBAJ?hl=en&gbpv=0
 ---
 
