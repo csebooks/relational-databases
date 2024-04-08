@@ -10,7 +10,7 @@ references:
         - https://www.javatpoint.com/dbms-multivalued-dependency
     books:
         - b1:
-            title: Database Systems: The Complete Book
+            title: Database Systems The Complete Book
             url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=0
         - b2:
             title: Database Systems

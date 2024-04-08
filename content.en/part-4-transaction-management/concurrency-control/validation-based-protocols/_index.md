@@ -10,7 +10,7 @@ references:
         - https://www.javatpoint.com/dbms-validation-based-protocol
     books:
         - b1:
-            title: Artificial Intelligence: Methods and Applications 
+            title: Artificial Intelligence Methods and Applications 
             url: https://www.google.co.in/books/edition/Artificial_Intelligence_Methods_and_Appl/NFm7BQAAQBAJ?hl=en&gbpv=0
         - b2:
             title: Database Management System

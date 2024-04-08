@@ -1,6 +1,7 @@
 ---
 title: 'Other Aspects of Database Design'
-weight: 10\references:
+weight: 10
+references:
     videos:
         - youtube:OU5mwEDa_P0
         - youtube:fh6jrvGy9K8

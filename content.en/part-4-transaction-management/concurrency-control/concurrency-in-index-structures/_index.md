@@ -13,7 +13,7 @@ references:
             title: Concurrency Control and Recovery in Database Systems 
             url: https://www.google.co.in/books/edition/Concurrency_Control_and_Recovery_in_Data/aiEPAQAAMAAJ?hl=en&gbpv=0&bsq=Concurrency%20in%20Index%20Structures%20books
         - b2:
-            title: Database Systems: The Complete Book
+            title: Database Systems The Complete Book
             url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=0
 ---
 

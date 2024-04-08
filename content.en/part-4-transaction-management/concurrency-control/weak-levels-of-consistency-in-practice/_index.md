@@ -10,7 +10,7 @@ references:
         - https://www.javatpoint.com/consistency-in-dbms
     books:
         - b1:
-            title: Paraconsistent Logic: Consistency, Contradiction and Negation 
+            title: Paraconsistent Logic Consistency, Contradiction and Negation 
             url: https://www.google.co.in/books/edition/Paraconsistent_Logic_Consistency_Contrad/VApkDAAAQBAJ?hl=en&gbpv=0
         - b2:
             title: Distributed Systems
