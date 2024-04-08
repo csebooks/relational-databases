@@ -13,7 +13,7 @@ references:
             title: Database Integrity
             url: https://www.google.co.in/books/edition/Database_Integrity_Challenges_and_Soluti/fJWncL6mjnwC?hl=en&gbpv=0
         - b2:
-           title: Principles of Data Management
+            title: Principles of Data Management
             url: https://www.google.co.in/books/edition/Principles_of_Data_Management/o9UlnQEACAAJ?hl=en
 ---
 

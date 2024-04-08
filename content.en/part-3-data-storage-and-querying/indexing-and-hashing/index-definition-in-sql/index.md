@@ -13,7 +13,7 @@ references:
             title: Expert Performance Indexing in SQL Server 
             url: https://www.google.co.in/books/edition/Expert_Performance_Indexing_in_SQL_Serve/nvLpCgAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: SQL Performance
+            title: SQL Performance
             url: https://www.google.co.in/books/edition/SQL_Performance_Explained/Wi-xNAEACAAJ?hl=en
 ---
 

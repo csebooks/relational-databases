@@ -13,7 +13,7 @@ references:
             title: Database System Concepts
             url: https://www.google.co.in/books/edition/Database_System_Concepts/Hvn_QQAACAAJ?hl=en
         - b2:
-           title: Data Structures Based on Non-linear Relations and Data Processing Methods
+            title: Data Structures Based on Non-linear Relations and Data Processing Methods
             url: https://www.google.co.in/books/edition/Data_structures_based_on_non_linear_rela/eXnnDwAAQBAJ?hl=en&gbpv=0
 ---
 

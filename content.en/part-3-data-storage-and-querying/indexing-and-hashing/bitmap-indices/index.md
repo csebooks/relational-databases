@@ -13,7 +13,7 @@ references:
             title: Multidimensional Databases and Data Warehousing
             url: https://www.google.co.in/books/edition/Multidimensional_Databases_and_Data_Ware/GYdyEAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: Database Management Systems book
+            title: Database Management Systems book
             url:https://www.google.co.in/books/edition/UGC_NET_unit_4_COMPUTER_SCIENCE_Database/9iWGEAAAQBAJ?hl=en&gbpv=0
 ---
 

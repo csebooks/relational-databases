@@ -13,7 +13,7 @@ references:
             title: The Structured Query Language
             url: https://www.google.co.in/books/edition/Structured_Query_Language_SQL/FKRQAAAAMAAJ?hl=en&gbpv=0&bsq=overview%20of%20the%20sql%20query%20language
         - b2:
-           title: SQL Clearly Explained  
+            title: SQL Clearly Explained  
             url: https://www.google.co.in/books/edition/SQL_Clearly_Explained/KMZasMUMU5UC?hl=en&gbpv=0
 ---
 

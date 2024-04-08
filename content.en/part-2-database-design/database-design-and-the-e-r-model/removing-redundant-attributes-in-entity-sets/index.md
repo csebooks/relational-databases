@@ -13,7 +13,7 @@ references:
             title: Database Systems
             url: https://www.google.co.in/books/edition/Database_Systems_The_Complete_Book/-5mqs4hQIBcC?hl=en&gbpv=0
         - b2:
-           title: Sql Server 2005 Black Book
+            title: Sql Server 2005 Black Book
             url:https://www.google.co.in/books/edition/Sql_Server_2005_Black_Book_New_Ed_With_C/Klj20GNs5egC?hl=en&gbpv=0
 ---
 

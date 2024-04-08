@@ -13,7 +13,7 @@ references:
             title: Hands On Relational Database Management System RDBMS
             url: https://www.google.co.in/books/edition/Hands_On_Relational_Database_Management/7QNuDwAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: Hands On DATABASE
+            title: Hands On DATABASE
             url: https://www.google.co.in/books/edition/Hands_On_DATABASE_2000_MCQ/s7BUDwAAQBAJ?hl=en&gbpv=0
 ---
 

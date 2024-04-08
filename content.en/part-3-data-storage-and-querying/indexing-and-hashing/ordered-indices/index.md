@@ -13,7 +13,7 @@ references:
             title: The Art and Science of Computer Assisted Ordering
             url: https://www.google.co.in/books/edition/The_Art_and_Science_of_Computer_Assisted/aEvEEAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: Indexing Books, Second Edition
+            title: Indexing Books, Second Edition
             url: https://www.google.co.in/books/edition/Indexing_Books_Second_Edition/G0Eqm8FbiTMC?hl=en&gbpv=0
 ---
 

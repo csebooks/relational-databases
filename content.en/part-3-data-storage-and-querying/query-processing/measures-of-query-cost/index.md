@@ -13,7 +13,7 @@ references:
             title: Query Processing in Database Systems
             url: https://www.google.co.in/books/edition/Query_Processing_in_Database_Systems/AOGpCAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: Database Systems
+            title: Database Systems
             url: https://www.google.co.in/books/edition/Database_Systems/9m382yDgxRsC?hl=en&gbpv=0
 ---
 

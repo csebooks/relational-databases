@@ -13,7 +13,7 @@ references:
             title: Foundations of Data Organization and Algorithm
             url: https://www.google.co.in/books/edition/Foundations_of_Data_Organization_and_Alg/C39nU_byNRcC?hl=en&gbpv=0
         - b2:
-           title: Software Engineer's Pocket Book
+            title: Software Engineer's Pocket Book
             url: https://www.google.co.in/books/edition/Software_Engineer_s_Pocket_Book/Og4BBQAAQBAJ?hl=en&gbpv=0
 ---
 

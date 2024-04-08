@@ -13,7 +13,7 @@ references:
             title: Design of hashing algorithms
             url: https://www.google.co.in/books/edition/Design_of_Hashing_Algorithms/MKlzAAAAIAAJ?hl=en&gbpv=0&bsq=Static%20Hashing%20books
         - b2:
-           title: The Joys of Hashing
+            title: The Joys of Hashing
             url: https://www.google.co.in/books/edition/The_Joys_of_Hashing/r0mHDwAAQBAJ?hl=en&gbpv=0
 ---
 

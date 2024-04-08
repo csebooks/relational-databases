@@ -13,7 +13,7 @@ references:
             title: Hands On Relational Database Management System
             url: https://www.google.co.in/books/edition/Hands_On_Relational_Database_Management/7QNuDwAAQBAJ?hl=en&gbpv=1&dq=Transformation+of+Relational+Expressions+books&pg=PA3&printsec=frontcover
         - b2:
-           title: Database in Depth
+            title: Database in Depth
             url:   https://www.google.co.in/books/edition/Database_in_Depth/sZc7B6wnmNcC?hl=en&gbpv=0
 ---
 

@@ -13,7 +13,7 @@ references:
             title: Modern B-Tree Techniques
             url: https://www.google.co.in/books/edition/Modern_B_Tree_Techniques/AiOj6n7-s_UC?hl=en&gbpv=0
         - b2:
-           title: Fundamentals of Database System
+            title: Fundamentals of Database System
             url: https://www.google.co.in/books/edition/Fundamentals_of_Database_System/LoiqDwAAQBAJ?hl=en&gbpv=0
 ---
 

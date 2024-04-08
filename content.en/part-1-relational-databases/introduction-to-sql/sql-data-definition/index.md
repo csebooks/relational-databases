@@ -13,7 +13,7 @@ references:
             title: SQL for Data Analytics
             url: //www.google.co.in/books/edition/SQL_for_Data_Analytics/jfAXxQEACAAJ?hl=en
         - b2:
-           title: Data Analysis Using SQL and Excel
+            title: Data Analysis Using SQL and Excel
             url: //www.google.co.in/books/edition/Data_Analysis_Using_SQL_and_Excel/98wIUfzeVvgC?hl=en&gbpv=0
  
 ---

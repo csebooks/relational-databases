@@ -13,7 +13,7 @@ references:
             title: Database Design Using Entity-Relationship Diagrams
             url: https://www.google.co.in/books/edition/Database_Design_Using_Entity_Relationshi/KZKylX9oH8IC?hl=en&gbpv=0
         - b2:
-           title: Relational Database Design Clearly Explained link
+            title: Relational Database Design Clearly Explained link
             url: https://www.google.co.in/books/edition/Relational_Database_Design_Clearly_Expla/TwtA-uouTQkC?hl=en&gbpv=0
             
 ---

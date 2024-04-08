@@ -13,7 +13,7 @@ references:
             title: The Art of Computer Programming
             url: https://www.google.co.in/books/edition/The_Art_of_Computer_Programming/cYULBAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: The Art of Computer Programming
+            title: The Art of Computer Programming
             url: https://www.google.co.in/books/edition/The_Art_of_Computer_Programming_Sorting/0VoZAQAAIAAJ?hl=en&gbpv=0&bsq=Computer%20Science%20Sorting%20books
 ---
 

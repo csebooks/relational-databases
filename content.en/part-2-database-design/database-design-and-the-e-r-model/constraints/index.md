@@ -13,7 +13,7 @@ references:
             title: Theory of Constraints Handbook
             url: https://www.google.co.in/books/edition/Theory_of_Constraints_Handbook/18biX-wLjE8C?hl=en&gbpv=0&bsq=Constraints%20books
         - b2:
-           title: The Triple Constraints in Project Management
+            title: The Triple Constraints in Project Management
             url: https://www.google.co.in/books/edition/The_Triple_Constraints_in_Project_Manage/ihhFDwAAQBAJ?hl=en&gbpv=0
 ---
 

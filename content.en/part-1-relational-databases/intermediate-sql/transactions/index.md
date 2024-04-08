@@ -13,7 +13,7 @@ references:
             title: Transactions and Creations
             url: https://www.google.co.in/books/edition/Transactions_and_Creations/ekP9QmsFvt8C?hl=en&gbpv=0
         - b2:
-           title: Design Transactions
+            title: Design Transactions
             url: https://www.google.co.in/books/edition/Design_Transactions/lkjmDwAAQBAJ?hl=en&gbpv=0
 ---
 

@@ -13,7 +13,7 @@ references:
             title: RUDIMENTS OF COMPUTER SCIENCE
             url: https://www.google.co.in/books/edition/RUDIMENTS_OF_COMPUTER_SCIENCE/K7ZcDAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: GATE Computer Science and Information Technology
+            title: GATE Computer Science and Information Technology
             url: https://www.google.co.in/books/edition/GATE_Computer_Science_and_Information_Te/moyqDwAAQBAJ?hl=en&gbpv=0
 ---
 

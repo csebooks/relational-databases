@@ -13,7 +13,7 @@ references:
             title: Materialized Views
             url: https://www.google.co.in/books/edition/Materialized_Views/QIAekwEACAAJ?hl=en
         - b2:
-           title: Oracle  SQL 
+            title: Oracle  SQL 
             url: https://www.google.co.in/books/edition/Oracle_SQL/NU-d9TIae9IC?hl=en&gbpv=0
 ---
 

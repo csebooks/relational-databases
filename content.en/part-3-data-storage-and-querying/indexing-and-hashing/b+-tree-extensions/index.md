@@ -13,7 +13,7 @@ references:
             title: SQLite Database System
             url: https://www.google.co.in/books/edition/SQLite_Database_System_Design_and_Implem/9Z6IQQnX1JEC?hl=en&gbpv=0
         - b2:
-           title: Latest Trends of Information Technology
+            title: Latest Trends of Information Technology
             url: https://www.google.co.in/books/edition/Latest_Trends_of_Information_Technology/G_-jDwAAQBAJ?hl=en&gbpv=0
 ---
 

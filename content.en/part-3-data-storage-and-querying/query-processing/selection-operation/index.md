@@ -13,7 +13,7 @@ references:
             title: RUDIMENTS OF COMPUTER SCIENCE
             url: https://www.google.co.in/books/edition/RUDIMENTS_OF_COMPUTER_SCIENCE/K7ZcDAAAQBAJ?hl=en&gbpv=0
         - b2:
-           title: Database Systems for Advanced Applications
+            title: Database Systems for Advanced Applications
             url: https://www.google.co.in/books/edition/Database_Systems_for_Advanced_Applicatio/_Cv6BwAAQBAJ?hl=en&gbpv=0
 ---
 

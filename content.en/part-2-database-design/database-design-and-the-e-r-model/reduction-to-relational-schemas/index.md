@@ -13,7 +13,7 @@ references:
             title: SQL and Relational Theory
             url: https://www.google.co.in/books/edition/SQL_and_Relational_Theory/Ew06OZtjuJEC?hl=en&gbpv=0
         - b2:
-           title: Information Modeling and Relational Databases
+            title: Information Modeling and Relational Databases
             url: https://www.google.co.in/books/edition/Information_Modeling_and_Relational_Data/UyCUjuuJNGgC?hl=en&gbpv=0
 ---
 
