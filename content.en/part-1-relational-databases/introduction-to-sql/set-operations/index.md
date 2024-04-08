@@ -4,7 +4,7 @@ weight: 5
 references:
     videos:
         - youtube:Uu4GfSHy3_4
-        - youtube_fRXjmfRESk
+        - youtube:_fRXjmfRESk
     links:
         - https://www.javatpoint.com/dbms-sql-set-operation
         - https://www.geeksforgeeks.org/set-theory-operations-in-relational-algebra/

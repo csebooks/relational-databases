@@ -3,7 +3,7 @@ title:  Additional Basic Operations
 weight: 4
 references:
     videos:
-        - youtubeRD9tMyFY_F0
+        - youtube:RD9tMyFY_F0
         - youtube:rFCKrC2NWgI
     links:
         - https://upscfever.com/upsc-fever/en/gatecse/en-gatecse-chp34.html

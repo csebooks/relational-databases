@@ -3,7 +3,7 @@ title: 'Reduction to Relational Schemas'
 weight: 6\
 references:
     videos:
-        - youtube"K2uQFfW5TXA&t=10s
+        - youtube:K2uQFfW5TXA&t=10s
         - youtube:8P435Ftkd54
     links:
         - https://www.exploredatabase.com/2016/04/convert-entity-relationship-diagram-to-relation-schema-exercise5.html
