@@ -13,7 +13,7 @@ references:
             title: Database System Concepts
             url: https://drive.google.com/file/d/1ykq0VTmfTWbbHuA_CjWU6HjPQEi7v4PS/view?usp=sharing
         - b2:
-            title: Database Systems for Advanced Applications
+            title: Database Systems for Applications
             url: https://www.flipkart.com/database-systems-advanced-applications/p/itmfc6e2mzhgtngd?pid=9783540253341&lid=LSTBOK9783540253341YBQNI4&marketplace=FLIPKART&q=database+systems+and+applications&store=bks%2Ff50%2Fksz&srno=s_1_2&otracker=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_28_na_na_na&fm=search-autosuggest&iid=2d24b066-b7ea-4035-b69d-cf915d937b7d.9783540253341.SEARCH&ppt=sp&ppn=sp&qH=f9df58cfd0b713e0
         - b3:
             title: Database and Expert Systems Applications
