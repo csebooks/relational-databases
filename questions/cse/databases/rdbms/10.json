@@ -1,0 +1,19 @@
+{
+    "question": " Which statement is used to update data in a table in PostgreSQL?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "UPDATE TABLE"
+        },
+        {
+            "value": "MODIFY TABLE"
+        },
+        {
+            "value": "UPDATE",
+            "answer": true
+        },
+        {
+            "value": "ALTER"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "question": "Which command is used to connect to a PostgresSQL database from the command line?",
+  "explanation": "",
+  "choices": [
+    {
+      "value": "psql",
+      "answer": true
+    },
+    {
+      "value": "connect"
+    },
+    {
+      "value": "pg_connect"
+    },
+    {
+      "value": "postgres"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "question": " What is the maximum table size ?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "32TB",
+            "answer": true
+        },
+        {
+            "value": "16TB"
+        },
+        {
+            "value": "8TB"
+        },
+        {
+            "value": " "
+        }
+    ]
+}

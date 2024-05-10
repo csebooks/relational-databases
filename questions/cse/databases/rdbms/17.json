@@ -1,0 +1,19 @@
+{
+    "question": " Which is the file stored the client authentication?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "Postgres.conf"
+        },
+        {
+            "value": "pb_hba.conf",
+            "answer": true
+        },
+        {
+            "value": "users.conf"
+        },
+        {
+            "value": " "
+        }
+    ]
+}

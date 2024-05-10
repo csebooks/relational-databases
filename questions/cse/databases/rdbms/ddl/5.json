@@ -1,0 +1,19 @@
+{
+    "question": "Which SQL command is used to create a new table in PostgresSQL ?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "ADD TABLE"
+        },
+        {
+            "value": "CREATE TABLE",
+            "answer": true
+        },
+        {
+            "value": "MAKE TABLE"
+        },
+        {
+            "value": "NEW TABLE"
+        }
+    ]
+}

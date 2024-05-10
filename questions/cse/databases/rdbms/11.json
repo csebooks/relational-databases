@@ -1,0 +1,19 @@
+{
+    "question": " Which command is used to exit from psql command line interface?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "\\EXIT"
+        },
+        {
+            "value": "\\QUIT"
+        },
+        {
+            "value": "\\BYE"
+        },
+        {
+            "value": "ALL THE ABOVE",
+            "answer": true
+        }
+    ]
+}

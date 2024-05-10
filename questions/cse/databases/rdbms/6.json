@@ -1,0 +1,19 @@
+{
+    "question": "Which statement is used to insert data into a table in PostgreSQL?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "ADD DATA"
+        },
+        {
+            "value": "INSERT INTO",
+            "answer": true
+        },
+        {
+            "value": "UPDATE TABLE"
+        },
+        {
+            "value": "CREATE ROW"
+        }
+    ]
+}

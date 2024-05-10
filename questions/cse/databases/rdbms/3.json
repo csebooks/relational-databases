@@ -1,0 +1,19 @@
+{
+    "question": " Which statement is used to create a new database in PostgresSQL ?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "CREATE DATABASE",
+            "answer": true
+        },
+        {
+            "value": "NEW DTABASE"
+        },
+        {
+            "value": "ADD DATABASE"
+        },
+        {
+            "value": "MAKE DATABASE"
+        }
+    ]
+}

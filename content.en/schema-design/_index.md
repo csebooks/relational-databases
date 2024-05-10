@@ -1,6 +1,8 @@
 ---
 title: 'Schema Design'
 weight: 2
+categories:
+    - ddl
 references:
     links:
         - https://newsletter.ashishps.com/p/a-detailed-guide-on-database-indexes5

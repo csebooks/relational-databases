@@ -1,0 +1,19 @@
+{
+  "question": "What is the default port number used by PostgreSQL for connections?",
+  "explanation": "",
+  "choices": [
+    {
+      "value": "3306",
+      "answer": true
+    },
+    {
+      "value": "5432"
+    },
+    {
+      "value": "1521"
+    },
+    {
+      "value": "5439"
+    }
+  ]
+}

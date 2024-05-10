@@ -1,0 +1,19 @@
+{
+    "question": "What does the  \\dt command do in psql? ",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "Displays table data"
+        },
+        {
+            "value": "Drops a table"
+        },
+        {
+            "value": "Lists all tables in the current database",
+            "answer": true
+        },
+        {
+            "value": "Deletes a table"
+        }
+    ]
+}

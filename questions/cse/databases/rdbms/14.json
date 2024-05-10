@@ -1,0 +1,19 @@
+{
+    "question": " WAL is related to",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "Performance"
+        },
+        {
+            "value": "Security"
+        },
+        {
+            "value": "Data Integrity",
+            "answer": true
+        },
+        {
+            "value": " "
+        }
+    ]
+}

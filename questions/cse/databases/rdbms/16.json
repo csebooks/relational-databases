@@ -1,0 +1,20 @@
+{
+    "question": " Network Address Type in POSTGRESS ?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "inet",
+            "answer": true
+        },
+        {
+            "value": "cidr",
+            "answer": true
+        },
+        {
+            "value": "ipv6"
+        },
+        {
+            "value": "ipv4 "
+        }
+    ]
+}

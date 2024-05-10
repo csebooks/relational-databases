@@ -1,0 +1,19 @@
+{
+    "question": " Which operator is used for pattern matching in PostgreSQL?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "LIKE",
+            "answer": true
+        },
+        {
+            "value": "MATCHES"
+        },
+        {
+            "value": "~"
+        },
+        {
+            "value": "CONTAINS"
+        }
+    ]
+}

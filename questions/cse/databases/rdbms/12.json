@@ -1,0 +1,19 @@
+{
+    "question": " WHich one of the following can not be changed ?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "Shareds",
+            "answer": true
+        },
+        {
+            "value": "Replicas"
+        },
+        {
+            "value": " "
+        },
+        {
+            "value": " "
+        }
+    ]
+}

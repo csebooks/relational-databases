@@ -1,0 +1,19 @@
+{
+    "question": "Which statement is used to delete data from a table in PostgreSQL?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "REMOVE FROM"
+        },
+        {
+            "value": "DELETE FROM",
+            "answer": true
+        },
+        {
+            "value": "DELETE FROM"
+        },
+        {
+            "value": "TRUNCATE TABLE"
+        }
+    ]
+}
