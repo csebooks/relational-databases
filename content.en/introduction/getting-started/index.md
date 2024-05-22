@@ -15,7 +15,7 @@ docker-compose -v
 
 Now we need to create a PostgreSQL container and pgAdmin to connect to the container. Create a 'docker-compose.yml' file and add the following:
 
-```yml
+```bash
 version: "3.8"
 services:
   db:
@@ -51,3 +51,16 @@ Now you can start these services by running:
 ```
 docker-compose up -d
 ```
+
+Now, you can see pgAdmin running from this link[Click the link to enter into the PG Admin](http://localhost:8888). Use the credentials below to log in:
+
+```bash
+username: user-name@domain-name.com
+password: strong-password
+```
+
+After that you are able to see the Object > Register > Server .
+Give the name of your database and goto the connection give the host name/address is ```db``
+and you can give the user name and password you want and don't forgot the user name and password and save the file .
+
+After that, the PostgreSQL database will be created
