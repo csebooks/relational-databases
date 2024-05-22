@@ -60,7 +60,10 @@ password: strong-password
 ```
 
 After that you are able to see the Object > Register > Server .
-Give the name of your database and goto the connection give the host name/address is ```db``
+Give the name of your database in General and goto the connection give the host name/address is 
+```bash
+db
+```
 and you can give the user name and password you want and don't forgot the user name and password and save the file .
 
 After that, the PostgreSQL database will be created
