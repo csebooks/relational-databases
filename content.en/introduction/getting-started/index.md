@@ -27,6 +27,7 @@ services:
     environment:
       POSTGRES_USER: user-name
       POSTGRES_PASSWORD: strong-password
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
     volumes:
       - local_pgdata:/var/lib/postgresql/data
   pgadmin:
@@ -52,18 +53,24 @@ Now you can start these services by running:
 docker-compose up -d
 ```
 
-Now, you can see pgAdmin running from this link[Click the link to enter into the PG Admin](http://localhost:8888). Use the credentials below to log in:
+you can now see pgAdmin running at [http://localhost:8888](http://localhost:8888). Enter the credentials below to log in:
 
 ```bash
 username: user-name@domain-name.com
 password: strong-password
 ```
 
-After that you are able to see the Object > Register > Server .
-Give the name of your database in General and goto the connection give the host name/address is 
-```bash
-db
-```
-and you can give the user name and password you want and don't forgot the user name and password and save the file .
+This shoud open the home page from there navigate to Object > Register > Server. Enter the details as given below
 
-After that, the PostgreSQL database will be created
+```bash
+ host name/address: db 
+ port : 5432
+ username: user-name
+ Password : strong-password
+```
+
+To view the queries executed you can watch the log file using
+
+```bash
+docker-compose logs -f db
+```
