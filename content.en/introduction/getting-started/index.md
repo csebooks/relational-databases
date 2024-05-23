@@ -60,7 +60,7 @@ username: user-name@domain-name.com
 password: strong-password
 ```
 
-This shoud open the home page from there navigate to Object > Register > Server. Enter the details as given below
+This shoud open the home page from there navigate to Add Server. Enter the details as given below
 
 ```bash
  host name/address: db 
