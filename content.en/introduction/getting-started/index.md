@@ -3,8 +3,6 @@ title: 'Getting Started'
 weight: 4
 ---
 
-# Getting Started
-
 As we start, we need a PostgreSQL instance with the latest PostgreSQL version and a user interface that helps us connect and interact with the database. There are many ways to install this, but we choose Docker as it offers more convenience. Please make sure you have Docker Desktop installed on your machine. 
 
 To validate, check below:
@@ -74,3 +72,5 @@ To view the queries executed you can watch the log file using
 ```bash
 docker-compose logs -f db
 ```
+
+By now, We are ready to start our journey through relational databases. Next lets see the building blocks of a relational database.
