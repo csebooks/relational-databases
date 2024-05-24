@@ -58,6 +58,12 @@ ADD CONSTRAINT fk_state
 FOREIGN KEY (state_code) REFERENCES state(state_code);
 ```
 
+Notice that the "state_code CHAR(2)" column in the "state" table points to the "state_code CHAR(2)" column in the "post_office" table.
+
+The "state_code CHAR(2)" column in the "state" table is the PRIMARY KEY in the "state" table.
+
+The "state_code CHAR(2)" column in the "post_office" table is a FOREIGN KEY in the "post_office" table.
+
 ## Summary
 
 In this lesson, we covered the following concepts related to columns in an RDBMS table:
