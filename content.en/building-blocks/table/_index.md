@@ -67,15 +67,39 @@ DELETE FROM post_office
 WHERE area_name = 'Loyola College Campus, Nungambakkam' AND city_name = 'Chennai';
 ```
 
+## Table Partitioning
+
+Table partitioning is a database optimization technique that involves dividing a large table into smaller, more manageable pieces, while still treating it as a single table. Each partition can be managed and accessed separately, which can improve performance, manageability, and availability. Here’s an example of how we could partition the `post_office` table by `city_name`:
+
+```sql
+CREATE TABLE post_office (
+    area_name TEXT,
+    city_name TEXT,
+    pin_code INT,
+    phone_number BIGINT
+) PARTITION BY LIST (city_name);
+
+CREATE TABLE post_office_madurai PARTITION OF post_office (
+    CONSTRAINT madurai_pin_code CHECK (pin_code BETWEEN 625000 AND 625999)
+) FOR VALUES IN ('Madurai');
+
+CREATE TABLE post_office_chennai PARTITION OF post_office (
+    CONSTRAINT chennai_pin_code CHECK (pin_code BETWEEN 600000 AND 600999)
+) FOR VALUES IN ('Chennai');
+```
+
+In this example, the `post_office` table is partitioned by the `city_name` column. Separate partitions are created for `Madurai` and `Chennai`, and each partition can have additional constraints such as specific ranges for PIN codes.
+
 ## Summary
 
-In this guide, we covered the basics of creating a table in an RDBMS, inserting data into the table, selecting data from the table, updating existing data, and deleting data from the table. Here are the key SQL statements we used:
+In this guide, we covered the basics of creating a table in an RDBMS, inserting data into the table, selecting data from the table, Additionally, we introduced the concept of table partitioning to enhance performance and manageability. Here are the key SQL statements we used:
 
 1. **CREATE TABLE**: Defines a new table and its columns.
 2. **INSERT INTO**: Adds new rows of data to the table.
 3. **SELECT**: Retrieves data from the table.
 4. **UPDATE**: Modifies existing data in the table.
 5. **DELETE**: Removes data from the table.
+6. **PARTITION BY**: Divides a table into partitions for better performance and manageability.
 
 By understanding and practicing these SQL statements, you can efficiently manage and manipulate data in an RDBMS.
 
