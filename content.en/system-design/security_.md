@@ -1,5 +1,5 @@
 ---
-title: 'Schema Design'
+title: 'Security'
 weight: 4
 categories:
     - ddl
@@ -9,4 +9,4 @@ references:
         - https://www.codecademy.com/learn/fscp-designing-relational-databases/modules/fscp-designing-a-database/cheatsheet
 --- 
 
-a Database Schema describes the structure of a database. Database schemas generally contain information about table/column names, data types/constraints, relationships between tables, and user roles.
+# Security
