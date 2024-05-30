@@ -1,0 +1,19 @@
+{
+    "question": "What is the purpose of PostgreSQL's WAL (Write-Ahead Logging) in replication?",
+    "choices": [
+      {
+        "value": "To improve query performance"
+      },
+      {
+        "value": "To track changes made to the database",
+        "answer": true
+      },
+      {
+        "value": "To enforce data integrity constraints"
+      },
+      {
+        "value": "To handle user authentication"
+      }
+    ]
+  }
+  

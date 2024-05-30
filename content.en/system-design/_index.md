@@ -2,14 +2,12 @@
 title: 'System Design'
 weight: 3
 categories:
-    - ddl
+    - dba
 references:
     links:
         - https://newsletter.ashishps.com/p/a-detailed-guide-on-database-indexes5
         - https://www.codecademy.com/learn/fscp-designing-relational-databases/modules/fscp-designing-a-database/cheatsheet
 --- 
-
-# System Design
 
 System design is the process of defining the architecture, components, modules, interfaces, and data for a system to satisfy specified requirements. It involves creating a blueprint for the system that ensures functionality, performance, scalability, reliability, and security.
 

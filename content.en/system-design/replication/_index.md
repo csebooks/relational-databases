@@ -1,6 +1,8 @@
 ---
 title: 'Replication'
 weight: 2
+categories:
+    - replication
 references:
     links:
         - https://medium.com/@eremeykin/how-to-setup-single-primary-postgresql-replication-with-docker-compose-98c48f233bbf
@@ -10,12 +12,22 @@ references:
         - https://osmanthus.work/?p=271
 --- 
 
-> The process responsible for copying data from primary instance to the replica is called replication. You can think of it as ongoing one-direction data transfer constantly operating in the background. Replication serves as the exclusive method for introducing new data to the replica. 
+> The process responsible for copying data from primary instance to the replica is called replication. You can think of it as ongoing one-direction data transfer constantly operating in the background. Replication serves as the exclusive method for introducing new data to the replica. With replication, we can:
+
+1. **Enhance Fault Tolerance:** By maintaining identical copies of data on multiple servers, replication improves fault tolerance. If the primary server fails, the replica can seamlessly take over, ensuring continuous availability of data.
+
+2. **Scale Read Operations:** Replication enables distributing read queries across multiple replicas, reducing the load on the primary server. This scalability enhances the overall performance of the system, especially in read-heavy environments.
+
+3. **Support High Availability:** With synchronous replication, where transactions are replicated to standby servers before being committed, PostgreSQL ensures high availability and data consistency. In case of primary server failure, standby servers
 
 There are two types of replications
 
-1. Physical replication
-2. Logical replication
+1. Logical replication
+2. Physical replication
+
+# Logical replication
+
+Logical replication works differently, it sends only rows changes for committed transactions. Roughly speaking it is somewhat equivalent to replaying same SQL instructions on replica just after it has been executed by primary instance.
 
 # Physical replication
 
@@ -101,7 +113,5 @@ However, a challenge arises due to the primary instance needing to periodically 
 
 Replication slot can be thought as an object that tracks replication progress. This object is created at primary instance and a replica connects to it. While replica consumes data from primary instance, replication slot tracks this progress making it safe to delete obsolete and already used WAL segments.
 
-# Logical replication
 
-Logical replication works differently, it sends only rows changes for committed transactions. Roughly speaking it is somewhat equivalent to replaying same SQL instructions on replica just after it has been executed by primary instance.
 

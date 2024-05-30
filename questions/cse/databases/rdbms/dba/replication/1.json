@@ -1,0 +1,18 @@
+{
+  "question": "Which statement best describes PostgreSQL replication?",
+  "choices": [
+    {
+      "value": "It's a feature exclusive to enterprise editions of PostgreSQL."
+    },
+    {
+      "value": "It allows data to be copied from one PostgreSQL database to another in real-time.",
+      "answer": true
+    },
+    {
+      "value": "It's a method for compressing database files to reduce storage space."
+    },
+    {
+      "value": "It's a technique for encrypting PostgreSQL database connections."
+    }
+  ]
+}
