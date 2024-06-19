@@ -173,7 +173,7 @@ CREATE TABLE orders (
     order_date DATE,
     customer_id INT,
     total_amount NUMERIC
-) partition by hash(customer_id);
+) partition by hash(order_id);
 ```
 To create a hash-partitioned table for this orders data based on the customer_id column, we need to follow these steps:
 
