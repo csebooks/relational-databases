@@ -58,13 +58,16 @@ BEGIN
     END LOOP;
 END $$;
 ```
+ Lets check the caching informations.
+
+
+```sql
+SELECT pg_stat_reset();
+
+SELECT * from tbldummy where c_id < 150;
+
+SELECT heap_blks_read, heap_blks_hit from pg_statio_user_tables where relname='tbldummy';
+```
 
 In this context, "heap" is not to be confused with the Computer Science term of "heap," which refers to a data structure or segment of memory. In PostgreSQL, "heap" refers to the data file(s) related to a particular table. Columns prefixed with idx_ refer to indexes created to speed up the lookup of data (in the heap).
 
-To answer your question about the meaning of the pairs, I would describe them in this way:
-
-heap_blk would be the ratio between 8KB blocks of a table read from disk : 8KB blocks of a table read from cache
-idx_blk would be the ratio between 8KB blocks of all indexes of "this table" (represented by relname) read from disk : 8KB blocks of all indexes of "this table" read from cache
-seq_tup would be the ratio between number of sequential scans performed on "this table" : number of rows/tuples read from "this table" (since the last pg_reset_stats() call)
-idx_tup would be the ratio between number of index scans performed on "this table" : number of rows/tuples fetched after referencing an index
-More details on each of the columns of pg_statio_user_tables can be found in the documentation
