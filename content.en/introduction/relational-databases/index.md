@@ -8,6 +8,7 @@ references:
     links:
         - https://www.oracle.com/in/database/what-is-a-relational-database/#:~:text=A%20relational%20database%20is%20a,of%20representing%20data%20in%20tables.
         - https://www.ibm.com/topics/relational-databases
+        - https://wiki.postgresql.org/wiki/PostgreSQL_derived_databases
 ---
 
 Relational Databases organize structured data in a relational model, storing data as tables and organizing them using relationships.
