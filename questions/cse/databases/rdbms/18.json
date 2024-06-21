@@ -1,0 +1,20 @@
+{
+    "question": "   Which of the following systems use RDMS?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "Oracle"
+        },
+        {
+            "value": "  Microsoft SQLServer"
+        },
+        {
+            "value": "IBM"
+        },
+        {
+            "value": "  All of the mentioned ",
+            "answer": true
+
+        }
+    ]
+}

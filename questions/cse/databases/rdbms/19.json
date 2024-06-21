@@ -1,0 +1,20 @@
+{
+    "question": "    Dynamic hashing allows us to?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": "  Accommodate the growth of the database"
+        },
+        {
+            "value": "  Accommodate the shrinkage of the database"
+        },
+        {
+            "value": "  Allows modification of hash function"
+        },
+        {
+            "value": "  Allows modification of hash function ",
+            "answer": true
+
+        }
+    ]
+}

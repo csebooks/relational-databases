@@ -1,0 +1,23 @@
+{
+    "question": ". What is a relation in RDBMS?",
+    "explanation": "",
+    "choices": [
+        {
+            "value": " Key"
+        },
+        {
+            "value": "Table",
+            "answer": true
+
+
+           
+        },
+        {
+            "value": "Row"
+            
+        },
+        {
+            "value": "  Data Types "
+        }
+    ]
+}
