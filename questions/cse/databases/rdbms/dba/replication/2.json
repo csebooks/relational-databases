@@ -1,5 +1,6 @@
 {
     "question": "What is the purpose of PostgreSQL's WAL (Write-Ahead Logging) in replication?",
+    "explanation" : "",
     "choices": [
       {
         "value": "To improve query performance"

@@ -1,5 +1,6 @@
 {
   "question": "Which statement best describes PostgreSQL replication?",
+  "explanation" : "",
   "choices": [
     {
       "value": "It's a feature exclusive to enterprise editions of PostgreSQL."

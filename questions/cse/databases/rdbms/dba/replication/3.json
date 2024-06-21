@@ -1,5 +1,6 @@
 {
     "question": "What is the primary benefit of synchronous replication in PostgreSQL?",
+    "explanation" : "",
     "choices": [
         {
             "value": "It reduces network traffic"
