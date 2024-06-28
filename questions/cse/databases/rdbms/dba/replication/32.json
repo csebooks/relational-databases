@@ -1,0 +1,20 @@
+{
+    "question": " What is the purpose of EXPLAIN ANALYZE in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " To obtain a query execution plan along with actual run-time statistics"
+          },
+      {
+        "value": " To perform advanced data analysis using SQL queries",
+        "answer": true
+      },
+      {
+        "value": " To retrieve data from multiple tables based on specified criteria"
+      },
+      {
+        "value": " To list all active connections to a PostgreSQL database"
+      }
+    ]
+  }
+  

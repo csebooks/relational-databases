@@ -1,0 +1,21 @@
+{
+    "question": "In PostgreSQL, which replication method offers the highest level of data consistency but may impact performance due to waiting for acknowledgments from standby servers?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "Synchronous Replication",
+        "answer": true
+      },
+      {
+        "value": " Asynchronous Replication"
+      },
+      {
+        "value": "Logical Replication"
+      },
+      {
+        "value": "Streaming Replication"
+
+      }
+    ]
+  }
+  

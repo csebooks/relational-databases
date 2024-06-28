@@ -1,0 +1,20 @@
+{
+    "question": " What is the purpose of ANALYZE in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " To collect statistics about the contents of tables"
+          },
+      {
+        "value": " To create a new table based on the results of a query",
+        "answer": true
+      },
+      {
+        "value": " To update the values of certain columns in a table"
+      },
+      {
+        "value": " To drop an existing index from a table"
+      }
+    ]
+  }
+  

@@ -1,0 +1,20 @@
+{
+    "question": "Which of the following operations is NOT typically performed using DDL statements?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Inserting data into tables"
+          },
+      {
+        "value": " Creating tables",
+        "answer": true
+      },
+      {
+        "value": " Modifying table structures"
+      },
+      {
+        "value": " Deleting tables"
+      }
+    ]
+  }
+  

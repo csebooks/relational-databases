@@ -1,0 +1,23 @@
+{
+    "question": "What is the primary benefit of synchronous replication in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "It ensures that all transactions are immediately replicated to standby servers before they are committed."
+
+      },
+      {
+        "value": "It reduces network traffic",
+        "answer": true
+
+      },
+      {
+        "value": "It allows for automatic failover"
+      },
+      {
+        "value": "It compresses replicated data for efficient storage"
+
+      }
+    ]
+  }
+  

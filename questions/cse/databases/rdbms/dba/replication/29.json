@@ -1,0 +1,20 @@
+{
+    "question": " What is the primary benefit of using stored procedures in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Improved performance by reducing network traffic",
+        "answer": true
+          },
+      {
+        "value": " Enhanced security through encryption"
+      },
+      {
+        "value": " Increased availability of database servers"
+      },
+      {
+        "value": " Easier management of database schema changes"
+      }
+    ]
+  }
+  

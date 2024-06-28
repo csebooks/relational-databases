@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, what is the purpose of the CLUSTER command?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " To reorganize data on disk to match the order of an index",
+        "answer": true
+          },
+      {
+        "value": " To create a new index on a table"
+      },
+      {
+        "value": " To remove duplicate rows from a table"
+      },
+      {
+        "value": " To change the table owner in PostgreSQL"
+      }
+    ]
+  }
+  

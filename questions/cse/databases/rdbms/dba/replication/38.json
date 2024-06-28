@@ -1,0 +1,20 @@
+{
+    "question": " Which of the following is a valid option for the REINDEX command in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " INDEX"
+          },
+      {
+        "value": " DATABASE"
+      },
+      {
+        "value": " SCHEMA"
+      },
+      {
+        "value": " SYSTEM",
+        "answer": true
+      }
+    ]
+  }
+  

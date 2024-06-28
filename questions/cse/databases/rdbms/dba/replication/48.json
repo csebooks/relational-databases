@@ -1,0 +1,20 @@
+{
+    "question": "Which PostgreSQL feature allows for automatic routing of data to appropriate partitions based on predefined rules?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Indexes"
+          },
+      {
+        "value": " Triggers"
+      },
+      {
+        "value": " Foreign keys"
+      },
+      {
+        "value": " Partitioning",
+        "answer": true
+      }
+    ]
+  }
+  

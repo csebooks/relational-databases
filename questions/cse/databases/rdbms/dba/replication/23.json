@@ -1,0 +1,20 @@
+{
+    "question": " Which of the following is true about partial indexes in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " They index only a subset of rows in a table defined by a condition"
+          },
+      {
+        "value": " They are used exclusively for indexes on multiple columns"
+      },
+      {
+        "value": " They are larger in size compared to regular indexes",
+        "answer": true
+      },
+      {
+        "value": " They cannot be used for unique constraints"
+      }
+    ]
+  }
+  

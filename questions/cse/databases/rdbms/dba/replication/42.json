@@ -1,0 +1,23 @@
+{
+    "question": "What is a shard in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "A subset of data in a distributed database"
+
+      },
+      {
+        "value": "An index on frequently queried columns"
+      },
+      {
+        "value": "A mechanism for data encryption",
+        "answer": true
+
+      },
+      {
+        "value": "A tool for query optimization"
+
+      }
+    ]
+  }
+  

@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, which command is used to create a new schema?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " CREATE SCHEMA"
+          },
+      {
+        "value": " CREATE TABLE"
+      },
+      {
+        "value": " CREATE DATABASE",
+        "answer": true
+      },
+      {
+        "value": " CREATE ROLE"
+      }
+    ]
+  }
+  

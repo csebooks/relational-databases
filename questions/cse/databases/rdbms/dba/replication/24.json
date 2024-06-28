@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, what does VACUUM do?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Reclaims storage occupied by dead tuples",
+        "answer": true
+          },
+      {
+        "value": " Creates new database connections"
+      },
+      {
+        "value": " Encrypts database connections"
+      },
+      {
+        "value": " Backs up the entire database"
+      }
+    ]
+  }
+  

@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, which isolation level ensures that a transaction sees only changes committed before it began?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Read Committed",
+        "answer": true
+          },
+      {
+        "value": " Read Uncommitted"
+      },
+      {
+        "value": " Repeatable Read"
+      },
+      {
+        "value": " Serializable"
+      }
+    ]
+  }
+  

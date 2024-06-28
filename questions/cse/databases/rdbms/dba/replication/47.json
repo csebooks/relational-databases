@@ -1,0 +1,21 @@
+{
+    "question": "What is the benefit of using partitions in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Improved query performance",
+        "answer": true
+          },
+      {
+        "value": " Reduced storage space"
+      },
+      {
+        "value": " Enhanced security"
+      },
+      {
+        "value": " Enhanced security"
+
+      }
+    ]
+  }
+  

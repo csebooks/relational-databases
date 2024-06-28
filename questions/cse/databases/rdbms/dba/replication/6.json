@@ -1,0 +1,23 @@
+{
+    "question": "In PostgreSQL, what is the role of foreign keys?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "To enforce relationships between tables",
+        "answer": true
+
+      },
+      {
+        "value": "To define primary key constraints"
+
+      },
+      {
+        "value": "To define check constraints"
+      },
+      {
+        "value": "To improve data compression"
+
+      }
+    ]
+  }
+  

@@ -1,0 +1,20 @@
+{
+    "question": " In a relational database management system, what technique can be used to optimize query performance?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Creating indexes on frequently queried columns"
+          },
+      {
+        "value": " Increasing the database size",
+        "answer": true
+      },
+      {
+        "value": " Adding more tables to the database"
+      },
+      {
+        "value": " Using complex SQL queries"
+      }
+    ]
+  }
+  

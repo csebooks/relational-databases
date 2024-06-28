@@ -1,0 +1,20 @@
+{
+    "question": "What is database normalization in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "To organize data into tables and columns"
+      },
+      {
+        "value": "To eliminate duplicate data",
+        "answer": true
+      },
+      {
+        "value": "To speed up query performance"
+      },
+      {
+        "value": "To ensure data security"
+      }
+    ]
+  }
+  

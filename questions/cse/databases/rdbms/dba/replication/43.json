@@ -1,0 +1,23 @@
+{
+    "question": "What does unique key constraint ensure in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "Ensures that all values in a column are unique"
+
+      },
+      {
+        "value": "Enforces a unique combination of values across columns",
+        "answer": true
+
+      },
+      {
+        "value": "Creates an index on a column"
+      },
+      {
+        "value": "Allows null values in a column"
+
+      }
+    ]
+  }
+  

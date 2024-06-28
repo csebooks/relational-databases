@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, which DDL statement is used to erase table data from the database?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " TRUNCATE"
+          },
+      {
+        "value": " DELETE TABLE",
+        "answer": true
+      },
+      {
+        "value": " DROP TABLE"
+      },
+      {
+        "value": " ERASE TABLE"
+      }
+    ]
+  }
+  

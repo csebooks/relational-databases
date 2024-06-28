@@ -1,0 +1,21 @@
+{
+    "question": "Which of the following statements regarding Write-Ahead Logging (WAL) in PostgreSQL is true?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "WAL logs only contain committed transactions"
+          },
+      {
+        "value": " WAL logs are stored separately from the main database files",
+        "answer": true
+      },
+      {
+        "value": " WAL logs are primarily used for query optimization"
+      },
+      {
+        "value": " WAL logs are compressed to save disk space"
+
+      }
+    ]
+  }
+  

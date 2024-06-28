@@ -1,0 +1,23 @@
+{
+    "question": "What is the primary purpose of primary keys in PostgreSQL tables?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "To uniquely identify each row in a table"
+
+      },
+      {
+        "value": "To enforce referential integrity",
+        "answer": true
+
+      },
+      {
+        "value": "To allow null values"
+      },
+      {
+        "value": "To speed up data retrieval"
+
+      }
+    ]
+  }
+  

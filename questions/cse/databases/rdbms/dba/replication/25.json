@@ -1,0 +1,20 @@
+{
+    "question": " Which type of index in PostgreSQL is best suited for columns with many repeated values?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " B-Tree Index"
+          },
+      {
+        "value": " Gin Index"
+      },
+      {
+        "value": " Hash Index",
+        "answer": true
+      },
+      {
+        "value": " Sparse Index"
+      }
+    ]
+  }
+  

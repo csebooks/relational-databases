@@ -1,0 +1,20 @@
+{
+    "question": " Which PostgreSQL extension provides support for full-text search capabilities?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " pg_trgm"
+          },
+      {
+        "value": " pgcrypto"
+      },
+      {
+        "value": " pg_stat_statements"
+      },
+      {
+        "value": " pg_tsearch",
+        "answer": true
+      }
+    ]
+  }
+  

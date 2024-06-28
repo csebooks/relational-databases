@@ -1,0 +1,20 @@
+{
+    "question": " In PostgreSQL, what is the purpose of the pg_cancel_backend function?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " To terminate an active session in PostgreSQL"
+          },
+      {
+        "value": " To cancel a running query in PostgreSQL",
+        "answer": true
+      },
+      {
+        "value": " To create a new database connection"
+      },
+      {
+        "value": " To monitor replication lag in PostgreSQL"
+      }
+    ]
+  }
+  

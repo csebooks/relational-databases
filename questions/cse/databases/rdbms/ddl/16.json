@@ -1,0 +1,20 @@
+{
+    "question": "What does DDL stand for in the context of databases?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " Data Definition Language"
+          },
+      {
+        "value": " Data Division Logic"
+      },
+      {
+        "value": " Database Design Language"
+      },
+      {
+        "value": " Data Description Language",
+        "answer": true
+      }
+    ]
+  }
+  

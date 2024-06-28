@@ -1,0 +1,20 @@
+{
+    "question": " Which statement best describes the concept of MVCC (Multi-Version Concurrency Control) in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " It allows multiple transactions to operate concurrently while ensuring data consistency"
+          },
+      {
+        "value": " It ensures that only one transaction can modify the database at a time",
+        "answer": true
+      },
+      {
+        "value": " It is used to replicate data across multiple PostgreSQL servers"
+      },
+      {
+        "value": " It optimizes query execution by pre-compiling SQL statements"
+      }
+    ]
+  }
+  

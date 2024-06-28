@@ -1,0 +1,21 @@
+{
+    "question": "Which type of join in PostgreSQL returns all records from both tables where there is a match in the joined columns?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "Full Join"
+      },
+      {
+        "value": "Inner Join"
+      },
+      {
+        "value": "Left Join"
+      },
+      {
+        "value": "Right Join",
+        "answer": true
+
+      }
+    ]
+  }
+  

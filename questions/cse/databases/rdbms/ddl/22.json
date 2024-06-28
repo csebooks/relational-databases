@@ -1,0 +1,20 @@
+{
+    "question": " What is the purpose of a CHECK constraint in PostgreSQL?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": " To enforce domain integrity by limiting the values that can be placed in a column",
+        "answer": true
+          },
+      {
+        "value": " To ensure that a column or combination of columns is unique among all rows in a table"
+      },
+      {
+        "value": " To specify that a column can contain NULL values"
+      },
+      {
+        "value": " To improve query performance"
+      }
+    ]
+  }
+  

@@ -1,0 +1,23 @@
+{
+    "question": "Which type of replication in PostgreSQL allows both read and write operations on the standby server?",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "Logical Replication"
+
+      },
+      {
+        "value": "Synchronous Replication"
+
+      },
+      {
+        "value": "Asynchronous Replication"
+      },
+      {
+        "value": "Hot Standby Replication",
+        "answer": true
+
+      }
+    ]
+  }
+  

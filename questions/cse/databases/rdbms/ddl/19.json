@@ -1,0 +1,20 @@
+{
+    "question": "Which of the following is NOT a factor that can impact database performance? ",
+    "explanation" : "",
+    "choices": [
+      {
+        "value": "User interface design"
+          },
+      {
+        "value": " Hardware specifications"
+      },
+      {
+        "value": " Software configuration"
+      },
+      {
+        "value": " Database size",
+        "answer": true
+      }
+    ]
+  }
+  
