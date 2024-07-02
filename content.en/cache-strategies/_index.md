@@ -20,6 +20,10 @@ Before discussing the solution to the problem, let’s understand why queries ar
 
 Internal cache performance means the hit rate of the database table. Insufficient internal buffer space of the database is the main reason for the low hit rate of the database table. So in PostgreSQL, we use the shared buffer concept to avoid a low rate of database table. A shared buffer is used to manage the buffer space of a database.
 
+To configure caching in PostgreSQL, you can change the `shared_buffers` parameter in the `postgresql.conf` file:
+
+shared_buffers: This integer parameter controls how much memory the server uses for caching data. The `default value is 128 MB`, but it should be set to `15–25%` of the machine's total RAM. For example, if your machine has 32 GB of RAM, you should set shared_buffers to 8 GB. You'll need to restart the database server after making this change
+
 ```sql
 CREATE Table tblDummy
 
