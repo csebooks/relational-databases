@@ -11,13 +11,13 @@ To validate, check below:
 docker-compose -v
 ```
 
-Now we need to create a PostgreSQL container and pgAdmin to connect to the container. Create a 'docker-compose.yml' file and add the following:
+Now we need to create a PostgreSQL container  Create a 'docker-compose.yml' file and add the following:
 
-```bash
+```yml
 version: "3.8"
 services:
   db:
-    image: postgres
+    image: postgres:16
     container_name: local_pgdb
     restart: always
     ports:
@@ -25,9 +25,11 @@ services:
     environment:
       POSTGRES_USER: user-name
       POSTGRES_PASSWORD: strong-password
-    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
-    volumes:
-      - local_pgdata:/var/lib/postgresql/data
+```
+
+Next we need to add pgAdmin for visualization. Add below lines
+
+```yml
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container
@@ -37,12 +39,6 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
       PGADMIN_DEFAULT_PASSWORD: strong-password
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
-volumes:
-  local_pgdata:
-  pgadmin-data:
 ```
 
 Now you can start these services by running:
@@ -68,6 +64,10 @@ This shoud open the home page from there navigate to Add Server. Enter the detai
 ```
 
 To view the queries executed you can watch the log file using
+
+```yml
+command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+```
 
 ```bash
 docker-compose logs -f db
