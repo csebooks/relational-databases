@@ -1,29 +1,30 @@
 ---
 title: 'Index'
 weight: 4
+references:
+    links:
+        - https://www.enterprisedb.com/postgres-tutorials/overview-postgresql-indexes
 --- 
 
-# Understanding Indexes in RDBMS
-
-## Introduction
-
-An Index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional space and slower inserts, updates, and deletes. It allows quick access to specific rows in a table without scanning the entire table.
-
-## Index
+> An Index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional space and slower inserts, updates, and deletes. It allows quick access to specific rows in a table without scanning the entire table.
 
 An Index is similar to an index in a book—it provides a quick way to look up information. In a database, an Index is created on one or more columns of a table. When you create an Index, the database creates an internal data structure (such as a B-tree or hash table) to organize the values of the indexed columns efficiently.
 
-## Types of Indexes
-
-### Primary Index
+## Primary Index
 
 A Primary Index is created automatically when you define a Primary Key constraint on a table. It ensures that the values in the indexed column(s) are unique and is used to enforce the uniqueness of rows in the table. Primary Key columns are indexed automatically.
 
-### Secondary Index
+## Secondary Index
 
 A Secondary Index is created explicitly by the user to improve the performance of queries that do not use the Primary Key. It allows fast access to rows based on the indexed column(s), but unlike a Primary Index, it does not enforce uniqueness.
 
-## Example: Creating an Index on the State Code Column
+## Types of Indexes
+
+### B-tree
+
+The most common and widely used index type is the B-tree index. This is the default index type for the CREATE INDEX command, unless you explicitly mention the type during index creation. 
+
+If the indexed column is used to perform the comparison by using comparison operators such as <, <=, =, >=, and >, then the  Postgres optimizer uses the index created by the B-tree option for the specified column.
 
 Let's create a Secondary Index on the `state_code` column of the `post_office` table to improve the performance of queries that filter data by state.
 
@@ -35,6 +36,18 @@ In this example:
 - `idx_state_code` is the name of the Index.
 - `state_code` is the column on which the Index is created.
 - The Index will improve the speed of queries that filter data based on the `state_code` column.
+
+### Hash
+
+The Hash index can be used only if the equality condition = is being used in the query. 
+
+### GiST
+
+### SP-GiST
+
+### GIN
+
+### BRIN
 
 ## Advantages of Indexes
 
