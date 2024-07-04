@@ -20,11 +20,48 @@ A Secondary Index is created explicitly by the user to improve the performance o
 
 ## Types of Indexes
 
+In order to undestand index lets consider we have below table
+
+```sql
+CREATE TABLE SENSOR_DATA {
+    A SAMPLE FOR PK INDEX,
+    TYPE OF SENSOR HASH INDEX,
+    CREATE_AT TIMESTAMP,
+    VALUE FLOAT
+}
+```
+
+Lets create quality and quantity data
+
+```sql
+CREATE OR REPLACE FUNCTION random_between(low INT ,high INT) 
+   RETURNS INT AS
+$$
+BEGIN
+   RETURN floor(random()* (high-low + 1) + low);
+END;
+$$ language 'plpgsql' STRICT;
+
+
+select * from  generate_series('2022-07-01 00:00'::timestamp,
+	'2022-08-01 00:00',  '60 seconds');
+
+insert into facilities.device_data(device_id, time, reading)  
+select generate_series(1,44641), 
+ generate_series('2022-07-01 00:00'::timestamp,
+	'2022-08-01 00:00',  '60 seconds'),
+ random_between (15,30);
+```
+
 ### B-tree
 
 The most common and widely used index type is the B-tree index. This is the default index type for the CREATE INDEX command, unless you explicitly mention the type during index creation. 
 
-If the indexed column is used to perform the comparison by using comparison operators such as <, <=, =, >=, and >, then the  Postgres optimizer uses the index created by the B-tree option for the specified column.
+If the indexed column is used to perform the comparison by using comparison operators such as `<, <=, =, >=, and >`, then the  Postgres optimizer uses the index created by the B-tree option for the specified column.
+
+```sql
+EXPLAIN SELECT QUERY 
+```
 
 Let's create a Secondary Index on the `state_code` column of the `post_office` table to improve the performance of queries that filter data by state.
 
@@ -39,7 +76,7 @@ In this example:
 
 ### Hash
 
-The Hash index can be used only if the equality condition = is being used in the query. 
+The Hash index can be used only if the equality condition `=` is being used in the query. 
 
 ### GiST
 

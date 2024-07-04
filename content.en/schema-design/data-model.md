@@ -10,9 +10,8 @@ references:
 --- 
 
 
-# Data Model
-
 ## Two key principles of Data model
 
-- Split Data into Small Chunks
-- First Think About the Query, Then Write the Table
+1. First Think About the Query, Then Write the Table
+3. Sample Data Fitment 
+3. Split Data into Small Chunks

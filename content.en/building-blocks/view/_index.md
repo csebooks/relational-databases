@@ -3,9 +3,10 @@ title: 'View'
 weight: 5
 --- 
 
-A View is a virtual table in an RDBMS that is based on the result set of a SQL query. Views simplify complex queries, enhance security by restricting access to data, and provide a way to present data in a specific format without altering the underlying tables.
+> A View is a virtual table in an RDBMS that is based on the result set of a SQL query. Views simplify complex queries, enhance security by restricting access to data, and provide a way to present data in a specific format without altering the underlying tables.
 
 There are two main types of views:
+
 1. **Normal Views** (or simply Views)
 2. **Materialized Views**
 
