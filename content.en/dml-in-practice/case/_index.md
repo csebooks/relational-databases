@@ -50,7 +50,7 @@ Lets get all the movies
 SELECT id, title, year_of_release FROM movies
 ```
 
-Lets join the `movie localized`
+Lets join the `movie_localized`
 
 ```sql
 SELECT id, 
@@ -65,8 +65,9 @@ Time to solve our actual problem of fall back locale. here is where CASE comes t
 ```sql
 SELECT id,
        CASE
-         WHEN ml.locale = 'ta' THEN ml.title
-         ELSE m.title
+         WHEN ml.title IS NULL 
+            THEN m.title
+            ELSE ml.title
        END AS title,
        year_of_release
     FROM   movies m
