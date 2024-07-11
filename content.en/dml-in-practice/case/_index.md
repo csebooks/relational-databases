@@ -25,15 +25,18 @@ Please note that for a movie `title` can be in multiple languages here as `year_
 
 
 ```sql
+-- Movie which has title for both en and ta
 INSERT INTO movies(title, year_of_release)
 	VALUES ('Avatar', 2009);
 	
 INSERT INTO movies_localized(movie_id, locale, title) 
 	VALUES (currval('movies_id_seq'), 'ta', 'அவதார்');
 
+-- Movie which has title only for ta
 INSERT INTO movies(title, year_of_release)
 	VALUES ('Inception', 2010);
 
+-- Movie which has no title at all
 INSERT INTO movies(title, year_of_release)
 	VALUES (NULL, 2000);    
 ```
