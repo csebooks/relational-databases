@@ -1,6 +1,9 @@
 ---
 title: 'Common table expression'
 weight: 2
+references:
+    links:
+        - https://stackoverflow.com/questions/2944297/postgresql-function-for-last-inserted-id
 --- 
 
 > A Common Table Expression (CTE) allows you to create a temporary result set within a query. It enhances the readability of complex queries by breaking them down into smaller and more reusable parts.
@@ -39,41 +42,45 @@ In this syntax:
 
 ## PostgreSQL CTE Examples
 
-### 1. Basic PostgreSQL Common Table Expression Example
+### Basic Usecase
 
-The following example uses a CTE to select the title and length of films in the 'Action' category and returns all the columns of the CTE:
+Lets revisit how we add localized movie where we need generated movie id to be passed to localized table.
 
 ```sql
-WITH action_films AS (
-  SELECT 
-    f.title, 
-    f.length 
-  FROM 
-    film f 
-    INNER JOIN film_category fc USING (film_id) 
-    INNER JOIN category c USING(category_id) 
-  WHERE 
-    c.name = 'Action'
-) 
-SELECT * FROM action_films;
+INSERT INTO movies(title, year_of_release)
+	VALUES ('Avatar', 2009);
+	
+INSERT INTO movies_localized(movie_id, locale, title) 
+	VALUES (currval('movies_id_seq'), 'ta', 'அவதார்');
 ```
 
-Output:
+We have used `currval` function. which can also be done with `lastval()` but they can cause side effects with triggers. `INSERT with RETURNING` will be safe option lets try
 
-|          title          | length |
-|-------------------------|--------|
-| Amadeus Holy            |    113 |
-| American Circus         |    129 |
-| Antitrust Tomatoes      |    168 |
-| Ark Ridgemont           |     68 |
-| ...                     |    ... |
+```sql
+INSERT INTO movies_localized(movie_id, locale, title) 
+	VALUES (
+    INSERT INTO movies(title, year_of_release) VALUES ('Avatar', 2009) RETURNING id
+    , 'ta', 'அவதார்');
+```
 
-In this example:
+But wait. POSTGRES does not like it. It throws an error ?! This is where CTE can help us as given below
 
-- The CTE query combines data from three tables (`film`, `film_category`, and `category`) using INNER JOIN clauses.
-- The main query retrieves data from the `action_films` CTE using a simple SELECT statement.
+```sql
+-- Step 1: Insert into the movies table and get the id
+WITH movie_insert AS (
+    INSERT INTO movies(title, year_of_release)
+    VALUES ('Avatar', 2009)
+    RETURNING id
+)
 
-### 2. Join a CTE with a Table Example
+-- Step 2: Use the returned id to insert into the movies_localized table
+INSERT INTO movies_localized(movie_id, locale, title)
+SELECT id, 'ta', 'அவதார்'
+FROM movie_insert;
+```
+
+
+### Join a CTE with a Table Example
 
 The following example joins a CTE with a table to find the staff and rental count for each:
 
@@ -110,7 +117,7 @@ In this example:
 - The CTE returns a result set that includes the staff ID and the rental counts.
 - The main query joins the `staff` table with the CTE using the `staff_id` column.
 
-### 3. Multiple CTEs Example
+### Multiple CTEs Example
 
 The following example uses multiple CTEs to calculate various statistics related to films and customers:
 
