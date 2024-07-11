@@ -4,6 +4,8 @@ weight: 4
 references:
     links:
         - https://www.enterprisedb.com/postgres-tutorials/overview-postgresql-indexes
+        - https://postgrespro.com/blog/pgsql/3994098
+        - https://www.postgresqltutorial.com/postgresql-indexes/postgresql-reindex/
 --- 
 
 > An Index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional space and slower inserts, updates, and deletes. It allows quick access to specific rows in a table without scanning the entire table.
@@ -17,6 +19,8 @@ A Primary Index is created automatically when you define a Primary Key constrain
 ## Secondary Index
 
 A Secondary Index is created explicitly by the user to improve the performance of queries that do not use the Primary Key. It allows fast access to rows based on the indexed column(s), but unlike a Primary Index, it does not enforce uniqueness.
+
+## Stor and Reindex
 
 ## Types of Indexes
 
