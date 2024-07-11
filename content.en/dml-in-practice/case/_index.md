@@ -25,10 +25,10 @@ Please note that for a movie `title` can be in multiple languages here as `year_
 
 
 ```sql
-INSERT INTO public.movies(title, year_of_release)
+INSERT INTO movies(title, year_of_release)
 	VALUES ('Avatar', 2009);
 	
-INSERT INTO public.movies_localized(movie_id, locale, title) 
+INSERT INTO movies_localized(movie_id, locale, title) 
 	VALUES (currval('movies_id_seq'), 'ta', 'அவதார்');
 
 INSERT INTO movies(title, year_of_release)
@@ -53,7 +53,10 @@ SELECT id, title, year_of_release FROM movies
 Lets join the `movie localized`
 
 ```sql
-SELECT id, m.title, year_of_release FROM movies m
+SELECT id, 
+        m.title, ml.title, 
+        year_of_release 
+    FROM movies m
 	LEFT JOIN movies_localized ml ON m.ID = ml.movie_id
 ```
 
@@ -66,10 +69,10 @@ SELECT id,
          ELSE m.title
        END AS title,
        year_of_release
-FROM   movies m
-       LEFT JOIN movies_localized ml
+    FROM   movies m
+    LEFT JOIN movies_localized ml
               ON m.id = ml.movie_id
-WHERE  ml.locale IS NULL
+    WHERE  ml.locale IS NULL
         OR ml.locale = 'ta'
 ```
 
@@ -79,10 +82,10 @@ Cool isn't it ? But wait . Is there any better way to it ?!
 SELECT id,
        COALESCE(ml.title, m.title) AS title,
        year_of_release
-FROM   movies m
-       LEFT JOIN movies_localized ml
+    FROM   movies m
+    LEFT JOIN movies_localized ml
               ON m.id = ml.movie_id
-WHERE  ml.locale IS NULL
+    WHERE  ml.locale IS NULL
         OR ml.locale = 'ta'
 ```
 
