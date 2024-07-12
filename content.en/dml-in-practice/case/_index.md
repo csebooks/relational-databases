@@ -13,7 +13,7 @@ CREATE TABLE movies (
 );
 
 CREATE TABLE movies_localized (
-    movie_id UUID,
+    movie_id INT,
     locale VARCHAR(8) NOT NULL,
     title TEXT,
     FOREIGN KEY (movie_id) REFERENCES movies (id),
@@ -31,6 +31,9 @@ INSERT INTO movies(title, year_of_release)
 	
 INSERT INTO movies_localized(movie_id, locale, title) 
 	VALUES (currval('movies_id_seq'), 'ta', 'அவதார்');
+
+INSERT INTO movies_localized(movie_id, locale, title) 
+	VALUES (currval('movies_id_seq'), 'tl', 'అవతార్');
 
 -- Movie which has title only for ta
 INSERT INTO movies(title, year_of_release)
