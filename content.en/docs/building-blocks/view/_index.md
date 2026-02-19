@@ -16,26 +16,6 @@ A Normal View is a stored query that can be treated as a table. It does not stor
 
 ### Creating a Normal View
 
-Let's create a view that shows the details of post offices along with their state names.
-
-First, we have two tables: `post_office` and `state`.
-
-```sql
-CREATE TABLE post_office (
-    post_office_id INT PRIMARY KEY AUTO_INCREMENT,
-    area_name TEXT,
-    city_name TEXT,
-    pin_code INT,
-    phone_number BIGINT,
-    state_code CHAR(2)
-);
-
-CREATE TABLE state (
-    state_code CHAR(2) PRIMARY KEY,
-    state_name VARCHAR(100)
-);
-```
-
 We insert some sample data into these tables:
 
 ```sql
@@ -51,7 +31,7 @@ Now, we create a view to display post office details along with the state name:
 
 ```sql
 CREATE VIEW post_office_view AS
-SELECT po.post_office_id, po.area_name, po.city_name, po.pin_code, po.phone_number, s.state_name
+SELECT po.area_name, po.city_name, po.pin_code, po.phone_number, s.state_name
 FROM post_office po
 JOIN state s ON po.state_code = s.state_code;
 ```
